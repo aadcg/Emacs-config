@@ -22,41 +22,25 @@
   (fullscreen)
   #+END_SRC
 * Theme
-#+BEGIN_SRC emacs-lisp
-(use-package nord-theme
-
-(load-theme 'nord t)
-(setq nord-comment-brightness 20)
-#+END_SRC
-* Packages
-#+BEGIN_SRC
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-
-(package-initialize)
-(when (not package-archive-contents)
-  (package-refresh-contents))
-
-(defvar myPackages
-  '(ein
-    elpy
-    flycheck
-    py-autopep8))
-
-(mapc #'(lambda (package)
-    (unless (package-installed-p package)
-      (package-install package)))
-      myPackages)
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+   (use-package nord-theme
+     :config (load-theme 'nord t)
+             (setq nord-comment-brightness 20))
+   #+END_SRC
 * Pdf Tools
-#+BEGIN_SRC
-(pdf-tools-install)
+   #+BEGIN_SRC
+   ;; not use if this is enough..
+   (use-package pdf-tools)
+   ;; maybe I need this...
+   (pdf-tools-install)
 #+END_SRC
 * Python
 #+BEGIN_SRC
-(require 'ein)
-(elpy-enable)
+(use-package elpy
+  :config (elpy-enable))
+
+(use-package ein)
+
 (setenv "IPY_TEST_SIMPLE_PROMPT" "1")
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "console --simple-prompt"
@@ -96,7 +80,7 @@
 #+BEGIN_SRC
 (use-package counsel)
 #+END_SRC
-* Auto-complete
+* Company mode
 #+BEGIN_SRC
 (require 'auto-complete)
 (global-auto-complete-mode t)
