@@ -1,83 +1,35 @@
 * Sensible Defaults
-#+BEGIN_SRC emacs-lisp
-(load-file "~/.emacs.d/sensible-defaults.el")
-(sensible-defaults/use-all-settings)
-(sensible-defaults/use-all-keybindings)
-(sensible-defaults/backup-to-temp-directory)
-#+END_SRC
-#+BEGIN_SRC emacs-lisp
-(defun sensible-defaults/open-files-from-home-directory ()
-  "When opening a file, start searching at the user's home
-directory."
-  (setq default-directory "~/"))
+  Any customization of built-in Emacs features goes in here.
 
-(defun sensible-defaults/increase-gc-threshold ()
-  "Allow 20MB of memory (instead of 0.76MB) before calling
-garbage collection. This means GC runs less often, which speeds
-up some operations."
-  (setq gc-cons-threshold 20000000))
-
-(defun sensible-defaults/delete-trailing-whitespace ()
-  "Call DELETE-TRAILING-WHITESPACE every time a buffer is saved."
-  (add-hook 'before-save-hook 'delete-trailing-whitespace))
-
-(defun sensible-defaults/treat-camelcase-as-separate-words ()
-  "Treat CamelCaseSubWords as separate words in every programming
-mode."
-  (add-hook 'prog-mode-hook 'subword-mode))
-
-(defun sensible-defaults/make-scripts-executable ()
-  "When saving a file that starts with `#!', make it executable."
-  (add-hook 'after-save-hook
-            'executable-make-buffer-file-executable-if-script-p))
-
-(defun sensible-defaults/overwrite-selected-text ()
-  "If some text is selected, and you type some text, delete the
-selected text and start inserting your typed text."
-  (delete-selection-mode t))
-
-(defun sensible-defaults/ensure-that-files-end-with-newline ()
-  "If you save a file that doesn't end with a newline,
-automatically append one."
-  (setq require-final-newline t))
-
-(defun sensible-defaults/ensure-that-files-end-with-newline ()
-  "If you save a file that doesn't end with a newline,
-automatically append one."
-  (setq require-final-newline t))
-
-(defun sensible-defaults/quiet-startup ()
-  "Don't present the usual startup message, and clear the scratch
-buffer."
-  (setq inhibit-startup-message t)
-  (setq initial-scratch-message nil))
-
-#+END_SRC
+  #+BEGIN_SRC emacs-lisp
+  (load-file "~/.emacs.d/sensible-defaults.el")
+  (sensible-defaults/use-all-settings)
+  (sensible-defaults/use-all-keybindings)
+  (sensible-defaults/backup-to-temp-directory)
+  #+END_SRC
 * Startup
-;;start on eshell
-;(add-hook 'emacs-startup-hook 'eshell)
+  Startup behaviour
 
-;; fullscreen by default
-(defun fullscreen ()
-       (interactive)
-       (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
-			      '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
-(fullscreen)
-* use-package
-(setq use-package-always-ensure t)
+  #+BEGIN_SRC
+  ;;start on eshell
+  ;(add-hook 'emacs-startup-hook 'eshell)
 
-;; auto update packages
-(use-package auto-package-update
-  :config
-  (setq auto-package-update-delete-old-versions t)
-  (setq auto-package-update-hide-results t)
-  (auto-package-update-maybe))
+  ;; fullscreen by default
+  (defun fullscreen ()
+         (interactive)
+         (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
+  			      '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
+  (fullscreen)
+  #+END_SRC
 * Theme
 #+BEGIN_SRC emacs-lisp
+(use-package nord-theme
+
 (load-theme 'nord t)
 (setq nord-comment-brightness 20)
 #+END_SRC
 * Packages
+#+BEGIN_SRC
 (require 'package)
 (add-to-list 'package-archives
              '("melpa-stable" . "https://stable.melpa.org/packages/") t)
@@ -96,9 +48,13 @@ buffer."
     (unless (package-installed-p package)
       (package-install package)))
       myPackages)
+#+END_SRC
 * Pdf Tools
+#+BEGIN_SRC
 (pdf-tools-install)
+#+END_SRC
 * Python
+#+BEGIN_SRC
 (require 'ein)
 (elpy-enable)
 (setenv "IPY_TEST_SIMPLE_PROMPT" "1")
@@ -116,7 +72,9 @@ buffer."
 ;; enable autopep8 formatting on save
 (require 'py-autopep8)
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+#+END_SRC
 * Org
+#+BEGIN_SRC
 (add-hook 'org-shiftup-final-hook 'windmove-up)
 (add-hook 'org-shiftleft-final-hook 'windmove-left)
 (add-hook 'org-shiftdown-final-hook 'windmove-down)
@@ -133,9 +91,13 @@ buffer."
 
 (setq org-todo-keywords
   '((sequence "TODO" "WAITING" "|" "DONE")))
+#+END_SRC
 * ivy (replaces ido and anzu)
+#+BEGIN_SRC
 (use-package counsel)
+#+END_SRC
 * Auto-complete
+#+BEGIN_SRC
 (require 'auto-complete)
 (global-auto-complete-mode t)
 
@@ -143,7 +105,9 @@ buffer."
   "No maybe for you. Only AC!"
   (unless (minibufferp (current-buffer))
     (auto-complete-mode 1)))
+#+END_SRC
 * eww bug
+#+BEGIN_SRC
 (define-advice shr-parse-image-data (:around (fn &rest args) my-emacs-25-patch)
   "Hackaround for bug#24111 in Emacs 25."
   (if shr-blocked-images
@@ -151,7 +115,9 @@ buffer."
     (cl-letf (((symbol-function 'libxml-parse-xml-region) #'buffer-substring)
               ((symbol-function 'shr-dom-to-xml)          #'identity))
       (apply fn args))))
+#+END_SRC
 * shell
+#+BEGIN_SRC
 (eval-after-load 'comint
   '(progn
      ;; originally on C-c M-r and C-c M-s
@@ -160,8 +126,11 @@ buffer."
      ;; originally on M-p and M-n
      (define-key comint-mode-map (kbd "C-c M-r") #'comint-previous-input)
      (define-key comint-mode-map (kbd "C-c M-s") #'comint-next-input)))
+#+END_SRC
 * eshell
+#+BEGIN_SRC
 (add-hook
  'eshell-mode-hook
  (lambda ()
    (setq pcomplete-cycle-completions nik)))
+#+END_SRC
