@@ -5,7 +5,6 @@ This is based on the following config files:
 #+BEGIN_SRC emacs-lisp
 (version)
 #+END_SRC
-
 #+RESULTS:
 : GNU Emacs 25.2.2 (x86_64-pc-linux-gnu, GTK+ Version 3.22.21)
 :  of 2017-09-22, modified by Debian
@@ -13,7 +12,6 @@ This is based on the following config files:
 #+BEGIN_SRC emacs-lisp
 (org-version)
 #+END_SRC
-
 #+RESULTS:
 : 9.1.14
 
@@ -32,7 +30,7 @@ Any customization of built-in Emacs features goes in here.
 (sensible-defaults/backup-to-temp-directory)
 #+END_SRC
 * Startup
-Startup behaviour
+  Startup behaviour
 
 #+BEGIN_SRC emacs-lisp
 ;;start on eshell
@@ -48,20 +46,24 @@ Startup behaviour
 * Theme
 #+BEGIN_SRC emacs-lisp
 (use-package nord-theme
+  :ensure t
   :config (load-theme 'nord t)
           (setq nord-comment-brightness 20))
 #+END_SRC
 * Pdf Tools
   I like this for pdf.
 #+BEGIN_SRC emacs-lisp
-  (use-package pdf-tools)
+  (use-package pdf-tools
+    :ensure t)
 #+END_SRC
 * Python
 #+BEGIN_SRC emacs-lisp
   (use-package elpy
+    :ensure t
     :config (elpy-enable))
 
-  (use-package ein)
+  (use-package ein
+    :ensure t)
 
   (setenv "IPY_TEST_SIMPLE_PROMPT" "1")
   (setq python-shell-interpreter "ipython"
@@ -76,7 +78,9 @@ Startup behaviour
     (add-hook 'elpy-mode-hook 'flycheck-mode))
 
   ;; enable autopep8 formatting on save
-  (require 'py-autopep8)
+  (use-package py-autopep8
+    :ensure t)
+
   (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 #+END_SRC
 * Org
@@ -97,26 +101,36 @@ Startup behaviour
     (setq org-src-window-setup 'current-window))
 
   (use-package org-bullets
+    :ensure t
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+END_SRC
 ** TODO Babel to run source code
-* ivy (replaces ido and anzu)
+* Ivy
 #+BEGIN_SRC emacs-lisp
-(use-package counsel)
+  (use-package ivy
+    :ensure t
+    :diminish ivy-mode
+    :config
+    (ivy-mode 1)
+    (setq ivy-use-virtual-buffers t)
+    (setq ivy-count-format "(%d/%d) ")
+    :bind
+    ("C-s" . swiper)
+    ("C-r" . swiper))
 #+END_SRC
 * Company mode
   Basic company mode config.
 
 #+BEGIN_SRC emacs-lisp
   (use-package company
-    :config ((global-company-mode t)
-             (setq company-idle-delay 0)
-             (setq company-minimum-prefix-length 3)
-             (define-key company-active-map (kbd "<tab>") 'company-complete-selection)
-             (define-key company-active-map (kbd "C-s") 'company-select-next)
-             (define-key company-active-map (kbd "C-r") 'company-select-previous))
-)
+    :ensure t
+    :config (global-company-mode t)
+            (setq company-idle-delay 0)
+            (setq company-minimum-prefix-length 3)
+            (define-key company-active-map (kbd "<tab>") 'company-complete-selection)
+            (define-key company-active-map (kbd "C-s") 'company-select-next)
+            (define-key company-active-map (kbd "C-r") 'company-select-previous))
 #+END_SRC
 * eww bug
   Solves the problem of not rendering Latex properly in eww mode.
