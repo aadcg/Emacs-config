@@ -20,6 +20,11 @@ This is based on the following config files:
   (setq user-full-name "André Alexandre Gomes"
         user-mail-address "up201106482@fc.up.pt")
 #+END_SRC
+* Diminish
+#+BEGIN_SRC emacs-lisp
+(use-package diminish
+  :ensure t)
+#+END_SRC
 * Sensible Defaults
 Any customization of built-in Emacs features goes in here.
 
@@ -88,8 +93,8 @@ Any customization of built-in Emacs features goes in here.
 
 #+BEGIN_SRC emacs-lisp
   (use-package org
+    :ensure t
     :pin gnu
-
     :config
     (set-fontset-font "fontset-default" nil (font-spec :size 20 :name "Symbola"))
     (setq org-ellipsis " ⬎")
@@ -114,7 +119,10 @@ Any customization of built-in Emacs features goes in here.
     :config
     (ivy-mode 1)
     (setq ivy-use-virtual-buffers t)
-    (setq ivy-count-format "(%d/%d) ")
+    (setq ivy-count-format "(%d/%d) "))
+
+  (use-package swiper
+    :ensure t
     :bind
     ("C-s" . swiper)
     ("C-r" . swiper))
