@@ -2,6 +2,21 @@ This is based on the following config files:
 [[https://github.com/zamansky/using-emacs/blob/master/myinit.org][Mike Zamansky]]
 [[https://github.com/hrs/dotfiles/blob/master/emacs/.emacs.d/configuration.org][Harry Schwartz]]
 
+#+BEGIN_SRC emacs-lisp
+(version)
+#+END_SRC
+
+#+RESULTS:
+: GNU Emacs 25.2.2 (x86_64-pc-linux-gnu, GTK+ Version 3.22.21)
+:  of 2017-09-22, modified by Debian
+
+#+BEGIN_SRC emacs-lisp
+(org-version)
+#+END_SRC
+
+#+RESULTS:
+: 9.1.14
+
 * About me
 #+BEGIN_SRC emacs-lisp
   (setq user-full-name "André Alexandre Gomes"
