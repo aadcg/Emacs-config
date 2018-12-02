@@ -1,6 +1,6 @@
 This is based on the following config files:
-[[https://github.com/zamansky/using-emacs/blob/master/myinit.org][Mike Zamansky]]
-[[https://github.com/hrs/dotfiles/blob/master/emacs/.emacs.d/configuration.org][Harry Schwartz]]
+- [[https://github.com/zamansky/using-emacs/blob/master/myinit.org][Mike Zamansky]]
+- [[https://github.com/hrs/dotfiles/blob/master/emacs/.emacs.d/configuration.org][Harry Schwartz]]
 
 #+BEGIN_SRC emacs-lisp
 (version)
