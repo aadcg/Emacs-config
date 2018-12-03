@@ -13,7 +13,7 @@ This is based on the following config files:
 (org-version)
 #+END_SRC
 #+RESULTS:
-: 9.1.14
+: 8.2.10
 
 * About me
 #+BEGIN_SRC emacs-lisp
@@ -25,19 +25,75 @@ This is based on the following config files:
 (use-package diminish
   :ensure t)
 #+END_SRC
-* Sensible Defaults
-Any customization of built-in Emacs features goes in here.
+* Built-in defaults
+** Here's a bunch of built-in stuff that I prefer by default.
+*** Words, whitespaces and text
+    - Get rid of trailing whitespaces when a file is saved
+    - Treat CamelCaseSubWords as separate words in programming stuff
+    - Overwrite selected text
+    - Append a newline to the end of a file by default
+    - Set nr of characters per line and enforce it
+    #+BEGIN_SRC emacs-lisp
+      (add-hook 'before-save-hook 'delete-trailing-whitespace)
+      (add-hook 'prog-mode-hook 'subword-mode)
+      (delete-selection-mode t)
+      (setq require-final-newline t)
+      (setq-default fill-column 80)
+      (add-hook 'text-mode-hook 'turn-on-auto-fill)
+    #+END_SRC
+*** Aesthetics, line numbering and matching parenthesis
+    - Hide startup stuff, hide bars, and simplify yes/no to y/n
+    - Show matching parenthesis
+    - Number lines in texty stuff
+    - Highlight current line
+    - Dired as 'ls -Alh'
+    #+BEGIN_SRC emacs-lisp
+      (setq inhibit-startup-message t)
+      (setq initial-scratch-message nil)
+      (tool-bar-mode -1)
+      ;; (menu-bar-mode -1)
+      (scroll-bar-mode -1)
+      (horizontal-scroll-bar-mode -1)
+      (fset 'yes-or-no-p 'y-or-n-p)
 
-#+BEGIN_SRC emacs-lisp
-(load-file "~/.emacs.d/sensible-defaults.el")
-(sensible-defaults/use-all-settings)
-(sensible-defaults/use-all-keybindings)
-(sensible-defaults/backup-to-temp-directory)
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(global-hl-line-mode)
-#+END_SRC
+      (show-paren-mode t)
+      (setq show-paren-delay 0.0)
+      (add-hook 'prog-mode-hook 'linum-mode)
+      (add-hook 'text-mode-hook 'linum-mode)
+      (global-hl-line-mode)
+      (setq-default dired-listing-switches "-Alh")
+    #+END_SRC
+*** Cursor
+    - Preserves cursor position after page up/down
+    - Preserves cursor position after closing a file
+    #+BEGIN_SRC emacs-lisp
+      (setq scroll-preserve-screen-position 'always)
+      (save-place-mode 1)
+    #+END_SRC
+*** Windows and buffers
+    - Automatically revert buffer is smth changed
+    - Killing a buffer also kills the window
+    - Navigating buffers with S-<arrows>
+    #+BEGIN_SRC emacs-lisp
+      (global-auto-revert-mode t)
+      (substitute-key-definition 'kill-buffer 'kill-buffer-and-window global-map)
+      (windmove-default-keybindings)
+      (setq windmove-wrap-around t)
+    #+END_SRC
+*** Keybindings
+    #+BEGIN_SRC emacs-lisp
+      (define-key global-map (kbd "C-0") 'sensible-defaults/reset-text-size)
+      (define-key global-map (kbd "C-+") 'text-scale-increase)
+      (define-key global-map (kbd "C--") 'text-scale-decrease)
+      (global-set-key (kbd "C-x C-b") 'ibuffer)
+   #+END_SRC
+*** Backups
+    #+BEGIN_SRC emacs-lisp
+      (setq backup-directory-alist
+              `((".*" . ,temporary-file-directory)))
+      (setq auto-save-file-name-transforms
+              `((".*" ,temporary-file-directory t)))
+    #+END_SRC
 * Startup
   Startup behaviour
 #+BEGIN_SRC emacs-lisp
