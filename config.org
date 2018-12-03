@@ -34,9 +34,12 @@ Any customization of built-in Emacs features goes in here.
 (sensible-defaults/use-all-keybindings)
 (sensible-defaults/backup-to-temp-directory)
 #+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(global-hl-line-mode)
+#+END_SRC
 * Startup
   Startup behaviour
-
 #+BEGIN_SRC emacs-lisp
 ;;start on eshell
 ;(add-hook 'emacs-startup-hook 'eshell)
@@ -59,7 +62,8 @@ Any customization of built-in Emacs features goes in here.
   I like this for pdf.
 #+BEGIN_SRC emacs-lisp
   (use-package pdf-tools
-    :ensure t)
+    :ensure t
+    :config (pdf-tools-install))
 #+END_SRC
 * Python
 #+BEGIN_SRC emacs-lisp
@@ -103,14 +107,21 @@ Any customization of built-in Emacs features goes in here.
 
     (setq org-src-fontify-natively t)
     (setq org-src-tab-acts-natively t)
-    (setq org-src-window-setup 'current-window))
+    (setq org-src-window-setup 'current-window)
+    (setq org-confirm-babel-evaluate nil)
+
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((python . t))))
 
   (use-package org-bullets
     :ensure t
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+END_SRC
-** TODO Babel to run source code
+** TODO Why doesn't it evaluate python code?
+** TODO Let Latex take care of russian
+** TODO Org subtree presentation
 * Ivy
 #+BEGIN_SRC emacs-lisp
   (use-package ivy
@@ -119,7 +130,8 @@ Any customization of built-in Emacs features goes in here.
     :config
     (ivy-mode 1)
     (setq ivy-use-virtual-buffers t)
-    (setq ivy-count-format "(%d/%d) "))
+    (setq ivy-count-format "(%d/%d) ")
+    (setq ivy-extra-directories ()))
 
   (use-package swiper
     :ensure t
@@ -134,11 +146,12 @@ Any customization of built-in Emacs features goes in here.
   (use-package company
     :ensure t
     :config (global-company-mode t)
-            (setq company-idle-delay 0)
-            (setq company-minimum-prefix-length 3)
-            (define-key company-active-map (kbd "<tab>") 'company-complete-selection)
-            (define-key company-active-map (kbd "C-s") 'company-select-next)
-            (define-key company-active-map (kbd "C-r") 'company-select-previous))
+	    (setq company-idle-delay 0)
+	    (setq company-minimum-prefix-length 3)
+	    (define-key company-active-map (kbd "<tab>") 'company-complete-selection)
+	    (define-key company-active-map (kbd "C-n") 'company-select-next)
+	    (define-key company-active-map (kbd "C-p") 'company-select-previous))
+
 #+END_SRC
 * eww bug
   Solves the problem of not rendering Latex properly in eww mode.
