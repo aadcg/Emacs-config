@@ -13,7 +13,7 @@ This is based on the following config files:
 (org-version)
 #+END_SRC
 #+RESULTS:
-: 8.2.10
+: 9.1.14
 
 * About me
 #+BEGIN_SRC emacs-lisp
@@ -120,10 +120,24 @@ This is based on the following config files:
 #+END_SRC
 * Pdf Tools
   I like this for pdf.
+  How to enable midnight by default?
+
 #+BEGIN_SRC emacs-lisp
   (use-package pdf-tools
     :ensure t
-    :config (pdf-tools-install))
+    :config (pdf-tools-install)
+    :hook pdf-view-midnight-minor-mode)
+#+END_SRC
+* Smartparens
+#+BEGIN_SRC emacs-lisp
+  (use-package smartparens
+    :ensure t
+    :config (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode))
+#+END_SRC
+* Magit
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :ensure t)
 #+END_SRC
 * Python
 #+BEGIN_SRC emacs-lisp
@@ -152,6 +166,10 @@ This is based on the following config files:
 
   (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 #+END_SRC
+
+#+RESULTS:
+| py-autopep8-enable-on-save |
+
 * Org
 ** Basic Stuff
 
@@ -206,12 +224,9 @@ This is based on the following config files:
   (use-package company
     :ensure t
     :config (global-company-mode t)
-	    (setq company-idle-delay 0)
-	    (setq company-minimum-prefix-length 3)
-	    (define-key company-active-map (kbd "<tab>") 'company-complete-selection)
-	    (define-key company-active-map (kbd "C-n") 'company-select-next)
-	    (define-key company-active-map (kbd "C-p") 'company-select-previous))
-
+            (setq company-idle-delay 0)
+            (setq company-minimum-prefix-length 3)
+            (define-key company-active-map (kbd "<tab>") 'company-complete))
 #+END_SRC
 * eww bug
   Solves the problem of not rendering Latex properly in eww mode.
