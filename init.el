@@ -32,7 +32,10 @@
  '(comint-input-ring-file-name "~/.bash_history")
  '(package-selected-packages
    (quote
-    (magit org-tree-slide auto-package-update use-package))))
+    (magit org-tree-slide auto-package-update use-package)))
+ '(send-mail-function (quote smtpmail-send-it))
+ '(smtpmail-smtp-server "smtp.gmail.com")
+ '(smtpmail-smtp-service 25))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

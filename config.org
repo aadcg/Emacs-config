@@ -12,8 +12,6 @@ This is based on the following config files:
 #+BEGIN_SRC emacs-lisp
 (org-version)
 #+END_SRC
-#+RESULTS:
-: 9.1.14
 
 * About me
 #+BEGIN_SRC emacs-lisp
@@ -21,6 +19,7 @@ This is based on the following config files:
         user-mail-address "up201106482@fc.up.pt")
 #+END_SRC
 * Diminish
+  Just a way to get rid of some minor modes showing up everywhere.
 #+BEGIN_SRC emacs-lisp
 (use-package diminish
   :ensure t)
@@ -71,7 +70,7 @@ This is based on the following config files:
       (save-place-mode 1)
     #+END_SRC
 *** Windows and buffers
-    - Automatically revert buffer is smth changed
+    - Automatically revert buffer if smth changed
     - Killing a buffer also kills the window
     - Navigating buffers with S-<arrows>
     #+BEGIN_SRC emacs-lisp
@@ -125,14 +124,18 @@ This is based on the following config files:
 #+BEGIN_SRC emacs-lisp
   (use-package pdf-tools
     :ensure t
-    :config (pdf-tools-install)
-    :hook pdf-view-midnight-minor-mode)
+    :config (pdf-tools-install))
 #+END_SRC
 * Smartparens
+  Straightforward smartparens config. I want it all the time except when I'm
+  typing English and I need "'".
 #+BEGIN_SRC emacs-lisp
   (use-package smartparens
     :ensure t
-    :config (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode))
+    :diminish smartparens-mode
+    :config
+    (smartparens-global-mode)
+    (sp-pair "'" nil :unless '(sp-point-after-word-p)))
 #+END_SRC
 * Magit
 #+BEGIN_SRC emacs-lisp
@@ -166,10 +169,6 @@ This is based on the following config files:
 
   (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 #+END_SRC
-
-#+RESULTS:
-| py-autopep8-enable-on-save |
-
 * Org
 ** Basic Stuff
 
@@ -226,7 +225,9 @@ This is based on the following config files:
     :config (global-company-mode t)
             (setq company-idle-delay 0)
             (setq company-minimum-prefix-length 3)
-            (define-key company-active-map (kbd "<tab>") 'company-complete))
+            (define-key company-active-map (kbd "<tab>") 'company-complete)
+            (define-key company-active-map (kbd "C-n") 'company-select-next)
+            (define-key company-active-map (kbd "C-p") 'company-select-previous))
 #+END_SRC
 * eww bug
   Solves the problem of not rendering Latex properly in eww mode.
