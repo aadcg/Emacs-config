@@ -22,27 +22,17 @@
 
 
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
-
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(comint-input-ring-file-name "~/.bash_history")
  '(package-selected-packages
    (quote
-    (magit org-tree-slide auto-package-update use-package)))
- '(send-mail-function (quote smtpmail-send-it))
- '(smtpmail-smtp-server "smtp.gmail.com")
- '(smtpmail-smtp-service 25))
+    (ox-beamer use-package swiper smartparens py-autopep8 pdf-tools org-bullets nord-theme magit elpy ein diminish auto-package-update))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.

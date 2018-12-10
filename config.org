@@ -13,6 +13,9 @@ This is based on the following config files:
 (org-version)
 #+END_SRC
 
+#+RESULTS:
+: 8.2.10
+
 * About me
 #+BEGIN_SRC emacs-lisp
   (setq user-full-name "André Alexandre Gomes"
@@ -128,7 +131,9 @@ This is based on the following config files:
   (use-package pdf-tools
     :ensure t
     :config (pdf-tools-install)
-            (add-hook 'pdf-tools-enabled-hook 'pdf-view-midnight-minor-mode))
+    (add-hook 'pdf-tools-enabled-hook 'pdf-view-midnight-minor-mode)
+    ;; (pdf-view-midnight-colors (quote ("#FFFFFF" . "#1C1C1C")))
+  )
 #+END_SRC
 * Smartparens
   Straightforward smartparens config. I want it all the time except when I'm
@@ -191,19 +196,29 @@ This is based on the following config files:
     (setq org-src-window-setup 'current-window)
     (setq org-confirm-babel-evaluate nil)
 
-    (setq exec-path (append exec-path '("/usr/bin/tex")))
-
-    (org-babel-do-load-languages
-     'org-babel-load-languages
-     '((python . t))
-     '((latex . t))))
+    (add-to-list 'org-structure-template-alist
+                 '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+      (add-to-list 'org-structure-template-alist
+               '("py" "#+BEGIN_SRC python\n?\n#+END_SRC")))
 
   (use-package org-bullets
     :ensure t
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+END_SRC
-** TODO Why doesn't it evaluate python code?
+
+#+BEGIN_SRC emacs-lisp
+  (setq exec-path (append exec-path '("/usr/bin/tex")))
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((python . t)
+     (latex . t)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(require 'ox-beamer)
+#+END_SRC
 ** TODO Let Latex take care of russian
 ** TODO Org subtree presentation
 * Ivy
