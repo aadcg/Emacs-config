@@ -88,6 +88,9 @@ This is based on the following config files:
       (define-key global-map (kbd "C-0") 'reset-text-size)
       (define-key global-map (kbd "C-+") 'text-scale-increase)
       (define-key global-map (kbd "C--") 'text-scale-decrease)
+
+      (define-key global-map (kbd "M-g") 'goto-line)
+
       (global-set-key (kbd "C-x C-b") 'ibuffer)
    #+END_SRC
 *** Backups
@@ -124,7 +127,8 @@ This is based on the following config files:
 #+BEGIN_SRC emacs-lisp
   (use-package pdf-tools
     :ensure t
-    :config (pdf-tools-install))
+    :config (pdf-tools-install)
+            (add-hook 'pdf-tools-enabled-hook 'pdf-view-midnight-minor-mode))
 #+END_SRC
 * Smartparens
   Straightforward smartparens config. I want it all the time except when I'm
@@ -187,9 +191,12 @@ This is based on the following config files:
     (setq org-src-window-setup 'current-window)
     (setq org-confirm-babel-evaluate nil)
 
+    (setq exec-path (append exec-path '("/usr/bin/tex")))
+
     (org-babel-do-load-languages
      'org-babel-load-languages
-     '((python . t))))
+     '((python . t))
+     '((latex . t))))
 
   (use-package org-bullets
     :ensure t
