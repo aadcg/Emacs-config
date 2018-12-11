@@ -160,8 +160,7 @@ This is based on the following config files:
   (use-package ein
     :ensure t)
 
-  (setenv "IPY_TEST_SIMPLE_PROMPT" "1")
-  (setq python-shell-interpreter "ipython"
+  (setq python-shell-interpreter "jupyter"
         python-shell-interpreter-args "console --simple-prompt"
         python-shell-prompt-detect-failure-warning nil)
   (add-to-list 'python-shell-completion-native-disabled-interpreters
@@ -174,10 +173,14 @@ This is based on the following config files:
 
   ;; enable autopep8 formatting on save
   (use-package py-autopep8
-    :ensure t)
+      :ensure t)
 
-  (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+  ;; '(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 #+END_SRC
+
+#+RESULTS:
+| py-autopep8-enable-on-save |
+
 * Org
 ** Basic Stuff
 
