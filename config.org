@@ -137,8 +137,7 @@ This is based on the following config files:
       :ensure t
       :config (pdf-tools-install)
       (add-hook 'pdf-tools-enabled-hook 'pdf-view-midnight-minor-mode)
-      ;; (pdf-view-midnight-colors (quote ("#FFFFFF" . "#1C1C1C")))
-    )
+      ''(pdf-view-midnight-colors (quote ("#d2c8c8" . "#283033"))))
   #+END_SRC
 * Smartparens
   Straightforward smartparens config. I want it all the time except when I'm
