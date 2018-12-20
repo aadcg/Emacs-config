@@ -43,6 +43,7 @@ This is based on the following config files:
     ;;        '((propertize (concat " " 24-hours ":" minutes " ")
     ;;                     'face 'egoge-display-time)))
      (display-time-mode 1)
+    '(display-time-day-and-date t)
   #+END_SRC
 * Built-in defaults
 ** Here's a bunch of built-in stuff that I prefer by default.
