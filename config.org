@@ -179,7 +179,7 @@ This is based on the following config files:
     (use-package py-autopep8
         :ensure t)
 
-    ;; '(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+    '(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
   #+END_SRC
 * Org
 ** Basic Stuff
