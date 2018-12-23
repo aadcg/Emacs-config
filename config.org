@@ -29,19 +29,19 @@ This is based on the following config files:
   #+END_SRC
 * Display time
   #+BEGIN_SRC emacs-lisp
-    ;; (defface egoge-display-time
-    ;;       '((((type x w32 mac))
-    ;;       ;; #060525 is the background colour of my default face.
-    ;;       (:foreground "#56c90e" :inherit bold))
-    ;;      (((type tty))
-    ;;       (:foreground "green")))
-    ;;    "Face used to display the time in the mode line.")
+    (defface egoge-display-time
+          '((((type x w32 mac))
+          ;; #060525 is the background colour of my default face.
+          (:foreground "#56c90e" :inherit bold))
+         (((type tty))
+          (:foreground "blue")))
+       "Face used to display the time in the mode line.")
 
-    ;;  ;; This causes the current time in the mode line to be displayed in
-    ;;  ;; `egoge-display-time-face' to make it stand out visually.
-    ;;  (setq display-time-string-forms
-    ;;        '((propertize (concat " " 24-hours ":" minutes " ")
-    ;;                     'face 'egoge-display-time)))
+     ;; This causes the current time in the mode line to be displayed in
+     ;; `egoge-display-time-face' to make it stand out visually.
+     (setq display-time-string-forms
+           '((propertize (concat " " 24-hours ":" minutes " ")
+                        'face 'egoge-display-time)))
      (display-time-mode 1)
     '(display-time-day-and-date t)
   #+END_SRC
@@ -125,6 +125,10 @@ This is based on the following config files:
     #+BEGIN_SRC emacs-lisp
       (eval-after-load "linum"
         '(set-face-attribute 'linum nil :height 125))
+    #+END_SRC
+*** Other-window
+    #+BEGIN_SRC emacs-lisp
+    (global-set-key (kbd "C-<tab>") 'other-window)
     #+END_SRC
 * Startup
   Startup behaviour
@@ -305,4 +309,15 @@ This is based on the following config files:
    'eshell-mode-hook
    (lambda ()
      (setq pcomplete-cycle-completions nil)))
+  #+END_SRC
+* YouTube
+  #+BEGIN_SRC emacs-lisp
+  (defun youtube-dl ()
+  (interactive)
+  (let* ((str (current-kill 0))
+         (default-directory "~/Downloads")
+         (proc (get-buffer-process (ansi-term "/bin/bash"))))
+    (term-send-string
+     proc
+     (concat "cd ~/Downloads && youtube-dl " str "\n"))))
   #+END_SRC
