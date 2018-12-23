@@ -1,0 +1,2 @@
+alias o find-file $1
+alias ll ls -hAlF
