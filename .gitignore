@@ -1,3 +1,4 @@
+init.el
 elpa
 .last-package-update-day
 snippets
@@ -9,4 +10,4 @@ init.el
 eshell/history
 eshell/lastdir
 url
-init.el
+ac-comphist.dat
