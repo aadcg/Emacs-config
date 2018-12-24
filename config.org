@@ -128,7 +128,7 @@ This is based on the following config files:
     #+END_SRC
 *** Other-window
     #+BEGIN_SRC emacs-lisp
-    (global-set-key (kbd "C-<tab>") 'other-window)
+    (global-set-key (kbd "M-<tab>") 'other-window)
     #+END_SRC
 * Startup
   Startup behaviour
@@ -159,7 +159,7 @@ This is based on the following config files:
       :ensure t
       :config (pdf-tools-install)
       (add-hook 'pdf-tools-enabled-hook 'pdf-view-midnight-minor-mode)
-      ''(pdf-view-midnight-colors (quote ("#d2c8c8" . "#283033"))))
+      (setq (pdf-view-midnight-colors (quote ("#d2c8c8" . "#283033")))))
   #+END_SRC
 * Smartparens
   Straightforward smartparens config. I want it all the time except when I'm
@@ -272,10 +272,14 @@ This is based on the following config files:
       :config (global-company-mode t)
               (setq company-idle-delay 0)
               (setq company-minimum-prefix-length 3)
-              (define-key company-active-map (kbd "<tab>") 'company-complete)
+              (define-key company-active-map (kbd "C-j") 'company-complete)
               (define-key company-active-map (kbd "C-n") 'company-select-next)
               (define-key company-active-map (kbd "C-p") 'company-select-previous))
   #+END_SRC
+
+  #+RESULTS:
+  : t
+
 * eww bug
   Solves the problem of not rendering Latex properly in eww mode.
   #+BEGIN_SRC emacs-lisp
@@ -305,10 +309,23 @@ This is based on the following config files:
   cycle through different options.
 
   #+BEGIN_SRC emacs-lisp
-  (add-hook
-   'eshell-mode-hook
+  (add-hook 'eshell-mode-hook
    (lambda ()
      (setq pcomplete-cycle-completions nil)))
+  #+END_SRC
+
+  Ivy in Eshell
+  #+BEGIN_SRC emacs-lisp
+    (add-hook 'eshell-mode-hook
+      (lambda ()
+        (define-key eshell-mode-map (kbd "<M-tab>") nil)
+        (define-key eshell-mode-map (kbd "<tab>")
+          (lambda () (interactive) (completion-at-point)))))
+  #+END_SRC
+
+  #+BEGIN_SRC emacs-lisp
+    (setq eshell-history-file-name "~/.bash_history")
+    (setq eshell-history-size 9999)
   #+END_SRC
 * YouTube
   #+BEGIN_SRC emacs-lisp
@@ -320,4 +337,8 @@ This is based on the following config files:
     (term-send-string
      proc
      (concat "cd ~/Downloads && youtube-dl " str "\n"))))
+  #+END_SRC
+* Input Method
+  #+BEGIN_SRC emacs-lisp
+    (setq default-input-method "russian-computer")
   #+END_SRC
