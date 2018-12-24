@@ -276,10 +276,6 @@ This is based on the following config files:
               (define-key company-active-map (kbd "C-n") 'company-select-next)
               (define-key company-active-map (kbd "C-p") 'company-select-previous))
   #+END_SRC
-
-  #+RESULTS:
-  : t
-
 * eww bug
   Solves the problem of not rendering Latex properly in eww mode.
   #+BEGIN_SRC emacs-lisp
