@@ -3,14 +3,15 @@ This is based on the following config files:
 - [[https://github.com/hrs/dotfiles/blob/master/emacs/.emacs.d/configuration.org][Harry Schwartz]]
 
 #+BEGIN_SRC emacs-lisp
-(version)
+  (version)
 #+END_SRC
+
 #+RESULTS:
 : GNU Emacs 25.2.2 (x86_64-pc-linux-gnu, GTK+ Version 3.22.21)
 :  of 2017-09-22, modified by Debian
 
 #+BEGIN_SRC emacs-lisp
-(org-version)
+  (org-version)
 #+END_SRC
 
 #+RESULTS:
@@ -130,6 +131,10 @@ This is based on the following config files:
     #+BEGIN_SRC emacs-lisp
     (global-set-key (kbd "M-<tab>") 'other-window)
     #+END_SRC
+*** Input Method
+  #+BEGIN_SRC emacs-lisp
+    (setq default-input-method "russian-computer")
+  #+END_SRC
 * Startup
   Startup behaviour
   #+BEGIN_SRC emacs-lisp
@@ -263,6 +268,12 @@ This is based on the following config files:
       ("C-s" . swiper)
       ("C-r" . swiper))
   #+END_SRC
+* Avy
+  #+BEGIN_SRC emacs-lisp
+    (use-package avy
+      :ensure t
+      :bind ("C-M-s" . avy-goto-word-1))
+  #+END_SRC
 * Company mode
   Basic company mode config.
 
@@ -333,8 +344,4 @@ This is based on the following config files:
     (term-send-string
      proc
      (concat "cd ~/Downloads && youtube-dl " str "\n"))))
-  #+END_SRC
-* Input Method
-  #+BEGIN_SRC emacs-lisp
-    (setq default-input-method "russian-computer")
   #+END_SRC
