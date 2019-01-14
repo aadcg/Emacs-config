@@ -11,3 +11,5 @@ eshell/history
 eshell/lastdir
 url
 ac-comphist.dat
+request
+tramp
