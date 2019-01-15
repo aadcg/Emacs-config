@@ -265,14 +265,13 @@ This is based on the following config files:
     (use-package swiper
       :ensure t
       :bind
-      ("C-s" . swiper)
-      ("C-r" . swiper))
+      ("C-s" . swiper))
   #+END_SRC
 * Avy
   #+BEGIN_SRC emacs-lisp
     (use-package avy
       :ensure t
-      :bind ("C-M-s" . avy-goto-word-1))
+      :bind ("C-r" . avy-goto-word-1))
   #+END_SRC
 * Company mode
   Basic company mode config.
