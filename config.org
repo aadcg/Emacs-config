@@ -1,12 +1,7 @@
 #+TITLE: GNU Emacs configuration
-#+STARTUP: indent
-#+OPTIONS: H:5 num:nil tags:nil toc:nil timestamps:t
-#+LAYOUT: post
+#+STARTUP: overview
+#+OPTIONS: num:nil toc:nil
 #+DESCRIPTION: Loading emacs configuration using org-babel
-#+TAGS: emacs
-#+CATEGORIES: editing
-
-
 
 This is based on the following config files:
 - [[https://github.com/zamansky/using-emacs/blob/master/myinit.org][Mike Zamansky]]
@@ -239,7 +234,7 @@ This is based on the following config files:
 
       (add-to-list 'org-structure-template-alist
                    '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
-        (add-to-list 'org-structure-template-alist
+      (add-to-list 'org-structure-template-alist
                  '("py" "#+BEGIN_SRC python\n?\n#+END_SRC")))
 
     (use-package org-bullets
