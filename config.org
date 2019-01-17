@@ -1,3 +1,13 @@
+#+TITLE: GNU Emacs configuration
+#+STARTUP: indent
+#+OPTIONS: H:5 num:nil tags:nil toc:nil timestamps:t
+#+LAYOUT: post
+#+DESCRIPTION: Loading emacs configuration using org-babel
+#+TAGS: emacs
+#+CATEGORIES: editing
+
+
+
 This is based on the following config files:
 - [[https://github.com/zamansky/using-emacs/blob/master/myinit.org][Mike Zamansky]]
 - [[https://github.com/hrs/dotfiles/blob/master/emacs/.emacs.d/configuration.org][Harry Schwartz]]
@@ -218,6 +228,7 @@ This is based on the following config files:
       :config
       (set-fontset-font "fontset-default" nil (font-spec :size 20 :name "Symbola"))
       (setq org-ellipsis " ⬎")
+      (add-hook 'org-mode-hook 'org-indent-mode)
 
       (setq org-todo-keywords '((sequence "TODO" "WAITING" "|" "DONE")))
 
