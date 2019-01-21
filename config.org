@@ -23,330 +23,329 @@ This is based on the following config files:
 : 8.2.10
 
 * About me
-  #+BEGIN_SRC emacs-lisp
-    (setq user-full-name "André Alexandre Gomes"
-          user-mail-address "up201106482@fc.up.pt")
-  #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (setq user-full-name "André Alexandre Gomes"
+        user-mail-address "up201106482@fc.up.pt")
+#+END_SRC
 * Diminish
-  Just a way to get rid of some minor modes showing up everywhere.
-  #+BEGIN_SRC emacs-lisp
-  (use-package diminish
-    :ensure t)
-  #+END_SRC
+Just a way to get rid of some minor modes showing up everywhere.
+#+BEGIN_SRC emacs-lisp
+(use-package diminish
+  :ensure t)
+#+END_SRC
 * Display time
-  #+BEGIN_SRC emacs-lisp
-    (defface egoge-display-time
-          '((((type x w32 mac))
-          ;; #060525 is the background colour of my default face.
-          (:foreground "#56c90e" :inherit bold))
-         (((type tty))
-          (:foreground "blue")))
-       "Face used to display the time in the mode line.")
+#+BEGIN_SRC emacs-lisp
+  (defface egoge-display-time
+        '((((type x w32 mac))
+        ;; #060525 is the background colour of my default face.
+        (:foreground "#56c90e" :inherit bold))
+       (((type tty))
+        (:foreground "blue")))
+     "Face used to display the time in the mode line.")
 
-     ;; This causes the current time in the mode line to be displayed in
-     ;; `egoge-display-time-face' to make it stand out visually.
-     (setq display-time-string-forms
-           '((propertize (concat " " 24-hours ":" minutes " ")
-                        'face 'egoge-display-time)))
-     (display-time-mode 1)
-    '(display-time-day-and-date t)
-  #+END_SRC
+   ;; This causes the current time in the mode line to be displayed in
+   ;; `egoge-display-time-face' to make it stand out visually.
+   (setq display-time-string-forms
+         '((propertize (concat " " 24-hours ":" minutes " ")
+                      'face 'egoge-display-time)))
+   (display-time-mode 1)
+  '(display-time-day-and-date t)
+#+END_SRC
 * Built-in defaults
 ** Here's a bunch of built-in stuff that I prefer by default.
 *** Words, whitespaces and text
-    - Get rid of trailing whitespaces when a file is saved
-    - Treat CamelCaseSubWords as separate words in programming stuff
-    - Overwrite selected text
-    - Append a newline to the end of a file by default
-    - Set nr of characters per line and enforce it
-    #+BEGIN_SRC emacs-lisp
-      (add-hook 'before-save-hook 'delete-trailing-whitespace)
-      (add-hook 'prog-mode-hook 'subword-mode)
-      (delete-selection-mode t)
-      (setq require-final-newline t)
-      (setq-default fill-column 80)
-      (add-hook 'text-mode-hook 'turn-on-auto-fill)
-    #+END_SRC
+- Get rid of trailing whitespaces when a file is saved
+- Treat CamelCaseSubWords as separate words in programming stuff
+- Overwrite selected text
+- Append a newline to the end of a file by default
+- Set nr of characters per line and enforce it
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+  (add-hook 'prog-mode-hook 'subword-mode)
+  (delete-selection-mode t)
+  (setq require-final-newline t)
+  (setq-default fill-column 80)
+  (add-hook 'text-mode-hook 'turn-on-auto-fill)
+#+END_SRC
 *** Aesthetics, line numbering and matching parenthesis
-    - Hide startup stuff, hide bars, and simplify yes/no to y/n
-    - Show matching parenthesis
-    - Number lines in texty stuff
-    - Highlight current line
-    - Dired as 'ls -Alh'
-    #+BEGIN_SRC emacs-lisp
-      (setq inhibit-startup-message t)
-      (setq initial-scratch-message nil)
-      (tool-bar-mode -1)
-      ;; (menu-bar-mode -1)
-      (scroll-bar-mode -1)
-      (horizontal-scroll-bar-mode -1)
-      (fset 'yes-or-no-p 'y-or-n-p)
+- Hide startup stuff, hide bars, and simplify yes/no to y/n
+- Show matching parenthesis
+- Number lines in texty stuff
+- Highlight current line
+- Dired as 'ls -Alh'
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-startup-message t)
+  (setq initial-scratch-message nil)
+  (tool-bar-mode -1)
+  ;; (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+  (horizontal-scroll-bar-mode -1)
+  (fset 'yes-or-no-p 'y-or-n-p)
 
-      (show-paren-mode t)
-      (setq show-paren-delay 0.0)
-      (add-hook 'prog-mode-hook 'linum-mode)
-      (add-hook 'text-mode-hook 'linum-mode)
-      (global-hl-line-mode)
-      (setq-default dired-listing-switches "-Alh")
-    #+END_SRC
+  (show-paren-mode t)
+  (setq show-paren-delay 0.0)
+  (add-hook 'prog-mode-hook 'linum-mode)
+  (add-hook 'text-mode-hook 'linum-mode)
+  (global-hl-line-mode)
+  (setq-default dired-listing-switches "-Alh")
+#+END_SRC
 *** Cursor
-    - Preserves cursor position after page up/down
-    - Preserves cursor position after closing a file
-    #+BEGIN_SRC emacs-lisp
-      (setq scroll-preserve-screen-position 'always)
-      (save-place-mode 1)
-    #+END_SRC
+- Preserves cursor position after page up/down
+- Preserves cursor position after closing a file
+#+BEGIN_SRC emacs-lisp
+  (setq scroll-preserve-screen-position 'always)
+  (save-place-mode 1)
+#+END_SRC
 *** Windows and buffers
-    - Automatically revert buffer if smth changed
-    - Killing a buffer also kills the window
-    - Navigating buffers with S-<arrows>
-    #+BEGIN_SRC emacs-lisp
-      (global-auto-revert-mode t)
-      (substitute-key-definition 'kill-buffer 'kill-buffer-and-window global-map)
-      (windmove-default-keybindings)
-      (setq windmove-wrap-around t)
-    #+END_SRC
+- Automatically revert buffer if smth changed
+- Killing a buffer also kills the window
+- Navigating buffers with S-<arrows>
+#+BEGIN_SRC emacs-lisp
+  (global-auto-revert-mode t)
+  (substitute-key-definition 'kill-buffer 'kill-buffer-and-window global-map)
+  (windmove-default-keybindings)
+  (setq windmove-wrap-around t)
+#+END_SRC
 *** Keybindings
-    #+BEGIN_SRC emacs-lisp
-      (defun reset-text-size ()
-        (interactive)
-        (text-scale-set 0))
+#+BEGIN_SRC emacs-lisp
+  (defun reset-text-size ()
+    (interactive)
+    (text-scale-set 0))
 
-      (define-key global-map (kbd "C-0") 'reset-text-size)
-      (define-key global-map (kbd "C-+") 'text-scale-increase)
-      (define-key global-map (kbd "C--") 'text-scale-decrease)
+  (define-key global-map (kbd "C-0") 'reset-text-size)
+  (define-key global-map (kbd "C-+") 'text-scale-increase)
+  (define-key global-map (kbd "C--") 'text-scale-decrease)
 
-      (define-key global-map (kbd "M-g") 'goto-line)
+  (define-key global-map (kbd "M-g") 'goto-line)
 
-      (global-set-key (kbd "C-x C-b") 'ibuffer)
-    #+END_SRC
+  (global-set-key (kbd "C-x C-b") 'ibuffer)
+#+END_SRC
 *** Backups
-    #+BEGIN_SRC emacs-lisp
-      (setq backup-directory-alist
-              `((".*" . ,temporary-file-directory)))
-      (setq auto-save-file-name-transforms
-              `((".*" ,temporary-file-directory t)))
-    #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (setq backup-directory-alist
+          `((".*" . ,temporary-file-directory)))
+  (setq auto-save-file-name-transforms
+          `((".*" ,temporary-file-directory t)))
+#+END_SRC
 *** Linum mode fix
-    #+BEGIN_SRC emacs-lisp
-      (eval-after-load "linum"
-        '(set-face-attribute 'linum nil :height 125))
-    #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load "linum"
+    '(set-face-attribute 'linum nil :height 125))
+#+END_SRC
 *** Other-window
-    #+BEGIN_SRC emacs-lisp
-    (global-set-key (kbd "M-<tab>") 'other-window)
-    #+END_SRC
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "M-<tab>") 'other-window)
+#+END_SRC
 *** Input Method
-  #+BEGIN_SRC emacs-lisp
-    (setq default-input-method "russian-computer")
-  #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (setq default-input-method "russian-computer")
+#+END_SRC
 * Startup
-  Startup behaviour
-  #+BEGIN_SRC emacs-lisp
-  ;;start on eshell
-  ;(add-hook 'emacs-startup-hook 'eshell)
+Startup behaviour
+#+BEGIN_SRC emacs-lisp
+;;start on eshell
+;(add-hook 'emacs-startup-hook 'eshell)
 
-  ;; fullscreen by default
-  (defun fullscreen ()
-         (interactive)
-         (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
-  			      '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
-  (fullscreen)
-  #+END_SRC
+;; fullscreen by default
+(defun fullscreen ()
+       (interactive)
+       (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
+			      '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
+(fullscreen)
+#+END_SRC
 * Theme
-  #+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp
   (use-package nord-theme
     :ensure t
     :config (load-theme 'nord t)
             (setq nord-comment-brightness 20))
-  #+END_SRC
+#+END_SRC
 * Pdf Tools
-  I like this for pdf.
-  How to enable midnight by default?
+I like this for pdf.
+How to enable midnight by default?
 
-  #+BEGIN_SRC emacs-lisp
-    (use-package pdf-tools
-      :ensure t
-      :config (pdf-tools-install)
-      (add-hook 'pdf-tools-enabled-hook 'pdf-view-midnight-minor-mode)
-      (setq pdf-view-midnight-colors (quote ("#d2c8c8" . "#283033"))))
-  #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (use-package pdf-tools
+    :ensure t
+    :config (pdf-tools-install)
+    (add-hook 'pdf-tools-enabled-hook 'pdf-view-midnight-minor-mode)
+    (setq pdf-view-midnight-colors (quote ("#d2c8c8" . "#283033"))))
+#+END_SRC
 * Smartparens
-  Straightforward smartparens config. I want it all the time except when I'm
-  typing English and I need "'".
-  #+BEGIN_SRC emacs-lisp
-    (use-package smartparens
-      :ensure t
-      :diminish smartparens-mode
-      :config
-      (smartparens-global-mode)
-      (sp-pair "'" nil :unless '(sp-point-after-word-p)))
-  #+END_SRC
+Straightforward smartparens config. I want it all the time except when I'm
+typing English and I need "'".
+#+BEGIN_SRC emacs-lisp
+  (use-package smartparens
+    :ensure t
+    :diminish smartparens-mode
+    :config
+    (smartparens-global-mode)
+    (sp-pair "'" nil :unless '(sp-point-after-word-p)))
+#+END_SRC
 * Magit
-  #+BEGIN_SRC emacs-lisp
-    (use-package magit
-      :ensure t)
-  #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :ensure t)
+#+END_SRC
 * Python
-  #+BEGIN_SRC emacs-lisp
-    (use-package elpy
-      :ensure t
-      :config (elpy-enable))
+#+BEGIN_SRC emacs-lisp
+  (use-package elpy
+    :ensure t
+    :config (elpy-enable))
 
-    (use-package ein
+  (use-package ein
+    :ensure t)
+
+  (setq python-shell-interpreter "jupyter"
+        python-shell-interpreter-args "console --simple-prompt"
+        python-shell-prompt-detect-failure-warning nil)
+  (add-to-list 'python-shell-completion-native-disabled-interpreters
+               "jupyter")
+
+  ;; use flycheck not flymake with elpy
+  (when (require 'flycheck nil t)
+    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+    (add-hook 'elpy-mode-hook 'flycheck-mode))
+
+  ;; enable autopep8 formatting on save
+  (use-package py-autopep8
       :ensure t)
 
-    (setq python-shell-interpreter "jupyter"
-          python-shell-interpreter-args "console --simple-prompt"
-          python-shell-prompt-detect-failure-warning nil)
-    (add-to-list 'python-shell-completion-native-disabled-interpreters
-                 "jupyter")
-
-    ;; use flycheck not flymake with elpy
-    (when (require 'flycheck nil t)
-      (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-      (add-hook 'elpy-mode-hook 'flycheck-mode))
-
-    ;; enable autopep8 formatting on save
-    (use-package py-autopep8
-        :ensure t)
-
-    '(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
-  #+END_SRC
+  '(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+#+END_SRC
 * Org
 ** Basic Stuff
+#+BEGIN_SRC emacs-lisp
+  (use-package org
+    :ensure t
+    :pin gnu
+    :config
+    (set-fontset-font "fontset-default" nil (font-spec :size 20 :name "Symbola"))
+    (setq org-ellipsis " ⬎")
+    (add-hook 'org-mode-hook 'org-indent-mode)
 
-  #+BEGIN_SRC emacs-lisp
-    (use-package org
-      :ensure t
-      :pin gnu
-      :config
-      (set-fontset-font "fontset-default" nil (font-spec :size 20 :name "Symbola"))
-      (setq org-ellipsis " ⬎")
-      (add-hook 'org-mode-hook 'org-indent-mode)
+    (setq org-todo-keywords '((sequence "TODO" "WAITING" "|" "DONE")))
 
-      (setq org-todo-keywords '((sequence "TODO" "WAITING" "|" "DONE")))
+    (setq org-src-fontify-natively t)
+    (setq org-src-tab-acts-natively t)
+    (setq org-src-window-setup 'current-window)
+    (setq org-confirm-babel-evaluate nil)
 
-      (setq org-src-fontify-natively t)
-      (setq org-src-tab-acts-natively t)
-      (setq org-src-window-setup 'current-window)
-      (setq org-confirm-babel-evaluate nil)
+    (add-to-list 'org-structure-template-alist
+                 '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+    (add-to-list 'org-structure-template-alist
+               '("py" "#+BEGIN_SRC python\n?\n#+END_SRC")))
 
-      (add-to-list 'org-structure-template-alist
-                   '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
-      (add-to-list 'org-structure-template-alist
-                 '("py" "#+BEGIN_SRC python\n?\n#+END_SRC")))
+  (use-package org-bullets
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+END_SRC
 
-    (use-package org-bullets
-      :ensure t
-      :config
-      (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-  #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (setq exec-path (append exec-path '("/usr/bin/tex")))
 
-  #+BEGIN_SRC emacs-lisp
-    (setq exec-path (append exec-path '("/usr/bin/tex")))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((python . t)
+     (latex . t)))
+#+END_SRC
 
-    (org-babel-do-load-languages
-     'org-babel-load-languages
-     '((python . t)
-       (latex . t)))
-  #+END_SRC
-
-  #+BEGIN_SRC emacs-lisp
-  (require 'ox-beamer)
-  #+END_SRC
+#+BEGIN_SRC emacs-lisp
+(require 'ox-beamer)
+#+END_SRC
 ** TODO Let Latex take care of russian
 ** TODO Org subtree presentation
 * Ivy
-  #+BEGIN_SRC emacs-lisp
-    (use-package ivy
-      :ensure t
-      :diminish ivy-mode
-      :config
-      (ivy-mode 1)
-      (setq ivy-use-virtual-buffers t)
-      (setq ivy-count-format "(%d/%d) ")
-      (setq ivy-extra-directories ()))
+#+BEGIN_SRC emacs-lisp
+  (use-package ivy
+    :ensure t
+    :diminish ivy-mode
+    :config
+    (ivy-mode 1)
+    (setq ivy-use-virtual-buffers t)
+    (setq ivy-count-format "(%d/%d) ")
+    (setq ivy-extra-directories ()))
 
-    (use-package swiper
-      :ensure t
-      :bind
-      ("C-s" . swiper))
-  #+END_SRC
+  (use-package swiper
+    :ensure t
+    :bind
+    ("C-s" . swiper))
+#+END_SRC
 * Avy
-  #+BEGIN_SRC emacs-lisp
-    (use-package avy
-      :ensure t
-      :bind ("C-r" . avy-goto-word-1))
-  #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (use-package avy
+    :ensure t
+    :bind ("C-r" . avy-goto-word-1))
+#+END_SRC
 * Company mode
-  Basic company mode config.
+Basic company mode config.
 
-  #+BEGIN_SRC emacs-lisp
-    (use-package company
-      :ensure t
-      :config (global-company-mode t)
-              (setq company-idle-delay 0)
-              (setq company-minimum-prefix-length 3)
-              (define-key company-active-map (kbd "C-j") 'company-complete)
-              (define-key company-active-map (kbd "C-n") 'company-select-next)
-              (define-key company-active-map (kbd "C-p") 'company-select-previous))
-  #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (use-package company
+    :ensure t
+    :config (global-company-mode t)
+            (setq company-idle-delay 0)
+            (setq company-minimum-prefix-length 3)
+            (define-key company-active-map (kbd "C-j") 'company-complete)
+            (define-key company-active-map (kbd "C-n") 'company-select-next)
+            (define-key company-active-map (kbd "C-p") 'company-select-previous))
+#+END_SRC
 * eww bug
-  Solves the problem of not rendering Latex properly in eww mode.
-  #+BEGIN_SRC emacs-lisp
-  (define-advice shr-parse-image-data (:around (fn &rest args) my-emacs-25-patch)
-    "Hackaround for bug#24111 in Emacs 25."
-    (if shr-blocked-images
-        (apply fn args)
-      (cl-letf (((symbol-function 'libxml-parse-xml-region) #'buffer-substring)
-                ((symbol-function 'shr-dom-to-xml)          #'identity))
-        (apply fn args))))
-  #+END_SRC
+Solves the problem of not rendering Latex properly in eww mode.
+#+BEGIN_SRC emacs-lisp
+(define-advice shr-parse-image-data (:around (fn &rest args) my-emacs-25-patch)
+  "Hackaround for bug#24111 in Emacs 25."
+  (if shr-blocked-images
+      (apply fn args)
+    (cl-letf (((symbol-function 'libxml-parse-xml-region) #'buffer-substring)
+              ((symbol-function 'shr-dom-to-xml)          #'identity))
+      (apply fn args))))
+#+END_SRC
 * shell and eshell
-  Make M-n and M-p more intelligent in shell.
+Make M-n and M-p more intelligent in shell.
 
-  #+BEGIN_SRC emacs-lisp
-  (eval-after-load 'comint
-    '(progn
-       ;; originally on C-c M-r and C-c M-s
-       (define-key comint-mode-map (kbd "M-p") #'comint-previous-matching-input-from-input)
-       (define-key comint-mode-map (kbd "M-n") #'comint-next-matching-input-from-input)
-       ;; originally on M-p and M-n
-       (define-key comint-mode-map (kbd "C-c M-r") #'comint-previous-input)
-       (define-key comint-mode-map (kbd "C-c M-s") #'comint-next-input)))
-  #+END_SRC
+#+BEGIN_SRC emacs-lisp
+(eval-after-load 'comint
+  '(progn
+     ;; originally on C-c M-r and C-c M-s
+     (define-key comint-mode-map (kbd "M-p") #'comint-previous-matching-input-from-input)
+     (define-key comint-mode-map (kbd "M-n") #'comint-next-matching-input-from-input)
+     ;; originally on M-p and M-n
+     (define-key comint-mode-map (kbd "C-c M-r") #'comint-previous-input)
+     (define-key comint-mode-map (kbd "C-c M-s") #'comint-next-input)))
+#+END_SRC
 
-  I want eshell to behave like a typical terminal, i.e. I don't want tab to
-  cycle through different options.
+I want eshell to behave like a typical terminal, i.e. I don't want tab to
+cycle through different options.
 
-  #+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp
+(add-hook 'eshell-mode-hook
+ (lambda ()
+   (setq pcomplete-cycle-completions nil)))
+#+END_SRC
+
+Ivy in Eshell
+#+BEGIN_SRC emacs-lisp
   (add-hook 'eshell-mode-hook
-   (lambda ()
-     (setq pcomplete-cycle-completions nil)))
-  #+END_SRC
+    (lambda ()
+      (define-key eshell-mode-map (kbd "<M-tab>") nil)
+      (define-key eshell-mode-map (kbd "<tab>")
+        (lambda () (interactive) (completion-at-point)))))
+#+END_SRC
 
-  Ivy in Eshell
-  #+BEGIN_SRC emacs-lisp
-    (add-hook 'eshell-mode-hook
-      (lambda ()
-        (define-key eshell-mode-map (kbd "<M-tab>") nil)
-        (define-key eshell-mode-map (kbd "<tab>")
-          (lambda () (interactive) (completion-at-point)))))
-  #+END_SRC
-
-  #+BEGIN_SRC emacs-lisp
-    (setq eshell-history-file-name "~/.bash_history")
-    (setq eshell-history-size 9999)
-  #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (setq eshell-history-file-name "~/.bash_history")
+  (setq eshell-history-size 9999)
+#+END_SRC
 * YouTube
-  #+BEGIN_SRC emacs-lisp
-  (defun youtube-dl ()
-  (interactive)
-  (let* ((str (current-kill 0))
-         (default-directory "~/Downloads")
-         (proc (get-buffer-process (ansi-term "/bin/bash"))))
-    (term-send-string
-     proc
-     (concat "cd ~/Downloads && youtube-dl " str "\n"))))
-  #+END_SRC
+#+BEGIN_SRC emacs-lisp
+(defun youtube-dl ()
+(interactive)
+(let* ((str (current-kill 0))
+       (default-directory "~/Downloads")
+       (proc (get-buffer-process (ansi-term "/bin/bash"))))
+  (term-send-string
+   proc
+   (concat "cd ~/Downloads && youtube-dl " str "\n"))))
+#+END_SRC
