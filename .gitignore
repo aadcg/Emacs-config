@@ -6,7 +6,6 @@ recentf
 places
 auto-save-list
 config.el
-init.el
 eshell/history
 eshell/lastdir
 url
