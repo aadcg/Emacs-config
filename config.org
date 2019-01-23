@@ -1,12 +1,8 @@
 #+TITLE: GNU Emacs configuration
-##+STARTUP: overview
 #+OPTIONS: num:nil toc:nil
 #+DESCRIPTION: Loading emacs configuration using org-babel
 
-#+TODO: TODO(t) | DONE(d)
-#+TODO: REPORT(r) BUG(b) KNOWNCAUSE(k) | FIXED(f)
-#+TODO: | CANCELED(c)
-
+* Meta
 This is based on the following config files:
 - [[https://github.com/zamansky/using-emacs/blob/master/myinit.org][Mike Zamansky]]
 - [[https://github.com/hrs/dotfiles/blob/master/emacs/.emacs.d/configuration.org][Harry Schwartz]]
@@ -24,8 +20,7 @@ This is based on the following config files:
 #+END_SRC
 
 #+RESULTS:
-: 8.2.10
-
+: 9.2
 * About me
 #+BEGIN_SRC emacs-lisp
   (setq user-full-name "André Alexandre Gomes"
@@ -230,7 +225,7 @@ typing English and I need "'".
 
     (setq org-startup-folded (quote content))
 
-    (setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w@)" "|" "DONE(d!)")))
+    (setq org-todo-keywords '((sequence "TODO(t)" "STARTED(s!)" "WAITING(w@)" "|" "DONE(d!)")))
     (setq org-tag-alist '(("@work" . ?w) ("@home" . ?h) ("laptop" . ?l)))
 
     (global-set-key "\C-ca" 'org-agenda)
@@ -261,6 +256,11 @@ typing English and I need "'".
 
 #+BEGIN_SRC emacs-lisp
 (require 'ox-beamer)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org-pdfview
+    :ensure t)
 #+END_SRC
 ** TODO Let Latex take care of russian
 ** TODO Org subtree presentation
