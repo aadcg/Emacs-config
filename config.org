@@ -3,6 +3,7 @@
 #+DESCRIPTION: Loading emacs configuration using org-babel
 
 * Meta
+** About the file
 This is based on the following config files:
 - [[https://github.com/zamansky/using-emacs/blob/master/myinit.org][Mike Zamansky]]
 - [[https://github.com/hrs/dotfiles/blob/master/emacs/.emacs.d/configuration.org][Harry Schwartz]]
@@ -21,16 +22,10 @@ This is based on the following config files:
 
 #+RESULTS:
 : 9.2
-* About me
+** About me
 #+BEGIN_SRC emacs-lisp
   (setq user-full-name "André Alexandre Gomes"
         user-mail-address "up201106482@fc.up.pt")
-#+END_SRC
-* Diminish
-Just a way to get rid of some minor modes showing up everywhere.
-#+BEGIN_SRC emacs-lisp
-(use-package diminish
-  :ensure t)
 #+END_SRC
 * Display time
 #+BEGIN_SRC emacs-lisp
@@ -49,6 +44,12 @@ Just a way to get rid of some minor modes showing up everywhere.
                       'face 'egoge-display-time)))
    (display-time-mode 1)
   '(display-time-day-and-date t)
+#+END_SRC
+* Diminish
+Just a way to get rid of some minor modes showing up everywhere.
+#+BEGIN_SRC emacs-lisp
+(use-package diminish
+  :ensure t)
 #+END_SRC
 * Built-in defaults
 ** Here's a bunch of built-in stuff that I prefer by default.
