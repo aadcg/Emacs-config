@@ -19,9 +19,6 @@ This is based on the following config files:
 #+BEGIN_SRC emacs-lisp
   (org-version)
 #+END_SRC
-
-#+RESULTS:
-: 9.2
 ** About me
 #+BEGIN_SRC emacs-lisp
   (setq user-full-name "André Alexandre Gomes"
@@ -43,7 +40,6 @@ This is based on the following config files:
          '((propertize (concat " " 24-hours ":" minutes " ")
                       'face 'egoge-display-time)))
    (display-time-mode 1)
-  '(display-time-day-and-date t)
 #+END_SRC
 * Diminish
 Just a way to get rid of some minor modes showing up everywhere.
@@ -218,9 +214,7 @@ typing English and I need "'".
 #+BEGIN_SRC emacs-lisp
   (use-package org
     :ensure t
-    :pin gnu
     :config
-    (set-fontset-font "fontset-default" nil (font-spec :size 20 :name "Symbola"))
     (setq org-ellipsis " ⬎")
     (add-hook 'org-mode-hook 'org-indent-mode)
 
@@ -236,9 +230,9 @@ typing English and I need "'".
     (setq org-confirm-babel-evaluate nil)
 
     (add-to-list 'org-structure-template-alist
-                 '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+		 '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
     (add-to-list 'org-structure-template-alist
-                 '("py" "#+BEGIN_SRC python\n?\n#+END_SRC")))
+		 '("py" "#+BEGIN_SRC python\n?\n#+END_SRC")))
 
   (use-package org-bullets
     :ensure t
@@ -256,7 +250,7 @@ typing English and I need "'".
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-(require 'ox-beamer)
+  (require 'ox-beamer)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
