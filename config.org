@@ -45,7 +45,7 @@ This is based on the following config files:
 Just a way to get rid of some minor modes showing up everywhere.
 #+BEGIN_SRC emacs-lisp
 (use-package diminish
-  :ensure t)
+  )
 #+END_SRC
 * Built-in defaults
 ** Here's a bunch of built-in stuff that I prefer by default.
@@ -104,17 +104,18 @@ Just a way to get rid of some minor modes showing up everywhere.
 #+END_SRC
 *** Keybindings
 #+BEGIN_SRC emacs-lisp
-  (defun reset-text-size ()
-    (interactive)
-    (text-scale-set 0))
+    (defun reset-text-size ()
+      (interactive)
+      (text-scale-set 0))
 
-  (define-key global-map (kbd "C-0") 'reset-text-size)
-  (define-key global-map (kbd "C-+") 'text-scale-increase)
-  (define-key global-map (kbd "C--") 'text-scale-decrease)
+    (define-key global-map (kbd "C-0") 'reset-text-size)
+    (define-key global-map (kbd "C-+") 'text-scale-increase)
+    (define-key global-map (kbd "C--") 'text-scale-decrease)
 
-  (define-key global-map (kbd "M-g") 'goto-line)
+    (define-key global-map (kbd "M-g") 'goto-line)
 
-  (global-set-key (kbd "C-x C-b") 'ibuffer)
+    (global-set-key (kbd "C-x C-b") 'ibuffer)
+    (global-set-key (kbd "C-x p") 'switch-to-prev-buffer)
 #+END_SRC
 *** Backups
 #+BEGIN_SRC emacs-lisp
@@ -152,7 +153,7 @@ Startup behaviour
 * Theme
 #+BEGIN_SRC emacs-lisp
   (use-package nord-theme
-    :ensure t
+
     :config (load-theme 'nord t)
             (setq nord-comment-brightness 20))
 #+END_SRC
@@ -162,7 +163,7 @@ How to enable midnight by default?
 
 #+BEGIN_SRC emacs-lisp
   (use-package pdf-tools
-    :ensure t
+
     :config (pdf-tools-install)
     (add-hook 'pdf-tools-enabled-hook 'pdf-view-midnight-minor-mode)
     (setq pdf-view-midnight-colors (quote ("#d2c8c8" . "#283033"))))
@@ -172,7 +173,7 @@ Straightforward smartparens config. I want it all the time except when I'm
 typing English and I need "'".
 #+BEGIN_SRC emacs-lisp
   (use-package smartparens
-    :ensure t
+
     :diminish smartparens-mode
     :config
     (smartparens-global-mode)
@@ -181,16 +182,16 @@ typing English and I need "'".
 * Magit
 #+BEGIN_SRC emacs-lisp
   (use-package magit
-    :ensure t)
+    )
 #+END_SRC
 * Python
 #+BEGIN_SRC emacs-lisp
   (use-package elpy
-    :ensure t
+
     :config (elpy-enable))
 
   (use-package ein
-    :ensure t)
+    )
 
   (setq python-shell-interpreter "jupyter"
         python-shell-interpreter-args "console --simple-prompt"
@@ -205,7 +206,7 @@ typing English and I need "'".
 
   ;; enable autopep8 formatting on save
   (use-package py-autopep8
-      :ensure t)
+      )
 
   '(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 #+END_SRC
@@ -213,7 +214,7 @@ typing English and I need "'".
 ** Basic Stuff
 #+BEGIN_SRC emacs-lisp
   (use-package org
-    :ensure t
+
     :config
     (setq org-ellipsis " §")
     (add-hook 'org-mode-hook 'org-indent-mode)
@@ -241,7 +242,7 @@ typing English and I need "'".
                  '("py" "#+BEGIN_SRC python\n?\n#+END_SRC")))
 
   (use-package org-bullets
-    :ensure t
+
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+END_SRC
@@ -261,14 +262,14 @@ typing English and I need "'".
 
 #+BEGIN_SRC emacs-lisp
   (use-package org-pdfview
-    :ensure t)
+    )
 #+END_SRC
 ** TODO Let Latex take care of russian
 ** TODO Org subtree presentation
 * Ivy
 #+BEGIN_SRC emacs-lisp
   (use-package ivy
-    :ensure t
+
     :diminish ivy-mode
     :config
     (ivy-mode 1)
@@ -277,14 +278,14 @@ typing English and I need "'".
     (setq ivy-extra-directories ()))
 
   (use-package swiper
-    :ensure t
+
     :bind
     ("C-s" . swiper))
 #+END_SRC
 * Avy
 #+BEGIN_SRC emacs-lisp
   (use-package avy
-    :ensure t
+
     :bind ("C-r" . avy-goto-word-1))
 #+END_SRC
 * Company mode
@@ -292,7 +293,7 @@ Basic company mode config.
 
 #+BEGIN_SRC emacs-lisp
   (use-package company
-    :ensure t
+
     :config (global-company-mode t)
             (setq company-idle-delay 0)
             (setq company-minimum-prefix-length 3)
