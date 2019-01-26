@@ -215,10 +215,16 @@ typing English and I need "'".
   (use-package org
     :ensure t
     :config
-    (setq org-ellipsis " ⬎")
+    (setq org-ellipsis " §")
     (add-hook 'org-mode-hook 'org-indent-mode)
 
     (setq org-startup-folded (quote content))
+
+    (setq org-directory "~/NextCloud/org/")
+    (setq org-mobile-directory "~/NextCloud/mobileorg/")
+    (setq org-agenda-files '("~/NextCloud/org"))
+    (setq org-mobile-files '("~/NextCloud/org"))
+    (setq org-mobile-inbox-for-pull "~/NextCloud/org/from-mobile.org")
 
     (setq org-todo-keywords '((sequence "TODO(t)" "STARTED(s!)" "WAITING(w@)" "|" "DONE(d!)")))
     (setq org-tag-alist '(("@work" . ?w) ("@home" . ?h) ("laptop" . ?l)))
@@ -230,9 +236,9 @@ typing English and I need "'".
     (setq org-confirm-babel-evaluate nil)
 
     (add-to-list 'org-structure-template-alist
-		 '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+                 '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
     (add-to-list 'org-structure-template-alist
-		 '("py" "#+BEGIN_SRC python\n?\n#+END_SRC")))
+                 '("py" "#+BEGIN_SRC python\n?\n#+END_SRC")))
 
   (use-package org-bullets
     :ensure t
