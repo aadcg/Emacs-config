@@ -19,6 +19,10 @@ This is based on the following config files:
 #+BEGIN_SRC emacs-lisp
   (org-version)
 #+END_SRC
+
+#+RESULTS:
+: 9.2
+
 ** About me
 #+BEGIN_SRC emacs-lisp
   (setq user-full-name "André Alexandre Gomes"
