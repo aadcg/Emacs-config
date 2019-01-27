@@ -153,6 +153,7 @@ Startup behaviour
 			      '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
 (fullscreen)
 #+END_SRC
+
 * Theme
 #+BEGIN_SRC emacs-lisp
   (use-package nord-theme
