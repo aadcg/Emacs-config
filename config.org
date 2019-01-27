@@ -45,14 +45,9 @@ This is based on the following config files:
                       'face 'egoge-display-time)))
    (display-time-mode 1)
 #+END_SRC
-* Diminish
-Just a way to get rid of some minor modes showing up everywhere.
-#+BEGIN_SRC emacs-lisp
-(use-package diminish)
-#+END_SRC
 * Built-in defaults
-** Here's a bunch of built-in stuff that I prefer by default.
-*** Words, whitespaces and text
+Here's a bunch of built-in stuff that I prefer by default.
+** Words, whitespaces and text
 - Get rid of trailing whitespaces when a file is saved
 - Treat CamelCaseSubWords as separate words in programming stuff
 - Overwrite selected text
@@ -66,7 +61,7 @@ Just a way to get rid of some minor modes showing up everywhere.
   (setq-default fill-column 80)
   (add-hook 'text-mode-hook 'turn-on-auto-fill)
 #+END_SRC
-*** Aesthetics, line numbering and matching parenthesis
+** Aesthetics, line numbering and matching parenthesis
 - Hide startup stuff, hide bars, and simplify yes/no to y/n
 - Show matching parenthesis
 - Number lines in texty stuff
@@ -88,14 +83,14 @@ Just a way to get rid of some minor modes showing up everywhere.
   (global-hl-line-mode)
   (setq-default dired-listing-switches "-Alh")
 #+END_SRC
-*** Cursor
+** Cursor
 - Preserves cursor position after page up/down
 - Preserves cursor position after closing a file
 #+BEGIN_SRC emacs-lisp
   (setq scroll-preserve-screen-position 'always)
   (save-place-mode 1)
 #+END_SRC
-*** Windows and buffers
+** Windows and buffers
 - Automatically revert buffer if smth changed
 - Killing a buffer also kills the window
 - Navigating buffers with S-<arrows>
@@ -105,38 +100,38 @@ Just a way to get rid of some minor modes showing up everywhere.
   (windmove-default-keybindings)
   (setq windmove-wrap-around t)
 #+END_SRC
-*** Keybindings
+** Keybindings
 #+BEGIN_SRC emacs-lisp
-    (defun reset-text-size ()
-      (interactive)
-      (text-scale-set 0))
+  (defun reset-text-size ()
+    (interactive)
+    (text-scale-set 0))
 
-    (define-key global-map (kbd "C-0") 'reset-text-size)
-    (define-key global-map (kbd "C-+") 'text-scale-increase)
-    (define-key global-map (kbd "C--") 'text-scale-decrease)
+  (define-key global-map (kbd "C-0") 'reset-text-size)
+  (define-key global-map (kbd "C-+") 'text-scale-increase)
+  (define-key global-map (kbd "C--") 'text-scale-decrease)
 
-    (define-key global-map (kbd "M-g") 'goto-line)
+  (define-key global-map (kbd "M-g") 'goto-line)
 
-    (global-set-key (kbd "C-x C-b") 'ibuffer)
-    (global-set-key (kbd "C-x p") 'switch-to-prev-buffer)
+  (global-set-key (kbd "C-x C-b") 'ibuffer)
+  (global-set-key (kbd "C-x p") 'switch-to-prev-buffer)
 #+END_SRC
-*** Backups
+** Backups
 #+BEGIN_SRC emacs-lisp
   (setq backup-directory-alist
           `((".*" . ,temporary-file-directory)))
   (setq auto-save-file-name-transforms
           `((".*" ,temporary-file-directory t)))
 #+END_SRC
-*** Linum mode fix
+** Linum mode fix
 #+BEGIN_SRC emacs-lisp
   (eval-after-load "linum"
     '(set-face-attribute 'linum nil :height 125))
 #+END_SRC
-*** Other-window
+** Other-window
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "M-<tab>") 'other-window)
 #+END_SRC
-*** Input Method
+** Input Method
 #+BEGIN_SRC emacs-lisp
   (setq default-input-method "russian-computer")
 #+END_SRC
@@ -348,4 +343,9 @@ Ivy in Eshell
   (term-send-string
    proc
    (concat "cd ~/Downloads && youtube-dl " str "\n"))))
+#+END_SRC
+* Diminish
+Just a way to get rid of some minor modes showing up everywhere.
+#+BEGIN_SRC emacs-lisp
+(use-package diminish)
 #+END_SRC
