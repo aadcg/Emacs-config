@@ -189,8 +189,22 @@ typing English and I need "'".
 #+END_SRC
 * Python
 #+BEGIN_SRC emacs-lisp
+  (defun drf/append-to-path (path)
+    "Add a path both to the $PATH variable and to Emacs' exec-path."
+    (setenv "PATH" (concat (getenv "PATH") ":" path))
+    (add-to-list 'exec-path path))
+
+  (use-package python-mode)
+  (drf/append-to-path "~/.local/bin")
+
   (use-package elpy
     :config (elpy-enable))
+
+  (use-package company-jedi)
+  (add-to-list 'company-backends 'company-jedi)
+
+  (add-hook 'python-mode-hook 'jedi:setup)
+  (setq jedi:complete-on-dot t)
 
   (use-package ein)
 
