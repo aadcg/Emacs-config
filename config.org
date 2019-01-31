@@ -189,14 +189,16 @@ typing English and I need "'".
 #+END_SRC
 * Python
 #+BEGIN_SRC emacs-lisp
+  (use-package python-mode)
+
   (defun drf/append-to-path (path)
     "Add a path both to the $PATH variable and to Emacs' exec-path."
     (setenv "PATH" (concat (getenv "PATH") ":" path))
     (add-to-list 'exec-path path))
 
-  (use-package python-mode)
-  (drf/append-to-path "~/.local/bin")
-
+  (drf/append-to-path "~/anaconda3/bin/")
+  (add-hook 'python-mode-hook'(lambda () (auto-complete-mode -1)))
+  (add-hook 'python-mode-hook'(lambda () (jedi-mode -1)))
   (use-package elpy
     :config (elpy-enable))
 
@@ -204,9 +206,15 @@ typing English and I need "'".
   (add-to-list 'company-backends 'company-jedi)
 
   (add-hook 'python-mode-hook 'jedi:setup)
-  (setq jedi:complete-on-dot t)
+
+  (use-package jedi
+    :init
+    (add-hook 'python-mode-hook 'jedi:setup)
+    (add-hook 'python-mode-hook 'jedi:ac-setup))
+    (setq jedi:complete-on-dot t)
 
   (use-package ein)
+  (add-hook 'ein:connect-mode-hook 'ein:jedi-setup)
 
   (setq python-shell-interpreter "jupyter"
         python-shell-interpreter-args "console --simple-prompt"
@@ -222,8 +230,12 @@ typing English and I need "'".
   ;; enable autopep8 formatting on save
   (use-package py-autopep8)
 
-  '(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+  (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 #+END_SRC
+
+#+RESULTS:
+| py-autopep8-enable-on-save | flycheck-mode |
+
 * Org
 ** Basic Stuff
 #+BEGIN_SRC emacs-lisp
@@ -277,6 +289,12 @@ typing English and I need "'".
 #+END_SRC
 ** TODO Let Latex take care of russian
 ** TODO Org subtree presentation
+* Flycheck
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck
+    :init
+    (global-flycheck-mode t))
+#+END_SRC
 * Ivy
 #+BEGIN_SRC emacs-lisp
   (use-package ivy
