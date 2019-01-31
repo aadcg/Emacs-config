@@ -189,38 +189,29 @@ typing English and I need "'".
 #+END_SRC
 * Python
 #+BEGIN_SRC emacs-lisp
-  (use-package python-mode)
-
   (defun drf/append-to-path (path)
     "Add a path both to the $PATH variable and to Emacs' exec-path."
     (setenv "PATH" (concat (getenv "PATH") ":" path))
     (add-to-list 'exec-path path))
 
   (drf/append-to-path "~/anaconda3/bin/")
-  (add-hook 'python-mode-hook'(lambda () (auto-complete-mode -1)))
-  (add-hook 'python-mode-hook'(lambda () (jedi-mode -1)))
+
   (use-package elpy
     :config (elpy-enable))
 
-  (use-package company-jedi)
-  (add-to-list 'company-backends 'company-jedi)
+  ;; (use-package company-jedi)
+  ;; (add-to-list 'company-backends 'company-jedi)
 
-  (add-hook 'python-mode-hook 'jedi:setup)
-
-  (use-package jedi
-    :init
-    (add-hook 'python-mode-hook 'jedi:setup)
-    (add-hook 'python-mode-hook 'jedi:ac-setup))
-    (setq jedi:complete-on-dot t)
+  ;; (add-hook 'python-mode-hook 'jedi:setup)
 
   (use-package ein)
   (add-hook 'ein:connect-mode-hook 'ein:jedi-setup)
 
-  (setq python-shell-interpreter "jupyter"
-        python-shell-interpreter-args "console --simple-prompt"
-        python-shell-prompt-detect-failure-warning nil)
-  (add-to-list 'python-shell-completion-native-disabled-interpreters
-               "jupyter")
+  ;; (setq python-shell-interpreter "jupyter"
+  ;;       python-shell-interpreter-args "console --simple-prompt"
+  ;;       python-shell-prompt-detect-failure-warning nil)
+  ;; (add-to-list 'python-shell-completion-native-disabled-interpreters
+  ;;              "jupyter")
 
   ;; use flycheck not flymake with elpy
   (when (require 'flycheck nil t)
@@ -232,10 +223,6 @@ typing English and I need "'".
 
   (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 #+END_SRC
-
-#+RESULTS:
-| py-autopep8-enable-on-save | flycheck-mode |
-
 * Org
 ** Basic Stuff
 #+BEGIN_SRC emacs-lisp
