@@ -28,7 +28,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (virtualenvwrapper exec-path-from-shell python-mode zenburn-theme use-package swiper smartparens py-autopep8 org-pdfview org-bullets nord-theme magit ivy-youtube elpy ein diminish avy auto-package-update))))
+    (sphinx-doc virtualenvwrapper exec-path-from-shell python-mode zenburn-theme use-package swiper smartparens py-autopep8 org-pdfview org-bullets nord-theme magit ivy-youtube elpy ein diminish avy auto-package-update))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
