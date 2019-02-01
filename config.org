@@ -222,7 +222,15 @@ typing English and I need "'".
   (use-package py-autopep8)
 
   (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+
+  (use-package sphinx-doc
+    :config
+    (add-hook 'python-mode-hook)
+    (sphinx-doc-mode t))
 #+END_SRC
+
+#+RESULTS:
+
 * Org
 ** Basic Stuff
 #+BEGIN_SRC emacs-lisp
