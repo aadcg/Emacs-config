@@ -223,10 +223,9 @@ typing English and I need "'".
 
   (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
-  (use-package sphinx-doc
-    :config
-    (add-hook 'python-mode-hook)
-    (sphinx-doc-mode t))
+  (add-hook 'python-mode-hook (lambda ()
+                                    (require 'sphinx-doc)
+                                    (sphinx-doc-mode t)))
 #+END_SRC
 
 #+RESULTS:
