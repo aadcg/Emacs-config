@@ -246,6 +246,9 @@ typing English and I need "'".
     (setq org-mobile-files '("~/NextCloud/org"))
     (setq org-mobile-inbox-for-pull "~/NextCloud/org/from-mobile.org")
 
+    (add-hook 'after-init-hook 'org-mobile-pull)
+    (add-hook 'kill-emacs-hook 'org-mobile-push)
+
     (setq org-todo-keywords '((sequence "TODO(t)" "STARTED(s!)" "WAITING(w@)" "|" "DONE(d!)")))
     (setq org-tag-alist '(("@work" . ?w) ("@home" . ?h) ("laptop" . ?l)))
 
