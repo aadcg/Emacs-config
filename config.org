@@ -3,8 +3,8 @@
 #+DESCRIPTION: Loading emacs configuration using org-babel
 
 * Meta
-** About the file
-This is based on the following config files:
+** About
+Based on:
 - [[https://github.com/zamansky/using-emacs/blob/master/myinit.org][Mike Zamansky]]
 - [[https://github.com/hrs/dotfiles/blob/master/emacs/.emacs.d/configuration.org][Harry Schwartz]]
 
@@ -21,29 +21,11 @@ This is based on the following config files:
 #+END_SRC
 
 #+RESULTS:
-: 9.2
-
+: 8.2.10
 ** About me
 #+BEGIN_SRC emacs-lisp
   (setq user-full-name "André Alexandre Gomes"
         user-mail-address "up201106482@fc.up.pt")
-#+END_SRC
-* Display time
-#+BEGIN_SRC emacs-lisp
-  (defface egoge-display-time
-        '((((type x w32 mac))
-        ;; #060525 is the background colour of my default face.
-        (:foreground "#56c90e" :inherit bold))
-       (((type tty))
-        (:foreground "blue")))
-     "Face used to display the time in the mode line.")
-
-   ;; This causes the current time in the mode line to be displayed in
-   ;; `egoge-display-time-face' to make it stand out visually.
-   (setq display-time-string-forms
-         '((propertize (concat " " 24-hours ":" minutes " ")
-                      'face 'egoge-display-time)))
-   (display-time-mode 1)
 #+END_SRC
 * Built-in defaults
 Here's a bunch of built-in stuff that I prefer by default.
@@ -135,101 +117,19 @@ Here's a bunch of built-in stuff that I prefer by default.
 #+BEGIN_SRC emacs-lisp
   (setq default-input-method "russian-computer")
 #+END_SRC
-* Startup
-Startup behaviour
+** Display time
+[[https://en.wikipedia.org/wiki/List_of_tz_database_time_zones][Time Zones]]
 #+BEGIN_SRC emacs-lisp
-;;start on eshell
-;(add-hook 'emacs-startup-hook 'eshell)
+  (display-time)
+  (setq display-time-day-and-date 't)
+  (setq display-time-24hr-format 't)
+  (setq display-time-default-load-average 'nil)
+  (setq display-time-format 'nil)
 
-;; fullscreen by default
-(defun fullscreen ()
-       (interactive)
-       (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
-			      '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
-(fullscreen)
+  (setq display-time-world-list
+        '(("Europe/Moscow" "Москва")
+          ("Europe/Lisbon" "Lisboa")))
 #+END_SRC
-
-* Theme
-#+BEGIN_SRC emacs-lisp
-  (use-package nord-theme
-    :config (load-theme 'nord t)
-            (setq nord-comment-brightness 20))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-  (use-package zenburn-theme
-    :ensure t
-    :init
-    (load-theme 'zenburn t))
-
-#+END_SRC
-* Pdf Tools
-I like this for pdf.
-How to enable midnight by default?
-
-#+BEGIN_SRC emacs-lisp
-  (use-package pdf-tools
-    :config (pdf-tools-install)
-    (add-hook 'pdf-tools-enabled-hook 'pdf-view-midnight-minor-mode)
-    (setq pdf-view-midnight-colors (quote ("#d2c8c8" . "#283033"))))
-#+END_SRC
-* Smartparens
-Straightforward smartparens config. I want it all the time except when I'm
-typing English and I need "'".
-#+BEGIN_SRC emacs-lisp
-  (use-package smartparens
-    :diminish smartparens-mode
-    :config
-    (smartparens-global-mode)
-    (sp-pair "'" nil :unless '(sp-point-after-word-p)))
-#+END_SRC
-* Magit
-#+BEGIN_SRC emacs-lisp
-  (use-package magit)
-#+END_SRC
-* Python
-#+BEGIN_SRC emacs-lisp
-  (defun drf/append-to-path (path)
-    "Add a path both to the $PATH variable and to Emacs' exec-path."
-    (setenv "PATH" (concat (getenv "PATH") ":" path))
-    (add-to-list 'exec-path path))
-
-  (drf/append-to-path "~/anaconda3/bin/")
-
-  (use-package elpy
-    :config (elpy-enable))
-
-  ;; (use-package company-jedi)
-  ;; (add-to-list 'company-backends 'company-jedi)
-
-  ;; (add-hook 'python-mode-hook 'jedi:setup)
-
-  (use-package ein)
-  (add-hook 'ein:connect-mode-hook 'ein:jedi-setup)
-
-  ;; (setq python-shell-interpreter "jupyter"
-  ;;       python-shell-interpreter-args "console --simple-prompt"
-  ;;       python-shell-prompt-detect-failure-warning nil)
-  ;; (add-to-list 'python-shell-completion-native-disabled-interpreters
-  ;;              "jupyter")
-
-  ;; use flycheck not flymake with elpy
-  (when (require 'flycheck nil t)
-    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-    (add-hook 'elpy-mode-hook 'flycheck-mode))
-
-  ;; enable autopep8 formatting on save
-  (use-package py-autopep8)
-
-  (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
-
-  (add-hook 'python-mode-hook (lambda ()
-                                    (require 'sphinx-doc)
-                                    (sphinx-doc-mode t)))
-#+END_SRC
-
-#+RESULTS:
-
 * Org
 ** Basic Stuff
 #+BEGIN_SRC emacs-lisp
@@ -286,6 +186,108 @@ typing English and I need "'".
 #+END_SRC
 ** TODO Let Latex take care of russian
 ** TODO Org subtree presentation
+* Startup
+Startup behaviour
+#+BEGIN_SRC emacs-lisp
+;;start on eshell
+;(add-hook 'emacs-startup-hook 'eshell)
+
+;; fullscreen by default
+(defun fullscreen ()
+       (interactive)
+       (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
+			      '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
+(fullscreen)
+#+END_SRC
+
+* Theme
+#+BEGIN_SRC emacs-lisp
+  (use-package nord-theme
+    :config (load-theme 'nord t)
+            (setq nord-comment-brightness 20))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package zenburn-theme
+    :ensure t
+    :init
+    (load-theme 'zenburn t))
+
+#+END_SRC
+* Pdf Tools
+I like this for pdf.
+How to enable midnight by default?
+
+#+BEGIN_SRC emacs-lisp
+  (use-package pdf-tools
+    :config (pdf-tools-install)
+    (add-hook 'pdf-tools-enabled-hook 'pdf-view-midnight-minor-mode)
+    (setq pdf-view-midnight-colors (quote ("#d2c8c8" . "#283033"))))
+#+END_SRC
+* Smartparens
+Straightforward smartparens config. I want it all the time except when I'm
+typing English and I need "'".
+#+BEGIN_SRC emacs-lisp
+  (use-package smartparens
+    :config
+    (smartparens-global-mode)
+    (sp-pair "'" nil :unless '(sp-point-after-word-p)))
+#+END_SRC
+* Magit
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :bind
+    ("C-x g" . magit-status))
+#+END_SRC
+* Python
+#+BEGIN_SRC emacs-lisp
+  (defun drf/append-to-path (path)
+    "Add a path both to the $PATH variable and to Emacs' exec-path."
+    (setenv "PATH" (concat (getenv "PATH") ":" path))
+    (add-to-list 'exec-path path))
+
+  (drf/append-to-path "~/anaconda3/bin/")
+
+  (use-package elpy
+    :config (elpy-enable))
+
+  ;; (use-package company-jedi)
+  ;; (add-to-list 'company-backends 'company-jedi)
+
+  ;; (add-hook 'python-mode-hook 'jedi:setup)
+
+  (use-package ein)
+  (add-hook 'ein:connect-mode-hook 'ein:jedi-setup)
+
+  ;; (setq python-shell-interpreter "jupyter"
+  ;;       python-shell-interpreter-args "console --simple-prompt"
+  ;;       python-shell-prompt-detect-failure-warning nil)
+  ;; (add-to-list 'python-shell-completion-native-disabled-interpreters
+  ;;              "jupyter")
+
+  ;; use flycheck not flymake with elpy
+  (when (require 'flycheck nil t)
+    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+    (add-hook 'elpy-mode-hook 'flycheck-mode))
+
+  ;; enable autopep8 formatting on save
+  (use-package py-autopep8)
+
+  (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+
+  (add-hook 'python-mode-hook (lambda ()
+                                    (require 'sphinx-doc)
+                                    (sphinx-doc-mode t)))
+
+#+END_SRC
+* Minions
+#+BEGIN_SRC emacs-lisp
+(use-package minions
+  :config
+  (setq minions-mode-line-lighter ""
+        minions-mode-line-delimiters '("" . ""))
+  (minions-mode 1))
+#+END_SRC
 * Flycheck
 #+BEGIN_SRC emacs-lisp
   (use-package flycheck
@@ -295,7 +297,6 @@ typing English and I need "'".
 * Ivy
 #+BEGIN_SRC emacs-lisp
   (use-package ivy
-    :diminish ivy-mode
     :config
     (ivy-mode 1)
     (setq ivy-use-virtual-buffers t)
@@ -380,9 +381,4 @@ Ivy in Eshell
   (term-send-string
    proc
    (concat "cd ~/Downloads && youtube-dl " str "\n"))))
-#+END_SRC
-* Diminish
-Just a way to get rid of some minor modes showing up everywhere.
-#+BEGIN_SRC emacs-lisp
-(use-package diminish)
 #+END_SRC
