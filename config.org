@@ -213,10 +213,8 @@ How to enable midnight by default?
 Straightforward smartparens config. I want it all the time except when I'm
 typing English and I need "'".
 #+BEGIN_SRC emacs-lisp
-  (use-package smartparens
-    :config
-    (smartparens-global-mode)
-    (sp-pair "'" nil :unless '(sp-point-after-word-p)))
+  (use-package smartparens-config
+    :ensure smartparens)
 #+END_SRC
 * Magit
 #+BEGIN_SRC emacs-lisp
