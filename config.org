@@ -27,7 +27,7 @@ Based on:
   (setq user-full-name "André Alexandre Gomes"
         user-mail-address "up201106482@fc.up.pt")
 #+END_SRC
-* Built-in defaults
+* Defaults
 Here's a bunch of built-in stuff that I prefer by default.
 ** Words, whitespaces and text
 - Get rid of trailing whitespaces when a file is saved
@@ -111,7 +111,7 @@ Here's a bunch of built-in stuff that I prefer by default.
 #+END_SRC
 ** Other-window
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "M-<tab>") 'other-window)
+  (global-set-key (kbd "M-SPC") 'other-window)
 #+END_SRC
 ** Input Method
 #+BEGIN_SRC emacs-lisp
@@ -129,6 +129,19 @@ Here's a bunch of built-in stuff that I prefer by default.
   (setq display-time-world-list
         '(("Europe/Moscow" "Москва")
           ("Europe/Lisbon" "Lisboa")))
+#+END_SRC
+* Startup
+Startup behaviour
+#+BEGIN_SRC emacs-lisp
+;;start on eshell
+;(add-hook 'emacs-startup-hook 'eshell)
+
+;; fullscreen by default
+(defun fullscreen ()
+       (interactive)
+       (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
+			      '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
+(fullscreen)
 #+END_SRC
 * Org
 ** Basic Stuff
@@ -186,34 +199,6 @@ Here's a bunch of built-in stuff that I prefer by default.
 #+END_SRC
 ** TODO Let Latex take care of russian
 ** TODO Org subtree presentation
-* Startup
-Startup behaviour
-#+BEGIN_SRC emacs-lisp
-;;start on eshell
-;(add-hook 'emacs-startup-hook 'eshell)
-
-;; fullscreen by default
-(defun fullscreen ()
-       (interactive)
-       (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
-			      '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
-(fullscreen)
-#+END_SRC
-
-* Theme
-#+BEGIN_SRC emacs-lisp
-  (use-package nord-theme
-    :config (load-theme 'nord t)
-            (setq nord-comment-brightness 20))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-  (use-package zenburn-theme
-    :ensure t
-    :init
-    (load-theme 'zenburn t))
-
-#+END_SRC
 * Pdf Tools
 I like this for pdf.
 How to enable midnight by default?
@@ -280,19 +265,18 @@ typing English and I need "'".
                                     (sphinx-doc-mode t)))
 
 #+END_SRC
-* Minions
-#+BEGIN_SRC emacs-lisp
-(use-package minions
-  :config
-  (setq minions-mode-line-lighter ""
-        minions-mode-line-delimiters '("" . ""))
-  (minions-mode 1))
-#+END_SRC
-* Flycheck
+* Checking
+** Flycheck
 #+BEGIN_SRC emacs-lisp
   (use-package flycheck
     :init
     (global-flycheck-mode t))
+#+END_SRC
+** Flyspell
+#+BEGIN_SRC emacs-lisp
+(use-package flyspell
+  :config
+  (add-hook 'org-mode-hook 'flyspell-mode)
 #+END_SRC
 * Ivy
 #+BEGIN_SRC emacs-lisp
@@ -324,18 +308,8 @@ Basic company mode config.
             (define-key company-active-map (kbd "C-n") 'company-select-next)
             (define-key company-active-map (kbd "C-p") 'company-select-previous))
 #+END_SRC
-* eww bug
-Solves the problem of not rendering Latex properly in eww mode.
-#+BEGIN_SRC emacs-lisp
-(define-advice shr-parse-image-data (:around (fn &rest args) my-emacs-25-patch)
-  "Hackaround for bug#24111 in Emacs 25."
-  (if shr-blocked-images
-      (apply fn args)
-    (cl-letf (((symbol-function 'libxml-parse-xml-region) #'buffer-substring)
-              ((symbol-function 'shr-dom-to-xml)          #'identity))
-      (apply fn args))))
-#+END_SRC
-* shell and eshell
+* Bash
+** Shell
 Make M-n and M-p more intelligent in shell.
 
 #+BEGIN_SRC emacs-lisp
@@ -348,7 +322,7 @@ Make M-n and M-p more intelligent in shell.
      (define-key comint-mode-map (kbd "C-c M-r") #'comint-previous-input)
      (define-key comint-mode-map (kbd "C-c M-s") #'comint-next-input)))
 #+END_SRC
-
+** Eshell
 I want eshell to behave like a typical terminal, i.e. I don't want tab to
 cycle through different options.
 
@@ -371,7 +345,8 @@ Ivy in Eshell
   (setq eshell-history-file-name "~/.bash_history")
   (setq eshell-history-size 9999)
 #+END_SRC
-* YouTube
+* Misc
+** YouTube
 #+BEGIN_SRC emacs-lisp
 (defun youtube-dl ()
 (interactive)
@@ -381,4 +356,47 @@ Ivy in Eshell
   (term-send-string
    proc
    (concat "cd ~/Downloads && youtube-dl " str "\n"))))
+#+END_SRC
+** eww bug
+Solves the problem of not rendering Latex properly in eww mode.
+#+BEGIN_SRC emacs-lisp
+(define-advice shr-parse-image-data (:around (fn &rest args) my-emacs-25-patch)
+  "Hackaround for bug#24111 in Emacs 25."
+  (if shr-blocked-images
+      (apply fn args)
+    (cl-letf (((symbol-function 'libxml-parse-xml-region) #'buffer-substring)
+              ((symbol-function 'shr-dom-to-xml)          #'identity))
+      (apply fn args))))
+#+END_SRC
+* Aesthetics
+** Theme
+*** Nord
+#+BEGIN_SRC emacs-lisp
+  ;; (use-package nord-theme
+  ;;   :config (load-theme 'nord t)
+  ;;           (setq nord-comment-brightness 20))
+#+END_SRC
+*** Zenburn
+#+BEGIN_SRC emacs-lisp
+  (use-package zenburn-theme
+    :ensure t
+    :init
+    (load-theme 'zenburn t))
+
+#+END_SRC
+** Modeline (not available for my emacs version)
+#+BEGIN_SRC emacs-lisp
+  ;; (use-package moody
+  ;;   :config
+  ;;   (setq x-underline-at-descent-line t)
+  ;;   (moody-replace-mode-line-buffer-identification)
+  ;;   (moody-replace-vc-mode))
+#+END_SRC
+** Minions
+#+BEGIN_SRC emacs-lisp
+(use-package minions
+  :config
+  (setq minions-mode-line-lighter ""
+        minions-mode-line-delimiters '("" . ""))
+  (minions-mode 1))
 #+END_SRC
