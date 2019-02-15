@@ -133,15 +133,15 @@ Here's a bunch of built-in stuff that I prefer by default.
 * Startup
 Startup behaviour
 #+BEGIN_SRC emacs-lisp
-;;start on eshell
-;(add-hook 'emacs-startup-hook 'eshell)
+  ;;start on eshell
+  (add-hook 'emacs-startup-hook 'org-agenda-list)
 
-;; fullscreen by default
-(defun fullscreen ()
-       (interactive)
-       (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
-			      '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
-(fullscreen)
+  ;; fullscreen by default
+  (defun fullscreen ()
+         (interactive)
+         (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
+                                '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
+  (fullscreen)
 #+END_SRC
 * Org
 ** Basic Stuff
@@ -274,7 +274,7 @@ typing English and I need "'".
 #+BEGIN_SRC emacs-lisp
 (use-package flyspell
   :config
-  (add-hook 'org-mode-hook 'flyspell-mode)
+  (add-hook 'org-mode-hook 'flyspell-mode))
 #+END_SRC
 * Ivy
 #+BEGIN_SRC emacs-lisp
