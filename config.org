@@ -120,11 +120,11 @@ Here's a bunch of built-in stuff that I prefer by default.
 ** Display time
 [[https://en.wikipedia.org/wiki/List_of_tz_database_time_zones][Time Zones]]
 #+BEGIN_SRC emacs-lisp
-  (display-time)
   (setq display-time-day-and-date t)
   (setq display-time-24hr-format t)
   (setq display-time-default-load-average nil)
   (setq display-time-format nil)
+  (display-time)
 
   (setq display-time-world-list
         '(("Europe/Moscow" "Москва")
@@ -200,12 +200,10 @@ Startup behaviour
 ** TODO Let Latex take care of russian
 ** TODO Org subtree presentation
 * Pdf Tools
-I like this for pdf.
-How to enable midnight by default?
-
 #+BEGIN_SRC emacs-lisp
   (use-package pdf-tools
-    :config (pdf-tools-install)
+    :config
+    (pdf-tools-install)
     (add-hook 'pdf-tools-enabled-hook 'pdf-view-midnight-minor-mode)
     (setq pdf-view-midnight-colors (quote ("#d2c8c8" . "#283033"))))
 #+END_SRC
@@ -213,8 +211,10 @@ How to enable midnight by default?
 Straightforward smartparens config. I want it all the time except when I'm
 typing English and I need "'".
 #+BEGIN_SRC emacs-lisp
-  (use-package smartparens-config
-    :ensure smartparens)
+  (use-package smartparens
+    :config
+    (require 'smartparens-config)
+    (smartparens-global-strict-mode))
 #+END_SRC
 * Magit
 #+BEGIN_SRC emacs-lisp
