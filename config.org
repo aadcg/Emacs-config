@@ -295,16 +295,15 @@ typing English and I need "'".
     :bind ("C-r" . avy-goto-word-1))
 #+END_SRC
 * Company mode
-Basic company mode config.
-
 #+BEGIN_SRC emacs-lisp
   (use-package company
-    :config (global-company-mode t)
-            (setq company-idle-delay 0)
-            (setq company-minimum-prefix-length 3)
-            (define-key company-active-map (kbd "C-j") 'company-complete)
-            (define-key company-active-map (kbd "C-n") 'company-select-next)
-            (define-key company-active-map (kbd "C-p") 'company-select-previous))
+    :config
+    (global-company-mode t)
+    (setq company-idle-delay 0)
+    (setq company-minimum-prefix-length 3)
+    (define-key company-active-map (kbd "C-j") 'company-complete)
+    (define-key company-active-map (kbd "C-n") 'company-select-next)
+    (define-key company-active-map (kbd "C-p") 'company-select-previous))
 #+END_SRC
 * Bash
 ** Shell
@@ -380,7 +379,6 @@ Solves the problem of not rendering Latex properly in eww mode.
     :ensure t
     :init
     (load-theme 'zenburn t))
-
 #+END_SRC
 ** Modeline (not available for my emacs version)
 #+BEGIN_SRC emacs-lisp
