@@ -20,9 +20,6 @@ Based on:
   (org-version)
 #+END_SRC
 
-#+RESULTS:
-: 8.2.10
-** About me
 #+BEGIN_SRC emacs-lisp
   (setq user-full-name "André Alexandre Gomes"
         user-mail-address "up201106482@fc.up.pt")
@@ -63,7 +60,7 @@ Here's a bunch of built-in stuff that I prefer by default.
   (add-hook 'prog-mode-hook 'linum-mode)
   (add-hook 'text-mode-hook 'linum-mode)
   (global-hl-line-mode)
-  (setq-default dired-listing-switches "-Alh")
+  (setq-default dired-listing-switches "-Atlh")
 #+END_SRC
 ** Cursor
 - Preserves cursor position after page up/down
