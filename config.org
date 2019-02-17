@@ -397,6 +397,3 @@ Solves the problem of not rendering Latex properly in eww mode.
 #+BEGIN_SRC emacs-lisp
   (use-package auctex)
 #+END_SRC
-
-#+RESULTS:
-: t
