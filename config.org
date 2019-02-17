@@ -19,7 +19,7 @@ Based on:
 #+BEGIN_SRC emacs-lisp
   (org-version)
 #+END_SRC
-
+** Me
 #+BEGIN_SRC emacs-lisp
   (setq user-full-name "André Alexandre Gomes"
         user-mail-address "up201106482@fc.up.pt")
@@ -45,7 +45,7 @@ Here's a bunch of built-in stuff that I prefer by default.
 - Show matching parenthesis
 - Number lines in texty stuff
 - Highlight current line
-- Dired as 'ls -Alh'
+- Dired as 'ls -Atlh'
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-startup-message t)
   (setq initial-scratch-message nil)
@@ -393,3 +393,10 @@ Solves the problem of not rendering Latex properly in eww mode.
         minions-mode-line-delimiters '("" . ""))
   (minions-mode 1))
 #+END_SRC
+* Auctex
+#+BEGIN_SRC emacs-lisp
+  (use-package auctex)
+#+END_SRC
+
+#+RESULTS:
+: t
