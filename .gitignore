@@ -1,3 +1,4 @@
+.gitignore
 .python-environments/
 init.el
 elpa
