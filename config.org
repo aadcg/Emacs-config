@@ -171,7 +171,10 @@ Startup behaviour
     (add-to-list 'org-structure-template-alist
                  '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
     (add-to-list 'org-structure-template-alist
-                 '("py" "#+BEGIN_SRC python\n?\n#+END_SRC")))
+                 '("py" "#+BEGIN_SRC python\n?\n#+END_SRC"))
+
+    :bind
+    ("C-S-c ." . org-time-stamp-inactive))
 
   (use-package org-bullets
     :config
@@ -297,7 +300,7 @@ typing English and I need "'".
     :config
     (global-company-mode t)
     (setq company-idle-delay 0)
-    (setq company-minimum-prefix-length 3)
+    (setq company-minimum-prefix-length 2)
     (define-key company-active-map (kbd "C-j") 'company-complete)
     (define-key company-active-map (kbd "C-n") 'company-select-next)
     (define-key company-active-map (kbd "C-p") 'company-select-previous))
@@ -396,4 +399,13 @@ Solves the problem of not rendering Latex properly in eww mode.
 * Auctex
 #+BEGIN_SRC emacs-lisp
   (use-package auctex)
+#+END_SRC
+* Tramp
+#+BEGIN_SRC emacs-lisp
+  (setq tramp-remote-path  '(tramp-remote-path
+     (quote
+      (tramp-default-remote-path "/ifs/home/aadco" "/ifs/opt/app/git/2.8.1-gcc/bin" "/bin" "/usr/bin" "/sbin" "/usr/sbin"
+"/usr/local/bin" "/usr/local/sbin" "/local/bin" "/local/freeware/bin"
+"/local/gnu/bin" "/usr/freeware/bin" "/usr/pkg/bin" "/usr/contrib/bin"
+"/opt/bin" "/opt/sbin" "/opt/local/bin"))))
 #+END_SRC
