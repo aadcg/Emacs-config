@@ -220,7 +220,8 @@ typing English and I need "'".
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :bind
-    ("C-x g" . magit-status))
+    ("C-x g" . magit-status)
+    (setq magit-display-buffer-function (quote magit-display-buffer-same-window-except-diff-v1)))
 #+END_SRC
 * Python
 #+BEGIN_SRC emacs-lisp
