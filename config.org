@@ -93,6 +93,7 @@ Here's a bunch of built-in stuff that I prefer by default.
 
   (global-set-key (kbd "C-x C-b") 'ibuffer)
   (global-set-key (kbd "C-x p") 'switch-to-prev-buffer)
+  (global-set-key (kbd "<f5>") 'revert-buffer)
 #+END_SRC
 ** Backups
 #+BEGIN_SRC emacs-lisp
@@ -162,7 +163,6 @@ Startup behaviour
     (setq org-todo-keywords '((sequence "TODO(t)" "STARTED(s!)" "WAITING(w@)" "|" "DONE(d!)")))
     (setq org-tag-alist '(("@work" . ?w) ("@home" . ?h) ("laptop" . ?l)))
 
-    (global-set-key "\C-ca" 'org-agenda)
     (setq org-src-fontify-natively t)
     (setq org-src-tab-acts-natively t)
     (setq org-src-window-setup 'current-window)
@@ -174,12 +174,16 @@ Startup behaviour
                  '("py" "#+BEGIN_SRC python\n?\n#+END_SRC"))
 
     :bind
-    ("C-S-c ." . org-time-stamp-inactive))
+    ("C-S-c ." . org-time-stamp-inactive)
+    ("\C-ca" . org-agenda))
 
   (use-package org-bullets
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+END_SRC
+
+#+RESULTS:
+: t
 
 #+BEGIN_SRC emacs-lisp
   (setq exec-path (append exec-path '("/usr/bin/tex")))
@@ -219,6 +223,10 @@ typing English and I need "'".
 * Magit
 #+BEGIN_SRC emacs-lisp
   (use-package magit
+    :config
+    ;; (setq exec-path (append exec-path '("/ifs/opt/app/git/2.8.1-gcc/bin")))
+    (drf/append-to-path "/ssh:aadco@login.mindstorm.vestas.net:/ifs/opt/app/git/2.8.1-gcc/bin/git")
+    ;; (drf/append-to-path "/ifs/opt/app/git/2.8.1-gcc/bin/git")
     :bind
     ("C-x g" . magit-status))
 #+END_SRC
@@ -229,10 +237,15 @@ typing English and I need "'".
     (setenv "PATH" (concat (getenv "PATH") ":" path))
     (add-to-list 'exec-path path))
 
-  (drf/append-to-path "~/anaconda3/bin/")
+  ;; (setenv "WORKON_HOME" "/ssh:aadco@login.mindstorm.vestas.net:/ifs/home/aadco/venv/pse2")
+  (drf/append-to-path "/ssh:aadco@login.mindstorm.vestas.net:/ifs/opt/app/anaconda/2-5.1.0/bin")
+  ;; (drf/append-to-path "/ssh:aadco@login.mindstorm.vestas.net:/ifs/home/aadco/venv/pse2/bin/ipython")
 
   (use-package elpy
-    :config (elpy-enable))
+    :config
+    (elpy-enable)
+    (setq python-shell-interpreter "ipython"
+        python-shell-interpreter-args "-i --simple-prompt"))
 
   ;; (use-package company-jedi)
   ;; (add-to-list 'company-backends 'company-jedi)
@@ -261,7 +274,6 @@ typing English and I need "'".
   (add-hook 'python-mode-hook (lambda ()
                                     (require 'sphinx-doc)
                                     (sphinx-doc-mode t)))
-
 #+END_SRC
 * Checking
 ** Flycheck
@@ -399,13 +411,4 @@ Solves the problem of not rendering Latex properly in eww mode.
 * Auctex
 #+BEGIN_SRC emacs-lisp
   (use-package auctex)
-#+END_SRC
-* Tramp
-#+BEGIN_SRC emacs-lisp
-  (setq tramp-remote-path  '(tramp-remote-path
-     (quote
-      (tramp-default-remote-path "/ifs/home/aadco" "/ifs/opt/app/git/2.8.1-gcc/bin" "/bin" "/usr/bin" "/sbin" "/usr/sbin"
-"/usr/local/bin" "/usr/local/sbin" "/local/bin" "/local/freeware/bin"
-"/local/gnu/bin" "/usr/freeware/bin" "/usr/pkg/bin" "/usr/contrib/bin"
-"/opt/bin" "/opt/sbin" "/opt/local/bin"))))
 #+END_SRC
