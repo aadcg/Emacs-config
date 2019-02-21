@@ -13,12 +13,15 @@ Based on:
 #+END_SRC
 
 #+RESULTS:
-: GNU Emacs 25.2.2 (x86_64-pc-linux-gnu, GTK+ Version 3.22.21)
-:  of 2017-09-22, modified by Debian
+: GNU Emacs 26.1 (build 2, x86_64-pc-linux-gnu, GTK+ Version 3.22.30)
+:  of 2018-05-29
 
 #+BEGIN_SRC emacs-lisp
   (org-version)
 #+END_SRC
+
+#+RESULTS:
+: 9.1.9
 ** Me
 #+BEGIN_SRC emacs-lisp
   (setq user-full-name "André Alexandre Gomes"
@@ -146,7 +149,7 @@ Startup behaviour
 #+BEGIN_SRC emacs-lisp
   (use-package org
     :config
-    (setq org-ellipsis " §")
+    (setq org-ellipsis "§")
     (add-hook 'org-mode-hook 'org-indent-mode)
 
     (setq org-startup-folded (quote content))
@@ -221,10 +224,9 @@ typing English and I need "'".
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :config
-    (drf/append-to-path "/ssh:aadco@login.mindstorm.vestas.net:/ifs/opt/app/git/2.8.1-gcc/bin/git")
+    (setq magit-display-buffer-function (quote magit-display-buffer-same-window-except-diff-v1))
     :bind
-    ("C-x g" . magit-status)
-    (setq magit-display-buffer-function (quote magit-display-buffer-same-window-except-diff-v1)))
+    ("C-x g" . magit-status))
 #+END_SRC
 * Python
 #+BEGIN_SRC emacs-lisp
@@ -233,7 +235,7 @@ typing English and I need "'".
     (setenv "PATH" (concat (getenv "PATH") ":" path))
     (add-to-list 'exec-path path))
 
-  (drf/append-to-path "/ssh:aadco@login.mindstorm.vestas.net:/ifs/opt/app/anaconda/2-5.1.0/bin")
+  ;; (drf/append-to-path "/ssh:aadco@login.mindstorm.vestas.net:/ifs/opt/app/anaconda/2-5.1.0/bin")
 
   (use-package elpy
     :config
@@ -388,11 +390,11 @@ Solves the problem of not rendering Latex properly in eww mode.
 #+END_SRC
 ** Modeline (not available for my emacs version)
 #+BEGIN_SRC emacs-lisp
-  ;; (use-package moody
-  ;;   :config
-  ;;   (setq x-underline-at-descent-line t)
-  ;;   (moody-replace-mode-line-buffer-identification)
-  ;;   (moody-replace-vc-mode))
+  (use-package moody
+    :config
+    (setq x-underline-at-descent-line t)
+    (moody-replace-mode-line-buffer-identification)
+    (moody-replace-vc-mode))
 #+END_SRC
 ** Minions
 #+BEGIN_SRC emacs-lisp
