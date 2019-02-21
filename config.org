@@ -149,7 +149,8 @@ Startup behaviour
 #+BEGIN_SRC emacs-lisp
   (use-package org
     :config
-    (setq org-ellipsis "§")
+    (setq org-ellipsis " §")
+    ;; (setq org-ellipsis " ⬎")
     (add-hook 'org-mode-hook 'org-indent-mode)
 
     (setq org-startup-folded (quote content))
@@ -390,11 +391,11 @@ Solves the problem of not rendering Latex properly in eww mode.
 #+END_SRC
 ** Modeline (not available for my emacs version)
 #+BEGIN_SRC emacs-lisp
-  (use-package moody
-    :config
-    (setq x-underline-at-descent-line t)
-    (moody-replace-mode-line-buffer-identification)
-    (moody-replace-vc-mode))
+  ;; (use-package moody
+  ;;   :config
+  ;;   (setq x-underline-at-descent-line t)
+  ;;   (moody-replace-mode-line-buffer-identification)
+  ;;   (moody-replace-vc-mode))
 #+END_SRC
 ** Minions
 #+BEGIN_SRC emacs-lisp
