@@ -221,9 +221,7 @@ typing English and I need "'".
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :config
-    ;; (setq exec-path (append exec-path '("/ifs/opt/app/git/2.8.1-gcc/bin")))
     (drf/append-to-path "/ssh:aadco@login.mindstorm.vestas.net:/ifs/opt/app/git/2.8.1-gcc/bin/git")
-    ;; (drf/append-to-path "/ifs/opt/app/git/2.8.1-gcc/bin/git")
     :bind
     ("C-x g" . magit-status)
     (setq magit-display-buffer-function (quote magit-display-buffer-same-window-except-diff-v1)))
@@ -235,9 +233,7 @@ typing English and I need "'".
     (setenv "PATH" (concat (getenv "PATH") ":" path))
     (add-to-list 'exec-path path))
 
-  ;; (setenv "WORKON_HOME" "/ssh:aadco@login.mindstorm.vestas.net:/ifs/home/aadco/venv/pse2")
   (drf/append-to-path "/ssh:aadco@login.mindstorm.vestas.net:/ifs/opt/app/anaconda/2-5.1.0/bin")
-  ;; (drf/append-to-path "/ssh:aadco@login.mindstorm.vestas.net:/ifs/home/aadco/venv/pse2/bin/ipython")
 
   (use-package elpy
     :config
