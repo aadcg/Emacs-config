@@ -97,6 +97,7 @@ Here's a bunch of built-in stuff that I prefer by default.
   (global-set-key (kbd "C-x C-b") 'ibuffer)
   (global-set-key (kbd "C-x p") 'switch-to-prev-buffer)
   (global-set-key (kbd "<f5>") 'revert-buffer)
+  (global-set-key (kbd "C-x w") 'eww)
 #+END_SRC
 ** Backups
 #+BEGIN_SRC emacs-lisp
@@ -150,8 +151,8 @@ Startup behaviour
   (use-package org
     :config
     (setq org-ellipsis " §")
-    (custom-set-faces '(org-ellipsis ((t (:foreground "gray40" :underline nil)))))
     ;; (setq org-ellipsis " ⬎")
+    (custom-set-faces '(org-ellipsis ((t (:foreground "gray40" :underline nil)))))
 
     (add-hook 'org-mode-hook 'org-indent-mode)
 
@@ -215,8 +216,6 @@ Startup behaviour
     (setq pdf-view-midnight-colors (quote ("#d2c8c8" . "#283033"))))
 #+END_SRC
 * Smartparens
-Straightforward smartparens config. I want it all the time except when I'm
-typing English and I need "'".
 #+BEGIN_SRC emacs-lisp
   (use-package smartparens
     :config
