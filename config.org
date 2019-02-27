@@ -408,6 +408,10 @@ Solves the problem of not rendering Latex properly in eww mode.
     (moody-replace-mode-line-buffer-identification)
     (moody-replace-vc-mode))
 #+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (display-battery-mode)
+#+END_SRC
 ** Minions
 #+BEGIN_SRC emacs-lisp
 (use-package minions
