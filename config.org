@@ -169,6 +169,8 @@ Startup behaviour
     (setq org-mobile-files '("~/NextCloud/org"))
     (setq org-mobile-inbox-for-pull "~/NextCloud/org/from-mobile.org")
 
+    (setq org-agenda-skip-deadline-prewarning-if-scheduled t)
+
     (add-hook 'after-init-hook 'org-mobile-pull)
     (add-hook 'kill-emacs-hook 'org-mobile-push)
 
@@ -181,9 +183,9 @@ Startup behaviour
     (setq org-confirm-babel-evaluate nil)
 
     (add-to-list 'org-structure-template-alist
-		 '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+                 '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
     (add-to-list 'org-structure-template-alist
-		 '("py" "#+BEGIN_SRC python\n?\n#+END_SRC"))
+                 '("py" "#+BEGIN_SRC python\n?\n#+END_SRC"))
 
     :bind
     ("C-S-c ." . org-time-stamp-inactive)
