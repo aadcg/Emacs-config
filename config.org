@@ -34,13 +34,13 @@ Based on:
 Here's a bunch of built-in stuff that I prefer by default.
 ** Words, whitespaces and text
 - Get rid of trailing whitespaces when a file is saved
-- Treat CamelCaseSubWords as separate words in programming stuff
+- Treat CamelCaseSubWords as separate words
 - Overwrite selected text
 - Append a newline to the end of a file by default
 - Set nr of characters per line and enforce it
 #+BEGIN_SRC emacs-lisp
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
-  (add-hook 'prog-mode-hook 'subword-mode)
+  (global-subword-mode t)
   (delete-selection-mode t)
   (setq require-final-newline t)
   (setq-default fill-column 80)
@@ -133,7 +133,8 @@ Here's a bunch of built-in stuff that I prefer by default.
   (setq display-time-day-and-date t)
   (setq display-time-24hr-format t)
   (setq display-time-default-load-average nil)
-  (setq display-time-format nil)
+  (format-time-string "%d/%m/%a %R")
+  ;; (setq display-time-format %d/%m/%a %R)
   (display-time)
 
   (setq display-time-world-list
@@ -503,3 +504,8 @@ Solves the problem of not rendering Latex properly in eww mode.
 #+BEGIN_SRC emacs-lisp
   (use-package auctex)
 #+END_SRC
+* TODO Run Firefox from Emacs
+* TODO Squash my config into one only with (when window-system)
+* TODO Hungry deletion
+* TODO Keybindings for visiting config.org and run init.el
+* TODO Projectile
