@@ -30,6 +30,20 @@ Based on:
         calendar-longitude -8.63
         calendar-location-name "Porto, PT")
 #+END_SRC
+
+* Edit this file
+#+BEGIN_SRC emacs-lisp
+  (defun config-visit ()
+    (interactive)
+    (find-file "~/.emacs.d/config.org"))
+  (global-set-key (kbd "C-c e") 'config-visit)
+
+  (defun config-reload ()
+    "Reloads ~/.emacs.d/config.org at runtime"
+    (interactive)
+    (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+  (global-set-key (kbd "C-c r") 'config-reload)
+#+END_SRC
 * Defaults
 Here's a bunch of built-in stuff that I prefer by default.
 ** Words, whitespaces and text
@@ -56,7 +70,7 @@ Here's a bunch of built-in stuff that I prefer by default.
   (setq inhibit-startup-message t)
   (setq initial-scratch-message nil)
   (tool-bar-mode -1)
-  ;; (menu-bar-mode -1)
+  (menu-bar-mode -1)
   (scroll-bar-mode -1)
   (horizontal-scroll-bar-mode -1)
   (fset 'yes-or-no-p 'y-or-n-p)
@@ -400,6 +414,12 @@ Startup behaviour
     :config
     (global-hungry-delete-mode))
 #+END_SRC
+* Projectile
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :init
+    (projectile-mode 1))
+#+END_SRC
 * Company mode
 #+BEGIN_SRC emacs-lisp
   (use-package company
@@ -512,6 +532,3 @@ Solves the problem of not rendering Latex properly in eww mode.
 #+END_SRC
 * TODO Run Firefox from Emacs
 * TODO Squash my config into one only with (when window-system)
-* TODO Hungry deletion
-* TODO Keybindings for visiting config.org and run init.el
-* TODO Projectile
