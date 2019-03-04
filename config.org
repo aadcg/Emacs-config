@@ -293,8 +293,8 @@ Startup behaviour
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-(require 'auto-dictionary)
-(add-hook 'flyspell-mode-hook (lambda () (auto-dictionary-mode 1)))
+  (use-package auto-dictionary
+    :config (add-hook 'flyspell-mode-hook (lambda () (auto-dictionary-mode 1))))
 #+END_SRC
 * Ivy
 #+BEGIN_SRC emacs-lisp
