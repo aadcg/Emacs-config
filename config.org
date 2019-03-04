@@ -394,6 +394,12 @@ Startup behaviour
   (use-package avy
     :bind ("C-r" . avy-goto-word-1))
 #+END_SRC
+* Hungry Delete
+#+BEGIN_SRC emacs-lisp
+  (use-package hungry-delete
+    :config
+    (global-hungry-delete-mode))
+#+END_SRC
 * Company mode
 #+BEGIN_SRC emacs-lisp
   (use-package company
