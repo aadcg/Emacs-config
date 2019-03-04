@@ -144,12 +144,9 @@ Here's a bunch of built-in stuff that I prefer by default.
 ** Display time
 [[https://en.wikipedia.org/wiki/List_of_tz_database_time_zones][Time Zones]]
 #+BEGIN_SRC emacs-lisp
-  (setq display-time-day-and-date t)
   (setq display-time-24hr-format t)
-  (setq display-time-default-load-average nil)
-  (format-time-string "%d/%m/%a %R")
-  ;; (setq display-time-format %d/%m/%a %R)
-  (display-time)
+  (setq display-time-format "%k:%M %a %e %b")
+  (display-time-mode 1)
 
   (setq display-time-world-list
         '(("Europe/Moscow" "Москва")
