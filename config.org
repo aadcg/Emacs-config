@@ -378,14 +378,16 @@ Here's a bunch of built-in stuff that I prefer by default.
 #+END_SRC
 ** Flyspell
 #+BEGIN_SRC emacs-lisp
-(use-package flyspell
-  :config
-  (add-hook 'org-mode-hook 'flyspell-mode))
+  (when window-system
+    (use-package flyspell
+    :config
+    (add-hook 'org-mode-hook 'flyspell-mode)))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (use-package auto-dictionary
-    :config (add-hook 'flyspell-mode-hook (lambda () (auto-dictionary-mode 1))))
+  (when window-system
+    (use-package auto-dictionary
+    :config (add-hook 'flyspell-mode-hook (lambda () (auto-dictionary-mode 1)))))
 #+END_SRC
 * Ivy
 #+BEGIN_SRC emacs-lisp
