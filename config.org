@@ -30,7 +30,6 @@ Based on:
         calendar-longitude -8.63
         calendar-location-name "Porto, PT")
 #+END_SRC
-
 * Edit this file
 #+BEGIN_SRC emacs-lisp
   (defun config-visit ()
@@ -79,7 +78,7 @@ Here's a bunch of built-in stuff that I prefer by default.
   (setq show-paren-delay 0.0)
   (add-hook 'prog-mode-hook 'linum-mode)
   (add-hook 'text-mode-hook 'linum-mode)
-  (global-hl-line-mode)
+  (when window-system (global-hl-line-mode))
   (setq-default dired-listing-switches "-Atlh")
 #+END_SRC
 ** Cursor
@@ -224,7 +223,6 @@ Here's a bunch of built-in stuff that I prefer by default.
           ))
 #+END_SRC
 * Startup
-Startup behaviour
 #+BEGIN_SRC emacs-lisp
   ;;start on eshell
   (add-hook 'emacs-startup-hook 'org-agenda-list)
@@ -234,15 +232,16 @@ Startup behaviour
          (interactive)
          (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
                                 '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
-  (fullscreen)
+
+  (when window-system (fullscreen))
 #+END_SRC
 * Org
 ** Basic Stuff
 #+BEGIN_SRC emacs-lisp
   (use-package org
     :config
-    ;; (setq org-ellipsis " §")
-    (setq org-ellipsis " ⬎")
+    (setq org-ellipsis " §")
+    ;; (setq org-ellipsis " ⬎")
     (custom-set-faces '(org-ellipsis ((t (:foreground "gray40" :underline nil)))))
 
     (add-hook 'org-mode-hook 'org-indent-mode)
@@ -262,7 +261,6 @@ Startup behaviour
     (add-hook 'kill-emacs-hook 'org-mobile-push)
 
     (setq org-todo-keywords '((sequence "TODO(t)" "STARTED(s!)" "WAITING(w@)" "|" "DONE(d!)")))
-    (setq org-tag-alist '(("@work" . ?w) ("@home" . ?h) ("laptop" . ?l)))
 
     (setq org-src-fontify-natively t)
     (setq org-src-tab-acts-natively t)
@@ -280,9 +278,10 @@ Startup behaviour
     ("\C-cc" . org-capture)
     ("C-S-c ." . org-time-stamp-inactive))
 
-  (use-package org-bullets
+  (when window-system
+    (use-package org-bullets
     :config
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -299,17 +298,18 @@ Startup behaviour
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (use-package org-pdfview)
+  (when window-system (use-package org-pdfview))
 #+END_SRC
 ** TODO Let Latex take care of russian
 ** TODO Org subtree presentation
 * Pdf Tools
 #+BEGIN_SRC emacs-lisp
-  (use-package pdf-tools
+  (when window-system
+    (use-package pdf-tools
     :config
     (pdf-tools-install)
     (add-hook 'pdf-tools-enabled-hook 'pdf-view-midnight-minor-mode)
-    (setq pdf-view-midnight-colors (quote ("#d2c8c8" . "#283033"))))
+    (setq pdf-view-midnight-colors (quote ("#d2c8c8" . "#283033")))))
 #+END_SRC
 * Smartparens
 #+BEGIN_SRC emacs-lisp
@@ -492,9 +492,10 @@ Solves the problem of not rendering Latex properly in eww mode.
 ** Theme
 *** Zenburn
 #+BEGIN_SRC emacs-lisp
-  (use-package zenburn-theme
+  (when window-system
+    (use-package zenburn-theme
     :init
-    (load-theme 'zenburn t))
+    (load-theme 'zenburn t)))
 #+END_SRC
 *** Nord
 #+BEGIN_SRC emacs-lisp
@@ -505,11 +506,12 @@ Solves the problem of not rendering Latex properly in eww mode.
 #+END_SRC
 ** Modeline
 #+BEGIN_SRC emacs-lisp
-  (use-package moody
+  (when window-system
+    (use-package moody
     :config
     (setq x-underline-at-descent-line t)
     (moody-replace-mode-line-buffer-identification)
-    (moody-replace-vc-mode))
+    (moody-replace-vc-mode)))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
