@@ -145,6 +145,7 @@ Here's a bunch of built-in stuff that I prefer by default.
 #+BEGIN_SRC emacs-lisp
   (setq display-time-24hr-format t)
   (setq display-time-format "%k:%M %a %e %b")
+  (setq display-time-default-load-average nil)
   (display-time-mode 1)
 
   (setq display-time-world-list
@@ -221,19 +222,6 @@ Here's a bunch of built-in stuff that I prefer by default.
           ;; This is actually wrong. This public holiday is celebrated on Monday
           ;; that follows the second sunday of August
           ))
-#+END_SRC
-* Startup
-#+BEGIN_SRC emacs-lisp
-  ;;start on eshell
-  (add-hook 'emacs-startup-hook 'org-agenda-list)
-
-  ;; fullscreen by default
-  (defun fullscreen ()
-         (interactive)
-         (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
-                                '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
-
-  (when window-system (fullscreen))
 #+END_SRC
 * Org
 ** Basic Stuff
@@ -530,6 +518,19 @@ Solves the problem of not rendering Latex properly in eww mode.
 * Auctex
 #+BEGIN_SRC emacs-lisp
   (use-package auctex)
+#+END_SRC
+* Startup
+#+BEGIN_SRC emacs-lisp
+  (defun fullscreen ()
+         (interactive)
+         (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
+                                '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
+
+  (when window-system (fullscreen))
+
+  (add-hook 'emacs-startup-hook 'org-agenda-list)
+  (delete-other-windows)
+
 #+END_SRC
 * TODO Run Firefox from Emacs
 * TODO Squash my config into one only with (when window-system)
