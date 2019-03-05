@@ -71,7 +71,7 @@ Here's a bunch of built-in stuff that I prefer by default.
   (tool-bar-mode -1)
   (menu-bar-mode -1)
   (when window-system (scroll-bar-mode -1))
-  (horizontal-scroll-bar-mode -1)
+  (when window-system (horizontal-scroll-bar-mode -1))
   (fset 'yes-or-no-p 'y-or-n-p)
 
   (show-paren-mode t)
