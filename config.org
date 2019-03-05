@@ -515,7 +515,7 @@ Solves the problem of not rendering Latex properly in eww mode.
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (display-battery-mode)
+  (when window-system (display-battery-mode))
 #+END_SRC
 ** Minions
 #+BEGIN_SRC emacs-lisp
