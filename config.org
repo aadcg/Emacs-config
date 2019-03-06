@@ -144,7 +144,7 @@ Here's a bunch of built-in stuff that I prefer by default.
 [[https://en.wikipedia.org/wiki/List_of_tz_database_time_zones][Time Zones]]
 #+BEGIN_SRC emacs-lisp
   (setq display-time-24hr-format t)
-  (setq display-time-format "%k:%M %a %e %b")
+  (setq display-time-format "%k:%M - %a %d %B")
   (setq display-time-default-load-average nil)
   (display-time-mode 1)
 
@@ -467,17 +467,6 @@ Ivy in Eshell
    proc
    (concat "cd ~/Downloads && youtube-dl " str "\n"))))
 #+END_SRC
-** eww bug
-Solves the problem of not rendering Latex properly in eww mode.
-#+BEGIN_SRC emacs-lisp
-(define-advice shr-parse-image-data (:around (fn &rest args) my-emacs-25-patch)
-  "Hackaround for bug#24111 in Emacs 25."
-  (if shr-blocked-images
-      (apply fn args)
-    (cl-letf (((symbol-function 'libxml-parse-xml-region) #'buffer-substring)
-              ((symbol-function 'shr-dom-to-xml)          #'identity))
-      (apply fn args))))
-#+END_SRC
 * Aesthetics
 ** Theme
 *** Zenburn
@@ -533,4 +522,3 @@ Solves the problem of not rendering Latex properly in eww mode.
 
 #+END_SRC
 * TODO Run Firefox from Emacs
-* TODO Squash my config into one only with (when window-system)
