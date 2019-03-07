@@ -223,6 +223,10 @@ Here's a bunch of built-in stuff that I prefer by default.
           ;; that follows the second sunday of August
           ))
 #+END_SRC
+** Browser
+#+BEGIN_SRC emacs-lisp
+  (setq browse-url-browser-function 'eww-browse-url)
+#+END_SRC
 * Org
 ** Basic Stuff
 #+BEGIN_SRC emacs-lisp
@@ -241,6 +245,8 @@ Here's a bunch of built-in stuff that I prefer by default.
     (setq org-agenda-files '("~/NextCloud/org"))
     (setq org-mobile-files '("~/NextCloud/org"))
     (setq org-mobile-inbox-for-pull "~/NextCloud/org/from-mobile.org")
+
+    (setq org-refile-targets '((org-agenda-files :maxlevel . 5)))
 
     (setq org-agenda-skip-deadline-prewarning-if-scheduled t)
     (setq org-agenda-include-diary t)
