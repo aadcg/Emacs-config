@@ -525,4 +525,5 @@ Ivy in Eshell
   (delete-other-windows)
 
 #+END_SRC
-* TODO Run Firefox from Emacs
+* TODO Firefox from Emacs?
+* TODO mu4e
