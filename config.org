@@ -219,7 +219,6 @@ Here's a bunch of built-in stuff that I prefer by default.
   (setq browse-url-browser-function 'eww-browse-url)
 #+END_SRC
 * Org
-** Basic Stuff
 #+BEGIN_SRC emacs-lisp
   (use-package org
     :config
@@ -286,8 +285,6 @@ Here's a bunch of built-in stuff that I prefer by default.
 #+BEGIN_SRC emacs-lisp
   (when window-system (use-package org-pdfview))
 #+END_SRC
-** TODO Let Latex take care of russian
-** TODO Org subtree presentation
 * Pdf Tools
 #+BEGIN_SRC emacs-lisp
   (when window-system
@@ -515,3 +512,5 @@ Ivy in Eshell
 * TODO github without password
 - set ssh key
 - git remote set-url github git@github.com:aadcg/.emacs.d.git
+* TODO Let Latex take care of russian
+* TODO Org subtree presentation
