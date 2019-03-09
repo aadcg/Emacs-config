@@ -1,4 +1,19 @@
-* Emacs-config
-My personal emacs config file
+* How to Emacs?
+I assume that you're motivated to use Emacs. If you're not, you should. [[https://www.youtube.com/watch?v=EsAkPl3On3E][Convince
+yourself]].
 
-Nothing fancy.
+I started using Emacs on July, 2018. I completed two bachelor's degrees from the
+University of Porto between 2011 and 2017. I started a master's program on pure maths
+but I quitted after the first semester. With that being said, I'm just a regular
+Joe Doe. Before July 2018 I didn't know GNU/Linux at all - no basic bash
+commands, no vi, no nothing. My background was paper, pencils, chalk and
+blackboards.
+
+How did the shift happen? Well, I had a friend who was using Ubuntu. Besides,
+once I met a professor in his office and he was using a "strange program". I
+asked about it, he replied - "It's Emacs! I write all my \LaTeX papers here,
+answer e-mails and program in here!". That seemed just unreal. At that time, I
+was also starting to shift from paper to a computer. I stopped taking notes on
+paper in lectures. I using Lyx to write \LaTeX docs, and I thought it couldn't
+get better than that since I was looking at my collegues typing \LaTeX from
+scratch and I felt sorry for them.
