@@ -246,6 +246,7 @@ Here's a bunch of built-in stuff that I prefer by default.
     (add-hook 'kill-emacs-hook 'org-mobile-push)
 
     (setq org-todo-keywords '((sequence "TODO(t)" "STARTED(s!)" "WAITING(w@)" "|" "DONE(d!)")))
+    (setq org-todo-keyword-faces '(("TODO" . org-warning) ("STARTED" . "yellow") ("WAITING" . "orange")))
 
     (setq org-src-fontify-natively t)
     (setq org-src-tab-acts-natively t)
