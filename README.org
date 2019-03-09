@@ -34,7 +34,6 @@ I started working on my own init.el roughly on December, 2018.
 Following the trend, I went for a literate programming kind of approach coupled
 with [[https://duckduckgo.com/l/?kh=-1&uddg=https%253A%252F%252Fgithub.com%252Fjwiegley%252Fuse%252Dpackage][use-package]].
 
-
 * How do I carry my org files?
 I have a smartphone, one of those Android. I mitigated the Google influence by
 not adding a Google account or not running Google apps. Anyway, I'm sure I'm
@@ -42,7 +41,7 @@ running endless malware in it. I'd like to get one of [[https://puri.sm/products
 
 So, my "Appstore" is [[https://f-droid.org/][F-Droid]]. In there you'll find [[https://termux.com/][Termux]]. That coupled with
 [[https://nextcloud.com/][Nextcloud]] makes it possible me to access my org files and agenda anywhere,
-anytime and to sync effortlessly. My life in text.
+anytime and to sync effortlessly. My life in plain text.
 
 ** Tutorial[fn:1]
 - [[https://f-droid.org/packages/com.termux/][Install Termux]]
@@ -51,7 +50,8 @@ anytime and to sync effortlessly. My life in text.
 - Run the following commands
   - pkg install emacs, git
   - [[https://wiki.termux.com/wiki/Sharing_Data][termux-setup-storage]] (to create symlinks)
-  - you might need to create a symlink depending on the way you set org-agenda-files
+- A symlink might be needed depending on the way you set org-agenda-files and on
+  where the Nextcloud are located
 
 * Sidenote on GNU
 Emacs is all about freedom. When you work in it, you feel it was designed by
