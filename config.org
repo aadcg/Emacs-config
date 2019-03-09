@@ -108,6 +108,7 @@ Here's a bunch of built-in stuff that I prefer by default.
   (global-set-key (kbd "<f5>") 'revert-buffer)
   (global-set-key (kbd "C-M-r") 'eval-buffer)
   (global-set-key (kbd "C-x w") 'eww)
+  (global-set-key (kbd "S-SPC") 'just-one-space)
 #+END_SRC
 ** Backups
 #+BEGIN_SRC emacs-lisp
@@ -388,12 +389,6 @@ Here's a bunch of built-in stuff that I prefer by default.
   (use-package avy
     :bind ("C-r" . avy-goto-word-1))
 #+END_SRC
-* Hungry Delete
-#+BEGIN_SRC emacs-lisp
-  (use-package hungry-delete
-    :config
-    (global-hungry-delete-mode))
-#+END_SRC
 * Projectile
 #+BEGIN_SRC emacs-lisp
   (use-package projectile
@@ -516,4 +511,6 @@ Ivy in Eshell
 #+END_SRC
 * TODO Firefox from Emacs?
 * TODO mu4e
-test2
+* TODO github without password
+- set ssh key
+- git remote set-url github git@github.com:aadcg/.emacs.d.git
