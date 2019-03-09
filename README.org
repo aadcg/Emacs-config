@@ -1,6 +1,10 @@
+#+TITLE: .emacs.d config readme
+#+STARTUP: latexpreview
+#+OPTIONS: toc:nil num:nil email:t
+
 * How did I get to Emacs?
 ** Who am I?
-I assume that you're motivated to use Emacs. If you're not - [[://www.youtube.com/watch?v=EsAkPl3On3E][convince yourself]].
+I assume that you're motivated to use Emacs. If you're not - [[https://www.youtube.com/watch?v=EsAkPl3On3E][convince yourself]].
 
 I started using Emacs inn August, 2018. I completed two bachelor's degrees from
 the University of Porto between 2011 and 2017. I started a master's program on
