@@ -1,4 +1,4 @@
-* How to Emacs?
+* How did I get to Emacs?
 I assume that you're motivated to use Emacs. If you're not, you should. [[https://www.youtube.com/watch?v=EsAkPl3On3E][Convince
 yourself]].
 
@@ -17,3 +17,33 @@ was also starting to shift from paper to a computer. I stopped taking notes on
 paper in lectures. I using Lyx to write \LaTeX docs, and I thought it couldn't
 get better than that since I was looking at my collegues typing \LaTeX from
 scratch and I felt sorry for them.
+
+At that time I only scrathed the surface of the folling idea: "Being able to
+type acuratelly and fast on a computer is convenient". What I didn't know
+is that my life would soon be so deeply based on text.
+
+* Where to start?
+I recommend running Emacs on a GUI. This guy agrees and he [[https://blog.aaronbieber.com/2016/12/29/don-t-use-terminal-emacs.html][expands]] on that.
+
+Well, like anyone will advice you, please read the tutorial.
+
+* How do I carry my org files?
+I have a smartphone, one of those Android. I mitigated the Google influence by
+not adding a Google account or not running Google apps. Anyway, I'm sure I'm
+running endless malware in it. I'd like to get one of [[https://puri.sm/products/librem-5/][these]], oneday.
+
+So, my "Appstore" is [[https://f-droid.org/][F-Droid]]. In there you'll find [[https://termux.com/][Termux]]. That coupled with
+[[https://nextcloud.com/][Nextcloud]] makes it possible me to access my org files and agenda anywhere,
+anytime and to sync effortlessly. My life in text.
+
+* Sidenote on GNU
+Emacs is all about freedom. When you work in it, you feel it was designed by
+people who want the same you want - something reliable without bullshit.
+
+It is quite helpful if you get acquainted with [[https://en.wikipedia.org/wiki/GNU_Project][GNU]], [[https://en.wikipedia.org/wiki/Free_Software_Foundation][Free Software Foundation
+(FSF)]] and [[https://www.youtube.com/watch?v=jUibaPTXSHk][Richard Stallman]]. I wish universities talked more Richard Stallman,
+and less Linus Torvalds (no to be discredited). I wish they didn't teach
+students any proprietary software. Free thought, free world.
+
+The road to freedom is hard. I do find myself doing thing that don't respect the
+FSF. But at least I'm conciously and proactively fighting years of bad education.
