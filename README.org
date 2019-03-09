@@ -2,7 +2,7 @@
 I assume that you're motivated to use Emacs. If you're not, you should. [[https://www.youtube.com/watch?v=EsAkPl3On3E][Convince
 yourself]].
 
-I started using Emacs on July, 2018. I completed two bachelor's degrees from the
+I started using Emacs on August, 2018. I completed two bachelor's degrees from the
 University of Porto between 2011 and 2017. I started a master's program on pure maths
 but I quitted after the first semester. With that being said, I'm just a regular
 Joe Doe. Before July 2018 I didn't know GNU/Linux at all - no basic bash
@@ -20,12 +20,15 @@ scratch and I felt sorry for them.
 
 At that time I only scrathed the surface of the folling idea: "Being able to
 type acuratelly and fast on a computer is convenient". What I didn't know
-is that my life would soon be so deeply based on text.
+is that my life would soon be so deeply based on text. And then there's [[https://www.youtube.com/watch?v=SzA2YODtgK4][org mode]]...
 
 * Where to start?
 I recommend running Emacs on a GUI. This guy agrees and he [[https://blog.aaronbieber.com/2016/12/29/don-t-use-terminal-emacs.html][expands]] on that.
 
 Well, like anyone will advice you, please read the tutorial.
+
+* Evolution
+I started working on my own init.el roughly on December, 2018.
 
 * How do I carry my org files?
 I have a smartphone, one of those Android. I mitigated the Google influence by
@@ -42,7 +45,7 @@ people who want the same you want - something reliable without bullshit.
 
 It is quite helpful if you get acquainted with [[https://en.wikipedia.org/wiki/GNU_Project][GNU]], [[https://en.wikipedia.org/wiki/Free_Software_Foundation][Free Software Foundation
 (FSF)]] and [[https://www.youtube.com/watch?v=jUibaPTXSHk][Richard Stallman]]. I wish universities talked more Richard Stallman,
-and less Linus Torvalds (no to be discredited). I wish they didn't teach
+and less Linus Torvalds (not to be discredited). I wish they didn't teach
 students any proprietary software. Free thought, free world.
 
 The road to freedom is hard. I do find myself doing thing that don't respect the
