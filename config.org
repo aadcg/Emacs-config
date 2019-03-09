@@ -3,25 +3,14 @@
 #+DESCRIPTION: Loading Emacs configuration using org-babel
 
 * Meta
+:PROPERTIES:
+:EMACS_VERSION: 26.1 (GTK+)
+:ORG_VERSION: 9.1.9
+:END:
 ** About
 Based on:
 - [[https://github.com/zamansky/using-emacs/blob/master/myinit.org][Mike Zamansky]]
 - [[https://github.com/hrs/dotfiles/blob/master/emacs/.emacs.d/configuration.org][Harry Schwartz]]
-
-#+BEGIN_SRC emacs-lisp
-  (version)
-#+END_SRC
-
-#+RESULTS:
-: GNU Emacs 26.1 (build 2, x86_64-pc-linux-gnu, GTK+ Version 3.22.30)
-:  of 2018-05-29
-
-#+BEGIN_SRC emacs-lisp
-  (org-version)
-#+END_SRC
-
-#+RESULTS:
-: 9.1.9
 ** Me
 #+BEGIN_SRC emacs-lisp
   (setq user-full-name "André Alexandre Gomes"
