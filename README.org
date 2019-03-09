@@ -15,13 +15,14 @@ all. I knew that something called command line existed, but I thought it was
 just for hackers. My background was paper, pencils, chalk and blackboards.
 
 ** How did the shift happen?
-Well, I had a friend who was using Ubuntu. Besides, once I met a [[https://cmup.fc.up.pt/cmup/jalmeida/][professor]] in
-his office, and he was using a "strange program". I asked about it, he replied -
-"It's Emacs! I write all my \LaTeX papers here, answer e-mails and program in
-here!". That seemed quite unreal. At that time, I was also starting to shift from
-paper to computers. I stopped taking notes on paper in lectures to start using [[https://en.wikipedia.org/wiki/Lyx][Lyx]] to
-write \LaTeX docs. I thought it couldn't get better than that, since I was
-looking at my collegues typing \LaTeX from scratch and I felt sorry for them.
+Well, a friend of mine was using Ubuntu. Once I met a [[https://cmup.fc.up.pt/cmup/jalmeida/][professor]] in his office,
+and he was using a "strange program". I asked about it, he replied - "It's
+Emacs! I write all my \LaTeX papers here, answer e-mails and program in
+here!". That seemed quite unreal. At that time, I was also starting to shift
+from paper to computers. I stopped taking notes on paper in lectures to start
+using [[https://en.wikipedia.org/wiki/Lyx][Lyx]] to write \LaTeX docs. I thought it couldn't get better than that,
+since I was looking at my collegues typing \LaTeX from scratch and I felt sorry
+for them.
 
 At that time I only scratched the surface of the folling idea: "Being able to
 type acuratelly and fast on a computer is convenient". What I didn't know
@@ -33,10 +34,22 @@ I recommend running Emacs on a GUI. This guy agrees and [[https://blog.aaronbieb
 Well, like anyone will advice you, please read the tutorial.
 
 * Evolution
+** Customization
 I started working on my own init.el roughly on December, 2018.
 
 Following the trend, I went for a literate programming kind of approach coupled
-with [[https://duckduckgo.com/l/?kh=-1&uddg=https%253A%252F%252Fgithub.com%252Fjwiegley%252Fuse%252Dpackage][use-package]].
+with [[https://duckduckgo.com/l/?kh=-1&uddg=https%253A%252F%252Fgithub.com%252Fjwiegley%252Fuse%252Dpackage][use-package]]. I disagree with those who say that vanilla Emacs (not
+customized) sucks. I see some packages as interesting add-ons. Others seem just
+useless since they could be easily replaced by built-in Emacs functionality.
+If only those people dared to read and study the manual.
+*** Org agenda
+*** E-mail
+*** Browsing the web
+** Emacs Lisp
+Anyway, I guess they're just having fun learning Emacs lisp. Which brings me to
+the next stage of using Emacs. When you start to work on your init.el you mostly
+copy from other people. Then you understand that it's actually useful to know
+Emacs Lisp (and Lisps in general too). That's the stage I'm currently at.
 
 * How do I carry my org files?
 I have a smartphone, one of those Android. I mitigated the Google influence by
