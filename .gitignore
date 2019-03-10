@@ -1,6 +1,9 @@
 .gitignore
+README.pdf
+README.tex
+ltximg
+projectile-bookmarks.eld
 .python-environments/
-init.el
 elpa
 .last-package-update-day
 snippets
