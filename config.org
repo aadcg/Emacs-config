@@ -221,6 +221,7 @@ Here's a bunch of built-in stuff that I prefer by default.
 * Org
 #+BEGIN_SRC emacs-lisp
   (use-package org
+    :pin gnu
     :config
     (setq org-ellipsis " §")
     ;; (setq org-ellipsis " ⬎")
@@ -256,6 +257,12 @@ Here's a bunch of built-in stuff that I prefer by default.
                  '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
     (add-to-list 'org-structure-template-alist
                  '("py" "#+BEGIN_SRC python\n?\n#+END_SRC"))
+    (add-to-list 'org-structure-template-alist
+                 '("ab" "#+BEGIN_abstract \n?\n#+END_abstract"))
+    (add-to-list 'org-structure-template-alist
+                 '("lx" "#+BEGIN_LaTeX \n?\n#+END_LaTeX"))
+    (add-to-list 'org-structure-template-alist
+                 '("th" "#+BEGIN_theorem \n?\n#+END_theorem"))
 
     :bind
     ("\C-ca" . org-agenda)
@@ -265,8 +272,8 @@ Here's a bunch of built-in stuff that I prefer by default.
 
   (when window-system
     (use-package org-bullets
-    :config
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))))
+      :config
+      (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
