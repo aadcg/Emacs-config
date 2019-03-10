@@ -12,13 +12,15 @@
 	(package-refresh-contents)
 	(package-install 'use-package))
 
-(require 'use-package-ensure)
-(setq use-package-always-ensure t)
+(use-package use-package-ensure
+  :config
+  (setq use-package-always-ensure t))
 
 (use-package auto-package-update
   :config
+  (auto-package-update-maybe)
+  (setq auto-package-update-prompt-before-update t)
   (setq auto-package-update-delete-old-versions t)
-  (setq auto-package-update-hide-results t)
-  (auto-package-update-maybe))
+  (setq auto-package-update-hide-results t))
 
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
