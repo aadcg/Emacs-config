@@ -1,37 +1,41 @@
-#+TITLE: .emacs.d config readme
 #+STARTUP: latexpreview
 #+OPTIONS: toc:nil num:nil email:t
 
 * How did I get to Emacs?
 ** Who am I?
-I assume that you're motivated to use Emacs. If you're not - [[https://www.youtube.com/watch?v=EsAkPl3On3E][convince yourself]].
+I assume you're motivated to use Emacs. If you're not - [[https://www.youtube.com/watch?v=EsAkPl3On3E][convince yourself]].
 
-I started using Emacs inn August, 2018. I completed two bachelor's degrees from
-the University of Porto between 2011 and 2017. I started a master's program on
-pure maths, but quitted after the first semester and started to work for
-[[https://en.wikipedia.org/wiki/Vestas][Vestas]]. With that being said, I'm just a guy and I think that Emacs is not as
-difficult as people usually tell. Back then, I barely knew what GNU/Linux was at
-all. I knew that something called command line existed, but I thought it was
-just for hackers. My background was paper, pencils, chalk and blackboards.
+I completed two bachelor's degrees from the University of Porto between 2011 and
+2017; started a master's program on pure maths, but quitted after the first
+semester. Then started to work for [[https://en.wikipedia.org/wiki/Vestas][Vestas]] and using Emacs, in August 2018. Back
+then, I barely knew what GNU/Linux was at all. I knew that something called
+terminal existed, but I thought it was just for hackers. My background was
+all about proofs using pencils or chalk on paper or blackboards. The point is:
+anyone can use Emacs, and it's not difficult to get into it.
 
 ** How did the shift happen?
-Well, a friend of mine was using Ubuntu. Once I met a [[https://cmup.fc.up.pt/cmup/jalmeida/][professor]] in his office,
-and he was using a "strange program". I asked about it, he replied - "It's
-Emacs! I write all my \LaTeX papers here, answer e-mails and program in
-here!". That seemed quite unreal. At that time, I was also starting to shift
-from paper to computers. I stopped taking notes on paper in lectures to start
-using [[https://en.wikipedia.org/wiki/Lyx][Lyx]] to write \LaTeX docs. I thought it couldn't get better than that,
-since I was looking at my collegues typing \LaTeX from scratch and I felt sorry
-for them.
+A friend of mine was using Ubuntu. Once I met a [[https://cmup.fc.up.pt/cmup/jalmeida/][professor]] in his office, and he
+was using a "strange program". I asked about it, he replied - "It's Emacs! I
+write all my \LaTeX papers here, answer e-mails and program in here!". That
+seemed quite impression and I kept it in the back of my head. At that time, I
+was also starting to shift from paper to computers. I was taking lecture notes
+[[https://en.wikipedia.org/wiki/Lyx][Lyx]], to generate \LaTeX docs. I thought it couldn't get better than that, since I
+was looking at my collegues typing \LaTeX from scratch and I felt sorry for
+them.
 
 At that time I only scratched the surface of the folling idea: "Being able to
 type acuratelly and fast on a computer is convenient". What I didn't know
-is that my life would soon be so deeply based on text - [[https://www.youtube.com/watch?v=SzA2YODtgK4][org mode]] is another universe.
+is that my life would soon be so deeply based on text. Namely, because [[https://www.youtube.com/watch?v=SzA2YODtgK4][org mode]]
+is such a whole new universe.
 
 * Where to start?
 I recommend running Emacs on a GUI. This guy agrees and [[https://blog.aaronbieber.com/2016/12/29/don-t-use-terminal-emacs.html][expands]] on that.
 
-Well, like anyone will advice you, please read the tutorial.
+I also recommend running it on GNU/Linux for obvious reasons. If your company
+makes you use that Windows laptop, then run it on a virtual machine. This guy
+[[https://youtu.be/RDrG-_kapaQ][expands]] on that.
+
+Then it's time to open Emacs and read the tutorial.
 
 * Evolution
 ** Customization
