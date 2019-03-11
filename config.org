@@ -521,4 +521,4 @@ Ivy in Eshell
 - git remote set-url github git@github.com:aadcg/.emacs.d.git
 * TODO Let Latex take care of russian
 * TODO Org subtree presentation
-test
+test2
