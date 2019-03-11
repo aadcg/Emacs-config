@@ -252,6 +252,7 @@ Here's a bunch of built-in stuff that I prefer by default.
     (setq org-src-tab-acts-natively t)
     (setq org-src-window-setup 'current-window)
     (setq org-confirm-babel-evaluate nil)
+    (setq org-highlight-latex-and-related latex)
 
     (add-to-list 'org-structure-template-alist
                  '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
@@ -499,7 +500,11 @@ Ivy in Eshell
 #+END_SRC
 * Auctex
 #+BEGIN_SRC emacs-lisp
-  (use-package auctex)
+  (use-package auctex
+    :config
+    (setq TeX-auto-save t)
+    (setq TeX-parse-self t)
+    (setq-default TeX-master nil))
 #+END_SRC
 * Startup
 #+BEGIN_SRC emacs-lisp
