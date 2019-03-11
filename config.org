@@ -516,9 +516,5 @@ Ivy in Eshell
 #+END_SRC
 * TODO Firefox from Emacs?
 * TODO mu4e
-* TODO github without password
-- set ssh key
-- git remote set-url github git@github.com:aadcg/.emacs.d.git
 * TODO Let Latex take care of russian
 * TODO Org subtree presentation
-test3
