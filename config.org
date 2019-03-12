@@ -443,6 +443,7 @@ Ivy in Eshell
        (concat "cd ~/Downloads && youtube-dl " str "\n"))))
 #+END_SRC
 * Aesthetics
+Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 ** Theme
 #+BEGIN_SRC emacs-lisp
   (when window-system
@@ -492,7 +493,7 @@ Ivy in Eshell
   (when window-system (scroll-bar-mode -1))
   (when window-system (horizontal-scroll-bar-mode -1))
   (fset 'yes-or-no-p 'y-or-n-p)
-
+  (setq line-number-mode nil)
   (show-paren-mode t)
   (setq show-paren-delay 0.0)
   (add-hook 'prog-mode-hook 'linum-mode)
