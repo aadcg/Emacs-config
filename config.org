@@ -1,4 +1,4 @@
-#+TITLE: GNU Emacs configuration
+#+TITLE: GNU Emacs configx
 #+OPTIONS: num:nil toc:nil email:t
 #+LATEX_HEADER: \usepackage[margin=1.2cm]{geometry}
 
@@ -7,10 +7,6 @@
 :EMACS_VERSION: 26.1 (GTK+)
 :ORG_VERSION: 9.1.9
 :END:
-** About
-Based on:
-- [[https://github.com/zamansky/using-emacs/blob/master/myinit.org][Mike Zamansky]]
-- [[https://github.com/hrs/dotfiles/blob/master/emacs/.emacs.d/configuration.org][Harry Schwartz]]
 ** Me
 #+BEGIN_SRC emacs-lisp
   (setq user-full-name "André Alexandre Gomes"
@@ -19,7 +15,7 @@ Based on:
         calendar-longitude -8.63
         calendar-location-name "Porto, PT")
 #+END_SRC
-* Edit this file
+** Config
 #+BEGIN_SRC emacs-lisp
   (defun config-visit ()
     (interactive)
@@ -32,7 +28,7 @@ Based on:
     (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
   (global-set-key (kbd "C-c r") 'config-reload)
 #+END_SRC
-* Defaults
+* Tweak Defaults
 Here's a bunch of built-in stuff that I prefer by default.
 ** Words, whitespaces and text
 - Get rid of trailing whitespaces when a file is saved
@@ -47,28 +43,6 @@ Here's a bunch of built-in stuff that I prefer by default.
   (setq require-final-newline t)
   (setq-default fill-column 80)
   (add-hook 'text-mode-hook 'turn-on-auto-fill)
-#+END_SRC
-** Aesthetics, line numbering and matching parenthesis
-- Hide startup stuff, hide bars, and simplify yes/no to y/n
-- Show matching parenthesis
-- Number lines in texty stuff
-- Highlight current line
-- Dired as 'ls -Atlh'
-#+BEGIN_SRC emacs-lisp
-  (setq inhibit-startup-message t)
-  (setq initial-scratch-message nil)
-  (tool-bar-mode -1)
-  (menu-bar-mode -1)
-  (when window-system (scroll-bar-mode -1))
-  (when window-system (horizontal-scroll-bar-mode -1))
-  (fset 'yes-or-no-p 'y-or-n-p)
-
-  (show-paren-mode t)
-  (setq show-paren-delay 0.0)
-  (add-hook 'prog-mode-hook 'linum-mode)
-  (add-hook 'text-mode-hook 'linum-mode)
-  (when window-system (global-hl-line-mode))
-  (setq-default dired-listing-switches "-Atlh")
 #+END_SRC
 ** Cursor
 - Preserves cursor position after page up/down
@@ -109,6 +83,8 @@ Here's a bunch of built-in stuff that I prefer by default.
   (global-set-key (kbd "C-M-r") 'eval-buffer)
   (global-set-key (kbd "C-x w") 'eww)
   (global-set-key (kbd "S-SPC") 'just-one-space)
+
+  (global-set-key (kbd "M-SPC") 'other-window)
 #+END_SRC
 ** Backups
 #+BEGIN_SRC emacs-lisp
@@ -117,20 +93,11 @@ Here's a bunch of built-in stuff that I prefer by default.
   (setq auto-save-file-name-transforms
           `((".*" ,temporary-file-directory t)))
 #+END_SRC
-** Linum mode fix
-#+BEGIN_SRC emacs-lisp
-  (eval-after-load "linum"
-    '(set-face-attribute 'linum nil :height 125))
-#+END_SRC
-** Other-window
-#+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "M-SPC") 'other-window)
-#+END_SRC
 ** Input Method
 #+BEGIN_SRC emacs-lisp
   (setq default-input-method "russian-computer")
 #+END_SRC
-** Display time
+** Time
 [[https://en.wikipedia.org/wiki/List_of_tz_database_time_zones][Time Zones]]
 #+BEGIN_SRC emacs-lisp
   (setq display-time-24hr-format t)
@@ -219,6 +186,7 @@ Here's a bunch of built-in stuff that I prefer by default.
   (setq browse-url-browser-function 'eww-browse-url)
 #+END_SRC
 * Org
+** Basic config
 #+BEGIN_SRC emacs-lisp
   (use-package org
     :pin gnu
@@ -226,6 +194,8 @@ Here's a bunch of built-in stuff that I prefer by default.
     (setq org-ellipsis " §")
     ;; (setq org-ellipsis " ⬎")
     (custom-set-faces '(org-ellipsis ((t (:foreground "gray40" :underline nil)))))
+
+    (require 'org-tempo)
 
     (add-hook 'org-mode-hook 'org-indent-mode)
 
@@ -265,16 +235,19 @@ Here's a bunch of built-in stuff that I prefer by default.
     (add-to-list 'org-structure-template-alist
                  '("th" "#+BEGIN_theorem \n?\n#+END_theorem"))
 
+    ;; (add-to-list 'org-structure-template-alist
+    ;;              '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC")
+    ;;              '("py" "#+BEGIN_SRC python\n?\n#+END_SRC")
+    ;;              '("ab" "#+BEGIN_abstract \n?\n#+END_abstract")
+    ;;              '("lx" "#+BEGIN_LaTeX \n?\n#+END_LaTeX")
+    ;;              '("th" "#+BEGIN_theorem \n?\n#+END_theorem"))
+
+
     :bind
     ("\C-ca" . org-agenda)
     ("\C-cl" . org-store-link)
     ("\C-cc" . org-capture)
     ("C-S-c ." . org-time-stamp-inactive))
-
-  (when window-system
-    (use-package org-bullets
-      :config
-      (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -285,39 +258,16 @@ Here's a bunch of built-in stuff that I prefer by default.
    '((python . t)
      (latex . t)))
 #+END_SRC
-
+<s
 #+BEGIN_SRC emacs-lisp
   (require 'ox-beamer)
 #+END_SRC
-
+** Org pdftools view
 #+BEGIN_SRC emacs-lisp
   (when window-system (use-package org-pdfview))
 #+END_SRC
-* Pdf Tools
-#+BEGIN_SRC emacs-lisp
-  (when window-system
-    (use-package pdf-tools
-    :config
-    (pdf-tools-install)
-    (add-hook 'pdf-tools-enabled-hook 'pdf-view-midnight-minor-mode)
-    (setq pdf-view-midnight-colors (quote ("#d2c8c8" . "#283033")))))
-#+END_SRC
-* Smartparens
-#+BEGIN_SRC emacs-lisp
-  (use-package smartparens
-    :config
-    (require 'smartparens-config)
-    (smartparens-global-strict-mode))
-#+END_SRC
-* Magit
-#+BEGIN_SRC emacs-lisp
-  (use-package magit
-    :config
-    (setq magit-display-buffer-function (quote magit-display-buffer-same-window-except-diff-v1))
-    :bind
-    ("C-x g" . magit-status))
-#+END_SRC
-* Python
+* Programming
+** Python
 #+BEGIN_SRC emacs-lisp
   (defun drf/append-to-path (path)
     "Add a path both to the $PATH variable and to Emacs' exec-path."
@@ -360,60 +310,16 @@ Here's a bunch of built-in stuff that I prefer by default.
                                     (require 'sphinx-doc)
                                     (sphinx-doc-mode t)))
 #+END_SRC
-* Checking
-** Flycheck
+** Auctex
 #+BEGIN_SRC emacs-lisp
-  (use-package flycheck
-    :init
-    (global-flycheck-mode t))
-#+END_SRC
-** Flyspell
-#+BEGIN_SRC emacs-lisp
-  (when window-system
-    (use-package flyspell))
-
-  (when window-system
-    (use-package auto-dictionary
-    :config (add-hook 'flyspell-mode-hook (lambda () (auto-dictionary-mode 1)))))
-
-#+END_SRC
-* Ivy
-#+BEGIN_SRC emacs-lisp
-  (use-package ivy
+  (use-package auctex
     :config
-    (ivy-mode 1)
-    (setq ivy-use-virtual-buffers t)
-    (setq ivy-count-format "(%d/%d) ")
-    (setq ivy-extra-directories ()))
-
-  (use-package swiper
-    :bind
-    ("C-s" . swiper))
+    (setq TeX-auto-save t)
+    (setq TeX-parse-self t)
+    (setq-default TeX-master nil))
 #+END_SRC
-* Avy
-#+BEGIN_SRC emacs-lisp
-  (use-package avy
-    :bind ("C-r" . avy-goto-word-1))
-#+END_SRC
-* Projectile
-#+BEGIN_SRC emacs-lisp
-  (use-package projectile
-    :init
-    (projectile-mode 1))
-#+END_SRC
-* Company mode
-#+BEGIN_SRC emacs-lisp
-  (use-package company
-    :config
-    (global-company-mode t)
-    (setq company-idle-delay 0)
-    (setq company-minimum-prefix-length 3)
-    (define-key company-active-map (kbd "C-j") 'company-complete)
-    (define-key company-active-map (kbd "C-n") 'company-select-next)
-    (define-key company-active-map (kbd "C-p") 'company-select-previous))
-#+END_SRC
-* Bash
-** Shell
+** Bash
+*** Shell
 Make M-n and M-p more intelligent in shell.
 
 #+BEGIN_SRC emacs-lisp
@@ -426,7 +332,7 @@ Make M-n and M-p more intelligent in shell.
      (define-key comint-mode-map (kbd "C-c M-r") #'comint-previous-input)
      (define-key comint-mode-map (kbd "C-c M-s") #'comint-next-input)))
 #+END_SRC
-** Eshell
+*** Eshell
 I want eshell to behave like a typical terminal, i.e. I don't want tab to
 cycle through different options.
 
@@ -449,7 +355,82 @@ Ivy in Eshell
   (setq eshell-history-file-name "~/.bash_history")
   (setq eshell-history-size 9999)
 #+END_SRC
-* Misc
+** Projectile
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :init
+    (projectile-mode 1))
+#+END_SRC
+** Magit
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :config
+    (setq magit-display-buffer-function (quote magit-display-buffer-same-window-except-diff-v1))
+    :bind
+    ("C-x g" . magit-status))
+#+END_SRC
+* Miscellaneous
+** Checking
+*** Flycheck
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck
+    :init
+    (global-flycheck-mode t))
+#+END_SRC
+*** Flyspell
+#+BEGIN_SRC emacs-lisp
+  (when window-system
+    (use-package flyspell))
+
+  (when window-system
+    (use-package auto-dictionary
+    :config (add-hook 'flyspell-mode-hook (lambda () (auto-dictionary-mode 1)))))
+#+END_SRC
+** Pdf Tools
+#+BEGIN_SRC emacs-lisp
+  (when window-system
+    (use-package pdf-tools
+    :config
+    (pdf-tools-install)
+    (add-hook 'pdf-tools-enabled-hook 'pdf-view-midnight-minor-mode)
+    (setq pdf-view-midnight-colors (quote ("#d2c8c8" . "#283033")))))
+#+END_SRC
+** Smartparens
+#+BEGIN_SRC emacs-lisp
+  (use-package smartparens
+    :config
+    (require 'smartparens-config)
+    (smartparens-global-strict-mode))
+#+END_SRC
+** Avy
+#+BEGIN_SRC emacs-lisp
+  (use-package avy
+    :bind ("C-r" . avy-goto-word-1))
+#+END_SRC
+** Ivy
+#+BEGIN_SRC emacs-lisp
+  (use-package ivy
+    :config
+    (ivy-mode 1)
+    (setq ivy-use-virtual-buffers t)
+    (setq ivy-count-format "(%d/%d) ")
+    (setq ivy-extra-directories ()))
+
+  (use-package swiper
+    :bind
+    ("C-s" . swiper))
+#+END_SRC
+** Company mode
+#+BEGIN_SRC emacs-lisp
+  (use-package company
+    :config
+    (global-company-mode t)
+    (setq company-idle-delay 0)
+    (setq company-minimum-prefix-length 3)
+    (define-key company-active-map (kbd "C-j") 'company-complete)
+    (define-key company-active-map (kbd "C-n") 'company-select-next)
+    (define-key company-active-map (kbd "C-p") 'company-select-previous))
+#+END_SRC
 ** YouTube
 #+BEGIN_SRC emacs-lisp
 (defun youtube-dl ()
@@ -463,19 +444,11 @@ Ivy in Eshell
 #+END_SRC
 * Aesthetics
 ** Theme
-*** Zenburn
 #+BEGIN_SRC emacs-lisp
   (when window-system
     (use-package zenburn-theme
     :init
     (load-theme 'zenburn t)))
-#+END_SRC
-*** Nord
-#+BEGIN_SRC emacs-lisp
-  ;; (use-package nord-theme
-  ;;   :config
-  ;;   (load-theme 'nord t)
-  ;;   (setq nord-comment-brightness 20))
 #+END_SRC
 ** Modeline
 #+BEGIN_SRC emacs-lisp
@@ -498,13 +471,36 @@ Ivy in Eshell
         minions-mode-line-delimiters '("" . ""))
   (minions-mode 1))
 #+END_SRC
-* Auctex
+** Org bullets
 #+BEGIN_SRC emacs-lisp
-  (use-package auctex
-    :config
-    (setq TeX-auto-save t)
-    (setq TeX-parse-self t)
-    (setq-default TeX-master nil))
+  (when window-system
+      (use-package org-bullets
+        :config
+        (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))))
+#+END_SRC
+** Built-in
+- Hide startup stuff, hide bars, and simplify yes/no to y/n
+- Show matching parenthesis
+- Number lines in texty stuff
+- Highlight current line
+- Dired as 'ls -Atlh'
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-startup-message t)
+  (setq initial-scratch-message nil)
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (when window-system (scroll-bar-mode -1))
+  (when window-system (horizontal-scroll-bar-mode -1))
+  (fset 'yes-or-no-p 'y-or-n-p)
+
+  (show-paren-mode t)
+  (setq show-paren-delay 0.0)
+  (add-hook 'prog-mode-hook 'linum-mode)
+  (add-hook 'text-mode-hook 'linum-mode)
+  (eval-after-load "linum"
+    '(set-face-attribute 'linum nil :height 125))
+  (when window-system (global-hl-line-mode))
+  (setq-default dired-listing-switches "-Atlh")
 #+END_SRC
 * Startup
 #+BEGIN_SRC emacs-lisp
@@ -514,12 +510,16 @@ Ivy in Eshell
                                 '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
 
   (when window-system (fullscreen))
-
   (add-hook 'emacs-startup-hook 'org-agenda-list)
   (delete-other-windows)
-
 #+END_SRC
-* TODO Firefox from Emacs?
-* TODO mu4e
-* TODO Let Latex take care of russian
-* TODO Org subtree presentation
+* TODO Improvements
+** TODO Emacs as window manager EXWM
+** TODO Email (mu4e)
+** TODO Org export Latex russian
+** TODO Org subtree presentation
+* Thanks
+Credit to:
+- [[https://github.com/zamansky/using-emacs/blob/master/myinit.org][Mike Zamansky]]
+- [[https://github.com/hrs/dotfiles/blob/master/emacs/.emacs.d/configuration.org][Harry Schwartz]]
+- [[https://github.com/daedreth/UncleDavesEmacs][Dawid Eckert]]
