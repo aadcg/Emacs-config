@@ -97,11 +97,11 @@ Here's a bunch of built-in stuff that I prefer by default.
 #+BEGIN_SRC emacs-lisp
   (setq default-input-method "russian-computer")
 #+END_SRC
-** Time
+** Clock
 [[https://en.wikipedia.org/wiki/List_of_tz_database_time_zones][Time Zones]]
 #+BEGIN_SRC emacs-lisp
   (setq display-time-24hr-format t)
-  (setq display-time-format "%k:%M - %a %d %B")
+  (setq display-time-format "%k:%M %a %d %b")
   (setq display-time-default-load-average nil)
   (display-time-mode 1)
 
@@ -433,14 +433,14 @@ Ivy in Eshell
 #+END_SRC
 ** YouTube
 #+BEGIN_SRC emacs-lisp
-(defun youtube-dl ()
-(interactive)
-(let* ((str (current-kill 0))
-       (default-directory "~/Downloads")
-       (proc (get-buffer-process (ansi-term "/bin/bash"))))
-  (term-send-string
-   proc
-   (concat "cd ~/Downloads && youtube-dl " str "\n"))))
+  (defun youtube-dl ()
+    (interactive)
+    (let* ((str (current-kill 0))
+           (default-directory "~/Downloads")
+           (proc (get-buffer-process (ansi-term "/bin/bash"))))
+      (term-send-string
+       proc
+       (concat "cd ~/Downloads && youtube-dl " str "\n"))))
 #+END_SRC
 * Aesthetics
 ** Theme
@@ -505,9 +505,9 @@ Ivy in Eshell
 * Startup
 #+BEGIN_SRC emacs-lisp
   (defun fullscreen ()
-         (interactive)
-         (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
-                                '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
+    (interactive)
+    (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
+                           '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
 
   (when window-system (fullscreen))
   (add-hook 'emacs-startup-hook 'org-agenda-list)
