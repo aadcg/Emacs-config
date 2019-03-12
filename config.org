@@ -28,7 +28,7 @@
     (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
   (global-set-key (kbd "C-c r") 'config-reload)
 #+END_SRC
-* Tweak Defaults
+* My defaults
 Here's a bunch of built-in stuff that I prefer by default.
 ** Words, whitespaces and text
 - Get rid of trailing whitespaces when a file is saved
@@ -67,24 +67,24 @@ Here's a bunch of built-in stuff that I prefer by default.
     (interactive)
     (text-scale-set 0))
 
-  (define-key global-map (kbd "C-0") 'reset-text-size)
-  (define-key global-map (kbd "C-+") 'text-scale-increase)
-  (define-key global-map (kbd "C--") 'text-scale-decrease)
+  (defun switch-to-agenda ()
+    (interactive)
+    (switch-to-buffer "*Org Agenda*"))
 
-  (define-key global-map (kbd "M-g") 'goto-line)
-
+  (global-set-key (kbd "C-0") 'reset-text-size)
+  (global-set-key (kbd "C-+") 'text-scale-increase)
+  (global-set-key (kbd "C--") 'text-scale-decrease)
+  (global-set-key (kbd "M-g") 'goto-line)
   (global-set-key (kbd "C-x C-b") 'ibuffer)
   (global-set-key (kbd "C-x p") 'switch-to-prev-buffer)
   (global-set-key (kbd "C-x n") 'switch-to-next-buffer)
-
   (global-set-key (kbd "M-%") 'query-replace-regexp)
-
   (global-set-key (kbd "<f5>") 'revert-buffer)
   (global-set-key (kbd "C-M-r") 'eval-buffer)
   (global-set-key (kbd "C-x w") 'eww)
   (global-set-key (kbd "S-SPC") 'just-one-space)
-
   (global-set-key (kbd "M-SPC") 'other-window)
+  (global-set-key (kbd "C-c f") 'switch-to-agenda)
 #+END_SRC
 ** Backups
 #+BEGIN_SRC emacs-lisp
@@ -519,7 +519,7 @@ Ivy in Eshell
 ** TODO Org export Latex russian
 ** TODO Org subtree presentation
 * Thanks
-Credit to:
+- [[https://github.com/BigNaNet/emacs][BigNaNet]]
 - [[https://github.com/zamansky/using-emacs/blob/master/myinit.org][Mike Zamansky]]
 - [[https://github.com/hrs/dotfiles/blob/master/emacs/.emacs.d/configuration.org][Harry Schwartz]]
 - [[https://github.com/daedreth/UncleDavesEmacs][Dawid Eckert]]
