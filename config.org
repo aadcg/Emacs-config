@@ -1,4 +1,4 @@
-#+TITLE: GNU Emacs configx
+#+TITLE: GNU Emacs config
 #+OPTIONS: num:nil toc:nil email:t
 #+LATEX_HEADER: \usepackage[margin=1.2cm]{geometry}
 
