@@ -197,7 +197,7 @@ Here's a bunch of built-in stuff that I prefer by default.
 
     (add-hook 'org-mode-hook 'org-indent-mode)
 
-    (setq org-startup-folded (quote content))
+    (setq org-startup-folded (quote overview))
 
     (setq org-directory "~/NextCloud/org/")
     (setq org-mobile-directory "~/NextCloud/mobileorg/")
