@@ -274,7 +274,7 @@ Here's a bunch of built-in stuff that I prefer by default.
     (setenv "PATH" (concat (getenv "PATH") ":" path))
     (add-to-list 'exec-path path))
 
-  ;; (drf/append-to-path "/ssh:aadco@login.mindstorm.vestas.net:/ifs/opt/app/anaconda/2-5.1.0/bin")
+  (drf/append-to-path "/home/shady/anaconda3/bin/")
 
   (use-package elpy
     :config
@@ -282,8 +282,8 @@ Here's a bunch of built-in stuff that I prefer by default.
     (setq python-shell-interpreter "ipython"
         python-shell-interpreter-args "-i --simple-prompt"))
 
-  ;; (use-package company-jedi)
-  ;; (add-to-list 'company-backends 'company-jedi)
+  (use-package company-jedi)
+  (add-to-list 'company-backends 'company-jedi)
 
   ;; (add-hook 'python-mode-hook 'jedi:setup)
 
