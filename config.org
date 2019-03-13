@@ -223,19 +223,19 @@ Here's a bunch of built-in stuff that I prefer by default.
     (setq org-highlight-latex-and-related latex)
 
     (require 'org-tempo)
-    (add-to-list 'org-structure-template-alist
-                 '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
-    (add-to-list 'org-structure-template-alist
-                 '("py" "#+BEGIN_SRC python\n?\n#+END_SRC"))
-    (add-to-list 'org-structure-template-alist
-                 '("ab" "#+BEGIN_abstract \n?\n#+END_abstract"))
-    (add-to-list 'org-structure-template-alist
-                 '("lx" "#+BEGIN_LaTeX \n?\n#+END_LaTeX"))
-    (add-to-list 'org-structure-template-alist
-                 '("th" "#+BEGIN_theorem \n?\n#+END_theorem"))
+    ;; (add-to-list 'org-structure-template-alist
+    ;;              '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+    ;; (add-to-list 'org-structure-template-alist
+    ;;              '("py" "#+BEGIN_SRC python\n?\n#+END_SRC"))
+    ;; (add-to-list 'org-structure-template-alist
+    ;;              '("ab" "#+BEGIN_abstract \n?\n#+END_abstract"))
+    ;; (add-to-list 'org-structure-template-alist
+    ;;              '("lx" "#+BEGIN_LaTeX \n?\n#+END_LaTeX"))
+    ;; (add-to-list 'org-structure-template-alist
+    ;;              '("th" "#+BEGIN_theorem \n?\n#+END_theorem"))
 
-    ;; (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-    ;; (add-to-list 'org-structure-template-alist '("py" . "src python"))
+    (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+    (add-to-list 'org-structure-template-alist '("py" . "src python"))
 
     :bind
     ("\C-ca" . org-agenda)
