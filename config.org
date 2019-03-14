@@ -196,7 +196,7 @@ Here's a bunch of built-in stuff that I prefer by default.
     (custom-set-faces '(org-ellipsis ((t (:foreground "gray40" :underline nil)))))
 
     (add-hook 'org-mode-hook 'org-indent-mode)
-
+    (setq orgtbl-mode t)
     (setq org-startup-folded (quote overview))
 
     (setq org-directory "~/NextCloud/org/")
