@@ -189,7 +189,6 @@ Here's a bunch of built-in stuff that I prefer by default.
 ** Basic config
 #+BEGIN_SRC emacs-lisp
   (use-package org
-    :pin gnu
     :config
     (setq org-ellipsis " §")
     ;; (setq org-ellipsis " ⬎")
@@ -213,10 +212,12 @@ Here's a bunch of built-in stuff that I prefer by default.
     (setq org-src-tab-acts-natively t)
     (setq org-src-window-setup 'current-window)
     (setq org-confirm-babel-evaluate nil)
-    (setq org-highlight-latex-and-related latex)
+    (setq org-highlight-latex-and-related 'latex)
+    (require 'org-tempo)
     (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
     (add-to-list 'org-structure-template-alist '("py" . "src python"))
-    ;; (require 'org-tempo)
+    (add-to-list 'org-structure-template-alist '("hk" . "src haskell"))
+
     ;; (add-to-list 'org-structure-template-alist
     ;;              '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
     ;; (add-to-list 'org-structure-template-alist
@@ -233,9 +234,6 @@ Here's a bunch of built-in stuff that I prefer by default.
     ("\C-cc" . org-capture)
     ("C-S-c ." . org-time-stamp-inactive))
 #+END_SRC
-
-#+RESULTS:
-: org-time-stamp-inactive
 
 #+BEGIN_SRC emacs-lisp
   (setq exec-path (append exec-path '("/usr/bin/tex")))
