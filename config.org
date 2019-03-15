@@ -216,7 +216,7 @@ Here's a bunch of built-in stuff that I prefer by default.
     (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
     (add-to-list 'org-structure-template-alist '("py" . "src python"))
     (add-to-list 'org-structure-template-alist '("hk" . "src haskell"))
-    ;; (setq org-highlight-latex-and-related 'latex)
+    (setq org-highlight-latex-and-related (quote (latex script entities)))
     ;; (add-to-list 'org-structure-template-alist
     ;;              '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
     ;; (add-to-list 'org-structure-template-alist
