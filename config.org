@@ -5,7 +5,7 @@
 * Meta
 :PROPERTIES:
 :EMACS_VERSION: 26.1 (GTK+)
-:ORG_VERSION: 9.1.9
+:ORG_VERSION: 9.2.1
 :END:
 ** Me
 #+BEGIN_SRC emacs-lisp
@@ -29,7 +29,6 @@
   (global-set-key (kbd "C-c r") 'config-reload)
 #+END_SRC
 * My defaults
-Here's a bunch of built-in stuff that I prefer by default.
 ** Words, whitespaces and text
 - Get rid of trailing whitespaces when a file is saved
 - Treat CamelCaseSubWords as separate words
@@ -71,20 +70,20 @@ Here's a bunch of built-in stuff that I prefer by default.
     (interactive)
     (switch-to-buffer "*Org Agenda*"))
 
-  (global-set-key (kbd "C-0") 'reset-text-size)
-  (global-set-key (kbd "C-+") 'text-scale-increase)
-  (global-set-key (kbd "C--") 'text-scale-decrease)
-  (global-set-key (kbd "M-g") 'goto-line)
+  (global-set-key (kbd "C-0")     'reset-text-size)
+  (global-set-key (kbd "C-+")     'text-scale-increase)
+  (global-set-key (kbd "C--")     'text-scale-decrease)
+  (global-set-key (kbd "M-g")     'goto-line)
   (global-set-key (kbd "C-x C-b") 'ibuffer)
-  (global-set-key (kbd "C-x p") 'switch-to-prev-buffer)
-  (global-set-key (kbd "C-x n") 'switch-to-next-buffer)
-  (global-set-key (kbd "M-%") 'query-replace-regexp)
-  (global-set-key (kbd "<f5>") 'revert-buffer)
-  (global-set-key (kbd "C-M-r") 'eval-buffer)
-  (global-set-key (kbd "C-x w") 'eww)
-  (global-set-key (kbd "S-SPC") 'just-one-space)
-  (global-set-key (kbd "M-SPC") 'other-window)
-  (global-set-key (kbd "C-c f") 'switch-to-agenda)
+  (global-set-key (kbd "C-x p")   'switch-to-prev-buffer)
+  (global-set-key (kbd "C-x n")   'switch-to-next-buffer)
+  (global-set-key (kbd "M-%")     'query-replace-regexp)
+  (global-set-key (kbd "<f5>")    'revert-buffer)
+  (global-set-key (kbd "C-M-r")   'eval-buffer)
+  (global-set-key (kbd "C-x w")   'eww)
+  (global-set-key (kbd "S-SPC")   'just-one-space)
+  (global-set-key (kbd "M-SPC")   'other-window)
+  (global-set-key (kbd "C-c f")   'switch-to-agenda)
 #+END_SRC
 ** Backups
 #+BEGIN_SRC emacs-lisp
@@ -100,25 +99,21 @@ Here's a bunch of built-in stuff that I prefer by default.
 ** Clock
 [[https://en.wikipedia.org/wiki/List_of_tz_database_time_zones][Time Zones]]
 #+BEGIN_SRC emacs-lisp
-  (setq display-time-24hr-format t)
-  (setq display-time-format "%k:%M %a %d %b")
-  (setq display-time-default-load-average nil)
+  (setq display-time-24hr-format t
+        display-time-format "%k:%M %a %d %b"
+        display-time-default-load-average nil
+        display-time-world-list '(("Europe/Moscow" "Москва")
+                                  ("Europe/Lisbon" "Lisboa")))
   (display-time-mode 1)
-
-  (setq display-time-world-list
-        '(("Europe/Moscow" "Москва")
-          ("Europe/Lisbon" "Lisboa")))
 #+END_SRC
 ** Holidays
 #+BEGIN_SRC emacs-lisp
-  (setq holiday-bahai-holidays nil)
-  (setq holiday-oriental-holidays nil)
-  (setq holiday-islamic-holidays nil)
-  (setq holiday-hebrew-holidays nil)
-
-  (setq holiday-general-holidays
-        '(
-          ;; Portuguese Public Holidays
+  (setq holiday-bahai-holidays nil
+        holiday-oriental-holidays nil
+        holiday-islamic-holidays nil
+        holiday-hebrew-holidays nil
+        holiday-general-holidays
+        '(;; Portuguese Public Holidays
           (holiday-fixed 3 19 "Dia do Pai")
           (holiday-fixed 4 25 "Dia da Liberdade")
           (holiday-fixed 5 1 "Dia do Trabalhador")
@@ -160,19 +155,18 @@ Here's a bunch of built-in stuff that I prefer by default.
           (holiday-fixed 10 31 "Halloween")
           ;; (holiday-fixed 11 11 "Veteran's Day")
           ;; (holiday-float 11 4 4 "Thanksgiving")
-          ))
-
-  (setq calendar-christian-all-holidays-flag t)
-  (setq holiday-christian-holidays
+          )
+        calendar-christian-all-holidays-flag t
+        holiday-christian-holidays
         '((holiday-easter-etc)
-         (holiday-fixed 12 25 "Christmas")
-         (if calendar-christian-all-holidays-flag
-             (append
-              (holiday-fixed 8 15 "Assunção de Nossa Senhora")
-              (holiday-fixed 11 1 "Dia de Todos-os-Santos")
-              (holiday-fixed 12 8 "Imaculada Conceição")))))
+          (holiday-fixed 12 25 "Christmas")
+          (if calendar-christian-all-holidays-flag
+              (append
+               (holiday-fixed 8 15 "Assunção de Nossa Senhora")
+               (holiday-fixed 11 1 "Dia de Todos-os-Santos")
+               (holiday-fixed 12 8 "Imaculada Conceição"))))
 
-  (setq holiday-local-holidays
+        holiday-local-holidays
         '(;; Porto, PT
           (holiday-fixed 6 24 "Dia de São João")
           ;; Oliveira de Azeméis, PT
@@ -238,6 +232,7 @@ Here's a bunch of built-in stuff that I prefer by default.
     ;; (setq org-ellipsis " ⬎")
     (setq org-ellipsis " §"
           org-startup-folded 'overview
+          org-cycle-include-plain-lists 'integrate
           org-directory "~/NextCloud/org/"
           org-mobile-directory "~/NextCloud/mobileorg/"
           org-agenda-files '("~/NextCloud/org")
@@ -278,6 +273,9 @@ Here's a bunch of built-in stuff that I prefer by default.
     ("\C-cc" . org-capture)
     ("C-S-c ." . org-time-stamp-inactive))
 #+END_SRC
+
+#+RESULTS:
+: org-time-stamp-inactive
 
 #+BEGIN_SRC emacs-lisp
   (setq exec-path (append exec-path '("/usr/bin/tex")))
@@ -441,9 +439,9 @@ Ivy in Eshell
   (use-package ivy
     :config
     (ivy-mode 1)
-    (setq ivy-use-virtual-buffers t)
-    (setq ivy-count-format "(%d/%d) ")
-    (setq ivy-extra-directories ()))
+    (setq ivy-use-virtual-buffers t
+          ivy-count-format "(%d/%d) "
+          ivy-extra-directories ()))
 
   (use-package swiper
     :bind
