@@ -182,56 +182,11 @@
 * Org
 ** Basic config
 #+BEGIN_SRC emacs-lisp
-  ;; (use-package org
-  ;;   :config
-  ;;   (setq org-ellipsis " §")
-  ;;   ;; (setq org-ellipsis " ⬎")
-  ;;   (custom-set-faces '(org-ellipsis ((t (:foreground "gray40" :underline nil)))))
-  ;;   (add-hook 'org-mode-hook 'org-indent-mode)
-  ;;   (setq orgtbl-mode t)
-  ;;   (setq org-startup-folded (quote overview))
-  ;;   (setq org-directory "~/NextCloud/org/")
-  ;;   (setq org-mobile-directory "~/NextCloud/mobileorg/")
-  ;;   (setq org-agenda-files '("~/NextCloud/org"))
-  ;;   (setq org-mobile-files '("~/NextCloud/org"))
-  ;;   (setq org-mobile-inbox-for-pull "~/NextCloud/org/from-mobile.org")
-  ;;   (setq org-refile-targets '((org-agenda-files :maxlevel . 5)))
-  ;;   (setq org-agenda-skip-deadline-prewarning-if-scheduled t)
-  ;;   (setq org-agenda-include-diary t)
-  ;;   (add-hook 'after-init-hook 'org-mobile-pull)
-  ;;   (add-hook 'kill-emacs-hook 'org-mobile-push)
-  ;;   (setq org-todo-keywords '((sequence "TODO(t)" "STARTED(s!)" "WAITING(w@)" "|" "DONE(d!)")))
-  ;;   (setq org-todo-keyword-faces '(("TODO" . org-warning) ("STARTED" . "yellow") ("WAITING" . "orange")))
-  ;;   (setq org-src-fontify-natively t)
-  ;;   (setq org-src-tab-acts-natively t)
-  ;;   (setq org-src-window-setup 'current-window)
-  ;;   (setq org-confirm-babel-evaluate nil)
-  ;;   (require 'org-tempo)
-  ;;   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-  ;;   (add-to-list 'org-structure-template-alist '("py" . "src python"))
-  ;;   (add-to-list 'org-structure-template-alist '("hk" . "src haskell"))
-  ;;   (setq org-highlight-latex-and-related (quote (latex script entities)))
-  ;;   ;; (add-to-list 'org-structure-template-alist
-  ;;   ;;              '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
-  ;;   ;; (add-to-list 'org-structure-template-alist
-  ;;   ;;              '("py" "#+BEGIN_SRC python\n?\n#+END_SRC"))
-  ;;   ;; (add-to-list 'org-structure-template-alist
-  ;;   ;;              '("ab" "#+BEGIN_abstract \n?\n#+END_abstract"))
-  ;;   ;; (add-to-list 'org-structure-template-alist
-  ;;   ;;              '("lx" "#+BEGIN_LaTeX \n?\n#+END_LaTeX"))
-  ;;   ;; (add-to-list 'org-structure-template-alist
-  ;;   ;;              '("th" "#+BEGIN_theorem \n?\n#+END_theorem"))
-  ;;   :bind
-  ;;   ("\C-ca" . org-agenda)
-  ;;   ("\C-cl" . org-store-link)
-  ;;   ("\C-cc" . org-capture)
-  ;;   ("C-S-c ." . org-time-stamp-inactive))
-
   (use-package org
     :config
     ;; (setq org-ellipsis " ⬎")
     (setq org-ellipsis " §"
-          org-startup-folded 'overview
+          org-startup-folded t
           org-cycle-include-plain-lists 'integrate
           org-directory "~/NextCloud/org/"
           org-mobile-directory "~/NextCloud/mobileorg/"
@@ -239,6 +194,7 @@
           org-mobile-files '("~/NextCloud/org")
           org-mobile-inbox-for-pull "~/NextCloud/org/from-mobile.org"
           org-refile-targets '((org-agenda-files :maxlevel . 5))
+          org-refile-allow-creating-parent-nodes t
           org-agenda-skip-deadline-prewarning-if-scheduled t
           org-agenda-include-diary t
           org-todo-keywords '((sequence "TODO(t)" "STARTED(s!)" "WAITING(w@)" "|" "DONE(d!)"))
