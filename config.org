@@ -92,11 +92,12 @@
   (setq auto-save-file-name-transforms
           `((".*" ,temporary-file-directory t)))
 #+END_SRC
-** Input Method
+** Regional Stuff
+*** Input Method
 #+BEGIN_SRC emacs-lisp
   (setq default-input-method "russian-computer")
 #+END_SRC
-** Clock
+*** Clock
 [[https://en.wikipedia.org/wiki/List_of_tz_database_time_zones][Time Zones]]
 #+BEGIN_SRC emacs-lisp
   (setq display-time-24hr-format t
@@ -106,12 +107,13 @@
                                   ("Europe/Lisbon" "Lisboa")))
   (display-time-mode 1)
 #+END_SRC
-** Holidays
+*** Holidays
 #+BEGIN_SRC emacs-lisp
   (setq holiday-bahai-holidays nil
         holiday-oriental-holidays nil
         holiday-islamic-holidays nil
         holiday-hebrew-holidays nil
+
         holiday-general-holidays
         '(;; Portuguese Public Holidays
           (holiday-fixed 3 19 "Dia do Pai")
@@ -156,15 +158,6 @@
           ;; (holiday-fixed 11 11 "Veteran's Day")
           ;; (holiday-float 11 4 4 "Thanksgiving")
           )
-        calendar-christian-all-holidays-flag t
-        holiday-christian-holidays
-        '((holiday-easter-etc)
-          (holiday-fixed 12 25 "Christmas")
-          (if calendar-christian-all-holidays-flag
-              (append
-               (holiday-fixed 8 15 "Assunção de Nossa Senhora")
-               (holiday-fixed 11 1 "Dia de Todos-os-Santos")
-               (holiday-fixed 12 8 "Imaculada Conceição"))))
 
         holiday-local-holidays
         '(;; Porto, PT
@@ -173,7 +166,17 @@
           (holiday-float 8 1 2 "Festa de Nossa Senhora de La Salette")
           ;; This is actually wrong. This public holiday is celebrated on Monday
           ;; that follows the second sunday of August
-          ))
+          )
+
+        calendar-christian-all-holidays-flag t
+        holiday-christian-holidays
+        '((holiday-easter-etc)
+          (holiday-fixed 12 25 "Christmas")
+          (if calendar-christian-all-holidays-flag
+              (append
+               (holiday-fixed 8 15 "Assunção de Nossa Senhora")
+               (holiday-fixed 11 1 "Dia de Todos-os-Santos")
+               (holiday-fixed 12 8 "Imaculada Conceição")))))
 #+END_SRC
 ** Browser
 #+BEGIN_SRC emacs-lisp
