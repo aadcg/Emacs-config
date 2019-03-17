@@ -182,6 +182,17 @@
 #+BEGIN_SRC emacs-lisp
   (setq browse-url-browser-function 'eww-browse-url)
 #+END_SRC
+** Startup
+#+BEGIN_SRC emacs-lisp
+  (defun fullscreen ()
+    (interactive)
+    (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
+                           '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
+
+  (when window-system (fullscreen))
+  (add-hook 'emacs-startup-hook 'org-agenda-list)
+  (delete-other-windows)
+#+END_SRC
 * Org
 ** Basic config
 #+BEGIN_SRC emacs-lisp
@@ -488,17 +499,6 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
     '(set-face-attribute 'linum nil :height 125))
   (when window-system (global-hl-line-mode))
   (setq-default dired-listing-switches "-Atlh")
-#+END_SRC
-* Startup
-#+BEGIN_SRC emacs-lisp
-  (defun fullscreen ()
-    (interactive)
-    (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
-                           '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
-
-  (when window-system (fullscreen))
-  (add-hook 'emacs-startup-hook 'org-agenda-list)
-  (delete-other-windows)
 #+END_SRC
 * TODO Improvements
 ** TODO Emacs as window manager EXWM
