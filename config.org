@@ -113,17 +113,27 @@
         holiday-oriental-holidays nil
         holiday-islamic-holidays nil
         holiday-hebrew-holidays nil
-        holiday-solar-holidays nil
+        holiday-christian-holidays nil
+        holiday-solar-holidays '((solar-equinoxes-solstices))
 
         holiday-general-holidays
         '(;; Portuguese Public Holidays
+          (holiday-fixed 1 1 "Ano Novo")
+          (holiday-easter-etc -47 "Carnaval")
+          (holiday-easter-etc -2 "Sexta-feira Santa")
+          (holiday-easter-etc 0 "Domingo de Páscoa")
           (holiday-fixed 3 19 "Dia do Pai")
           (holiday-fixed 4 25 "Dia da Liberdade")
           (holiday-fixed 5 1 "Dia do Trabalhador")
+          (holiday-easter-etc +60 "Corpo de Deus")
           (holiday-float 5 0 1 "Dia da Mãe")
           (holiday-fixed 6 10 "Dia de Portugal, de Camões e das Comunidades Portuguesas")
+          (holiday-fixed 8 15 "Assunção de Nossa Senhora")
           (holiday-fixed 10 5 "Implantação da República")
-          (holiday-fixed 12 1 "Restauração da Independência (1580-1640)")
+          (holiday-fixed 11 1 "Dia de Todos-os-Santos")
+          (holiday-fixed 12 1 "Restauração da Independência")
+          (holiday-fixed 12 8 "Imaculada Conceição")
+          (holiday-fixed 12 25 "Natal")
 
           ;; Russian Public Holidays
           (holiday-fixed 1 1 "Новый год")
@@ -160,24 +170,13 @@
           ;; (holiday-float 11 4 4 "Thanksgiving")
           )
 
+        holiday-other-holidays
+        '((holiday-fixed 12 24 "Day Off")
+          (holiday-fixed 12 26 "Day Off"))
+
         holiday-local-holidays
         '(;; Porto, PT
-          (holiday-fixed 6 24 "Dia de São João")
-          ;; Oliveira de Azeméis, PT
-          (holiday-float 8 1 2 "Festa de Nossa Senhora de La Salette")
-          ;; This is actually wrong. This public holiday is celebrated on Monday
-          ;; that follows the second sunday of August
-          )
-
-        calendar-christian-all-holidays-flag t
-        holiday-christian-holidays
-        '((holiday-easter-etc)
-          (holiday-fixed 12 25 "Christmas")
-          (if calendar-christian-all-holidays-flag
-              (append
-               (holiday-fixed 8 15 "Assunção de Nossa Senhora")
-               (holiday-fixed 11 1 "Dia de Todos-os-Santos")
-               (holiday-fixed 12 8 "Imaculada Conceição")))))
+          (holiday-fixed 6 24 "Dia de São João")))
 #+END_SRC
 ** Browser
 #+BEGIN_SRC emacs-lisp
