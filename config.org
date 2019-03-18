@@ -92,7 +92,7 @@
   (setq auto-save-file-name-transforms
           `((".*" ,temporary-file-directory t)))
 #+END_SRC
-** Regional Stuff
+** Regional
 *** Input Method
 #+BEGIN_SRC emacs-lisp
   (setq default-input-method "russian-computer")
@@ -113,6 +113,7 @@
         holiday-oriental-holidays nil
         holiday-islamic-holidays nil
         holiday-hebrew-holidays nil
+        holiday-solar-holidays nil
 
         holiday-general-holidays
         '(;; Portuguese Public Holidays
