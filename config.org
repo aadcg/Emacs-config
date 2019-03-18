@@ -307,7 +307,7 @@
                                     (require 'sphinx-doc)
                                     (sphinx-doc-mode t)))
 #+END_SRC
-** Auctex
+** \LaTeX
 #+BEGIN_SRC emacs-lisp
   (use-package auctex
     :config
@@ -383,7 +383,7 @@ Ivy in Eshell
     (use-package auto-dictionary
     :config (add-hook 'flyspell-mode-hook (lambda () (auto-dictionary-mode 1)))))
 #+END_SRC
-** Pdf Tools
+** Pdf
 #+BEGIN_SRC emacs-lisp
   (when window-system
     (use-package pdf-tools
@@ -392,7 +392,7 @@ Ivy in Eshell
     (add-hook 'pdf-tools-enabled-hook 'pdf-view-midnight-minor-mode)
     (setq pdf-view-midnight-colors (quote ("#d2c8c8" . "#283033")))))
 #+END_SRC
-** Smartparens
+** Parenthesis
 #+BEGIN_SRC emacs-lisp
   (use-package smartparens
     :config
@@ -404,7 +404,7 @@ Ivy in Eshell
   (use-package avy
     :bind ("C-r" . avy-goto-word-1))
 #+END_SRC
-** Ivy
+** Completion
 #+BEGIN_SRC emacs-lisp
   (use-package ivy
     :config
@@ -417,7 +417,7 @@ Ivy in Eshell
     :bind
     ("C-s" . swiper))
 #+END_SRC
-** Company mode
+** Autocomplete
 #+BEGIN_SRC emacs-lisp
   (use-package company
     :config
@@ -455,7 +455,8 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
     :config
     (setq x-underline-at-descent-line t)
     (moody-replace-mode-line-buffer-identification)
-    (moody-replace-vc-mode)))
+    (moody-replace-vc-mode)
+    (moody-mode-line-height 30)))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -505,6 +506,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 ** TODO Email (mu4e)
 ** TODO Org export Latex russian
 ** TODO Org subtree presentation
+** TODO Create repo with portuguese holidays
 * Thanks
 - [[https://github.com/BigNaNet/emacs][BigNaNet]]
 - [[https://github.com/zamansky/using-emacs/blob/master/myinit.org][Mike Zamansky]]
