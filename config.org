@@ -522,7 +522,8 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
   (when window-system
     (use-package rainbow-delimiters
       :config
-      (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)))
+      (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+      (add-hook 'text-mode-hook #'rainbow-delimiters-mode)))
 #+end_src
 * TODO Improvements
 ** TODO Emacs as window manager EXWM
