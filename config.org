@@ -430,7 +430,8 @@ Ivy in Eshell
     (global-company-mode t)
     (setq company-idle-delay 0.1)
     (setq company-minimum-prefix-length 3)
-    (define-key company-active-map (kbd "C-j") 'company-complete)
+    (define-key company-active-map (kbd "C-j") 'company-complete-selection)
+    (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
     (define-key company-active-map (kbd "C-n") 'company-select-next)
     (define-key company-active-map (kbd "C-p") 'company-select-previous))
 #+END_SRC
@@ -519,11 +520,10 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 #+END_SRC
 ** Delimiters
 #+begin_src emacs-lisp
-  (when window-system
-    (use-package rainbow-delimiters
+  (use-package rainbow-delimiters
       :config
       (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-      (add-hook 'text-mode-hook #'rainbow-delimiters-mode)))
+      (add-hook 'text-mode-hook #'rainbow-delimiters-mode))
 #+end_src
 * TODO Improvements
 ** TODO Emacs as window manager EXWM
