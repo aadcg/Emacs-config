@@ -365,6 +365,13 @@ Ivy in Eshell
     :bind
     ("C-x g" . magit-status))
 #+END_SRC
+** Highlight uncommitted changes
+#+begin_src emacs-lisp
+  (use-package diff-hl
+    :config
+    (global-diff-hl-mode)
+    (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+#+end_src
 * Miscellaneous
 ** Checking
 *** Flycheck
@@ -438,14 +445,24 @@ Ivy in Eshell
        proc
        (concat "cd ~/Downloads && youtube-dl " str "\n"))))
 #+END_SRC
+** Games
+#+begin_src emacs-lisp
+  (use-package typit)
+#+end_src
 * Aesthetics
 Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 ** Theme
 #+BEGIN_SRC emacs-lisp
+  (defun transparency (value)
+    "Sets the transparency of the frame window. 0=transparent/100=opaque."
+    (interactive "nTransparency Value 0 - 100 opaque:")
+    (set-frame-parameter (selected-frame) 'alpha value))
+
   (when window-system
     (use-package zenburn-theme
     :init
-    (load-theme 'zenburn t)))
+    (load-theme 'zenburn t)
+    (transparency 95)))
 #+END_SRC
 ** Modeline
 #+BEGIN_SRC emacs-lisp
@@ -500,6 +517,13 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
   (when window-system (global-hl-line-mode))
   (setq-default dired-listing-switches "-Atlh")
 #+END_SRC
+** Delimiters
+#+begin_src emacs-lisp
+  (when window-system
+    (use-package rainbow-delimiters
+      :config
+      (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)))
+#+end_src
 * TODO Improvements
 ** TODO Emacs as window manager EXWM
 ** TODO Email (mu4e)
