@@ -372,6 +372,12 @@ Ivy in Eshell
     (global-diff-hl-mode)
     (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 #+end_src
+** Yaml
+#+begin_src emacs-lisp
+  (use-package yaml-mode
+    :config
+    (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
+#+end_src
 * Miscellaneous
 ** Checking
 *** Flycheck
@@ -463,7 +469,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
     (use-package zenburn-theme
     :init
     (load-theme 'zenburn t)
-    (transparency 95)))
+    (transparency 90)))
 #+END_SRC
 ** Modeline
 #+BEGIN_SRC emacs-lisp
@@ -521,9 +527,9 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 ** Delimiters
 #+begin_src emacs-lisp
   (use-package rainbow-delimiters
-      :config
-      (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-      (add-hook 'text-mode-hook #'rainbow-delimiters-mode))
+    :config
+    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+    (add-hook 'text-mode-hook #'rainbow-delimiters-mode))
 #+end_src
 * TODO Improvements
 ** TODO Emacs as window manager EXWM
@@ -531,6 +537,11 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 ** TODO Org export Latex russian
 ** TODO Org subtree presentation
 ** TODO Create repo with portuguese holidays
+** TODO term, ansi-term, shell and eshell
+- [[https://emacs.stackexchange.com/questions/2101/terminal-is-not-fully-functional-over-ssh-in-a-shell-buffer][link1]]
+- [[https://emacs.stackexchange.com/questions/27/how-can-i-use-my-local-emacs-client-as-the-editor-for-remote-machines-i-access/893#893][link2]]
+- [[https://emacs.stackexchange.com/questions/241/what-are-all-the-ways-of-launching-a-shell-from-inside-emacs-and-what-are-their][link3]]
+- [[https://emacs.stackexchange.com/questions/241/what-are-all-the-ways-of-launching-a-shell-from-inside-emacs-and-what-are-their/242#242][link4]]
 * Thanks
 - [[https://github.com/BigNaNet/emacs][BigNaNet]]
 - [[https://github.com/zamansky/using-emacs/blob/master/myinit.org][Mike Zamansky]]
