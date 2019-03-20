@@ -451,11 +451,11 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 #+BEGIN_SRC emacs-lisp
   (when window-system
     (use-package moody
-    :config
-    (setq x-underline-at-descent-line t)
-    (moody-replace-mode-line-buffer-identification)
-    (moody-replace-vc-mode)
-    (moody-mode-line-height 30)))
+      :config
+      (setq moody-mode-line-height 25)
+      (setq x-underline-at-descent-line t)
+      (moody-replace-mode-line-buffer-identification)
+      (moody-replace-vc-mode)))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
