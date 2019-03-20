@@ -114,7 +114,6 @@
         holiday-islamic-holidays nil
         holiday-hebrew-holidays nil
         holiday-christian-holidays nil
-        holiday-solar-holidays '((solar-equinoxes-solstices))
 
         holiday-general-holidays
         '(;; Portuguese Public Holidays
