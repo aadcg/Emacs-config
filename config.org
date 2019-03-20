@@ -319,14 +319,14 @@
 Make M-n and M-p more intelligent in shell.
 
 #+BEGIN_SRC emacs-lisp
-(eval-after-load 'comint
-  '(progn
-     ;; originally on C-c M-r and C-c M-s
-     (define-key comint-mode-map (kbd "M-p") #'comint-previous-matching-input-from-input)
-     (define-key comint-mode-map (kbd "M-n") #'comint-next-matching-input-from-input)
-     ;; originally on M-p and M-n
-     (define-key comint-mode-map (kbd "C-c M-r") #'comint-previous-input)
-     (define-key comint-mode-map (kbd "C-c M-s") #'comint-next-input)))
+  (eval-after-load 'comint
+    '(progn
+       ;; originally on C-c M-r and C-c M-s
+       (define-key comint-mode-map (kbd "M-p") #'comint-previous-matching-input-from-input)
+       (define-key comint-mode-map (kbd "M-n") #'comint-next-matching-input-from-input)
+       ;; originally on M-p and M-n
+       (define-key comint-mode-map (kbd "C-c M-r") #'comint-previous-input)
+       (define-key comint-mode-map (kbd "C-c M-s") #'comint-next-input)))
 #+END_SRC
 *** Eshell
 I want eshell to behave like a typical terminal, i.e. I don't want tab to
