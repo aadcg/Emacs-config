@@ -428,7 +428,7 @@ Ivy in Eshell
   (use-package company
     :config
     (global-company-mode t)
-    (setq company-idle-delay 0)
+    (setq company-idle-delay 0.1)
     (setq company-minimum-prefix-length 3)
     (define-key company-active-map (kbd "C-j") 'company-complete)
     (define-key company-active-map (kbd "C-n") 'company-select-next)
