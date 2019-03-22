@@ -426,8 +426,10 @@ Ivy in Eshell
     :config
     (ivy-mode 1)
     (setq ivy-use-virtual-buffers t
+          ivy-height 15
+          history-length 300
           ivy-count-format "(%d/%d) "
-          ivy-extra-directories ()))
+          ivy-extra-directories nil))
 
   (use-package swiper
     :bind
