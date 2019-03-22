@@ -225,7 +225,7 @@
           org-confirm-babel-evaluate nil
           org-highlight-latex-and-related (quote (latex script entities))
           orgtbl-mode t)
-    (custom-set-faces '(org-ellipsis ((t (:foreground "gray40" :underline nil)))))
+    (custom-set-faces '(org-ellipsis ((t (:foreground "gray70" :underline nil)))))
     (add-hook 'org-mode-hook 'org-indent-mode)
     (add-hook 'after-init-hook 'org-mobile-pull)
     (add-hook 'kill-emacs-hook 'org-mobile-push)
