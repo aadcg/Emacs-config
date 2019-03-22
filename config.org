@@ -210,8 +210,15 @@
           org-refile-allow-creating-parent-nodes t
           org-agenda-skip-deadline-prewarning-if-scheduled t
           org-agenda-include-diary t
-          org-todo-keywords '((sequence "TODO(t)" "STARTED(s!)" "WAITING(w@)" "|" "DONE(d!)"))
-          org-todo-keyword-faces '(("TODO" . org-warning) ("STARTED" . "yellow") ("WAITING" . "orange"))
+          org-todo-keywords '((sequence "TODO(t)"
+                                        "STARTED(s!)"
+                                        "WAITING(w@)"
+                                        "|"
+                                        "DONE(d!)"
+                                        "NOT TODO(n@)"))
+          org-todo-keyword-faces '(("TODO" . org-warning)
+                                   ("STARTED" . "yellow")
+                                   ("WAITING" . "orange"))
           org-src-fontify-natively t
           org-src-tab-acts-natively t
           org-src-window-setup 'current-window
@@ -242,9 +249,6 @@
     ("\C-cc" . org-capture)
     ("C-S-c ." . org-time-stamp-inactive))
 #+END_SRC
-
-#+RESULTS:
-: org-time-stamp-inactive
 
 #+BEGIN_SRC emacs-lisp
   (setq exec-path (append exec-path '("/usr/bin/tex")))
