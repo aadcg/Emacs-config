@@ -473,7 +473,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
     (use-package zenburn-theme
     :init
     (load-theme 'zenburn t)
-    (transparency 90)))
+    (transparency 95)))
 #+END_SRC
 ** Modeline
 #+BEGIN_SRC emacs-lisp
