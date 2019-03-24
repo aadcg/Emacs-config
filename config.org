@@ -210,6 +210,8 @@
           org-refile-allow-creating-parent-nodes t
           org-agenda-skip-deadline-prewarning-if-scheduled t
           org-agenda-include-diary t
+          org-agenda-span 10
+          org-agenda-start-on-weekday nil
           org-todo-keywords '((sequence "TODO(t)"
                                         "STARTED(s!)"
                                         "WAITING(w@)"
