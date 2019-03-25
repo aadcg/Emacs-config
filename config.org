@@ -539,6 +539,13 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
     (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
     (add-hook 'text-mode-hook #'rainbow-delimiters-mode))
 #+end_src
+** Beacon
+#+begin_src emacs-lisp
+  (use-package beacon
+    :config
+    (beacon-mode 1)
+    (setq beacon-size 100))
+#+end_src
 * TODO Improvements
 ** TODO Emacs as window manager EXWM
 ** TODO Email (mu4e)
