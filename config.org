@@ -42,6 +42,7 @@
   (setq require-final-newline t)
   (setq-default fill-column 80)
   (add-hook 'text-mode-hook 'turn-on-auto-fill)
+  (setq-default indent-tabs-mode nil)
 #+END_SRC
 ** Cursor
 - Preserves cursor position after page up/down
@@ -311,6 +312,8 @@
   (add-hook 'python-mode-hook (lambda ()
                                     (require 'sphinx-doc)
                                     (sphinx-doc-mode t)))
+
+  (add-hook 'python-mode-hook (setq-default electric-indent-inhibit t))
 #+END_SRC
 ** \LaTeX
 #+BEGIN_SRC emacs-lisp
@@ -506,10 +509,9 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 #+END_SRC
 ** Org bullets
 #+BEGIN_SRC emacs-lisp
-  (when window-system
-      (use-package org-bullets
+  (use-package org-bullets
         :config
-        (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))))
+        (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+END_SRC
 ** Built-in
 - Hide startup stuff, hide bars, and simplify yes/no to y/n
@@ -539,8 +541,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 #+begin_src emacs-lisp
   (use-package rainbow-delimiters
     :config
-    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-    (add-hook 'text-mode-hook #'rainbow-delimiters-mode))
+    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 #+end_src
 ** Beacon
 #+begin_src emacs-lisp
@@ -561,6 +562,8 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 - [[https://emacs.stackexchange.com/questions/27/how-can-i-use-my-local-emacs-client-as-the-editor-for-remote-machines-i-access/893#893][link2]]
 - [[https://emacs.stackexchange.com/questions/241/what-are-all-the-ways-of-launching-a-shell-from-inside-emacs-and-what-are-their][link3]]
 - [[https://emacs.stackexchange.com/questions/241/what-are-all-the-ways-of-launching-a-shell-from-inside-emacs-and-what-are-their/242#242][link4]]
+** TODO add personal holidays in a private file
+** TODO [[https://dougie.io/emacs/indentation/][Tabs vs spaces]]
 * Thanks
 - [[https://github.com/BigNaNet/emacs][BigNaNet]]
 - [[https://github.com/zamansky/using-emacs/blob/master/myinit.org][Mike Zamansky]]
