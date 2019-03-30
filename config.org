@@ -85,6 +85,7 @@
   (global-set-key (kbd "S-SPC")   'just-one-space)
   (global-set-key (kbd "M-SPC")   'other-window)
   (global-set-key (kbd "C-c f")   'switch-to-agenda)
+  (global-set-key (kbd "M-o")   'mode-line-other-buffer)
 #+END_SRC
 ** Backups
 #+BEGIN_SRC emacs-lisp
@@ -431,12 +432,14 @@ Ivy in Eshell
     :config
     (ivy-mode 1)
     (setq ivy-use-virtual-buffers t
-          ivy-height 15
+          ivy-height 20
           history-length 300
           ivy-count-format "(%d/%d) "
           ivy-extra-directories nil))
 
   (use-package swiper
+    :config
+    (setq swiper-include-line-number-in-search nil)
     :bind
     ("C-s" . swiper))
 #+END_SRC
@@ -466,6 +469,15 @@ Ivy in Eshell
 ** Games
 #+begin_src emacs-lisp
   (use-package typit)
+#+end_src
+** EXWM
+#+begin_src emacs-lisp
+  ;; (use-package xelb)
+
+  ;; (use-package exwm
+  ;;   :config
+  ;;   (require 'exwm-config)
+  ;;   (exwm-config-default))
 #+end_src
 * Aesthetics
 Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
@@ -547,9 +559,9 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 #+begin_src emacs-lisp
   (when window-system
     (use-package beacon
-    :config
-    (beacon-mode 1)
-    (setq beacon-size 100)))
+      :config
+      (beacon-mode 1)
+      (setq beacon-blink-when-window-scrolls nil)))
 #+end_src
 * TODO Improvements
 ** TODO Emacs as window manager EXWM
