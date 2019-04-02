@@ -404,7 +404,7 @@ Ivy in Eshell
 
   (when window-system
     (use-package auto-dictionary
-    :config (add-hook 'flyspell-mode-hook (lambda () (auto-dictionary-mode 1)))))
+      :config (add-hook 'flyspell-mode-hook (lambda () (auto-dictionary-mode 1)))))
 #+END_SRC
 ** Pdf
 #+BEGIN_SRC emacs-lisp
