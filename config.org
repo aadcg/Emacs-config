@@ -564,6 +564,10 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
       (beacon-mode 1)
       (setq beacon-blink-when-window-scrolls nil)))
 #+end_src
+** Htmlize (syntax highlighting for org export)
+#+begin_src emacs-lisp
+  (use-package htmlize)
+#+end_src
 * TODO Improvements
 ** TODO Emacs as window manager EXWM
 ** TODO Email (mu4e)
