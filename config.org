@@ -404,7 +404,7 @@ Ivy in Eshell
 
   (when window-system
     (use-package auto-dictionary
-    :config (add-hook 'flyspell-mode-hook (lambda () (auto-dictionary-mode 1)))))
+      :config (add-hook 'flyspell-mode-hook (lambda () (auto-dictionary-mode 1)))))
 #+END_SRC
 ** Pdf
 #+BEGIN_SRC emacs-lisp
@@ -523,8 +523,9 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 ** Org bullets
 #+BEGIN_SRC emacs-lisp
   (use-package org-bullets
-        :config
-        (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+    (setq org-bullets-bullet-list '("◉" "○")))
 #+END_SRC
 ** Built-in
 - Hide startup stuff, hide bars, and simplify yes/no to y/n
@@ -569,8 +570,8 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
   (use-package htmlize)
 #+end_src
 * TODO Improvements
-** TODO Emacs as window manager EXWM
 ** TODO Email (mu4e)
+** TODO Emacs as window manager EXWM
 ** TODO Org export Latex russian
 ** TODO Org subtree presentation
 ** TODO Create repo with portuguese holidays
