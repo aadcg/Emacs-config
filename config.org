@@ -86,7 +86,9 @@
   (global-set-key (kbd "S-SPC")   'just-one-space)
   (global-set-key (kbd "M-SPC")   'other-window)
   (global-set-key (kbd "C-c f")   'switch-to-agenda)
-  (global-set-key (kbd "M-o")   'mode-line-other-buffer)
+  (global-set-key (kbd "M-o")     'mode-line-other-buffer)
+  (global-set-key (kbd "M-[")     'backward-paragraph)
+  (global-set-key (kbd "M-]")     'forward-paragraph)
 #+END_SRC
 ** Backups
 #+BEGIN_SRC emacs-lisp
@@ -571,6 +573,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 #+end_src
 * TODO Improvements
 ** TODO Email (mu4e)
+- mu4e + mbsync
 ** TODO Emacs as window manager EXWM
 ** TODO Org export Latex russian
 ** TODO Org subtree presentation
