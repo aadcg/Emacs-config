@@ -440,7 +440,6 @@ Ivy in Eshell
     (ivy-mode 1)
     (setq ivy-use-virtual-buffers t
           ivy-height 20
-          history-length 300
           ivy-count-format "(%d/%d) "
           ivy-extra-directories nil))
 
@@ -449,6 +448,10 @@ Ivy in Eshell
     (setq swiper-include-line-number-in-search nil)
     :bind
     ("C-s" . swiper))
+
+  (use-package smex
+    :config
+    (smex-initialize))
 #+END_SRC
 ** Autocomplete
 #+BEGIN_SRC emacs-lisp
@@ -547,13 +550,13 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
   (when window-system (scroll-bar-mode -1))
   (when window-system (horizontal-scroll-bar-mode -1))
   (fset 'yes-or-no-p 'y-or-n-p)
+  (setq column-number-mode t)
   (setq line-number-mode nil)
   (show-paren-mode t)
   (setq show-paren-delay 0.0)
-  (add-hook 'prog-mode-hook 'linum-mode)
-  (add-hook 'text-mode-hook 'linum-mode)
-  (eval-after-load "linum"
-    '(set-face-attribute 'linum nil :height 125))
+  (setq global-display-line-numbers-mode t)
+  ;; (eval-after-load "linum"
+  ;;   '(set-face-attribute 'linum nil :height 125))
   (when window-system (global-hl-line-mode))
   (setq-default dired-listing-switches "-Atlh")
 #+END_SRC
@@ -574,6 +577,10 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 ** Htmlize (syntax highlighting for org export)
 #+begin_src emacs-lisp
   (use-package htmlize)
+#+end_src
+** Cursor
+#+begin_src emacs-lisp
+  (setq blink-cursor-mode nil)
 #+end_src
 * TODO Improvements
 ** TODO Email (mu4e)
