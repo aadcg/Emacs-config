@@ -197,6 +197,10 @@
   (add-hook 'emacs-startup-hook 'org-agenda-list)
   (delete-other-windows)
 #+END_SRC
+** Tramp
+#+begin_src emacs-lisp
+  (setq tramp-default-method "ssh")
+#+end_src
 * Org
 ** Basic config
 #+BEGIN_SRC emacs-lisp
@@ -254,7 +258,7 @@
     ("\C-ca" . org-agenda)
     ("\C-cl" . org-store-link)
     ("\C-cc" . org-capture)
-    ("C-S-c ." . org-time-stamp-inactive))
+    ("C-c i" . org-time-stamp-inactive))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
