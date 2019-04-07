@@ -232,11 +232,11 @@
 
 ** Beacon
 #+begin_src emacs-lisp
-  ((use-package beacon
+  (use-package beacon
       :if window-system
       :config
       (beacon-mode 1)
-      (setq beacon-blink-when-window-scrolls nil)))
+      (setq beacon-blink-when-window-scrolls nil))
 #+end_src
 
 ** Htmlize (syntax highlighting for org export)
