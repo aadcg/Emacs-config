@@ -5,7 +5,7 @@
 * Meta
 :PROPERTIES:
 :EMACS_VERSION: 26.1 (GTK+)
-:ORG_VERSION: 9.2.1
+:ORG_VERSION: 9.2.3
 :END:
 ** Me
 #+BEGIN_SRC emacs-lisp
@@ -19,12 +19,13 @@
 ** Config
 #+BEGIN_SRC emacs-lisp
   (defun config-visit ()
+    "Visits ~/.emacs.d/config.org."
     (interactive)
     (find-file "~/.emacs.d/config.org"))
   (global-set-key (kbd "C-c e") 'config-visit)
 
   (defun config-reload ()
-    "Reloads ~/.emacs.d/config.org at runtime"
+    "Reloads ~/.emacs.d/config.org at runtime."
     (interactive)
     (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
   (global-set-key (kbd "C-c r") 'config-reload)
@@ -254,6 +255,8 @@
     :config
     ;; (setq org-ellipsis " ⬎")
     (setq org-ellipsis " §"
+          org-goto-interface 'outline-path-completion
+          org-goto-max-level 10
           org-startup-indented t
           org-hide-leading-stars t
           org-special-ctrl-a/e t
@@ -277,7 +280,8 @@
                                         "WAITING(w@)"
                                         "|"
                                         "DONE(d!)"
-                                        "NOT TODO(n@)"))
+                                        "NOT TODO(n@)"
+                                        "CANCELED(c)"))
           org-todo-keyword-faces '(("TODO" . org-warning)
                                    ("STARTED" . "yellow")
                                    ("WAITING" . "orange"))
@@ -507,7 +511,9 @@ Ivy in Eshell
     (setq ivy-use-virtual-buffers t
           ivy-height 15
           ivy-count-format "(%d/%d) "
-          ivy-extra-directories nil))
+          ivy-extra-directories nil)
+    :bind
+    ("C-x B" . ivy-switch-buffer-other-window))
 
   (use-package swiper
     :config
