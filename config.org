@@ -218,7 +218,8 @@
   (show-paren-mode t)
   (setq show-paren-delay 0.0)
   (add-hook 'prog-mode-hook 'display-line-numbers-mode)
-  (add-hook 'prog-mode-hook 'column-number-mode)
+  (column-number-mode)
+  (line-number-mode)
   (when window-system (global-hl-line-mode))
   (setq-default dired-listing-switches "-Atlh")
 #+END_SRC
@@ -583,6 +584,8 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
     "Sets the transparency of the frame window. 0=transparent/100=opaque."
     (interactive "nTransparency Value 0 - 100 opaque:")
     (set-frame-parameter (selected-frame) 'alpha value))
+
+  (global-set-key (kbd "C-x t") 'transparency)
 
   (use-package zenburn-theme
     :if window-system
