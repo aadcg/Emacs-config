@@ -439,7 +439,7 @@ Ivy in Eshell
     :config
     (ivy-mode 1)
     (setq ivy-use-virtual-buffers t
-          ivy-height 20
+          ivy-height 15
           ivy-count-format "(%d/%d) "
           ivy-extra-directories nil))
 
