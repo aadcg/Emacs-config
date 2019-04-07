@@ -15,6 +15,7 @@
         calendar-longitude -8.63
         calendar-location-name "Porto, PT")
 #+END_SRC
+
 ** Config
 #+BEGIN_SRC emacs-lisp
   (defun config-visit ()
@@ -28,6 +29,7 @@
     (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
   (global-set-key (kbd "C-c r") 'config-reload)
 #+END_SRC
+
 * My defaults
 ** Words, whitespaces and text
 - Get rid of trailing whitespaces when a file is saved
@@ -45,6 +47,7 @@
   (setq-default indent-tabs-mode nil)
   (unless window-system (global-visual-line-mode t))
 #+END_SRC
+
 ** Cursor
 - Preserves cursor position after page up/down
 - Preserves cursor position after closing a file
@@ -52,6 +55,7 @@
   (setq scroll-preserve-screen-position 'always)
   (save-place-mode 1)
 #+END_SRC
+
 ** Windows and buffers
 - Automatically revert buffer if smth changed
 - Killing a buffer also kills the window
@@ -62,6 +66,7 @@
   (windmove-default-keybindings)
   (setq windmove-wrap-around t)
 #+END_SRC
+
 ** Keybindings
 #+BEGIN_SRC emacs-lisp
   (defun reset-text-size ()
@@ -90,6 +95,7 @@
   (global-set-key (kbd "M-[")     'backward-paragraph)
   (global-set-key (kbd "M-]")     'forward-paragraph)
 #+END_SRC
+
 ** Backups
 #+BEGIN_SRC emacs-lisp
   (setq backup-directory-alist
@@ -97,11 +103,13 @@
   (setq auto-save-file-name-transforms
           `((".*" ,temporary-file-directory t)))
 #+END_SRC
+
 ** Regional
 *** Input Method
 #+BEGIN_SRC emacs-lisp
   (setq default-input-method "russian-computer")
 #+END_SRC
+
 *** Clock
 [[https://en.wikipedia.org/wiki/List_of_tz_database_time_zones][Time Zones]]
 #+BEGIN_SRC emacs-lisp
@@ -112,6 +120,7 @@
                                   ("Europe/Lisbon" "Lisboa")))
   (display-time-mode 1)
 #+END_SRC
+
 *** Holidays
 #+BEGIN_SRC emacs-lisp
   (setq holiday-bahai-holidays nil
@@ -186,21 +195,12 @@
 #+BEGIN_SRC emacs-lisp
   (setq browse-url-browser-function 'eww-browse-url)
 #+END_SRC
-** Startup
-#+BEGIN_SRC emacs-lisp
-  (defun fullscreen ()
-    (interactive)
-    (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
-                           '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
 
-  (when window-system (fullscreen))
-  (add-hook 'emacs-startup-hook 'org-agenda-list)
-  (delete-other-windows)
-#+END_SRC
 ** Tramp
 #+begin_src emacs-lisp
   (setq tramp-default-method "ssh")
 #+end_src
+
 * Org
 ** Basic config
 #+BEGIN_SRC emacs-lisp
@@ -208,7 +208,12 @@
     :config
     ;; (setq org-ellipsis " ⬎")
     (setq org-ellipsis " §"
+          org-startup-indented t
+          org-hide-leading-stars t
+          org-special-ctrl-a/e t
+          org-special-ctrl-k t
           org-startup-folded t
+          org-return-follows-link t
           org-cycle-include-plain-lists 'integrate
           org-directory "~/NextCloud/org/"
           org-mobile-directory "~/NextCloud/mobileorg/"
@@ -237,7 +242,6 @@
           org-highlight-latex-and-related (quote (latex script entities))
           orgtbl-mode t)
     (custom-set-faces '(org-ellipsis ((t (:foreground "gray70" :underline nil)))))
-    (add-hook 'org-mode-hook 'org-indent-mode)
     (add-hook 'after-init-hook 'org-mobile-pull)
     (add-hook 'kill-emacs-hook 'org-mobile-push)
     (require 'org-tempo)
@@ -273,10 +277,12 @@
 #+BEGIN_SRC emacs-lisp
   (require 'ox-beamer)
 #+END_SRC
+
 ** Org pdftools view
 #+BEGIN_SRC emacs-lisp
   (when window-system (use-package org-pdfview))
 #+END_SRC
+
 * Programming
 ** Python
 #+BEGIN_SRC emacs-lisp
@@ -323,6 +329,7 @@
 
   (add-hook 'python-mode-hook (setq-default electric-indent-inhibit t))
 #+END_SRC
+
 ** \LaTeX
 #+BEGIN_SRC emacs-lisp
   (use-package auctex
@@ -331,6 +338,7 @@
     (setq TeX-parse-self t)
     (setq-default TeX-master nil))
 #+END_SRC
+
 ** Bash
 *** Shell
 Make M-n and M-p more intelligent in shell.
@@ -345,6 +353,7 @@ Make M-n and M-p more intelligent in shell.
        (define-key comint-mode-map (kbd "C-c M-r") #'comint-previous-input)
        (define-key comint-mode-map (kbd "C-c M-s") #'comint-next-input)))
 #+END_SRC
+
 *** Eshell
 I want eshell to behave like a typical terminal, i.e. I don't want tab to
 cycle through different options.
@@ -368,12 +377,14 @@ Ivy in Eshell
   (setq eshell-history-file-name "~/.bash_history")
   (setq eshell-history-size 9999)
 #+END_SRC
+
 ** Projectile
 #+BEGIN_SRC emacs-lisp
   (use-package projectile
     :init
     (projectile-mode 1))
 #+END_SRC
+
 ** Magit
 #+BEGIN_SRC emacs-lisp
   (use-package magit
@@ -382,6 +393,7 @@ Ivy in Eshell
     :bind
     ("C-x g" . magit-status))
 #+END_SRC
+
 ** Highlight uncommitted changes
 #+begin_src emacs-lisp
   (use-package diff-hl
@@ -389,20 +401,24 @@ Ivy in Eshell
     (global-diff-hl-mode)
     (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 #+end_src
+
 ** Yaml
 #+begin_src emacs-lisp
   (use-package yaml-mode
     :config
     (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
 #+end_src
+
 * Miscellaneous
 ** Checking
+
 *** Flycheck
 #+BEGIN_SRC emacs-lisp
   (use-package flycheck
     :init
     (global-flycheck-mode t))
 #+END_SRC
+
 *** Flyspell
 #+BEGIN_SRC emacs-lisp
   (when window-system
@@ -412,6 +428,7 @@ Ivy in Eshell
     (use-package auto-dictionary
       :config (add-hook 'flyspell-mode-hook (lambda () (auto-dictionary-mode 1)))))
 #+END_SRC
+
 ** Pdf
 #+BEGIN_SRC emacs-lisp
   (when window-system
@@ -421,6 +438,7 @@ Ivy in Eshell
     (add-hook 'pdf-tools-enabled-hook 'pdf-view-midnight-minor-mode)
     (setq pdf-view-midnight-colors (quote ("#d2c8c8" . "#3F3F3F")))))
 #+END_SRC
+
 ** Parenthesis
 #+BEGIN_SRC emacs-lisp
   (use-package smartparens
@@ -428,11 +446,13 @@ Ivy in Eshell
     (require 'smartparens-config)
     (smartparens-global-strict-mode))
 #+END_SRC
+
 ** Avy
 #+BEGIN_SRC emacs-lisp
   (use-package avy
     :bind ("C-r" . avy-goto-word-1))
 #+END_SRC
+
 ** Completion
 #+BEGIN_SRC emacs-lisp
   (use-package ivy
@@ -453,6 +473,7 @@ Ivy in Eshell
     :config
     (smex-initialize))
 #+END_SRC
+
 ** Autocomplete
 #+BEGIN_SRC emacs-lisp
   (use-package company
@@ -465,6 +486,7 @@ Ivy in Eshell
     (define-key company-active-map (kbd "C-n") 'company-select-next)
     (define-key company-active-map (kbd "C-p") 'company-select-previous))
 #+END_SRC
+
 ** YouTube
 #+BEGIN_SRC emacs-lisp
   (defun youtube-dl ()
@@ -476,10 +498,12 @@ Ivy in Eshell
        proc
        (concat "cd ~/Downloads && youtube-dl " str "\n"))))
 #+END_SRC
+
 ** Games
 #+begin_src emacs-lisp
   (use-package typit)
 #+end_src
+
 ** EXWM
 #+begin_src emacs-lisp
   ;; (use-package xelb)
@@ -489,6 +513,7 @@ Ivy in Eshell
   ;;   (require 'exwm-config)
   ;;   (exwm-config-default))
 #+end_src
+
 * Aesthetics
 Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 ** Theme
@@ -505,8 +530,6 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
     (transparency 90)))
 #+END_SRC
 
-#+RESULTS:
-
 ** Modeline
 #+BEGIN_SRC emacs-lisp
   (when window-system
@@ -521,6 +544,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 #+BEGIN_SRC emacs-lisp
   (when window-system (display-battery-mode))
 #+END_SRC
+
 ** Minions
 #+BEGIN_SRC emacs-lisp
 (use-package minions
@@ -529,6 +553,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
         minions-mode-line-delimiters '("" . ""))
   (minions-mode 1))
 #+END_SRC
+
 ** Org bullets
 #+BEGIN_SRC emacs-lisp
   (use-package org-bullets
@@ -536,10 +561,11 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
     (setq org-bullets-bullet-list '("◉" "○")))
 #+END_SRC
+
 ** Built-in
 - Hide startup stuff, hide bars, and simplify yes/no to y/n
 - Show matching parenthesis
-- Number lines in texty stuff
+- Number lines while programming
 - Highlight current line
 - Dired as 'ls -Atlh'
 #+BEGIN_SRC emacs-lisp
@@ -550,22 +576,22 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
   (when window-system (scroll-bar-mode -1))
   (when window-system (horizontal-scroll-bar-mode -1))
   (fset 'yes-or-no-p 'y-or-n-p)
-  (setq column-number-mode t)
   (setq line-number-mode nil)
   (show-paren-mode t)
   (setq show-paren-delay 0.0)
-  (setq global-display-line-numbers-mode t)
-  ;; (eval-after-load "linum"
-  ;;   '(set-face-attribute 'linum nil :height 125))
+  (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+  (add-hook 'prog-mode-hook 'column-number-mode)
   (when window-system (global-hl-line-mode))
   (setq-default dired-listing-switches "-Atlh")
 #+END_SRC
+
 ** Delimiters
 #+begin_src emacs-lisp
   (use-package rainbow-delimiters
     :config
     (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 #+end_src
+
 ** Beacon
 #+begin_src emacs-lisp
   (when window-system
@@ -574,10 +600,12 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
       (beacon-mode 1)
       (setq beacon-blink-when-window-scrolls nil)))
 #+end_src
+
 ** Htmlize (syntax highlighting for org export)
 #+begin_src emacs-lisp
   (use-package htmlize)
 #+end_src
+
 ** Cursor
 #+begin_src emacs-lisp
   (setq blink-cursor-mode nil)
@@ -585,19 +613,38 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 * TODO Improvements
 ** TODO Email (mu4e)
 - mu4e + mbsync
+
 ** TODO Emacs as window manager EXWM
+
 ** TODO Org export Latex russian
+
 ** TODO Org subtree presentation
+
 ** TODO Create repo with portuguese holidays
+
 ** TODO term, ansi-term, shell and eshell
 - [[https://emacs.stackexchange.com/questions/2101/terminal-is-not-fully-functional-over-ssh-in-a-shell-buffer][link1]]
 - [[https://emacs.stackexchange.com/questions/27/how-can-i-use-my-local-emacs-client-as-the-editor-for-remote-machines-i-access/893#893][link2]]
 - [[https://emacs.stackexchange.com/questions/241/what-are-all-the-ways-of-launching-a-shell-from-inside-emacs-and-what-are-their][link3]]
 - [[https://emacs.stackexchange.com/questions/241/what-are-all-the-ways-of-launching-a-shell-from-inside-emacs-and-what-are-their/242#242][link4]]
+
 ** TODO add personal holidays in a private file
+
 ** TODO [[https://dougie.io/emacs/indentation/][Tabs vs spaces]]
 * Thanks
 - [[https://github.com/BigNaNet/emacs][BigNaNet]]
 - [[https://github.com/zamansky/using-emacs/blob/master/myinit.org][Mike Zamansky]]
 - [[https://github.com/hrs/dotfiles/blob/master/emacs/.emacs.d/configuration.org][Harry Schwartz]]
 - [[https://github.com/daedreth/UncleDavesEmacs][Dawid Eckert]]
+
+* Startup
+#+BEGIN_SRC emacs-lisp
+  (defun fullscreen ()
+    (interactive)
+    (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
+                           '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
+
+  (when window-system (fullscreen))
+  (add-hook 'emacs-startup-hook 'org-agenda-list)
+  (delete-other-windows)
+#+END_SRC
