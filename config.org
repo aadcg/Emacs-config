@@ -81,8 +81,6 @@
   (global-set-key (kbd "C--")     'text-scale-decrease)
   (global-set-key (kbd "M-g")     'goto-line)
   (global-set-key (kbd "C-x C-b") 'ibuffer)
-  (global-set-key (kbd "C-x p")   'switch-to-prev-buffer)
-  (global-set-key (kbd "C-x n")   'switch-to-next-buffer)
   (global-set-key (kbd "M-%")     'query-replace-regexp)
   (global-set-key (kbd "<f5>")    'revert-buffer)
   (global-set-key (kbd "C-M-r")   'eval-buffer)
@@ -108,6 +106,10 @@
 #+BEGIN_SRC emacs-lisp
   (setq default-input-method "russian-computer")
 #+END_SRC
+*** Calendar
+#+begin_src emacs-lisp
+  (setq calendar-week-start-day 1)
+#+end_src
 
 *** Clock
 [[https://en.wikipedia.org/wiki/List_of_tz_database_time_zones][Time Zones]]
