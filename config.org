@@ -106,6 +106,10 @@
 #+BEGIN_SRC emacs-lisp
   (setq default-input-method "russian-computer")
 #+END_SRC
+*** Calendar
+#+begin_src emacs-lisp
+  (setq calendar-week-start-day 1)
+#+end_src
 
 *** Clock
 [[https://en.wikipedia.org/wiki/List_of_tz_database_time_zones][Time Zones]]
