@@ -81,8 +81,6 @@
   (global-set-key (kbd "C--")     'text-scale-decrease)
   (global-set-key (kbd "M-g")     'goto-line)
   (global-set-key (kbd "C-x C-b") 'ibuffer)
-  (global-set-key (kbd "C-x p")   'switch-to-prev-buffer)
-  (global-set-key (kbd "C-x n")   'switch-to-next-buffer)
   (global-set-key (kbd "M-%")     'query-replace-regexp)
   (global-set-key (kbd "<f5>")    'revert-buffer)
   (global-set-key (kbd "C-M-r")   'eval-buffer)
@@ -119,6 +117,11 @@
                                   ("Europe/Lisbon" "Lisboa")))
   (display-time-mode 1)
 #+END_SRC
+
+*** Calendar
+#+begin_src emacs-lisp
+  (setq calendar-week-start-day 1)
+#+end_src
 
 *** Holidays
 #+BEGIN_SRC emacs-lisp
@@ -647,6 +650,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 ** TODO add personal holidays in a private file
 
 ** TODO [[https://dougie.io/emacs/indentation/][Tabs vs spaces]]
+
 * Thanks
 - [[https://github.com/BigNaNet/emacs][BigNaNet]]
 - [[https://github.com/zamansky/using-emacs/blob/master/myinit.org][Mike Zamansky]]
