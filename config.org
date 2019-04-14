@@ -422,8 +422,9 @@
              ("return" .   #x27fc)
              ;; ("yield" .    #x27fb)
              ("for" .      #x2200)
+             ;; U+2200
              ;; Base Types
-             ("int" .      #x2124)
+             ("int" .      #x2115)
              ("float" .    #x211d)
              ("str" .      #x1d54a)
              ("True" .     #x1d54b)
@@ -436,7 +437,7 @@
              ;; ("Iterable" . #x1d50a)
              ;; ("Any" .      #x2754)
              ;; ("Union" .    #x22c3))))
-             )
+             ))))
 
 #+END_SRC
 
@@ -681,7 +682,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
   (require 'pretty-mode)
   (global-pretty-mode t)
   (pretty-activate-groups
-   '(:sub-and-superscripts :greek :arithmetic-nary))
+   '(:sub-and-superscripts :greek :arithmetic-nary :quantifiers))
 #+end_src
 
 * TODO Improvements
