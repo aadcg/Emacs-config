@@ -706,6 +706,8 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 
 ** TODO [[https://dougie.io/emacs/indentation/][Tabs vs spaces]]
 
+** TODO Pretty stuff
+
 * Thanks
 - [[https://github.com/BigNaNet/emacs][BigNaNet]]
 - [[https://github.com/zamansky/using-emacs/blob/master/myinit.org][Mike Zamansky]]
