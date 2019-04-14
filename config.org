@@ -188,8 +188,24 @@
           )
 
         holiday-other-holidays
-        '((holiday-fixed 12 24 "Day Off")
-          (holiday-fixed 12 26 "Day Off"))
+        '(;; Days Off for 2019
+          (holiday-fixed 12 24 "Day Off")
+          (holiday-fixed 12 26 "Day Off")
+
+          ;; Company Holidays for 2019
+          (holiday-fixed 6 25 "Company Holiday")
+          (holiday-fixed 6 26 "Company Holiday")
+          (holiday-fixed 6 27 "Company Holiday")
+          (holiday-fixed 6 28 "Company Holiday")
+          (holiday-fixed 7 9 "Company Holiday")
+          (holiday-fixed 7 10 "Company Holiday")
+          (holiday-fixed 7 11 "Company Holiday")
+          (holiday-fixed 7 12 "Company Holiday")
+          (holiday-fixed 7 15 "Company Holiday")
+          (holiday-fixed 7 16 "Company Holiday")
+          (holiday-fixed 7 17 "Company Holiday")
+          (holiday-fixed 7 18 "Company Holiday")
+          (holiday-fixed 7 19 "Company Holiday"))
 
         holiday-local-holidays
         '(;; Porto, PT
@@ -268,10 +284,10 @@
           org-return-follows-link t
           org-cycle-include-plain-lists 'integrate
           org-directory "~/NextCloud/org/"
-          org-mobile-directory "~/NextCloud/mobileorg/"
           org-agenda-files '("~/NextCloud/org")
-          org-mobile-files '("~/NextCloud/org")
-          org-mobile-inbox-for-pull "~/NextCloud/org/from-mobile.org"
+          ;; org-mobile-directory "~/NextCloud/mobileorg/"
+          ;; org-mobile-files '("~/NextCloud/org")
+          ;; org-mobile-inbox-for-pull "~/NextCloud/org/from-mobile.org"
           org-refile-targets '((org-agenda-files :maxlevel . 5))
           org-refile-allow-creating-parent-nodes t
           org-agenda-skip-deadline-prewarning-if-scheduled t
@@ -284,7 +300,7 @@
                                         "|"
                                         "DONE(d!)"
                                         "NOT TODO(n@)"
-                                        "CANCELED(c)"))
+                                        "CANCELED(c@)"))
           org-todo-keyword-faces '(("TODO" . org-warning)
                                    ("STARTED" . "yellow")
                                    ("WAITING" . "orange"))
@@ -298,8 +314,8 @@
                ("begin" "$1" "$" "$$" "\\(" "\\[")))
           orgtbl-mode t)
     (custom-set-faces '(org-ellipsis ((t (:foreground "gray70" :underline nil)))))
-    (add-hook 'after-init-hook 'org-mobile-pull)
-    (add-hook 'kill-emacs-hook 'org-mobile-push)
+    ;; (add-hook 'after-init-hook 'org-mobile-pull)
+    ;; (add-hook 'kill-emacs-hook 'org-mobile-push)
     (require 'org-tempo)
     (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
     (add-to-list 'org-structure-template-alist '("py" . "src python"))
@@ -320,7 +336,6 @@
         (org-toggle-checkbox))
       (org-next-item))
 
-    ;; (global-set-key (kbd "C-c j") 'aag/org-checkbox-next)
     :bind
     ("\C-ca" . org-agenda)
     ("\C-cl" . org-store-link)
