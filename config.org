@@ -422,7 +422,6 @@
              ("return" .   #x27fc)
              ;; ("yield" .    #x27fb)
              ("for" .      #x2200)
-             ;; U+2200
              ;; Base Types
              ("int" .      #x2115)
              ("float" .    #x211d)
