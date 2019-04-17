@@ -374,6 +374,7 @@
 
   (drf/append-to-path "/home/shady/anaconda3/bin/")
 
+
   (use-package elpy
     :config
     (elpy-enable)
@@ -439,6 +440,15 @@
              ))))
 
 #+END_SRC
+** Haskell
+#+begin_src emacs-lisp
+  (use-package haskell-mode)
+
+  (add-hook 'haskell-mode-hook
+            (lambda ()
+              (haskell-doc-mode)
+              (turn-on-haskell-indent)))
+#+end_src
 
 ** \LaTeX
 #+BEGIN_SRC emacs-lisp
