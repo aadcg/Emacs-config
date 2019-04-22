@@ -587,11 +587,13 @@ Ivy in Eshell
     :bind
     ("C-x B" . ivy-switch-buffer-other-window))
 
-  (use-package swiper
-    :config
-    (setq swiper-include-line-number-in-search nil)
-    :bind
-    ("C-s" . swiper))
+  (when window-system
+    (use-package swiper
+      :config
+      (setq swiper-include-line-number-in-search nil)
+      :bind
+      ("C-s" . swiper)))
+
 
   (use-package smex
     :config
@@ -682,10 +684,11 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 
 ** Org bullets
 #+BEGIN_SRC emacs-lisp
-  (use-package org-bullets
-    :config
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-    (setq org-bullets-bullet-list '("◉" "○")))
+  (when window-system
+    (use-package org-bullets
+      :config
+      (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+      (setq org-bullets-bullet-list '("◉" "○"))))
 #+END_SRC
 
 ** Pretty mode
