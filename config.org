@@ -255,11 +255,11 @@
 
 ** Beacon
 #+begin_src emacs-lisp
-  (use-package beacon
-      :if window-system
-      :config
-      (beacon-mode 1)
-      (setq beacon-blink-when-window-scrolls nil))
+  (when window-system
+    (use-package beacon
+    :config
+    (beacon-mode 1)
+    (setq beacon-blink-when-window-scrolls nil)))
 #+end_src
 
 ** Htmlize (syntax highlighting for org export)
@@ -360,8 +360,9 @@
 
 ** Org pdftools view
 #+BEGIN_SRC emacs-lisp
-  (use-package org-pdfview
-    :if window-system)
+  (when window-system
+    (use-package org-pdfview))
+
 #+END_SRC
 
 * Programming
@@ -540,22 +541,24 @@ Ivy in Eshell
 
 *** Flyspell
 #+BEGIN_SRC emacs-lisp
-  (use-package flyspell
-    :if window-system)
+  (when window-system
+    (use-package flyspell))
 
-  (use-package auto-dictionary
-    :if window-system
-    :config (add-hook 'flyspell-mode-hook (lambda () (auto-dictionary-mode 1))))
+
+  (when window-system
+    (use-package auto-dictionary
+      :config (add-hook 'flyspell-mode-hook (lambda () (auto-dictionary-mode 1)))))
 #+END_SRC
 
 ** Pdf
 #+BEGIN_SRC emacs-lisp
-  (use-package pdf-tools
-    :if window-system
-    :config
-    (pdf-tools-install)
-    (add-hook 'pdf-tools-enabled-hook 'pdf-view-midnight-minor-mode)
-    (setq pdf-view-midnight-colors (quote ("#d2c8c8" . "#3F3F3F"))))
+  (when window-system
+    (use-package pdf-tools
+      :config
+      (pdf-tools-install)
+      (add-hook 'pdf-tools-enabled-hook 'pdf-view-midnight-minor-mode)
+      (setq pdf-view-midnight-colors (quote ("#d2c8c8" . "#3F3F3F")))))
+
 #+END_SRC
 
 ** Parenthesis
@@ -646,22 +649,22 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 
   (global-set-key (kbd "C-x t") 'transparency)
 
-  (use-package zenburn-theme
-    :if window-system
-    :init
-    (load-theme 'zenburn t)
-    (transparency 90))
+  (when window-system
+    (use-package zenburn-theme
+      :init
+      (load-theme 'zenburn t)
+      (transparency 90)))
 #+END_SRC
 
 ** Modeline
 #+BEGIN_SRC emacs-lisp
-  (use-package moody
-      :if window-system
+  (when window-system
+    (use-package moody
       :config
       (setq moody-mode-line-height 25)
       (setq x-underline-at-descent-line t)
       (moody-replace-mode-line-buffer-identification)
-      (moody-replace-vc-mode))
+      (moody-replace-vc-mode)))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
