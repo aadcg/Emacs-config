@@ -230,7 +230,7 @@
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-startup-message t)
   (setq initial-scratch-message nil)
-  (tool-bar-mode -1)
+  (when window-system (tool-bar-mode -1))
   (menu-bar-mode -1)
   (when window-system (scroll-bar-mode -1))
   (when window-system (horizontal-scroll-bar-mode -1))
