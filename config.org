@@ -91,8 +91,8 @@
   (global-set-key (kbd "M-SPC")   'other-window)
   (global-set-key (kbd "C-c f")   'switch-to-agenda)
   (global-set-key (kbd "M-o")     'mode-line-other-buffer)
-  (global-set-key (kbd "M-[")     'backward-paragraph)
-  (global-set-key (kbd "M-]")     'forward-paragraph)
+  ;; (global-set-key (kbd "M-[")     'backward-paragraph)
+  ;; (global-set-key (kbd "M-]")     'forward-paragraph)
 #+END_SRC
 
 ** Backups
