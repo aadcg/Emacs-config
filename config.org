@@ -690,12 +690,13 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 
 ** Pretty mode
 #+begin_src emacs-lisp
-  (use-package pretty-mode
-    :config
-    (require 'pretty-mode)
-    (global-pretty-mode t)
-    (pretty-activate-groups
-     '(:sub-and-superscripts :greek :arithmetic-nary :quantifiers)))
+  (when window-system
+    (use-package pretty-mode
+      :config
+      (require 'pretty-mode)
+      (global-pretty-mode t)
+      (pretty-activate-groups
+       '(:sub-and-superscripts :greek :arithmetic-nary :quantifiers))))
 #+end_src
 
 * TODO Improvements
