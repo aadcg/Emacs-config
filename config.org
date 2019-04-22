@@ -243,7 +243,7 @@
   (line-number-mode)
   (when window-system (global-hl-line-mode))
   (setq-default dired-listing-switches "-Atlh")
-  (global-prettify-symbols-mode t)
+  (when window-system (global-prettify-symbols-mode t))
 #+END_SRC
 
 ** Delimiters
