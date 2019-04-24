@@ -23,12 +23,14 @@
     "Visits ~/.emacs.d/config.org."
     (interactive)
     (find-file "~/.emacs.d/config.org"))
+
   (global-set-key (kbd "C-c e") 'config-visit)
 
   (defun config-reload ()
     "Reloads ~/.emacs.d/config.org at runtime."
     (interactive)
     (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+
   (global-set-key (kbd "C-c r") 'config-reload)
 #+END_SRC
 
@@ -65,6 +67,7 @@
 
 #+BEGIN_SRC emacs-lisp
   (global-auto-revert-mode t)
+  (setq auto-revert-remote-files t)
   (substitute-key-definition 'kill-buffer 'kill-buffer-and-window global-map)
 #+END_SRC
 
@@ -101,6 +104,45 @@
           `((".*" . ,temporary-file-directory)))
   (setq auto-save-file-name-transforms
           `((".*" ,temporary-file-directory t)))
+#+END_SRC
+
+** Browser
+#+BEGIN_SRC emacs-lisp
+  (setq browse-url-browser-function 'eww-browse-url)
+#+END_SRC
+
+** Tramp
+#+begin_src emacs-lisp
+  (setq tramp-default-method "ssh")
+#+end_src
+
+** Aesthetics
+- Hide startup stuff, hide bars, and simplify yes/no to y/n
+- Show matching parenthesis
+- Number lines while programming
+- Highlight current line
+- Dired as 'ls -Atlh'
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-startup-message t
+        initial-scratch-message nil)
+
+  (fset 'yes-or-no-p 'y-or-n-p)
+
+  (show-paren-mode t)
+  (setq show-paren-delay 0.0)
+
+  (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+  (column-number-mode)
+
+  (setq-default dired-listing-switches "-Atlh")
+  (global-prettify-symbols-mode t)
+
+  (menu-bar-mode -1)
+  (when window-system
+    (tool-bar-mode -1)
+    (scroll-bar-mode -1)
+    (horizontal-scroll-bar-mode -1)
+    (global-hl-line-mode))
 #+END_SRC
 
 ** Regional
@@ -211,62 +253,6 @@
         '(;; Porto, PT
           (holiday-fixed 6 24 "Dia de São João")))
 #+END_SRC
-** Browser
-#+BEGIN_SRC emacs-lisp
-  (setq browse-url-browser-function 'eww-browse-url)
-#+END_SRC
-
-** Tramp
-#+begin_src emacs-lisp
-  (setq tramp-default-method "ssh")
-#+end_src
-
-** Aesthetics
-- Hide startup stuff, hide bars, and simplify yes/no to y/n
-- Show matching parenthesis
-- Number lines while programming
-- Highlight current line
-- Dired as 'ls -Atlh'
-#+BEGIN_SRC emacs-lisp
-  (setq inhibit-startup-message t)
-  (setq initial-scratch-message nil)
-  (when window-system (tool-bar-mode -1))
-  (menu-bar-mode -1)
-  (when window-system (scroll-bar-mode -1))
-  (when window-system (horizontal-scroll-bar-mode -1))
-  (fset 'yes-or-no-p 'y-or-n-p)
-  (show-paren-mode t)
-  (setq show-paren-delay 0.0)
-  (add-hook 'prog-mode-hook 'display-line-numbers-mode)
-  (column-number-mode)
-  (when window-system (global-hl-line-mode))
-  (setq-default dired-listing-switches "-Atlh")
-  (when window-system (global-prettify-symbols-mode t))
-#+END_SRC
-
-** Delimiters
-#+begin_src emacs-lisp
-  (when window-system
-    (use-package rainbow-delimiters
-      :config
-      (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)))
-
-#+end_src
-
-** Beacon
-#+begin_src emacs-lisp
-  (when window-system
-    (use-package beacon
-    :config
-    (beacon-mode 1)
-    (setq beacon-blink-when-window-scrolls nil)))
-#+end_src
-
-** Htmlize (syntax highlighting for org export)
-#+begin_src emacs-lisp
-  (use-package htmlize)
-#+end_src
-
 * Org
 ** Basic config
 #+BEGIN_SRC emacs-lisp
@@ -502,6 +488,11 @@ Ivy in Eshell
     (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
 #+end_src
 
+** JS
+#+begin_src emacs-lisp
+  (add-hook 'js-mode-hook 'json-pretty-print-buffer-ordered)
+#+end_src
+
 * Miscellaneous
 ** Checking
 
@@ -657,22 +648,41 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 
 ** Org bullets
 #+BEGIN_SRC emacs-lisp
-  (when window-system
-    (use-package org-bullets
-      :config
-      (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-      (setq org-bullets-bullet-list '("◉" "○"))))
+  (use-package org-bullets
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+    (setq org-bullets-bullet-list '("◉" "○")))
 #+END_SRC
 
 ** Pretty mode
 #+begin_src emacs-lisp
+  (use-package pretty-mode
+    :config
+    (require 'pretty-mode)
+    (global-pretty-mode t)
+    (pretty-activate-groups
+     '(:sub-and-superscripts :greek :arithmetic-nary :quantifiers)))
+#+end_src
+
+** Beacon
+#+begin_src emacs-lisp
   (when window-system
-    (use-package pretty-mode
-      :config
-      (require 'pretty-mode)
-      (global-pretty-mode t)
-      (pretty-activate-groups
-       '(:sub-and-superscripts :greek :arithmetic-nary :quantifiers))))
+    (use-package beacon
+    :config
+    (beacon-mode 1)
+    (setq beacon-blink-when-window-scrolls nil)))
+#+end_src
+
+*** Htmlize (syntax highlighting for org export)
+#+begin_src emacs-lisp
+  (use-package htmlize)
+#+end_src
+
+** Delimiters
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters
+    :config
+    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 #+end_src
 
 * TODO Improvements
