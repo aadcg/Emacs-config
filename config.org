@@ -94,16 +94,6 @@
   (global-set-key (kbd "M-SPC")   'other-window)
   (global-set-key (kbd "C-c f")   'switch-to-agenda)
   (global-set-key (kbd "M-o")     'mode-line-other-buffer)
-  ;; (global-set-key (kbd "M-[")     'backward-paragraph)
-  ;; (global-set-key (kbd "M-]")     'forward-paragraph)
-#+END_SRC
-
-** Backups
-#+BEGIN_SRC emacs-lisp
-  (setq backup-directory-alist
-          `((".*" . ,temporary-file-directory)))
-  (setq auto-save-file-name-transforms
-          `((".*" ,temporary-file-directory t)))
 #+END_SRC
 
 ** Browser
@@ -413,8 +403,8 @@
 #+BEGIN_SRC emacs-lisp
   (use-package auctex
     :config
-    (setq TeX-auto-save t)
-    (setq TeX-parse-self t)
+    (setq TeX-auto-save t
+          TeX-parse-self t)
     (setq-default TeX-master nil))
 #+END_SRC
 
@@ -453,8 +443,8 @@ Ivy in Eshell
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (setq eshell-history-file-name "~/.bash_history")
-  (setq eshell-history-size 9999)
+  (setq eshell-history-file-name "~/.bash_history"
+        eshell-history-size 9999)
 #+END_SRC
 
 ** Projectile
@@ -569,8 +559,8 @@ Ivy in Eshell
   (use-package company
     :config
     (global-company-mode t)
-    (setq company-idle-delay 0.1)
-    (setq company-minimum-prefix-length 3)
+    (setq company-idle-delay 0.1
+          company-minimum-prefix-length 3)
     (define-key company-active-map (kbd "C-j") 'company-complete-selection)
     (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
     (define-key company-active-map (kbd "C-n") 'company-select-next)
@@ -627,8 +617,8 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
   (when window-system
     (use-package moody
       :config
-      (setq moody-mode-line-height 25)
-      (setq x-underline-at-descent-line t)
+      (setq moody-mode-line-height 25
+            x-underline-at-descent-line t)
       (moody-replace-mode-line-buffer-identification)
       (moody-replace-vc-mode)))
 #+END_SRC
