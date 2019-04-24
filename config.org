@@ -541,12 +541,11 @@ Ivy in Eshell
     :bind
     ("C-x B" . ivy-switch-buffer-other-window))
 
-  (when window-system
-    (use-package swiper
-      :config
-      (setq swiper-include-line-number-in-search nil)
-      :bind
-      ("C-s" . swiper)))
+  (use-package swiper
+    :config
+    (setq swiper-include-line-number-in-search nil)
+    :bind
+    ("C-s" . swiper))
 
 
   (use-package smex
