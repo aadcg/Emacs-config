@@ -363,7 +363,7 @@
   ;; (add-hook 'python-mode-hook 'jedi:setup)
 
   (use-package ein)
-  (add-hook 'ein:connect-mode-hook 'ein:jedi-setup)
+  ;; (add-hook 'ein:connect-mode-hook 'ein:jedi-setup)
 
   ;; (setq python-shell-interpreter "jupyter"
   ;;       python-shell-interpreter-args "console --simple-prompt"
