@@ -7,7 +7,6 @@ tramp
 bookmarks
 .org-id-locations
 .last-package-update-day
-*.rej
 *.dat
 *.pdf
 *.tex
@@ -20,3 +19,4 @@ request/*
 elpa/*
 ltximg/*
 .python-environments/*
+*~
