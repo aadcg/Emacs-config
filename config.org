@@ -73,12 +73,7 @@
 
 ** Backups
 #+begin_src emacs-lisp
-  ;; (setq backup-directory-alist
-  ;;       `((".*" . ,temporary-file-directory))
-  ;;       auto-save-file-name-transforms
-  ;;       `((".*" ,temporary-file-directory t)))
-
-  (setq temporary-file-directory user-emacs-directory
+  (setq temporary-file-directory (concat user-emacs-directory "backups/")
         backup-directory-alist `((".*" . ,temporary-file-directory))
         auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 #+end_src
