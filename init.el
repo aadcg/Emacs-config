@@ -1,7 +1,5 @@
 (require 'package)
 
-(setq package-enable-at-startup nil)
-
 (add-to-list 'package-archives
              '("melpa" . "https://stable.melpa.org/packages/") t)
 
@@ -19,8 +17,6 @@
 (use-package auto-package-update
   :config
   (auto-package-update-maybe)
-  (setq auto-package-update-prompt-before-update t)
-  (setq auto-package-update-delete-old-versions t)
-  (setq auto-package-update-hide-results t))
+  (setq auto-package-update-prompt-before-update t))
 
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
