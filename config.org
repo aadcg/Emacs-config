@@ -71,6 +71,18 @@
   (substitute-key-definition 'kill-buffer 'kill-buffer-and-window global-map)
 #+END_SRC
 
+** Backups
+#+begin_src emacs-lisp
+  ;; (setq backup-directory-alist
+  ;;       `((".*" . ,temporary-file-directory))
+  ;;       auto-save-file-name-transforms
+  ;;       `((".*" ,temporary-file-directory t)))
+
+  (setq temporary-file-directory user-emacs-directory
+        backup-directory-alist `((".*" . ,temporary-file-directory))
+        auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+#+end_src
+
 ** Keybindings
 #+BEGIN_SRC emacs-lisp
   (defun reset-text-size ()
