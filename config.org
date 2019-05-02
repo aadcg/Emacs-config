@@ -455,6 +455,11 @@ Ivy in Eshell
         eshell-history-size 9999)
 #+END_SRC
 
+** JS
+#+begin_src emacs-lisp
+  (add-hook 'js-mode-hook 'json-pretty-print-buffer-ordered)
+#+end_src
+
 ** Projectile
 #+BEGIN_SRC emacs-lisp
   (use-package projectile
@@ -486,9 +491,9 @@ Ivy in Eshell
     (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
 #+end_src
 
-** JS
+** CSV
 #+begin_src emacs-lisp
-  (add-hook 'js-mode-hook 'json-pretty-print-buffer-ordered)
+  (use-package csv-mode)
 #+end_src
 
 * Miscellaneous
@@ -543,9 +548,10 @@ Ivy in Eshell
     :config
     (ivy-mode 1)
     (setq ivy-use-virtual-buffers t
-          ivy-height 15
           ivy-count-format "(%d/%d) "
           ivy-extra-directories nil)
+    (when window-system
+      (setq ivy-height 25))
     :bind
     ("C-x B" . ivy-switch-buffer-other-window))
 
@@ -555,10 +561,9 @@ Ivy in Eshell
     :bind
     ("C-s" . swiper))
 
-
-  (use-package smex
+  (use-package counsel
     :config
-    (smex-initialize))
+    (counsel-mode))
 #+END_SRC
 
 ** Autocomplete
@@ -680,6 +685,15 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
   (use-package rainbow-delimiters
     :config
     (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+#+end_src
+
+** Icons
+#+begin_src emacs-lisp
+  (use-package all-the-icons)
+
+  (use-package all-the-icons-ivy
+    :config
+    (all-the-icons-ivy-setup))
 #+end_src
 
 * TODO Improvements
