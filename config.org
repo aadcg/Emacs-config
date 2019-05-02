@@ -278,7 +278,7 @@
           org-agenda-include-diary t
           org-agenda-span 10
           org-agenda-start-on-weekday nil
-          org-todo-keywords '((sequence "TODO(t)"
+          org-todo-keywords '((sequence "TODO(t!)"
                                         "STARTED(s!)"
                                         "WAITING(w@)"
                                         "|"
@@ -389,10 +389,11 @@
   (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
   (add-hook 'python-mode-hook (lambda ()
-                                    (require 'sphinx-doc)
-                                    (sphinx-doc-mode t)))
+                                (require 'sphinx-doc)
+                                (sphinx-doc-mode t)))
 
-  (add-hook 'python-mode-hook (setq-default electric-indent-inhibit t))
+  (add-hook 'python-mode-hook
+            (setq-default electric-indent-inhibit t))
 
 
 #+END_SRC
