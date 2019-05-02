@@ -18,5 +18,6 @@ url/*
 request/*
 elpa/*
 ltximg/*
+backups/*
 .python-environments/*
 *~
