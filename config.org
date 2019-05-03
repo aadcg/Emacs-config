@@ -545,28 +545,43 @@ Ivy in Eshell
     :bind ("C-r" . avy-goto-word-1))
 #+end_src
 
-** Completion
+** Emacs completion
 #+begin_src emacs-lisp
-  (use-package ivy
+  (use-package counsel
     :config
+    (counsel-mode)
     (ivy-mode 1)
     (setq ivy-use-virtual-buffers t
           ivy-count-format "(%d/%d) "
-          ivy-extra-directories nil)
+          ivy--directories nil
+          ivy-initial-inputs-alist nil
+          ivy-format-function 'ivy-format-function-arrow)
     (when window-system
       (setq ivy-height 25))
-    :bind
-    ("C-x B" . ivy-switch-buffer-other-window))
 
-  (use-package swiper
-    :config
-    (setq swiper-include-line-number-in-search nil)
     :bind
+    ("C-x B" . ivy-switch-buffer-other-window)
     ("C-s" . swiper))
 
-  (use-package counsel
-    :config
-    (counsel-mode))
+  ;; (use-package ivy
+  ;;   :config
+  ;;   (ivy-mode 1)
+  ;;   (setq ivy-use-virtual-buffers t
+  ;;         ivy-count-format "(%d/%d) "
+  ;;         ivy--directories nil
+  ;;         ivy-initial-inputs-alist nil
+  ;;         ivy-format-function 'ivy-format-function-arrow)
+  ;;   (when window-system
+  ;;     (setq ivy-height 25))
+  ;;   :bind
+  ;;   ("C-x B" . ivy-switch-buffer-other-window))
+
+  ;; (use-package swiper
+  ;;   :config
+  ;;   (setq swiper-include-line-number-in-search nil)
+  ;;   :bind
+  ;;   ("C-s" . swiper))
+
 #+end_src
 
 ** Autocomplete
