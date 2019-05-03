@@ -552,6 +552,7 @@ Ivy in Eshell
     (ivy-mode 1)
     (setq ivy-use-virtual-buffers t
           ivy-count-format "(%d/%d) "
+          ivy-wrap t
           ivy--directories nil
           ivy-initial-inputs-alist nil
           ivy-format-function 'ivy-format-function-arrow)
