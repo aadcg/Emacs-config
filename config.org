@@ -500,7 +500,6 @@ Ivy in Eshell
 
 * Miscellaneous
 ** Checking
-
 *** Flycheck
 #+begin_src emacs-lisp
   (use-package flycheck
@@ -512,7 +511,6 @@ Ivy in Eshell
 #+begin_src emacs-lisp
   (when window-system
     (use-package flyspell))
-
 
   (when window-system
     (use-package auto-dictionary
@@ -552,6 +550,7 @@ Ivy in Eshell
           ivy-count-format "(%d/%d) "
           ivy-wrap t
           ivy--directories nil
+          ivy-extra-directories nil
           ivy-initial-inputs-alist nil
           ivy-format-function 'ivy-format-function-arrow)
     (when window-system
@@ -674,7 +673,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
     (setq beacon-blink-when-window-scrolls nil)))
 #+end_src
 
-*** Htmlize (syntax highlighting for org export)
+** Htmlize (syntax highlighting for org export)
 #+begin_src emacs-lisp
   (use-package htmlize)
 #+end_src
@@ -719,12 +718,6 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 
 ** TODO Pretty stuff
 
-* Thanks
-- [[https://github.com/BigNaNet/emacs][BigNaNet]]
-- [[https://github.com/zamansky/using-emacs/blob/master/myinit.org][Mike Zamansky]]
-- [[https://github.com/hrs/dotfiles/blob/master/emacs/.emacs.d/configuration.org][Harry Schwartz]]
-- [[https://github.com/daedreth/UncleDavesEmacs][Dawid Eckert]]
-
 * Startup
 #+begin_src emacs-lisp
   (defun fullscreen ()
@@ -736,3 +729,8 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
   (add-hook 'emacs-startup-hook 'org-agenda-list)
   (delete-other-windows)
 #+end_src
+* Thanks
+- [[https://github.com/BigNaNet/emacs][BigNaNet]]
+- [[https://github.com/zamansky/using-emacs/blob/master/myinit.org][Mike Zamansky]]
+- [[https://github.com/hrs/dotfiles/blob/master/emacs/.emacs.d/configuration.org][Harry Schwartz]]
+- [[https://github.com/daedreth/UncleDavesEmacs][Dawid Eckert]]
