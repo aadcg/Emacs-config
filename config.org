@@ -253,7 +253,6 @@ Backups and auto-save files at ~/.emacs/backups
           (holiday-fixed 6 24 "Dia de São João")))
 #+end_src
 * Org
-** Basic config
 #+begin_src emacs-lisp
   (use-package org
     :config
@@ -343,52 +342,35 @@ Backups and auto-save files at ~/.emacs/backups
   (require 'ox-beamer)
 #+end_src
 
-** Org pdftools view
 #+begin_src emacs-lisp
   (when window-system
     (use-package org-pdfview))
 #+end_src
 
+#+begin_src emacs-lisp
+  (use-package ob-translate)
+#+end_src
+
 * Programming
 ** Python
 #+begin_src emacs-lisp
-  (defun drf/append-to-path (path)
-    "Add a path both to the $PATH variable and to Emacs' exec-path."
-    (setenv "PATH" (concat (getenv "PATH") ":" path))
-    (add-to-list 'exec-path path))
-
-  (drf/append-to-path "/home/shady/anaconda3/bin/")
-
-
   (use-package elpy
     :config
     (elpy-enable)
     (setq python-shell-interpreter "ipython"
-        python-shell-interpreter-args "-i --simple-prompt"))
+          python-shell-interpreter-args "-i --simple-prompt"))
 
-  (use-package company-jedi)
-  (add-to-list 'company-backends 'company-jedi)
-
-  ;; (add-hook 'python-mode-hook 'jedi:setup)
+  (use-package company-jedi
+    :config
+    (add-to-list 'company-backends 'company-jedi))
 
   (use-package ein)
-  ;; (add-hook 'ein:connect-mode-hook 'ein:jedi-setup)
 
-  ;; (setq python-shell-interpreter "jupyter"
-  ;;       python-shell-interpreter-args "console --simple-prompt"
-  ;;       python-shell-prompt-detect-failure-warning nil)
-  ;; (add-to-list 'python-shell-completion-native-disabled-interpreters
-  ;;              "jupyter")
+  (use-package py-autopep8
+    :hook
+    (elpy-mode . py-autopep8-enable-on-save))
 
-  ;; use flycheck not flymake with elpy
-  (when (require 'flycheck nil t)
-    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-    (add-hook 'elpy-mode-hook 'flycheck-mode))
-
-  ;; enable autopep8 formatting on save
-  (use-package py-autopep8)
-
-  (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+  ;; (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
   (add-hook 'python-mode-hook (lambda ()
                                 (require 'sphinx-doc)
@@ -396,8 +378,6 @@ Backups and auto-save files at ~/.emacs/backups
 
   (add-hook 'python-mode-hook
             (setq-default electric-indent-inhibit t))
-
-
 #+end_src
 ** Haskell
 #+begin_src emacs-lisp
@@ -687,11 +667,15 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 
 ** Icons
 #+begin_src emacs-lisp
-  (use-package all-the-icons)
+  ;; (use-package all-the-icons)
 
-  (use-package all-the-icons-ivy
-    :config
-    (all-the-icons-ivy-setup))
+  ;; (use-package all-the-icons-ivy
+  ;;   :config
+  ;;   (all-the-icons-ivy-setup))
+
+  ;; (use-package all-the-icons-dired
+  ;;   :hook
+  ;;   (dired-mode . all-the-icons-dired-mode))
 #+end_src
 
 * TODO Improvements
