@@ -412,6 +412,7 @@ Backups and auto-save files at ~/.emacs/backups
 ** \LaTeX
 #+begin_src emacs-lisp
   (use-package auctex
+    :defer t
     :config
     (setq TeX-auto-save t
           TeX-parse-self t)
@@ -725,7 +726,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
                            '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
 
   (when window-system (fullscreen))
-  (add-hook 'emacs-startup-hook 'org-agenda-list)
+  (org-agenda nil "a")
   (delete-other-windows)
 #+end_src
 * Thanks
