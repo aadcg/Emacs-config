@@ -319,8 +319,8 @@ Backups and auto-save files at ~/.emacs/backups
     (defun aag/org-checkbox-next ()
       (interactive)
       (when (org-at-item-checkbox-p)
-        (org-toggle-checkbox))
-      (org-next-item))
+        (org-toggle-checkbox)
+        (org-sort-list nil ?x)))
 
     :bind
     ("\C-ca" . org-agenda)
