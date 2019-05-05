@@ -62,7 +62,8 @@
 #+begin_src emacs-lisp
   (setq scroll-preserve-screen-position 'always)
   (save-place-mode 1)
-  (when window-system (setq blink-cursor-mode nil))
+  (when window-system
+    (setq blink-cursor-mode nil))
 #+end_src
 
 ** Windows and buffers
@@ -504,9 +505,11 @@ Ivy in Eshell
     (use-package pdf-tools
       :config
       (pdf-tools-install)
-      (add-hook 'pdf-tools-enabled-hook 'pdf-view-midnight-minor-mode)
-      (setq pdf-view-midnight-colors (quote ("#d2c8c8" . "#3F3F3F")))))
-
+      (setq pdf-view-midnight-colors '("#d2c8c8" . "#3F3F3F"))
+      :hook
+      (pdf-tools-enabled . pdf-view-midnight-minor-mode)
+      (pdf-tools-enabled . pdf-view-auto-slice-minor-mode)
+      (pdf-tools-enabled . pdf-view-fit-height-to-window)))
 #+end_src
 
 ** Parenthesis
@@ -614,7 +617,8 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 #+end_src
 
 #+begin_src emacs-lisp
-  (when window-system (display-battery-mode))
+  (when window-system
+    (display-battery-mode))
 #+end_src
 
 ** Minions
@@ -709,7 +713,8 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
     (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
                            '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
 
-  (when window-system (fullscreen))
+  (when window-system
+    (fullscreen))
   (org-agenda nil "a")
   (delete-other-windows)
 #+end_src
