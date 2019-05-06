@@ -4,7 +4,7 @@
 
 * Meta
 :PROPERTIES:
-:EMACS_VERSION: 26.1 (GTK+)
+:EMACS_VERSION: 26.2 (GTK+)
 :ORG_VERSION: 9.2.3
 :END:
 ** Me
@@ -367,9 +367,9 @@ Backups and auto-save files at ~/.emacs/backups
 
   (use-package ein)
 
-  (use-package py-autopep8
-    :hook
-    (elpy-mode . py-autopep8-enable-on-save))
+  ;; (use-package py-autopep8
+  ;;   :hook
+  ;;   (elpy-mode . py-autopep8-enable-on-save))
 
   ;; (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
