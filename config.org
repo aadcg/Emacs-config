@@ -359,19 +359,16 @@ Backups and auto-save files at ~/.emacs/backups
     :config
     (elpy-enable)
     (setq python-shell-interpreter "ipython"
-          python-shell-interpreter-args "-i --simple-prompt"))
+          python-shell-interpreter-args "-i --simple-prompt")
+    :bind
+    ("C-c p". elpy-autopep8-fix-code)
+    ("C-c b". elpy-black-fix-code))
 
   (use-package company-jedi
     :config
     (add-to-list 'company-backends 'company-jedi))
 
   (use-package ein)
-
-  ;; (use-package py-autopep8
-  ;;   :hook
-  ;;   (elpy-mode . py-autopep8-enable-on-save))
-
-  ;; (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
   (add-hook 'python-mode-hook (lambda ()
                                 (require 'sphinx-doc)
@@ -380,6 +377,7 @@ Backups and auto-save files at ~/.emacs/backups
   (add-hook 'python-mode-hook
             (setq-default electric-indent-inhibit t))
 #+end_src
+
 ** Haskell
 #+begin_src emacs-lisp
   (use-package haskell-mode)
