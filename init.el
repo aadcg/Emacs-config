@@ -16,7 +16,6 @@
 
 (use-package auto-package-update
   :config
-  (auto-package-update-maybe)
-  (setq auto-package-update-prompt-before-update t))
+  (auto-package-update-maybe))
 
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
