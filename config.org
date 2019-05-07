@@ -483,7 +483,9 @@ Ivy in Eshell
 *** Flyspell
 #+begin_src emacs-lisp
   (when window-system
-    (use-package flyspell))
+    (use-package flyspell
+      :config
+      (flyspell-prog-mode)))
 
   (when window-system
     (use-package auto-dictionary
