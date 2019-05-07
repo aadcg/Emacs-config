@@ -124,19 +124,13 @@ Backups and auto-save files at ~/.emacs/backups
 #+begin_src emacs-lisp
   (setq inhibit-startup-message t
         initial-scratch-message nil)
-
   (fset 'yes-or-no-p 'y-or-n-p)
-
   (show-paren-mode t)
   (setq show-paren-delay 0.0)
-
   (add-hook 'prog-mode-hook 'display-line-numbers-mode)
   (column-number-mode)
-
   (setq-default dired-listing-switches "-Atlh")
-
-  (global-prettify-symbols-mode t)
-
+  ;; (global-prettify-symbols-mode t)
   (menu-bar-mode -1)
   (when window-system
     (tool-bar-mode -1)
