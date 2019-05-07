@@ -275,14 +275,13 @@ Backups and auto-save files at ~/.emacs/backups
           org-agenda-span 10
           org-agenda-start-on-weekday nil
           org-todo-keywords '((sequence "TODO(t!)"
-                                        "STARTED(s!)"
+                                        "WIP(s!)"
                                         "WAITING(w@)"
                                         "|"
                                         "DONE(d!)"
                                         "NOT TODO(n@)"
                                         "CANCELED(c@)"))
-          org-todo-keyword-faces '(("TODO" . org-warning)
-                                   ("STARTED" . "yellow")
+          org-todo-keyword-faces '(("WIP" . "yellow")
                                    ("WAITING" . "orange"))
           org-src-fontify-natively t
           org-src-tab-acts-natively t
@@ -685,7 +684,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 ** TODO Org subtree presentation
 
 ** TODO Create repo with portuguese holidays
-
+[[https://blog.aaronbieber.com/2015/08/04/authoring-emacs-packages.html][how to]]
 ** TODO term, ansi-term, shell and eshell
 - [[https://emacs.stackexchange.com/questions/2101/terminal-is-not-fully-functional-over-ssh-in-a-shell-buffer][link1]]
 - [[https://emacs.stackexchange.com/questions/27/how-can-i-use-my-local-emacs-client-as-the-editor-for-remote-machines-i-access/893#893][link2]]
