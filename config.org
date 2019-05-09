@@ -125,7 +125,7 @@ Backups and auto-save files at ~/.emacs/backups
   (setq inhibit-startup-message t
         initial-scratch-message nil)
   (fset 'yes-or-no-p 'y-or-n-p)
-  (show-paren-mode t)
+  ;; (show-paren-mode t) curently using smartparens for this
   (setq show-paren-delay 0.0)
   (add-hook 'prog-mode-hook 'display-line-numbers-mode)
   (column-number-mode)
@@ -296,6 +296,7 @@ Backups and auto-save files at ~/.emacs/backups
     ;; (add-hook 'after-init-hook 'org-mobile-pull)
     ;; (add-hook 'kill-emacs-hook 'org-mobile-push)
     (require 'org-tempo)
+    (require 'ox-beamer)
     (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
     (add-to-list 'org-structure-template-alist '("py" . "src python"))
     (add-to-list 'org-structure-template-alist '("hk" . "src haskell"))
@@ -309,11 +310,6 @@ Backups and auto-save files at ~/.emacs/backups
     ;;              '("lx" "#+BEGIN_LaTeX \n?\n#+END_LaTeX"))
     ;; (add-to-list 'org-structure-template-alist
     ;;              '("th" "#+BEGIN_theorem \n?\n#+END_theorem"))
-    (defun aag/org-checkbox-next ()
-      (interactive)
-      (when (org-at-item-checkbox-p)
-        (org-toggle-checkbox)
-        (org-sort-list nil ?x)))
 
     :bind
     ("\C-ca" . org-agenda)
@@ -324,25 +320,25 @@ Backups and auto-save files at ~/.emacs/backups
 #+end_src
 
 #+begin_src emacs-lisp
-    (setq exec-path (append exec-path '("/usr/bin/tex")))
+  (defun aag/org-checkbox-next ()
+        (interactive)
+        (when (org-at-item-checkbox-p)
+          (org-toggle-checkbox)
+          (org-sort-list nil ?x)))
 
-    (org-babel-do-load-languages
-     'org-babel-load-languages
-     '((python . t)
-       (latex . t)))
-#+end_src
+  (setq exec-path (append exec-path '("/usr/bin/tex")))
 
-#+begin_src emacs-lisp
-  (require 'ox-beamer)
-#+end_src
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((python . t)
+     (latex . t)))
 
-#+begin_src emacs-lisp
   (when window-system
-    (use-package org-pdfview))
-#+end_src
+      (use-package org-pdfview))
 
-#+begin_src emacs-lisp
   (use-package ob-translate)
+
+  (use-package cdlatex)
 #+end_src
 
 * Programming
@@ -510,7 +506,9 @@ Ivy in Eshell
   (use-package smartparens
     :config
     (require 'smartparens-config)
-    (smartparens-global-strict-mode))
+    (smartparens-global-strict-mode)
+    (show-smartparens-global-mode)
+    (sp-local-pair 'org-mode "$$" "$$"))
 #+end_src
 
 ** Avy
@@ -696,8 +694,6 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 ** TODO add personal holidays in a private file
 
 ** TODO [[https://dougie.io/emacs/indentation/][Tabs vs spaces]]
-
-** TODO Pretty stuff
 
 * Startup
 #+begin_src emacs-lisp
