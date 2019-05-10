@@ -121,6 +121,7 @@ Backups and auto-save files at ~/.emacs/backups
 - Number lines while programming
 - Highlight current line
 - Dired as 'ls -Atlh'
+
 #+begin_src emacs-lisp
   (setq inhibit-startup-message t
         initial-scratch-message nil)
@@ -130,6 +131,7 @@ Backups and auto-save files at ~/.emacs/backups
   (add-hook 'prog-mode-hook 'display-line-numbers-mode)
   (column-number-mode)
   (setq-default dired-listing-switches "-Atlh")
+  (setq dired-auto-revert-buffer t)
   ;; (global-prettify-symbols-mode t)
   (menu-bar-mode -1)
   (when window-system
@@ -339,14 +341,17 @@ Backups and auto-save files at ~/.emacs/backups
   (use-package ob-translate)
 
   (use-package cdlatex)
+
+  (use-package org-tree-slide)
 #+end_src
 
 * Programming
 ** Python
 #+begin_src emacs-lisp
   (use-package elpy
-    :config
+    :init
     (elpy-enable)
+    :config
     (setq python-shell-interpreter "ipython"
           python-shell-interpreter-args "-i --simple-prompt")
     :bind
