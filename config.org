@@ -8,7 +8,7 @@
 :ORG_VERSION: 9.2.3
 :END:
 ** Me
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (setq user-full-name "André Alexandre Gomes"
         user-mail-address "up201106482@fc.up.pt"
         calendar-latitude 41.16
@@ -17,7 +17,7 @@
 #+end_src
 
 ** Config
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (defun config-visit ()
     "Visits ~/.emacs.d/config.org."
     (interactive)
@@ -43,7 +43,7 @@
 - Spaces over tabs
 - visual-line-mode if non-GUI (I only use the non-GUI emacs on my android phone)
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
   (global-subword-mode t)
   (delete-selection-mode t)
@@ -59,7 +59,7 @@
 - Preserve cursor position after closing a file
 - No blinking cursor
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (setq scroll-preserve-screen-position 'always)
   (save-place-mode 1)
   (when window-system
@@ -70,8 +70,9 @@
 - Automatically revert buffers
 - Killing a buffer also kills the window
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (global-auto-revert-mode t)
+  (setq revert-without-query '*)
   (setq auto-revert-remote-files t)
   (substitute-key-definition 'kill-buffer 'kill-buffer-and-window global-map)
 #+end_src
@@ -79,14 +80,14 @@
 ** Backups
 Backups and auto-save files at ~/.emacs/backups
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (setq temporary-file-directory (concat user-emacs-directory "backups/")
         backup-directory-alist `((".*" . ,temporary-file-directory))
         auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 #+end_src
 
 ** Keybindings
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (defun reset-text-size ()
     (interactive)
     (text-scale-set 0))
@@ -111,7 +112,7 @@ Backups and auto-save files at ~/.emacs/backups
 #+end_src
 
 ** Browser
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (setq browse-url-browser-function 'eww-browse-url)
 #+end_src
 
@@ -122,7 +123,7 @@ Backups and auto-save files at ~/.emacs/backups
 - Highlight current line
 - Dired as 'ls -Atlh'
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (setq inhibit-startup-message t
         initial-scratch-message nil)
   (fset 'yes-or-no-p 'y-or-n-p)
@@ -143,18 +144,18 @@ Backups and auto-save files at ~/.emacs/backups
 
 ** Regional
 *** Input Method
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (setq default-input-method "russian-computer")
 #+end_src
 
 *** Calendar
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (setq calendar-week-start-day 1)
 #+end_src
 
 *** Clock
 [[https://en.wikipedia.org/wiki/List_of_tz_database_time_zones][Time Zones]]
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (setq display-time-24hr-format t
         display-time-format "%k:%M %a %d %b"
         display-time-default-load-average nil
@@ -164,7 +165,7 @@ Backups and auto-save files at ~/.emacs/backups
 #+end_src
 
 *** Holidays
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (setq holiday-bahai-holidays nil
         holiday-oriental-holidays nil
         holiday-islamic-holidays nil
@@ -250,7 +251,7 @@ Backups and auto-save files at ~/.emacs/backups
           (holiday-fixed 6 24 "Dia de São João")))
 #+end_src
 * Org
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (use-package org
     :config
     ;; (setq org-ellipsis " ⬎")
@@ -321,33 +322,40 @@ Backups and auto-save files at ~/.emacs/backups
     ("C-c j" . aag/org-checkbox-next))
 #+end_src
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (defun aag/org-checkbox-next ()
-        (interactive)
-        (when (org-at-item-checkbox-p)
-          (org-toggle-checkbox)
-          (org-sort-list nil ?x)))
+    (interactive)
+    (let ((home (point)))
+      (when (org-at-item-checkbox-p)
+        (org-toggle-checkbox)
+        (org-sort-list nil ?x))
+      (goto-char home)))
 
   (setq exec-path (append exec-path '("/usr/bin/tex")))
 
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((python . t)
-     (latex . t)))
+     (latex . t)
+     (translate . t)
+     (shell . t)
+     (emacs-lisp . t)))
 
   (when window-system
-      (use-package org-pdfview))
+    (use-package org-pdfview))
 
   (use-package ob-translate)
 
-  (use-package cdlatex)
+  (use-package cdlatex
+    :config
+    (org-cdlatex-mode))
 
   (use-package org-tree-slide)
 #+end_src
 
 * Programming
 ** Python
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (use-package elpy
     :init
     (elpy-enable)
@@ -373,7 +381,7 @@ Backups and auto-save files at ~/.emacs/backups
 #+end_src
 
 ** Haskell
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (use-package haskell-mode)
 
   (add-hook 'haskell-mode-hook
@@ -383,7 +391,7 @@ Backups and auto-save files at ~/.emacs/backups
 #+end_src
 
 ** \LaTeX
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (use-package auctex
     :defer t
     :config
@@ -396,7 +404,7 @@ Backups and auto-save files at ~/.emacs/backups
 *** Shell
 Make M-n and M-p more intelligent in shell.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (eval-after-load 'comint
     '(progn
        ;; originally on C-c M-r and C-c M-s
@@ -411,14 +419,14 @@ Make M-n and M-p more intelligent in shell.
 I want eshell to behave like a typical terminal, i.e. I don't want tab to
 cycle through different options.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
 (add-hook 'eshell-mode-hook
  (lambda ()
    (setq pcomplete-cycle-completions nil)))
 #+end_src
 
 Ivy in Eshell
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (add-hook 'eshell-mode-hook
     (lambda ()
       (define-key eshell-mode-map (kbd "<M-tab>") nil)
@@ -426,25 +434,25 @@ Ivy in Eshell
         (lambda () (interactive) (completion-at-point)))))
 #+end_src
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (setq eshell-history-file-name "~/.bash_history"
         eshell-history-size 9999)
 #+end_src
 
 ** JS
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (add-hook 'js-mode-hook 'json-pretty-print-buffer-ordered)
 #+end_src
 
 ** Projectile
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (use-package projectile
     :init
     (projectile-mode 1))
 #+end_src
 
 ** Magit
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (use-package magit
     :config
     (setq magit-display-buffer-function (quote magit-display-buffer-same-window-except-diff-v1))
@@ -453,7 +461,7 @@ Ivy in Eshell
 #+end_src
 
 ** Highlight uncommitted changes
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (use-package diff-hl
     :config
     (global-diff-hl-mode)
@@ -461,28 +469,28 @@ Ivy in Eshell
 #+end_src
 
 ** Yaml
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (use-package yaml-mode
     :config
     (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
 #+end_src
 
 ** CSV
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (use-package csv-mode)
 #+end_src
 
 * Miscellaneous
 ** Checking
 *** Flycheck
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (use-package flycheck
     :init
     (global-flycheck-mode t))
 #+end_src
 
 *** Flyspell
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (when window-system
     (use-package flyspell
       :config
@@ -494,7 +502,7 @@ Ivy in Eshell
 #+end_src
 
 ** Pdf
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (when window-system
     (use-package pdf-tools
       :config
@@ -507,7 +515,7 @@ Ivy in Eshell
 #+end_src
 
 ** Parenthesis
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (use-package smartparens
     :config
     (require 'smartparens-config)
@@ -517,13 +525,13 @@ Ivy in Eshell
 #+end_src
 
 ** Avy
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (use-package avy
     :bind ("C-r" . avy-goto-word-1))
 #+end_src
 
 ** Emacs completion
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
     (use-package counsel
       :config
       (setq ivy-use-virtual-buffers t
@@ -544,7 +552,7 @@ Ivy in Eshell
 #+end_src
 
 ** Autocomplete
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (use-package company
     :config
     (global-company-mode t)
@@ -557,7 +565,7 @@ Ivy in Eshell
 #+end_src
 
 ** YouTube
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (defun youtube-dl ()
     (interactive)
     (let* ((str (current-kill 0))
@@ -569,12 +577,12 @@ Ivy in Eshell
 #+end_src
 
 ** Games
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (use-package typit)
 #+end_src
 
 ** EXWM
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   ;; (use-package xelb)
 
   ;; (use-package exwm
@@ -586,7 +594,7 @@ Ivy in Eshell
 * Aesthetics
 Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 ** Theme
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (defun transparency (value)
     "Sets the transparency of the frame window. 0=transparent/100=opaque."
     (interactive "nTransparency Value 0 - 100 opaque:")
@@ -602,7 +610,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 #+end_src
 
 ** Modeline
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (when window-system
     (use-package moody
       :config
@@ -612,13 +620,13 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
       (moody-replace-vc-mode)))
 #+end_src
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (when window-system
     (display-battery-mode))
 #+end_src
 
 ** Minions
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
 (use-package minions
   :config
   (setq minions-mode-line-lighter ""
@@ -627,7 +635,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 #+end_src
 
 ** Org bullets
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (use-package org-bullets
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
@@ -635,7 +643,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 #+end_src
 
 ** Pretty mode
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (use-package pretty-mode
     :config
     (require 'pretty-mode)
@@ -645,7 +653,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 #+end_src
 
 ** Beacon
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (when window-system
     (use-package beacon
     :config
@@ -654,19 +662,19 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 #+end_src
 
 ** Htmlize (syntax highlighting for org export)
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (use-package htmlize)
 #+end_src
 
 ** Delimiters
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (use-package rainbow-delimiters
     :config
     (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 #+end_src
 
 ** Icons
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   ;; (use-package all-the-icons)
 
   ;; (use-package all-the-icons-ivy
@@ -701,7 +709,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 ** TODO [[https://dougie.io/emacs/indentation/][Tabs vs spaces]]
 
 * Startup
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :results silent
   (defun fullscreen ()
     (interactive)
     (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
@@ -712,6 +720,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
   (org-agenda nil "a")
   (delete-other-windows)
 #+end_src
+
 * Thanks
 - [[https://github.com/BigNaNet/emacs][BigNaNet]]
 - [[https://github.com/zamansky/using-emacs/blob/master/myinit.org][Mike Zamansky]]
