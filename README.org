@@ -8,23 +8,22 @@ I assume you're motivated to use Emacs. If you're not - [[https://www.youtube.co
 I completed two bachelor's degrees from the University of Porto between 2011 and
 2017; started a master's program on pure maths, but quitted after the first
 semester. Then started to work for [[https://en.wikipedia.org/wiki/Vestas][Vestas]] and using Emacs, in August 2018. Back
-then, I barely knew what GNU/Linux was at all. I knew that something called
-terminal existed, but I thought it was just for hackers. My background was
-all about proofs using pencils or chalk on paper or blackboards. The point is:
-anyone can use Emacs, and it's not difficult to get into it.
+then, I barely knew what GNU/Linux was at all. My background was all about
+proofs using pencils or chalk on paper or blackboards. The point is: anyone can
+use Emacs, and it's not difficult to get into it.
 
 ** How did the shift happen?
 A friend of mine was using Ubuntu. Once I met a [[https://cmup.fc.up.pt/cmup/jalmeida/][professor]] in his office, and he
-was using a "strange program". I asked about it, he replied - "It's Emacs! I
-write all my \LaTeX papers here, answer e-mails and program in here!". That
-seemed quite impression and I kept it in the back of my head. At that time, I
-was also starting to shift from paper to computers. I was taking lecture notes
-[[https://en.wikipedia.org/wiki/Lyx][Lyx]], to generate \LaTeX docs. I thought it couldn't get better than that, since I
-was looking at my collegues typing \LaTeX from scratch and I felt sorry for
-them.
+was using a "strange program". I asked about it, and he replied - "It's Emacs! I
+write all my \LaTeX papers here, answer e-mails and write my programs without
+leaving it!". That seemed quite impressive and I kept it in the back of my
+head. At that time, I was also starting to shift from paper to computers, since
+I was taking lecture notes using [[https://en.wikipedia.org/wiki/Lyx][Lyx]] to generate \LaTeX docs. I thought it
+couldn't get better than that. Seeing my colleagues typing every \LaTeX command
+from scratch made me feel sorry for them.
 
-At that time I only scratched the surface of the folling idea: "Being able to
-type acuratelly and fast on a computer is convenient". What I didn't know
+At that time I only scratched the surface of the following idea: "Being able to
+type accurately and fast on a computer is convenient". What I didn't know
 is that my life would soon be so deeply based on text. Namely, because [[https://www.youtube.com/watch?v=SzA2YODtgK4][org mode]]
 is such a whole new universe.
 
@@ -35,7 +34,11 @@ I also recommend running it on GNU/Linux for obvious reasons. If your company
 makes you use that Windows laptop, then run it on a virtual machine. This guy
 [[https://youtu.be/RDrG-_kapaQ][expands]] on that.
 
-Then it's time to open Emacs and read the tutorial.
+Then it's time to open Emacs. It greets you with:
+
+/Welcome to GNU Emacs, one component of the GNU/Linux operating system./
+
+Get acquainted with what GNU stands for and read the tutorial.
 
 * Evolution
 ** Customization
@@ -58,9 +61,9 @@ Emacs Lisp (and Lisps in general too). That's the stage I'm currently at.
 * How do I carry my org files?
 I have a smartphone, one of those Android. I mitigated the Google influence by
 not adding a Google account or not running Google apps. Anyway, I'm sure I'm
-running endless malware in it. I'd like to get one of [[https://puri.sm/products/librem-5/][these]], oneday.
+running endless malware in it. I'd like to get one of [[https://puri.sm/products/librem-5/][these]], one day.
 
-So, my "Appstore" is [[https://f-droid.org/][F-Droid]]. In there you'll find [[https://termux.com/][Termux]]. That coupled with
+So, my "App-store" is [[https://f-droid.org/][F-Droid]]. In there you'll find [[https://termux.com/][Termux]]. That coupled with
 [[https://nextcloud.com/][Nextcloud]] makes it possible me to access my org files and agenda anywhere,
 anytime and to sync effortlessly. My life in plain text.
 
@@ -79,13 +82,12 @@ Emacs is all about freedom. When you work in it, you feel it was designed by
 people who want the same you want - something reliable without bullshit.
 
 It is quite helpful if you get acquainted with [[https://en.wikipedia.org/wiki/GNU_Project][GNU]], [[https://en.wikipedia.org/wiki/Free_Software_Foundation][Free Software Foundation
-(FSF)]] and [[https://www.youtube.com/watch?v=jUibaPTXSHk][Richard Stallman]]. I wish universities talked more Richard Stallman,
-and less Linus Torvalds (not to his discredit). I wish they didn't teach
-students any proprietary software. I wish engineers had morals.
+(FSF)]] and [[https://www.youtube.com/watch?v=jUibaPTXSHk][Richard Stallman]]. I wish the world talked Richard Stallman and Linus
+Torvalds in a balanced proportion. I wish students weren't being taught
+proprietary software. I wish companies and their engineers to have ethics.
 
-The road to freedom is hard. I do find myself doing thing that don't respect the
-FSF. But at least I'm conciously and proactively fighting years of bad
-education.
+The road to freedom is hard. I'm consciously and proactively fighting years of
+bad education.
 
 *Free thought, free world.*
 
