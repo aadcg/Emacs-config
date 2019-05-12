@@ -105,7 +105,7 @@ Backups and auto-save files at ~/.emacs/backups
   (global-set-key (kbd "<f5>")    'revert-buffer)
   (global-set-key (kbd "C-M-r")   'eval-buffer)
   (global-set-key (kbd "C-x w")   'eww)
-  (global-set-key (kbd "S-SPC")   'just-one-space)
+  (global-set-key (kbd "S-SPC")   'cycle-spacing)
   (global-set-key (kbd "M-SPC")   'other-window)
   (global-set-key (kbd "C-c f")   'switch-to-agenda)
   (global-set-key (kbd "M-o")     'mode-line-other-buffer)
