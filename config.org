@@ -329,7 +329,8 @@ Backups and auto-save files at ~/.emacs/backups
      (latex . t)
      (translate . t)
      (shell . t)
-     (emacs-lisp . t)))
+     (emacs-lisp . t)
+     (ditaa . t)))
 
   (when window-system
     (use-package org-pdfview))
@@ -351,8 +352,9 @@ Backups and auto-save files at ~/.emacs/backups
     (elpy-enable)
     :config
     (setq python-shell-interpreter "ipython"
-          python-shell-interpreter-args "-i --simple-prompt")
-    (setq pyvenv-mode-line-indicator nil)
+          python-shell-interpreter-args "-i --simple-prompt"
+          pyvenv-mode-line-indicator nil
+          pyvenv-activate "~/anaconda3")
     :bind
     ("C-c p". elpy-autopep8-fix-code)
     ("C-c b". elpy-black-fix-code))
@@ -677,17 +679,11 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 #+end_src
 
 * TODO Improvements
-** TODO Email (mu4e)
-- mu4e + mbsync
-
-** TODO Emacs as window manager EXWM
-
 ** TODO Org export Latex russian
-
-** TODO Org subtree presentation
 
 ** TODO Create repo with portuguese holidays
 [[https://blog.aaronbieber.com/2015/08/04/authoring-emacs-packages.html][how to]]
+
 ** TODO term, ansi-term, shell and eshell
 - [[https://emacs.stackexchange.com/questions/2101/terminal-is-not-fully-functional-over-ssh-in-a-shell-buffer][link1]]
 - [[https://emacs.stackexchange.com/questions/27/how-can-i-use-my-local-emacs-client-as-the-editor-for-remote-machines-i-access/893#893][link2]]
@@ -696,7 +692,13 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 
 ** TODO add personal holidays in a private file
 
-** TODO [[https://dougie.io/emacs/indentation/][Tabs vs spaces]]
+** TODO Emacs OS
+- State "TODO"       from              [2019-05-12 Sun 15:20]
+
+- [ ] Install Arch Linux
+- [ ] EXWM
+- [ ] Email (mu4e + mbsync?)
+- [ ] Syncthing
 
 * Startup
 #+begin_src emacs-lisp :results silent
