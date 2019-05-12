@@ -20,3 +20,5 @@ elpa/*
 ltximg/*
 backups/*
 .python-environments/*
+
+command-log-mode.el
