@@ -281,8 +281,8 @@ Backups and auto-save files at ~/.emacs/backups
                                         "DONE(d!)"
                                         "NOT TODO(n@)"
                                         "CANCELED(c@)"))
-          org-todo-keyword-faces '(("WIP" . "yellow")
-                                   ("WAITING" . "orange"))
+          org-todo-keyword-faces '(("WIP" . "orange")
+                                   ("WAITING" . "yellow"))
           org-src-fontify-natively t
           org-src-tab-acts-natively t
           org-src-window-setup 'current-window
