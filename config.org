@@ -665,19 +665,6 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
     (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 #+end_src
 
-** Icons
-#+begin_src emacs-lisp :results silent
-  ;; (use-package all-the-icons)
-
-  ;; (use-package all-the-icons-ivy
-  ;;   :config
-  ;;   (all-the-icons-ivy-setup))
-
-  ;; (use-package all-the-icons-dired
-  ;;   :hook
-  ;;   (dired-mode . all-the-icons-dired-mode))
-#+end_src
-
 * TODO Improvements
 ** TODO Org export Latex russian
 
