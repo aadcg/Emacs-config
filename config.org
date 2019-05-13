@@ -72,7 +72,6 @@
 
 #+begin_src emacs-lisp :results silent
   (global-auto-revert-mode t)
-  (setq revert-without-query '*)
   (setq auto-revert-remote-files t)
   (substitute-key-definition 'kill-buffer 'kill-buffer-and-window global-map)
 #+end_src
@@ -341,7 +340,13 @@ Backups and auto-save files at ~/.emacs/backups
     :config
     (org-cdlatex-mode))
 
-  (use-package org-tree-slide)
+  (use-package org-tree-slide
+    :config
+    (setq org-tree-slide-slide-in-effect nil
+          org-tree-slide-heading-emphasis t
+          org-tree-slide-activate-message "Welcome to my presentaion"
+          org-tree-slide-deactivate-message "Hope you have enjoyed"
+          org-tree-slide-modeline-display nil))
 #+end_src
 
 * Programming
@@ -434,7 +439,7 @@ Ivy in Eshell
 
 ** JS
 #+begin_src emacs-lisp :results silent
-  (add-hook 'js-mode-hook 'json-pretty-print-buffer-ordered)
+  ;; (add-hook 'js-mode-hook 'json-pretty-print-buffer-ordered)
 #+end_src
 
 ** Projectile
@@ -653,7 +658,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
     (setq beacon-blink-when-window-scrolls nil)))
 #+end_src
 
-** Htmlize (syntax highlighting for org export)
+** Htmlize
 #+begin_src emacs-lisp :results silent
   (use-package htmlize)
 #+end_src
