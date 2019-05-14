@@ -350,8 +350,8 @@ Backups and auto-save files at ~/.emacs/backups
           org-tree-slide-deactivate-message "Hope you have enjoyed!"
           org-tree-slide-modeline-display nil)
     :hook
-    (org-tree-slide-play-hook . aadcg/presenting)
-    (org-tree-slide-stop-hook . aadcg/working)
+    (org-tree-slide-play . aadcg/presenting)
+    (org-tree-slide-stop . aadcg/working)
     :bind
     ("<f8>" . org-tree-slide-mode)
     ("<f7>" . org-tree-slide-play-with-timer))
@@ -364,7 +364,8 @@ Backups and auto-save files at ~/.emacs/backups
     (transparency 100)
     (display-time-mode 0)
     (column-number-mode 0)
-    (line-number-mode 0))
+    (line-number-mode 0)
+    (display-battery-mode 0))
 
   (defun aadcg/working ()
     "Select my favourite production theme."
@@ -374,7 +375,8 @@ Backups and auto-save files at ~/.emacs/backups
     (transparency 90)
     (display-time-mode 1)
     (column-number-mode 1)
-    (line-number-mode 1))
+    (line-number-mode 1)
+    (display-battery-mode 1))
 #+end_src
 
 * Programming
