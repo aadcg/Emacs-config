@@ -259,6 +259,7 @@ Backups and auto-save files at ~/.emacs/backups
           org-goto-max-level 10
           org-startup-indented t
           org-startup-with-inline-images t
+          org-image-actual-width nil
           org-hide-leading-stars t
           org-special-ctrl-a/e t
           org-special-ctrl-k t
@@ -299,6 +300,7 @@ Backups and auto-save files at ~/.emacs/backups
     (add-to-list 'org-structure-template-alist '("py" . "src python"))
     (add-to-list 'org-structure-template-alist '("hk" . "src haskell"))
     (add-to-list 'org-structure-template-alist '("sh" . "src sh"))
+    (add-to-list 'org-structure-template-alist '("co" . "comment")) ;
     ;; (add-to-list 'org-structure-template-alist '("ab" . "abstract"))
     ;; (add-to-list 'org-structure-template-alist '("lx" . "latex"))
     ;; (add-to-list 'org-structure-template-alist '("th" . "theorem"))
@@ -344,9 +346,35 @@ Backups and auto-save files at ~/.emacs/backups
     :config
     (setq org-tree-slide-slide-in-effect nil
           org-tree-slide-heading-emphasis t
-          org-tree-slide-activate-message "Welcome to my presentaion"
-          org-tree-slide-deactivate-message "Hope you have enjoyed"
-          org-tree-slide-modeline-display nil))
+          org-tree-slide-activate-message "Welcome to my presentation!"
+          org-tree-slide-deactivate-message "Hope you have enjoyed!"
+          org-tree-slide-modeline-display nil)
+    :hook
+    (org-tree-slide-play-hook . aadcg/presenting)
+    (org-tree-slide-stop-hook . aadcg/working)
+    :bind
+    ("<f8>" . org-tree-slide-mode)
+    ("<f7>" . org-tree-slide-play-with-timer))
+
+  (defun aadcg/presenting ()
+    "Select a light theme suitable for a presentation."
+    (interactive)
+    (disable-theme 'zenburn)
+    (load-theme 'solarized-light t)
+    (transparency 100)
+    (display-time-mode 0)
+    (column-number-mode 0)
+    (line-number-mode 0))
+
+  (defun aadcg/working ()
+    "Select my favourite production theme."
+    (interactive)
+    (disable-theme 'solarized-light)
+    (load-theme 'zenburn t)
+    (transparency 90)
+    (display-time-mode 1)
+    (column-number-mode 1)
+    (line-number-mode 1))
 #+end_src
 
 * Programming
@@ -604,6 +632,9 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
       :init
       (load-theme 'zenburn t)
       (transparency 90)))
+
+  (when window-system
+    (use-package solarized-theme))
 #+end_src
 
 ** Modeline
