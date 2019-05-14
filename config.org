@@ -259,7 +259,7 @@ Backups and auto-save files at ~/.emacs/backups
           org-goto-max-level 10
           org-startup-indented t
           org-startup-with-inline-images t
-          org-image-actual-width nil
+          org-image-actual-width 400
           org-hide-leading-stars t
           org-special-ctrl-a/e t
           org-special-ctrl-k t
@@ -345,10 +345,8 @@ Backups and auto-save files at ~/.emacs/backups
   (use-package org-tree-slide
     :config
     (setq org-tree-slide-slide-in-effect nil
-          org-tree-slide-heading-emphasis t
           org-tree-slide-activate-message "Welcome to my presentation!"
-          org-tree-slide-deactivate-message "Hope you have enjoyed!"
-          org-tree-slide-modeline-display nil)
+          org-tree-slide-deactivate-message "Hope you have enjoyed!")
     :hook
     (org-tree-slide-play . aadcg/presenting)
     (org-tree-slide-stop . aadcg/working)
@@ -365,7 +363,8 @@ Backups and auto-save files at ~/.emacs/backups
     (display-time-mode 0)
     (column-number-mode 0)
     (line-number-mode 0)
-    (display-battery-mode 0))
+    (display-battery-mode 0)
+    (text-scale-increase 2))
 
   (defun aadcg/working ()
     "Select my favourite production theme."
@@ -376,7 +375,8 @@ Backups and auto-save files at ~/.emacs/backups
     (display-time-mode 1)
     (column-number-mode 1)
     (line-number-mode 1)
-    (display-battery-mode 1))
+    (display-battery-mode 1)
+    (reset-text-size))
 #+end_src
 
 * Programming
