@@ -310,7 +310,7 @@ Backups and auto-save files at ~/.emacs/backups
     ("\C-cl" . org-store-link)
     ("\C-cc" . org-capture)
     ("C-c i" . org-time-stamp-inactive)
-    ("C-c j" . aag/org-checkbox-next))
+    ("C-c j" . aadcg/org-checkbox-next))
 #+end_src
 
 #+begin_src emacs-lisp :results silent
