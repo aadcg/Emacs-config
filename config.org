@@ -259,7 +259,7 @@ Backups and auto-save files at ~/.emacs/backups
           org-goto-max-level 10
           org-startup-indented t
           org-startup-with-inline-images t
-          org-image-actual-width 700
+          org-image-actual-width 500
           org-hide-leading-stars t
           org-special-ctrl-a/e t
           org-special-ctrl-k t
