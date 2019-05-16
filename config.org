@@ -349,8 +349,8 @@ Backups and auto-save files at ~/.emacs/backups
     :hook
     ((org-tree-slide-play . aadcg/presenting)
     (org-tree-slide-stop . aadcg/working)
-    (org-tree-slide-play . command-log-mode)
-    (org-tree-slide-stop . command-log-mode))
+    (org-tree-slide-play . global-command-log-mode)
+    (org-tree-slide-stop . global-command-log-mode))
     :bind
     ("<f8>" . org-tree-slide-mode)
     ("<f7>" . org-tree-slide-play-with-timer))
