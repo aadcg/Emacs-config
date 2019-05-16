@@ -263,7 +263,6 @@ Backups and auto-save files at ~/.emacs/backups
           org-hide-leading-stars t
           org-special-ctrl-a/e t
           org-special-ctrl-k t
-          org-startup-folded t
           org-return-follows-link t
           org-cycle-include-plain-lists 'integrate
           org-directory "~/NextCloud/org/"
@@ -326,12 +325,12 @@ Backups and auto-save files at ~/.emacs/backups
 
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((python . t)
-     (latex . t)
-     (translate . t)
-     (shell . t)
+   '((python     . t)
+     (latex      . t)
+     (translate  . t)
+     (shell      . t)
      (emacs-lisp . t)
-     (ditaa . t)))
+     (ditaa      . t)))
 
   (when window-system
     (use-package org-pdfview))
@@ -365,7 +364,7 @@ Backups and auto-save files at ~/.emacs/backups
     (line-number-mode 0)
     (display-battery-mode 0)
     (text-scale-increase 3)
-    (setq org-ellipsis " "))
+    (command-log-mode))
 
   (defun aadcg/working ()
     "Select my favourite production theme."
@@ -378,7 +377,8 @@ Backups and auto-save files at ~/.emacs/backups
     (line-number-mode 1)
     (display-battery-mode 1)
     (reset-text-size)
-    (setq org-ellipsis " §"))
+    (command-log-mode)
+    (clm/close-command-log-buffer))
 #+end_src
 
 * Programming
@@ -608,6 +608,16 @@ Ivy in Eshell
 ** Games
 #+begin_src emacs-lisp :results silent
   (use-package typit)
+#+end_src
+
+** Command log
+#+begin_src emacs-lisp :results sillent
+    (use-package command-log-mode
+      :config
+      (setq command-log-mode-window-size 38
+            command-log-mode-auto-show t)
+      :hook
+      (command-log-mode . visual-line-mode))
 #+end_src
 
 ** EXWM
