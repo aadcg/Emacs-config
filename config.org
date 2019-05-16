@@ -347,8 +347,10 @@ Backups and auto-save files at ~/.emacs/backups
           org-tree-slide-activate-message "Welcome to my presentation!"
           org-tree-slide-deactivate-message "Hope you have enjoyed!")
     :hook
-    (org-tree-slide-play . aadcg/presenting)
+    ((org-tree-slide-play . aadcg/presenting)
     (org-tree-slide-stop . aadcg/working)
+    (org-tree-slide-play . command-log-mode)
+    (org-tree-slide-stop . command-log-mode))
     :bind
     ("<f8>" . org-tree-slide-mode)
     ("<f7>" . org-tree-slide-play-with-timer))
@@ -363,8 +365,7 @@ Backups and auto-save files at ~/.emacs/backups
     (column-number-mode 0)
     (line-number-mode 0)
     (display-battery-mode 0)
-    (text-scale-increase 3)
-    (command-log-mode))
+    (text-scale-increase 3))
 
   (defun aadcg/working ()
     "Select my favourite production theme."
@@ -377,8 +378,7 @@ Backups and auto-save files at ~/.emacs/backups
     (line-number-mode 1)
     (display-battery-mode 1)
     (reset-text-size)
-    (command-log-mode)
-    (clm/close-command-log-buffer))
+    (delete-other-windows))
 #+end_src
 
 * Programming
@@ -612,12 +612,10 @@ Ivy in Eshell
 
 ** Command log
 #+begin_src emacs-lisp :results sillent
-    (use-package command-log-mode
-      :config
-      (setq command-log-mode-window-size 38
-            command-log-mode-auto-show t)
-      :hook
-      (command-log-mode . visual-line-mode))
+  (use-package command-log-mode
+    :config
+    (setq command-log-mode-window-size 38
+          command-log-mode-auto-show t))
 #+end_src
 
 ** EXWM
