@@ -285,6 +285,7 @@ Backups and auto-save files at ~/.emacs/backups
           org-src-fontify-natively t
           org-src-tab-acts-natively t
           org-src-window-setup 'current-window
+          org-export-use-babel nil
           org-confirm-babel-evaluate nil
           org-highlight-latex-and-related (quote (latex script entities))
           org-format-latex-options
@@ -344,6 +345,7 @@ Backups and auto-save files at ~/.emacs/backups
   (use-package org-tree-slide
     :config
     (setq org-tree-slide-slide-in-effect nil
+          org-tree-slide-heading-emphasis t
           org-tree-slide-activate-message "Welcome to my presentation!"
           org-tree-slide-deactivate-message "Hope you have enjoyed!")
     :hook
@@ -620,12 +622,9 @@ Ivy in Eshell
 
 ** EXWM
 #+begin_src emacs-lisp :results silent
-  ;; (use-package xelb)
+  (use-package xelb)
 
-  ;; (use-package exwm
-  ;;   :config
-  ;;   (require 'exwm-config)
-  ;;   (exwm-config-default))
+  (use-package exwm)
 #+end_src
 
 * Aesthetics
