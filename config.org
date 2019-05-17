@@ -358,8 +358,8 @@ Backups and auto-save files at ~/.emacs/backups
   (defun aadcg/presenting ()
     "Select a light theme suitable for a presentation."
     (interactive)
-    ;; (disable-theme 'zenburn)
-    ;; (load-theme 'solarized-light t)
+    (disable-theme 'zenburn)
+    (load-theme 'doneburn t)
     (transparency 100)
     (display-time-mode 0)
     (column-number-mode 0)
@@ -370,8 +370,8 @@ Backups and auto-save files at ~/.emacs/backups
   (defun aadcg/working ()
     "Select my favourite production theme."
     (interactive)
-    ;; (disable-theme 'solarized-light)
-    ;; (load-theme 'zenburn t)
+    (disable-theme 'doneburn)
+    (load-theme 'zenburn t)
     (transparency 90)
     (display-time-mode 1)
     (column-number-mode 1)
@@ -643,13 +643,11 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
     (use-package zenburn-theme
       :init
       (load-theme 'zenburn t)
-      (transparency 90)
-      :config
-      (setq zenburn-use-variable-pitch t)
-      (setq zenburn-scale-org-headlines t)))
+      (transparency 90)))
 
   (when window-system
-    (use-package solarized-theme))
+    (use-package doneburn-theme
+      :defer t))
 #+end_src
 
 ** Modeline
