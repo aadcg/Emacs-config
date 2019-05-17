@@ -331,15 +331,12 @@ Backups and auto-save files at ~/.emacs/backups
    'org-babel-load-languages
    '((python     . t)
      (latex      . t)
-     (translate  . t)
      (shell      . t)
      (emacs-lisp . t)
      (ditaa      . t)))
 
   (when window-system
     (use-package org-pdfview))
-
-  (use-package ob-translate)
 
   (use-package cdlatex
     :config
@@ -353,9 +350,9 @@ Backups and auto-save files at ~/.emacs/backups
           org-tree-slide-deactivate-message "Hope you have enjoyed!")
     :hook
     ((org-tree-slide-play . aadcg/presenting)
-    (org-tree-slide-stop . aadcg/working)
-    (org-tree-slide-play . global-command-log-mode)
-    (org-tree-slide-stop . global-command-log-mode))
+     (org-tree-slide-stop . aadcg/working)
+     (org-tree-slide-play . global-command-log-mode)
+     (org-tree-slide-stop . global-command-log-mode))
     :bind
     ("<f8>" . org-tree-slide-mode)
     ("<f7>" . org-tree-slide-play-with-timer))
@@ -645,6 +642,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
     (use-package zenburn-theme
       :init
       (load-theme 'zenburn t)
+      (setq zenburn-scale-org-headlines t)
       (transparency 90)))
 
   (when window-system
