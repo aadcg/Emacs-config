@@ -127,13 +127,11 @@ Backups and auto-save files at ~/.emacs/backups
   (setq inhibit-startup-message t
         initial-scratch-message nil)
   (fset 'yes-or-no-p 'y-or-n-p)
-  ;; (show-paren-mode t) curently using smartparens for this
   (setq show-paren-delay 0.0)
   (add-hook 'prog-mode-hook 'display-line-numbers-mode)
   (column-number-mode)
   (setq-default dired-listing-switches "-Atlh")
   (setq dired-auto-revert-buffer t)
-  ;; (global-prettify-symbols-mode t)
   (menu-bar-mode -1)
   (when window-system
     (tool-bar-mode -1)
@@ -254,7 +252,6 @@ Backups and auto-save files at ~/.emacs/backups
 #+begin_src emacs-lisp
   (use-package org
     :config
-    ;; (setq org-ellipsis " ⬎")
     (setq org-ellipsis " §"
           org-goto-interface 'outline-path-completion
           org-goto-max-level 10
@@ -300,10 +297,7 @@ Backups and auto-save files at ~/.emacs/backups
     (add-to-list 'org-structure-template-alist '("py" . "src python"))
     (add-to-list 'org-structure-template-alist '("hk" . "src haskell"))
     (add-to-list 'org-structure-template-alist '("sh" . "src sh"))
-    (add-to-list 'org-structure-template-alist '("co" . "comment")) ;
-    ;; (add-to-list 'org-structure-template-alist '("ab" . "abstract"))
-    ;; (add-to-list 'org-structure-template-alist '("lx" . "latex"))
-    ;; (add-to-list 'org-structure-template-alist '("th" . "theorem"))
+    (add-to-list 'org-structure-template-alist '("co" . "comment"))
 
     :bind
     ("\C-ca" . org-agenda)
@@ -313,11 +307,9 @@ Backups and auto-save files at ~/.emacs/backups
     ("C-c j" . aadcg/org-checkbox-next))
 #+end_src
 
-#+RESULTS:
-: aadcg/org-checkbox-next
-
 #+begin_src emacs-lisp
   (defun aadcg/org-checkbox-next ()
+    "Mark checkboxes and sort"
     (interactive)
     (let ((home (point)))
       (when (org-at-item-checkbox-p)
@@ -641,8 +633,8 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
   (when window-system
     (use-package zenburn-theme
       :init
-      (load-theme 'zenburn t)
       (setq zenburn-scale-org-headlines t)
+      (load-theme 'zenburn t)
       (transparency 90))
 
     (use-package doneburn-theme
