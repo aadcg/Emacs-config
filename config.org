@@ -643,9 +643,8 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
       :init
       (load-theme 'zenburn t)
       (setq zenburn-scale-org-headlines t)
-      (transparency 90)))
+      (transparency 90))
 
-  (when window-system
     (use-package doneburn-theme
       :defer t))
 #+end_src
