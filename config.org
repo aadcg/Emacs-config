@@ -359,7 +359,8 @@ Backups and auto-save files at ~/.emacs/backups
     (column-number-mode 0)
     (line-number-mode 0)
     (display-battery-mode 0)
-    (text-scale-increase 3))
+    (text-scale-increase 4)
+    (variable-pitch-mode))
 
   (defun aadcg/working ()
     "Select my favourite production theme."
@@ -372,6 +373,7 @@ Backups and auto-save files at ~/.emacs/backups
     (line-number-mode 1)
     (display-battery-mode 1)
     (reset-text-size)
+    (variable-pitch-mode)
     (delete-other-windows))
 #+end_src
 
