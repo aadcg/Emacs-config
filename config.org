@@ -331,7 +331,7 @@ Backups and auto-save files at ~/.emacs/backups
     (use-package org-pdfview))
 
   (use-package cdlatex
-    :config
+    :init
     (org-cdlatex-mode))
 
   (use-package org-tree-slide
@@ -521,9 +521,9 @@ Ivy in Eshell
   (when window-system
     (use-package flyspell
       :config
-      (flyspell-prog-mode)
-      (when org-mode-hook
-        (flyspell-mode-off))))
+      (flyspell-prog-mode)))
+      ;; (when org-mode-hook
+      ;;   (flyspell-mode-off))))
 #+end_src
 
 ** PDF
@@ -607,11 +607,11 @@ Ivy in Eshell
 #+end_src
 
 ** Command log
-#+begin_src emacs-lisp :results sillent
+#+begin_src emacs-lisp
   (use-package command-log-mode
     :config
-    (setq command-log-mode-window-size 38
-          command-log-mode-auto-show t))
+    (setq command-log-mode-auto-show t
+          clm/log-command-indentation 8))
 #+end_src
 
 ** EXWM
