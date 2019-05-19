@@ -359,7 +359,7 @@ Backups and auto-save files at ~/.emacs/backups
     (column-number-mode 0)
     (line-number-mode 0)
     (display-battery-mode 0)
-    (text-scale-increase 4)
+    (text-scale-increase 3)
     (variable-pitch-mode))
 
   (defun aadcg/working ()
@@ -661,11 +661,11 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 
 ** Minions
 #+begin_src emacs-lisp
-(use-package minions
-  :config
-  (setq minions-mode-line-lighter ""
-        minions-mode-line-delimiters '("" . ""))
-  (minions-mode 1))
+  (use-package minions
+    :config
+    (setq minions-mode-line-lighter ""
+          minions-mode-line-delimiters '("" . ""))
+    (minions-mode 1))
 #+end_src
 
 ** Org bullets
