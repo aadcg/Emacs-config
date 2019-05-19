@@ -18,7 +18,9 @@ url/*
 request/*
 elpa/*
 ltximg/*
+image-dired/*
 backups/*
+transient/*
 .python-environments/*
 
 command-log-mode.el
