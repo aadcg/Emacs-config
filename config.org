@@ -359,7 +359,7 @@ Backups and auto-save files at ~/.emacs/backups
     (column-number-mode 0)
     (line-number-mode 0)
     (display-battery-mode 0)
-    (text-scale-increase 3)
+    (text-scale-increase 4)
     (variable-pitch-mode))
 
   (defun aadcg/working ()
@@ -683,7 +683,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
     (require 'pretty-mode)
     (global-pretty-mode t)
     (pretty-activate-groups
-     '(:sub-and-superscripts :greek :arithmetic-nary :quantifiers)))
+     '(:sub-and-superscripts :greek :arithmetic-nary :quantifiers :types)))
 #+end_src
 
 ** Beacon
