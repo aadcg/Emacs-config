@@ -75,7 +75,7 @@ anytime and to sync effortlessly. My life in plain text.
   - pkg install emacs, git
   - [[https://wiki.termux.com/wiki/Sharing_Data][termux-setup-storage]] (to create symlinks)
 - A symlink might be needed depending on the way you set org-agenda-files and on
-  where the Nextcloud are located
+  where the Nextcloud files are located
 
 * Sidenote on GNU
 Emacs is all about freedom. When you work in it, you feel it was designed by
