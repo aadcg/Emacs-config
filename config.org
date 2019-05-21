@@ -322,6 +322,7 @@ Backups and auto-save files at ~/.emacs/backups
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((python     . t)
+     (haskell    . t)
      (latex      . t)
      (shell      . t)
      (emacs-lisp . t)
@@ -467,7 +468,7 @@ Ivy in Eshell
 
 ** JS
 #+begin_src emacs-lisp
-  ;; (add-hook 'js-mode-hook 'json-pretty-print-buffer-ordered)
+  (add-hook 'js-mode-hook 'json-pretty-print-buffer-ordered)
 #+end_src
 
 ** Projectile
