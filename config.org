@@ -251,6 +251,7 @@ Backups and auto-save files at ~/.emacs/backups
 * Org
 #+begin_src emacs-lisp
   (use-package org
+    :pin gnu
     :config
     (setq org-ellipsis " §"
           org-goto-interface 'outline-path-completion
