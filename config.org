@@ -321,11 +321,11 @@ Backups and auto-save files at ~/.emacs/backups
 
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((python     . t)
+   '((emacs-lisp . t)
+     (python     . t)
      (haskell    . t)
      (latex      . t)
      (shell      . t)
-     (emacs-lisp . t)
      (ditaa      . t)))
 
   (when window-system
