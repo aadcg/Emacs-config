@@ -296,7 +296,7 @@ Backups and auto-save files at ~/.emacs/backups
     (require 'ox-beamer)
     (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
     (add-to-list 'org-structure-template-alist '("py" . "src python"))
-    (add-to-list 'org-structure-template-alist '("hk" . "src haskell"))
+    (add-to-list 'org-structure-template-alist '("hs" . "src haskell"))
     (add-to-list 'org-structure-template-alist '("sh" . "src sh"))
     (add-to-list 'org-structure-template-alist '("co" . "comment"))
 
