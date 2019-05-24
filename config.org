@@ -685,7 +685,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
     (require 'pretty-mode)
     (global-pretty-mode t)
     (pretty-activate-groups
-     '(:sub-and-superscripts :greek :arithmetic-nary :quantifiers :types)))
+     '(:sub-and-superscripts :arithmetic-nary :quantifiers :types)))
 #+end_src
 
 ** Beacon
