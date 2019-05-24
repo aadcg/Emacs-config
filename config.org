@@ -557,6 +557,13 @@ Ivy in Eshell
     :bind ("C-r" . avy-goto-word-1))
 #+end_src
 
+** Expand region
+#+begin_src emacs-lisp
+  (use-package expand-region
+    :bind
+    ("C-=". 'er/expand-region))
+#+end_src
+
 ** Emacs completion
 #+begin_src emacs-lisp
     (use-package counsel
