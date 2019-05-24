@@ -391,8 +391,8 @@ Backups and auto-save files at ~/.emacs/backups
           pyvenv-mode-line-indicator nil
           pyvenv-activate "~/anaconda3")
     :bind
-    ("C-c p". elpy-autopep8-fix-code)
-    ("C-c b". elpy-black-fix-code))
+    ("C-c p" . elpy-autopep8-fix-code)
+    ("C-c b" . elpy-black-fix-code))
 
   (use-package company-jedi
     :config
@@ -560,8 +560,7 @@ Ivy in Eshell
 ** Expand region
 #+begin_src emacs-lisp
   (use-package expand-region
-    :bind
-    ("C-=". 'er/expand-region))
+    :bind ("C-=". 'er/expand-region))
 #+end_src
 
 ** Emacs completion
