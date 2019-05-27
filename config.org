@@ -137,7 +137,8 @@ Backups and auto-save files at ~/.emacs/backups
     (tool-bar-mode -1)
     (scroll-bar-mode -1)
     (horizontal-scroll-bar-mode -1)
-    (global-hl-line-mode))
+    (global-hl-line-mode)
+    (fringe-mode '(4 . 4)))
 #+end_src
 
 ** Regional
