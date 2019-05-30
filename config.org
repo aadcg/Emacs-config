@@ -625,7 +625,7 @@ Ivy in Eshell
           clm/log-command-indentation 8))
 #+end_src
 
-** EXWM
+** COMMENT EXWM
 #+begin_src emacs-lisp
   (use-package xelb)
 
