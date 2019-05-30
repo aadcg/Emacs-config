@@ -568,23 +568,23 @@ Ivy in Eshell
 
 ** Emacs completion
 #+begin_src emacs-lisp
-    (use-package counsel
-      :config
-      (setq ivy-use-virtual-buffers t
-            ivy-count-format "(%d/%d) "
-            ivy-wrap t
-            ivy-extra-directories nil
-            ivy-initial-inputs-alist nil
-            ivy-format-function 'ivy-format-function-arrow)
-      (when window-system
-        (setq ivy-height 25))
-
-      :bind
-      ("C-x B" . ivy-switch-buffer-other-window)
-      ("C-s" . swiper))
-
+  (use-package counsel
+    :init
     (ivy-mode 1)
     (counsel-mode)
+    :config
+    (setq ivy-use-virtual-buffers t
+          ivy-count-format "(%d/%d) "
+          ivy-wrap t
+          ivy-extra-directories nil
+          ivy-initial-inputs-alist nil
+          ivy-format-function 'ivy-format-function-arrow)
+    (when window-system
+      (setq ivy-height 25))
+    (use-package smex)
+    :bind
+    ("C-x B" . ivy-switch-buffer-other-window)
+    ("C-s" . swiper))
 #+end_src
 
 ** Auto-complete
