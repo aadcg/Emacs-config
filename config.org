@@ -719,7 +719,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
     (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 #+end_src
 
-* TODO Improvements
+* TODO COMMENT Improvements
 ** TODO Org export Latex russian
 
 ** TODO Create repo with portuguese holidays
@@ -741,10 +741,12 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 - [ ] Email (mu4e + mbsync?)
 - [ ] Syncthing
 
-** TODO COMMENT Emacs CI
+** TODO Emacs CI
 - State "TODO"       from              [2019-06-01 sáb 10:10]
-<sh
+
+#+begin_src sh
 emacs -nw --batch --eval '(message (number-to-string (* 2 2)))'
+#+end_src
 
 * Startup
 #+begin_src emacs-lisp
