@@ -262,6 +262,7 @@ Backups and auto-save files at ~/.emacs/backups
           org-startup-with-inline-images t
           org-image-actual-width 500
           org-hide-leading-stars t
+          org-hide-emphasis-markers t
           org-special-ctrl-a/e t
           org-special-ctrl-k t
           org-return-follows-link t
