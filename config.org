@@ -114,6 +114,7 @@ Backups and auto-save files at ~/.emacs/backups
 ** Browser
 #+begin_src emacs-lisp
   (setq browse-url-browser-function 'eww-browse-url)
+  (setq shr-external-browser 'browse-url-firefox)
 #+end_src
 
 ** Aesthetics
@@ -252,7 +253,7 @@ Backups and auto-save files at ~/.emacs/backups
 * Org
 #+begin_src emacs-lisp
   (use-package org
-    :pin gnu
+    :pin "gnu"
     :config
     (setq org-ellipsis " §"
           org-goto-interface 'outline-path-completion
@@ -739,6 +740,11 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 - [ ] EXWM
 - [ ] Email (mu4e + mbsync?)
 - [ ] Syncthing
+
+** TODO COMMENT Emacs CI
+- State "TODO"       from              [2019-06-01 sáb 10:10]
+<sh
+emacs -nw --batch --eval '(message (number-to-string (* 2 2)))'
 
 * Startup
 #+begin_src emacs-lisp
