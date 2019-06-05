@@ -393,7 +393,6 @@ Backups and auto-save files at ~/.emacs/backups
     (setq python-shell-interpreter "jupyter"
           python-shell-interpreter-args "console --simple-prompt"
           python-shell-prompt-detect-failure-warning nil
-          pyvenv-mode-line-indicator nil
           pyvenv-activate "~/anaconda3")
     (add-to-list 'python-shell-completion-native-disabled-interpreters "jupyter")
 
