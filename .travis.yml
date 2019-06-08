@@ -13,6 +13,7 @@ before_install:
   - sudo mv ../.emacs.d ~
   - ls -a ~
   - lsb_release -a
+  - emacs -version
 
 script:
   ./test_startup.sh
