@@ -9,7 +9,8 @@ before_install:
   # - sudo snap install emacs
   - sudo apt-get install -y -qq emacs
   - ls
-  - mv .emacs.d ../../..
+  - pwd
+  - mv init.el ../..
   - cd
   - ls
 
