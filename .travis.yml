@@ -9,8 +9,8 @@ before_install:
   # - sudo snap install emacs
   # - sudo apt-get install -y -qq emacs
   - git clone https://github.com/aadcg/.emacs.d.git
-  # - pwd
-  # - ls
+  - pwd
+  - ls
 
 script:
   ./test_startup.sh
