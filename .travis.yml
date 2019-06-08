@@ -24,4 +24,4 @@ matrix:
     - env: EVM_EMACS=emacs-git-snapshot-travis
 
 script:
-lsb_release -a && ./test-startup.sh
+  - lsb_release -a && ./test-startup.sh
