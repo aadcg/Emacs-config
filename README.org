@@ -1,6 +1,8 @@
 #+STARTUP: latexpreview
 #+OPTIONS: toc:nil num:nil email:t
 
+[[https://travis-ci.org/aadcg/.emacs.d.svg?branch=master][Build]]
+
 * How did I get to Emacs?
 ** Who am I?
 I assume you're motivated to use Emacs. If you're not - [[https://www.youtube.com/watch?v=EsAkPl3On3E][convince yourself]].
