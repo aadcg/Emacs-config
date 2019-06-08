@@ -1,3 +1,5 @@
+language: emacs-lisp
+
 services:
   - docker
 
@@ -8,10 +10,7 @@ before_install:
   # - sudo apt-get update && sudo apt-get install -y -qq snapd
   # - sudo snap refresh && sudo snap install emacs
   - sudo apt-get install -y -qq emacs
-  - ls
-  - pwd
   - sudo mv ../.emacs.d ~
-  - ls -a ~
   - lsb_release -a
   - emacs -version
 
