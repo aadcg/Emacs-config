@@ -1,16 +1,15 @@
-# services:
-#   - docker
+services:
+  - docker
 
 # sudo: required
 
 before_install:
-  # - docker pull ubuntu:rolling
-  # - sudo apt-get update && sudo apt-get install -y -qq snapd
-  # - sudo snap install emacs
-  # - sudo apt-get install -y -qq emacs
+  - docker pull ubuntu:rolling
+  - sudo apt-get update && sudo apt-get install -y -qq snapd
+  - sudo snap install emacs
+  - sudo apt-get install -y -qq emacs
   - rm ~/.emacs.d/
   - mv .emacs.d ../../..
-  # - git clone https://github.com/aadcg/.emacs.d.git
   - ls
 
 script:
