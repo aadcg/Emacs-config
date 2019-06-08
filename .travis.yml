@@ -1,13 +1,7 @@
-language: emacs-lisp
-dist: xenial
-services:
-  - docker
-
 sudo: required
 
-env:
-  matrix:
-    - emacs=emacs-snapshot
+services:
+  - docker
 
 before_install:
   - docker pull ubuntu:rolling
