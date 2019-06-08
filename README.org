@@ -1,7 +1,8 @@
 #+STARTUP: latexpreview
 #+OPTIONS: toc:nil num:nil email:t
+# (org-md-export-to-markdown)
 
-[[https://travis-ci.org/aadcg/.emacs.d.svg?branch=master][Build]]
+[![Build Status](https://travis-ci.org/aadcg/.emacs.d.svg?branch=master)](https://travis-ci.org/aadcg/.emacs.d)
 
 * How did I get to Emacs?
 ** Who am I?
