@@ -8,6 +8,7 @@ before_install:
   - sudo apt-get update && sudo apt-get install -y -qq snapd
   # - sudo snap install emacs
   - sudo apt-get install -y -qq emacs
+  - ls
   - mv .emacs.d ../../..
   - cd
   - ls
