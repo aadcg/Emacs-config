@@ -3,6 +3,7 @@ services:
 
 before_install:
   - docker pull ubuntu:rolling
+  - apt update && apt install snap
   - snap install emacs
   - git clone https://github.com/aadcg/.emacs.d.git
 
