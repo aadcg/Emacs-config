@@ -749,6 +749,8 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 emacs -nw --batch --eval '(message (number-to-string (* 2 2)))'
 #+end_src
 
+cenas
+
 ** TODO Fancy TODO
 [[https://thraxys.wordpress.com/2016/01/14/pimp-up-your-org-agenda/][here]]
 
