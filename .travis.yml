@@ -1,5 +1,5 @@
 language: emacs-lisp
-
+dist: xenial
 services:
   - docker
 
