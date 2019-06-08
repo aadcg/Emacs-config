@@ -3,6 +3,7 @@ services:
 
 before_install:
   - docker pull ubuntu:rolling
+  - git clone https://github.com/aadcg/.emacs.d.git
 
 script:
   ./test_startup.sh
