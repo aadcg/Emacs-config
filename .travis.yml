@@ -6,7 +6,8 @@ sudo: required
 before_install:
   - docker pull ubuntu:rolling
   - sudo apt-get update && sudo apt-get install -y -qq snap
-  - sudo snap install -y emacs
+  # - sudo snap install -y emacs
+  - sudo apt-get install -y -qq emacs
   - git clone https://github.com/aadcg/.emacs.d.git
 
 script:
