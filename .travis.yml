@@ -8,9 +8,11 @@ before_install:
   # - sudo apt-get update && sudo apt-get install -y -qq snapd
   # - sudo snap install emacs
   # - sudo apt-get install -y -qq emacs
-  # - ln -s ../.emacs.d/ ~
+  - ls
+  - pwd
   - sudo mv ../.emacs.d ~
   - ls ~
+  - lsb_release -a
 
 script:
   ./test_startup.sh
