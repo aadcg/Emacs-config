@@ -1,4 +1,4 @@
-[\![Build Status](<https://travis-ci.org/aadcg/.emacs.d.svg?branch=master>)](<https://travis-ci.org/aadcg/.emacs.d>)
+[![Build Status](https://travis-ci.org/aadcg/.emacs.d.svg?branch=master)](https://travis-ci.org/aadcg/.emacs.d)
 
 
 # How did I get to Emacs?
