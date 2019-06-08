@@ -5,14 +5,10 @@ services:
 
 before_install:
   - docker pull ubuntu:rolling
-  - sudo apt-get update && sudo apt-get install -y -qq snapd
+  # - sudo apt-get update && sudo apt-get install -y -qq snapd
   # - sudo snap install emacs
-  - sudo apt-get install -y -qq emacs
-  - ls
-  - pwd
-  - mv ../.emacs.d ~
-  - cd
-  - ls
+  # - sudo apt-get install -y -qq emacs
+  - ln -s ../.emacs.d/ ~
 
 script:
   ./test_startup.sh
