@@ -2,14 +2,10 @@ dist: xenial
 
 language: minimal
 
-# services:
-#   - docker
-
 sudo: required
 
 before_install:
-  # - docker pull ubuntu:rolling
-  # - docker built -t ubuntu
+  - sudo add-apt-repository ppa:kelleyk/emacs && sudo apt update && sudo apt install emacs26
   - sudo mv ../.emacs.d ~
   - lsb_release -a
   - emacs -version
