@@ -1,10 +1,15 @@
-services:
-  - docker
+dist: xenial
+
+language: minimal
+
+# services:
+#   - docker
 
 sudo: required
 
 before_install:
-  - docker pull ubuntu:rolling
+  # - docker pull ubuntu:rolling
+  # - docker built -t ubuntu
   - sudo mv ../.emacs.d ~
   - lsb_release -a
   - emacs -version
