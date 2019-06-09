@@ -6,10 +6,9 @@ sudo: required
 
 before_install:
   - sudo add-apt-repository -y ppa:kelleyk/emacs && sudo apt update
-  - sudo apt install -y -qq emacs26
+  - sudo apt install -y -qq emacs26-nox
   - sudo mv ../.emacs.d ~
-  - mkdir ~/NextCloud && mkdir ~/NextCloud/org && touch ~/NextCloud/org/agendafile
-  - lsb_release -a
+  - mkdir -p ~/NextCloud/org && touch ~/NextCloud/org/agendafile
   - emacs26 -version
 
 script:
