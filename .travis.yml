@@ -5,7 +5,7 @@ language: minimal
 sudo: required
 
 before_install:
-  - root add-apt-repository ppa:kelleyk/emacs && root apt install -y - qq emacs26
+  - sudo add-apt-repository ppa:kelleyk/emacs && sudo apt install -y - qq emacs26
   - sudo mv ../.emacs.d ~
   - lsb_release -a
   - emacs -version
