@@ -9,7 +9,7 @@ before_install:
   - sudo apt install -y -qq emacs26-nox
   - sudo mv ../.emacs.d ~
   - mkdir -p ~/NextCloud/org && touch ~/NextCloud/org/agendafile
-  - emacs26 -version
+  - emacs26-nox -version
 
 script:
   ./test_startup.sh
