@@ -74,7 +74,7 @@ read it more than once).
 
 I started working on my own init.el on December, 2018.
 
-Following the trend, I went for a literate programming coupled with
+Following the trend, I went for literate programming coupled with
 [use-package](https://duckduckgo.com/l/?kh=-1&uddg=https%3A%2F%2Fgithub.com%2Fjwiegley%2Fuse%2Dpackage).
 
 Vanilla Emacs (not customized) doesn't suck and you should learn it
