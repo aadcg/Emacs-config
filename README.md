@@ -106,10 +106,7 @@ Emacs is the self-documenting text editor, so C-h i has everything you need!
 
 ## Emacs Lisp
 
-Anyway, I guess they're just having fun learning Emacs lisp. Which brings me to
-the next stage of using Emacs. When you start to work on your init.el you mostly
-copy from other people. Then you understand that it's actually useful to know
-Emacs Lisp (and Lisps in general too). That's the stage I'm currently at.
+If you love Emacs, you'll start learning it before you notice.
 
 
 ## CI
