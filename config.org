@@ -1,13 +1,31 @@
 #+TITLE: GNU Emacs config
 #+OPTIONS: num:nil toc:nil email:t
-#+LATEX_HEADER: \usepackage[margin=1.2cm]{geometry}
 #+PROPERTY: header-args :results silent
 
 * Meta
-:PROPERTIES:
-:EMACS_VERSION: 26.2 (GTK+)
-:ORG_VERSION: 9.2.3
-:END:
+** Versions
+#+begin_src emacs-lisp
+(shell-command "lsb_release -a")
+#+end_src
+
+#+RESULTS:
+Ubuntu 19.04
+
+#+begin_src emacs-lisp
+(emacs-version)
+#+end_src
+
+#+RESULTS:
+GNU Emacs 26.2 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.22.30) of
+2019-06-04
+
+#+begin_src emacs-lisp
+(org-version)
+#+end_src
+
+#+RESULTS:
+9.2.3
+
 ** Me
 #+begin_src emacs-lisp
   (setq user-full-name "André Alexandre Gomes"
@@ -17,7 +35,7 @@
         calendar-location-name "Porto, PT")
 #+end_src
 
-** Config
+** Metaconfiguration
 #+begin_src emacs-lisp
   (defun config-visit ()
     "Visits ~/.emacs.d/config.org."
@@ -34,15 +52,17 @@
   (global-set-key (kbd "C-c r") 'config-reload)
 #+end_src
 
-* My defaults
+* My tweaks
+Tweaking vanilla Emacs to my taste.
+
 ** Words, white spaces and text
-- Get rid of trailing whitespaces when a file is saved
-- Treat CamelCaseSubWords as separate words
+- No trailing whitespaces when a file is saved
+- CamelCaseSubWords are separate words
 - Overwrite selected text
-- Append a newline to the end of a file by default
+- Append a newline to the end of a file
 - 80 chars per line
 - Spaces over tabs
-- visual-line-mode if non-GUI (I only use the non-GUI emacs on my android phone)
+- visual-line-mode while using non-GUI Emacs (because I use it on my smartphone)
 
 #+begin_src emacs-lisp
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -112,23 +132,24 @@ Backups and auto-save files at ~/.emacs/backups
 #+end_src
 
 ** Browser
+- Eww by default
+
 #+begin_src emacs-lisp
   (setq browse-url-browser-function 'eww-browse-url)
-  (setq shr-external-browser 'browse-url-firefox)
 #+end_src
 
 ** Aesthetics
-- Hide startup stuff, hide bars, and simplify yes/no to y/n
-- Show matching parenthesis
+- Hide useless stuff and simplify verbose stuff
 - Number lines while programming
-- Highlight current line
-- Dired as 'ls -Atlh'
+- Tuple (#line, #column) on the modeline
+- Highlight current line except on the terminal (looks terrible on my
+  smartphone)
+- Dired as 'ls -Atlh' and auto revert
 
 #+begin_src emacs-lisp
   (setq inhibit-startup-message t
         initial-scratch-message nil)
   (fset 'yes-or-no-p 'y-or-n-p)
-  (setq show-paren-delay 0.0)
   (add-hook 'prog-mode-hook 'display-line-numbers-mode)
   (column-number-mode)
   (setq-default dired-listing-switches "-Atlh")
@@ -144,17 +165,22 @@ Backups and auto-save files at ~/.emacs/backups
 
 ** Regional
 *** Input Method
+- Всё ясно, да?
+
 #+begin_src emacs-lisp
   (setq default-input-method "russian-computer")
 #+end_src
 
 *** Calendar
+- Calendar starts on mondays
+
 #+begin_src emacs-lisp
   (setq calendar-week-start-day 1)
 #+end_src
 
 *** Clock
-[[https://en.wikipedia.org/wiki/List_of_tz_database_time_zones][Time Zones]]
+- That's how I like my clock
+
 #+begin_src emacs-lisp
   (setq display-time-24hr-format t
         display-time-format "%k:%M %a %d %b"
@@ -165,6 +191,7 @@ Backups and auto-save files at ~/.emacs/backups
 #+end_src
 
 *** Holidays
+- That's how I like my holidays
 #+begin_src emacs-lisp
     (setq holiday-bahai-holidays nil
           holiday-oriental-holidays nil
