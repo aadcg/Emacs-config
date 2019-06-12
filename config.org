@@ -337,75 +337,76 @@ Backups and auto-save files at ~/.emacs/backups
     ("C-c j" . aadcg/org-checkbox-next))
 #+end_src
 
+** Extra
 #+begin_src emacs-lisp
-    (defun aadcg/org-checkbox-next ()
-      "Mark checkboxes and sort"
-      (interactive)
-      (let ((home (point)))
-        (when (org-at-item-checkbox-p)
-          (org-toggle-checkbox)
-          (org-sort-list nil ?x))
-        (goto-char home)))
+  (defun aadcg/org-checkbox-next ()
+    "Mark checkboxes and sort"
+    (interactive)
+    (let ((home (point)))
+      (when (org-at-item-checkbox-p)
+        (org-toggle-checkbox)
+        (org-sort-list nil ?x))
+      (goto-char home)))
 
-    (setq exec-path (append exec-path '("/usr/bin/tex")))
+  (setq exec-path (append exec-path '("/usr/bin/tex")))
 
-    (org-babel-do-load-languages
-     'org-babel-load-languages
-     '((emacs-lisp . t)
-       (python     . t)
-       (haskell    . t)
-       (latex      . t)
-       (shell      . t)
-       (ditaa      . t)))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (python     . t)
+     (haskell    . t)
+     (latex      . t)
+     (shell      . t)
+     (ditaa      . t)))
 
-    (when window-system
-      (use-package org-pdfview))
+  (when window-system
+    (use-package org-pdfview))
 
-    (use-package cdlatex
-      :init
-      (org-cdlatex-mode))
+  (use-package cdlatex
+    :init
+    (org-cdlatex-mode))
 
-    (use-package org-tree-slide
-      :config
-      (setq org-tree-slide-slide-in-effect nil
-            org-tree-slide-heading-emphasis t
-            org-tree-slide-activate-message "Welcome to my presentation!"
-            org-tree-slide-deactivate-message "Hope you have enjoyed!")
-      :hook
-      ((org-tree-slide-play . aadcg/presenting)
-       (org-tree-slide-stop . aadcg/working)
-       (org-tree-slide-play . global-command-log-mode)
-       (org-tree-slide-stop . global-command-log-mode))
-      :bind
-      ("<f8>" . org-tree-slide-mode)
-      ("<f7>" . org-tree-slide-play-with-timer))
+  (use-package org-tree-slide
+    :config
+    (setq org-tree-slide-slide-in-effect nil
+          org-tree-slide-heading-emphasis t
+          org-tree-slide-activate-message "Welcome to my presentation!"
+          org-tree-slide-deactivate-message "Hope you have enjoyed!")
+    :hook
+    ((org-tree-slide-play . aadcg/presenting)
+     (org-tree-slide-stop . aadcg/working)
+     (org-tree-slide-play . global-command-log-mode)
+     (org-tree-slide-stop . global-command-log-mode))
+    :bind
+    ("<f8>" . org-tree-slide-mode)
+    ("<f7>" . org-tree-slide-play-with-timer))
 
-    (defun aadcg/presenting ()
-      "Select a light theme suitable for a presentation."
-      (interactive)
-      (disable-theme 'zenburn)
-      (load-theme 'doneburn t)
-      (transparency 100)
-      (display-time-mode 0)
-      (column-number-mode 0)
-      (line-number-mode 0)
-      (display-battery-mode 0)
-      (text-scale-increase 4)
-      (variable-pitch-mode))
+  (defun aadcg/presenting ()
+    "Select a light theme suitable for a presentation."
+    (interactive)
+    (disable-theme 'zenburn)
+    (load-theme 'doneburn t)
+    (transparency 100)
+    (display-time-mode 0)
+    (column-number-mode 0)
+    (line-number-mode 0)
+    (display-battery-mode 0)
+    (text-scale-increase 4)
+    (variable-pitch-mode))
 
-    (defun aadcg/working ()
-      "Select my favourite production theme."
-      (interactive)
-      (disable-theme 'doneburn)
-      (load-theme 'zenburn t)
-      (transparency 90)
-      (display-time-mode 1)
-      (column-number-mode 1)
-      (line-number-mode 1)
-      (display-battery-mode 1)
-      (reset-text-size)
-      (variable-pitch-mode)
-      (delete-other-windows))
+  (defun aadcg/working ()
+    "Select my favourite production theme."
+    (interactive)
+    (disable-theme 'doneburn)
+    (load-theme 'zenburn t)
+    (transparency 90)
+    (display-time-mode 1)
+    (column-number-mode 1)
+    (line-number-mode 1)
+    (display-battery-mode 1)
+    (reset-text-size)
+    (variable-pitch-mode)
+    (delete-other-windows))
 #+end_src
 
 * Programming
@@ -747,7 +748,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
     (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 #+end_src
 
-* TODO COMMENT Improvements
+* TODO COMMENT
 ** TODO Org export Latex russian
 
 ** TODO Create repo with portuguese holidays
