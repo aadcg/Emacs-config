@@ -4,26 +4,17 @@
 
 * Meta
 ** Versions
-#+begin_src emacs-lisp
 (shell-command "lsb_release -a")
-#+end_src
 
-#+RESULTS:
 Ubuntu 19.04
 
-#+begin_src emacs-lisp
 (emacs-version)
-#+end_src
 
-#+RESULTS:
 GNU Emacs 26.2 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.22.30) of
 2019-06-04
 
-#+begin_src emacs-lisp
 (org-version)
-#+end_src
 
-#+RESULTS:
 9.2.3
 
 ** Me
@@ -602,19 +593,22 @@ Ivy in Eshell
     :init
     (ivy-mode 1)
     (counsel-mode)
+
     :config
     (setq ivy-use-virtual-buffers t
           ivy-count-format "(%d/%d) "
           ivy-wrap t
           ivy-extra-directories nil
-          ivy-initial-inputs-alist nil
-          ivy-format-function 'ivy-format-function-arrow)
+          ivy-initial-inputs-alist nil)
+    (add-to-list 'ivy-format-functions-alist '(t . ivy-format-function-arrow))
     (when window-system
       (setq ivy-height 25))
-    (use-package smex)
+
     :bind
     ("C-x B" . ivy-switch-buffer-other-window)
     ("C-s" . swiper))
+
+  (use-package smex)
 #+end_src
 
 ** Auto-complete
