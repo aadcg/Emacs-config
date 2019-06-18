@@ -596,7 +596,7 @@ Ivy in Eshell
 
     :config
     (setq ivy-use-virtual-buffers t
-          ivy-count-format "(%d/%d) "
+          ivy-count-format "%d/%d "
           ivy-wrap t
           ivy-extra-directories nil
           ivy-initial-inputs-alist nil)
