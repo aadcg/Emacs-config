@@ -742,6 +742,13 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
     (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 #+end_src
 
+** Google Translate
+#+begin_src emacs-lisp
+  (use-package google-translate
+    :config
+    (defun google-translate--search-tkk () "Search TKK." (list 430675 2721866130)))
+#+end_src
+
 * TODO COMMENT
 ** TODO Org export Latex russian
 
