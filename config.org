@@ -183,6 +183,7 @@ Backups and auto-save files at ~/.emacs/backups
 
 *** Holidays
 - That's how I like my holidays
+
 #+begin_src emacs-lisp
     (setq holiday-bahai-holidays nil
           holiday-oriental-holidays nil
@@ -268,6 +269,7 @@ Backups and auto-save files at ~/.emacs/backups
           '(;; Porto, PT
             (holiday-fixed 6 24 "Dia de São João")))
 #+end_src
+
 * Org
 #+begin_src emacs-lisp
   (use-package org
@@ -769,6 +771,8 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 - [ ] Install Arch Linux
 - [ ] EXWM
 - [ ] Syncthing
+
+https://askubuntu.com/questions/886315/starting-session-with-exwm
 
 ** TODO Gmail
 [[https://www.emacswiki.org/emacs/GnusGmail][here]]
