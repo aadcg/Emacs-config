@@ -272,63 +272,63 @@ Backups and auto-save files at ~/.emacs/backups
 
 * Org
 #+begin_src emacs-lisp
-    (use-package org
-      :config
-      (setq org-ellipsis " §"
-            org-goto-interface 'outline-path-completion
-            org-goto-max-level 10
-            org-startup-indented t
-            org-startup-with-inline-images t
-            org-image-actual-width 500
-            org-hide-leading-stars t
-            org-hide-emphasis-markers t
-            org-special-ctrl-a/e t
-            org-special-ctrl-k t
-            org-return-follows-link t
-            org-cycle-include-plain-lists 'integrate
-            org-directory "~/NextCloud/org/"
-            org-agenda-files '("~/NextCloud/org")
-            org-refile-targets '((org-agenda-files :maxlevel . 5))
-            org-refile-allow-creating-parent-nodes t
-            org-agenda-skip-deadline-prewarning-if-scheduled t
-            org-agenda-include-diary t
-            org-agenda-span 10
-            org-agenda-start-on-weekday nil
-            org-todo-keywords '((sequence "TODO(t!)"
-                                          "WIP(s!)"
-                                          "WAITING(w@)"
-                                          "|"
-                                          "DONE(d!)"
-                                          "NOT TODO(n@)"
-                                          "CANCELED(c@)"))
-            org-todo-keyword-faces '(("WIP" . "orange")
-                                     ("WAITING" . "yellow"))
-            org-src-fontify-natively t
-            org-src-tab-acts-natively t
-            org-src-window-setup 'current-window
-            org-export-use-babel nil
-            org-confirm-babel-evaluate nil
-            org-highlight-latex-and-related (quote (latex script entities))
-            org-format-latex-options
-            (quote (:foreground default :background default :scale 2.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
-                                ("begin" "$1" "$" "$$" "\\(" "\\[")))
-            orgtbl-mode t)
-      (custom-set-faces '(org-ellipsis ((t (:foreground "gray70" :underline nil)))))
-      (require 'org-tempo)
-      (require 'ox-beamer)
-      (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-      (add-to-list 'org-structure-template-alist '("py" . "src python"))
-      (add-to-list 'org-structure-template-alist '("hs" . "src haskell"))
-      (add-to-list 'org-structure-template-alist '("sh" . "src sh"))
-      (add-to-list 'org-structure-template-alist '("co" . "comment"))
+  (use-package org
+    :config
+    (setq org-ellipsis " §"
+          org-goto-interface 'outline-path-completion
+          org-goto-max-level 10
+          org-startup-indented t
+          org-startup-with-inline-images t
+          org-image-actual-width 500
+          org-hide-leading-stars t
+          ;; org-hide-emphasis-markers t
+          org-special-ctrl-a/e t
+          org-special-ctrl-k t
+          org-return-follows-link t
+          org-cycle-include-plain-lists 'integrate
+          org-directory "~/NextCloud/org/"
+          org-agenda-files '("~/NextCloud/org")
+          org-refile-targets '((org-agenda-files :maxlevel . 5))
+          org-refile-allow-creating-parent-nodes t
+          org-agenda-skip-deadline-prewarning-if-scheduled t
+          org-agenda-include-diary t
+          org-agenda-span 10
+          org-agenda-start-on-weekday nil
+          org-todo-keywords '((sequence "TODO(t!)"
+                                        "WIP(s!)"
+                                        "WAITING(w@)"
+                                        "|"
+                                        "DONE(d!)"
+                                        "NOT TODO(n@)"
+                                        "CANCELED(c@)"))
+          org-todo-keyword-faces '(("WIP" . "orange")
+                                   ("WAITING" . "yellow"))
+          org-src-fontify-natively t
+          org-src-tab-acts-natively t
+          org-src-window-setup 'current-window
+          org-export-use-babel nil
+          org-confirm-babel-evaluate nil
+          org-highlight-latex-and-related (quote (latex script entities))
+          org-format-latex-options
+          (quote (:foreground default :background default :scale 2.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+                              ("begin" "$1" "$" "$$" "\\(" "\\[")))
+          orgtbl-mode t)
+    (custom-set-faces '(org-ellipsis ((t (:foreground "gray70" :underline nil)))))
+    (require 'org-tempo)
+    (require 'ox-beamer)
+    (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+    (add-to-list 'org-structure-template-alist '("py" . "src python"))
+    (add-to-list 'org-structure-template-alist '("hs" . "src haskell"))
+    (add-to-list 'org-structure-template-alist '("sh" . "src sh"))
+    (add-to-list 'org-structure-template-alist '("co" . "comment"))
 
-      :bind
-      ("\C-ca" . org-agenda)
-      ("\C-cl" . org-store-link)
-      ("\C-cc" . org-capture)
-      ("C-c i" . org-time-stamp-inactive)
-      ("C-c j" . aadcg/org-checkbox-next)
-      ("<mouse-1>" . aadcg/org-checkbox-next))
+    :bind
+    ("\C-ca" . org-agenda)
+    ("\C-cl" . org-store-link)
+    ("\C-cc" . org-capture)
+    ("C-c i" . org-time-stamp-inactive)
+    ("C-c j" . aadcg/org-checkbox-next)
+    ("<mouse-1>" . aadcg/org-checkbox-next))
 #+end_src
 
 ** Extra
@@ -412,11 +412,11 @@ Backups and auto-save files at ~/.emacs/backups
     ;; (elpy-mode)
 
     :config
-    (setq python-shell-interpreter "jupyter"
-          python-shell-interpreter-args "console --simple-prompt"
+    (setq python-shell-interpreter "ipython"
+          python-shell-interpreter-args "-i --simple-prompt"
           python-shell-prompt-detect-failure-warning nil
           pyvenv-activate "~/anaconda3")
-    (add-to-list 'python-shell-completion-native-disabled-interpreters "jupyter")
+    ;; (add-to-list 'python-shell-completion-native-disabled-interpreters "jupyter")
 
     :bind
     ("C-c p" . elpy-autopep8-fix-code)
@@ -496,7 +496,7 @@ Ivy in Eshell
 
 ** JS
 #+begin_src emacs-lisp
-  (add-hook 'js-mode-hook 'json-pretty-print-buffer-ordered)
+  ;; (add-hook 'js-mode-hook 'json-pretty-print-buffer-ordered)
 #+end_src
 
 ** Projectile
