@@ -10,12 +10,12 @@ Ubuntu 19.04
 
 (emacs-version)
 
-GNU Emacs 26.2 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.22.30) of
-2019-06-04
+GNU Emacs 26.1 (build 2, x86_64-pc-linux-gnu, GTK+ Version 3.24.7) of
+2019-04-11, modified by Debian
 
 (org-version)
 
-9.2.3
+9.2.4
 
 ** Me
 #+begin_src emacs-lisp
@@ -316,6 +316,10 @@ Backups and auto-save files at ~/.emacs/backups
     (custom-set-faces '(org-ellipsis ((t (:foreground "gray70" :underline nil)))))
     (require 'org-tempo)
     (require 'ox-beamer)
+    (add-to-list 'org-latex-packages-alist '("" "minted"))
+    (setq org-latex-listings 'minted)
+    ;; (setq org-latex-pdf-process
+    ;;       '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
     (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
     (add-to-list 'org-structure-template-alist '("py" . "src python"))
     (add-to-list 'org-structure-template-alist '("hs" . "src haskell"))
@@ -348,6 +352,7 @@ Backups and auto-save files at ~/.emacs/backups
    'org-babel-load-languages
    '((emacs-lisp . t)
      (python     . t)
+     (ipython    . t)
      (haskell    . t)
      (latex      . t)
      (shell      . t)
@@ -355,6 +360,8 @@ Backups and auto-save files at ~/.emacs/backups
 
   (when window-system
     (use-package org-pdfview))
+
+  (use-package ob-ipython)
 
   (use-package cdlatex
     :init
@@ -714,12 +721,17 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
     (setq org-bullets-bullet-list '("◉" "○")))
 #+end_src
 
-** Pretty mode
+** TODO Pretty mode
+- State "TODO"       from              [2019-07-18 Thu 13:16]
+
+Global pretty mode breaks html export of org-mode files when there are functions
+in python source code blocks.
+
 #+begin_src emacs-lisp
   (use-package pretty-mode
     :config
     (require 'pretty-mode)
-    (global-pretty-mode t)
+    ;; (global-pretty-mode t)
     (pretty-activate-groups
      '(:sub-and-superscripts :arithmetic-nary :quantifiers :types)))
 #+end_src
