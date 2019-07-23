@@ -124,9 +124,11 @@ Backups and auto-save files at ~/.emacs/backups
 
 ** Browser
 - Eww by default
+- Firefox for GUI stuff
 
 #+begin_src emacs-lisp
-  (setq browse-url-browser-function 'eww-browse-url)
+  (setq browse-url-browser-function '((".*youtube.*" . browse-url-firefox)
+                                      ("." . eww-browse-url)))
 #+end_src
 
 ** Aesthetics
