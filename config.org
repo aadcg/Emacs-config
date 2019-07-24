@@ -454,6 +454,13 @@ Backups and auto-save files at ~/.emacs/backups
               (turn-on-haskell-indent)))
 #+end_src
 
+** Golang
+#+begin_src emacs-lisp
+  (use-package go-mode)
+
+  (use-package company-go)
+#+end_src
+
 ** \LaTeX
 #+begin_src emacs-lisp
   (use-package auctex
