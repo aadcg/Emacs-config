@@ -418,7 +418,6 @@ Backups and auto-save files at ~/.emacs/backups
   (use-package elpy
     :init
     (elpy-enable)
-    ;; (elpy-mode)
 
     :config
     (setq python-shell-interpreter "ipython"
