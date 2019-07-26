@@ -458,7 +458,8 @@ Backups and auto-save files at ~/.emacs/backups
 #+begin_src emacs-lisp
   (use-package go-mode)
 
-  (use-package company-go)
+  (use-package company-go
+    :config (add-to-list 'company-backends 'company-go))
 #+end_src
 
 ** \LaTeX
