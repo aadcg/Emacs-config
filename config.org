@@ -454,8 +454,11 @@ Backups and auto-save files at ~/.emacs/backups
 #+end_src
 
 ** Golang
+Requires gocode for the autocomplete to work.
+
 #+begin_src emacs-lisp
-  (use-package go-mode)
+  (use-package go-mode
+    :bind ("C-c b" . gofmt))
 
   (use-package company-go
     :config (add-to-list 'company-backends 'company-go))
@@ -803,11 +806,16 @@ https://askubuntu.com/questions/886315/starting-session-with-exwm
 
 ** DONE Emacs CI
 - State "DONE"       from "TODO"       [2019-06-09 Sun 23:09]
-- State "TODO"       from              [2019-06-01 sáb 10:10]
+- State "TODO"       from              [2019-06-01 Sat 10:10]
 
 #+begin_src sh
 emacs -nw --batch --eval '(message (number-to-string (* 2 2)))'
 #+end_src
+
+** TODO Port repo to Gitlab and mirror it to Github
+- State "TODO"       from              [2019-08-03 Sat 12:02]
+
+[[https://docs.gitlab.com/ee/workflow/repository_mirroring.html#setting-up-a-push-mirror-from-gitlab-to-github-core][how to mirror]]
 
 ** TODO Fancy TODO
 [[https://thraxys.wordpress.com/2016/01/14/pimp-up-your-org-agenda/][here]]
