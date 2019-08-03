@@ -6,16 +6,16 @@
 ** Versions
 (shell-command "lsb_release -a")
 
-Ubuntu 19.04
+"Ubuntu 19.04"
 
 (emacs-version)
 
-GNU Emacs 26.1 (build 2, x86_64-pc-linux-gnu, GTK+ Version 3.24.7) of
-2019-04-11, modified by Debian
+"GNU Emacs 26.1 (build 2, x86_64-pc-linux-gnu, GTK+ Version 3.24.7) of
+2019-04-11, modified by Debian"
 
 (org-version)
 
-9.2.4
+"9.2.4"
 
 ** Me
 #+begin_src emacs-lisp
@@ -378,8 +378,9 @@ Backups and auto-save files at ~/.emacs/backups
     :hook
     ((org-tree-slide-play . aadcg/presenting)
      (org-tree-slide-stop . aadcg/working)
-     (org-tree-slide-play . global-command-log-mode)
-     (org-tree-slide-stop . global-command-log-mode))
+     ;; (org-tree-slide-play . global-command-log-mode)
+     ;; (org-tree-slide-stop . global-command-log-mode)
+    )
     :bind
     ("<f8>" . org-tree-slide-mode)
     ("<f7>" . org-tree-slide-play-with-timer))
@@ -387,8 +388,8 @@ Backups and auto-save files at ~/.emacs/backups
   (defun aadcg/presenting ()
     "Select a light theme suitable for a presentation."
     (interactive)
-    (disable-theme 'zenburn)
-    (load-theme 'doneburn t)
+    ;; (disable-theme 'zenburn)
+    ;; (load-theme 'doneburn t)
     (transparency 100)
     (display-time-mode 0)
     (column-number-mode 0)
@@ -400,8 +401,8 @@ Backups and auto-save files at ~/.emacs/backups
   (defun aadcg/working ()
     "Select my favourite production theme."
     (interactive)
-    (disable-theme 'doneburn)
-    (load-theme 'zenburn t)
+    ;; (disable-theme 'doneburn)
+    ;; (load-theme 'zenburn t)
     (transparency 90)
     (display-time-mode 1)
     (column-number-mode 1)
@@ -423,8 +424,8 @@ Backups and auto-save files at ~/.emacs/backups
     (setq python-shell-interpreter "ipython"
           python-shell-interpreter-args "-i --simple-prompt"
           python-shell-prompt-detect-failure-warning nil
-          pyvenv-activate "~/anaconda3")
-    ;; (add-to-list 'python-shell-completion-native-disabled-interpreters "jupyter")
+          pyvenv-activate "~/anaconda3"
+          pyvenv-mode-line-indicator nil)
 
     :bind
     ("C-c p" . elpy-autopep8-fix-code)
@@ -713,7 +714,9 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 
 #+begin_src emacs-lisp
   (when window-system
-    (display-battery-mode))
+    (display-battery-mode)
+    (setq battery-mode-line-format " %p%"
+          battery-mode-line-limit 99))
 #+end_src
 
 ** Minions
