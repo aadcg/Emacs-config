@@ -325,6 +325,7 @@ Backups and auto-save files at ~/.emacs/backups
     (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
     (add-to-list 'org-structure-template-alist '("py" . "src python"))
     (add-to-list 'org-structure-template-alist '("hs" . "src haskell"))
+    (add-to-list 'org-structure-template-alist '("go" . "src go"))
     (add-to-list 'org-structure-template-alist '("sh" . "src sh"))
     (add-to-list 'org-structure-template-alist '("co" . "comment"))
 
@@ -350,12 +351,16 @@ Backups and auto-save files at ~/.emacs/backups
 
   (setq exec-path (append exec-path '("/usr/bin/tex")))
 
+  (use-package ob-ipython)
+  (use-package ob-go)
+
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
      (python     . t)
      (ipython    . t)
      (haskell    . t)
+     (go         . t)
      (latex      . t)
      (shell      . t)
      (ditaa      . t)))
@@ -363,7 +368,7 @@ Backups and auto-save files at ~/.emacs/backups
   (when window-system
     (use-package org-pdfview))
 
-  (use-package ob-ipython)
+
 
   (use-package cdlatex
     :init
@@ -459,7 +464,7 @@ Requires gocode for the autocomplete to work.
 
 #+begin_src emacs-lisp
   (use-package go-mode
-    :bind ("C-c b" . gofmt))
+    :bind ("C-c s" . gofmt))
 
   (use-package company-go
     :config (add-to-list 'company-backends 'company-go))
@@ -554,6 +559,11 @@ Ivy in Eshell
 ** CSV
 #+begin_src emacs-lisp
   (use-package csv-mode)
+#+end_src
+
+** Misc
+#+begin_src emacs-lisp
+  (use-package gitlab-ci-mode)
 #+end_src
 
 * Miscellaneous
