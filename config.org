@@ -369,7 +369,6 @@ Backups and auto-save files at ~/.emacs/backups
     (use-package org-pdfview))
 
 
-
   (use-package cdlatex
     :init
     (org-cdlatex-mode))
@@ -377,7 +376,7 @@ Backups and auto-save files at ~/.emacs/backups
   (use-package org-tree-slide
     :config
     (setq org-tree-slide-slide-in-effect nil
-          ;; org-tree-slide-heading-emphasis t
+          org-tree-slide-heading-emphasis t
           org-tree-slide-activate-message "Welcome to my presentation!"
           org-tree-slide-deactivate-message "Hope you have enjoyed!")
     :hook
@@ -393,22 +392,18 @@ Backups and auto-save files at ~/.emacs/backups
   (defun aadcg/presenting ()
     "Select a light theme suitable for a presentation."
     (interactive)
-    (disable-theme 'zenburn)
-    (load-theme 'doneburn t)
     (transparency 100)
     (display-time-mode 0)
     (column-number-mode 0)
     (line-number-mode 0)
     (display-battery-mode 0)
-    (text-scale-increase 3)
+    (text-scale-increase 1)
     ;; (variable-pitch-mode)
     )
 
   (defun aadcg/working ()
     "Select my favourite production theme."
     (interactive)
-    (disable-theme 'doneburn)
-    (load-theme 'zenburn t)
     (transparency 90)
     (display-time-mode 1)
     (column-number-mode 1)
