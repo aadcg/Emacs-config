@@ -283,7 +283,7 @@ Backups and auto-save files at ~/.emacs/backups
           org-startup-with-inline-images t
           org-image-actual-width 500
           org-hide-leading-stars t
-          ;; org-hide-emphasis-markers t
+          org-hide-emphasis-markers t
           org-special-ctrl-a/e t
           org-special-ctrl-k t
           org-return-follows-link t
@@ -377,6 +377,7 @@ Backups and auto-save files at ~/.emacs/backups
     :config
     (setq org-tree-slide-slide-in-effect nil
           org-tree-slide-heading-emphasis t
+          org-tree-slide-cursor-init nil
           org-tree-slide-activate-message "Welcome to my presentation!"
           org-tree-slide-deactivate-message "Hope you have enjoyed!")
     :hook
@@ -387,7 +388,9 @@ Backups and auto-save files at ~/.emacs/backups
      )
     :bind
     ("<f8>" . org-tree-slide-mode)
-    ("<f7>" . org-tree-slide-play-with-timer))
+    ("<f7>" . org-tree-slide-play-with-timer)
+    ("C->" . org-tree-slide-move-next-tree)
+    ("C-<" . org-tree-slide-move-previous-tree))
 
   (defun aadcg/presenting ()
     "Select a light theme suitable for a presentation."
@@ -397,20 +400,21 @@ Backups and auto-save files at ~/.emacs/backups
     (column-number-mode 0)
     (line-number-mode 0)
     (display-battery-mode 0)
-    (text-scale-increase 1)
-    ;; (variable-pitch-mode)
-    )
+    (global-diff-hl-mode 0)
+    (setq global-hl-line-mode nil)
+    (text-scale-increase 2))
 
   (defun aadcg/working ()
     "Select my favourite production theme."
     (interactive)
     (transparency 90)
-    (display-time-mode 1)
-    (column-number-mode 1)
-    (line-number-mode 1)
-    (display-battery-mode 1)
+    (display-time-mode)
+    (column-number-mode)
+    (line-number-mode)
+    (display-battery-mode)
     (reset-text-size)
-    ;; (variable-pitch-mode)
+    (global-diff-hl-mode)
+    (global-hl-line-mode)
     (delete-other-windows))
 #+end_src
 
@@ -731,11 +735,13 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
     :config
     (setq minions-mode-line-lighter ""
           minions-mode-line-delimiters '("" . "")
-          minions-direct '(org-tree-slide-mode))
+          minions-direct '(org-tree-slide-mode text-scale-mode))
     (minions-mode 1))
 #+end_src
 
 ** Org bullets
+[[http://nadeausoftware.com/articles/2007/11/latency_friendly_customized_bullets_using_unicode_characters][Ideas for bullets]]
+
 #+begin_src emacs-lisp
   (use-package org-bullets
     :config
@@ -829,6 +835,25 @@ emacs -nw --batch --eval '(message (number-to-string (* 2 2)))'
 
 ** TODO Fancy TODO
 [[https://thraxys.wordpress.com/2016/01/14/pimp-up-your-org-agenda/][here]]
+
+** TODO GUI Emacs on Android
+- State "TODO"       from              [2019-08-05 Mon 20:07]
+[[https://www.reddit.com/r/emacs/comments/9m76ak/termux_package_emacsx/][reddit]]
+[[https://wiki.termux.com/wiki/Graphical_Environment][termux]]
+
+** Zenburn theme on Termux
+background=#3F3F3F
+foreground=#DCDCCC
+cursor=#DCDCCC
+
+
+color0=#CC9393
+color1=#DFAF8F
+color2=#F0DFAF
+color3=#7F9F7F
+color4=#93E0E3
+color5=#8CD0D3
+color6=#DC8CC3
 
 * Startup
 #+begin_src emacs-lisp
