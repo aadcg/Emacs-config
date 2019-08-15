@@ -123,12 +123,13 @@ Backups and auto-save files at ~/.emacs/backups
 #+end_src
 
 ** Browser
-- Eww by default
+- Eww by default (w/ visual-line-mode)
 - Firefox for GUI stuff
 
 #+begin_src emacs-lisp
   (setq browse-url-browser-function '((".*youtube.*" . browse-url-firefox)
                                       ("." . eww-browse-url)))
+  (add-hook 'eww-mode-hook 'visual-line-mode)
 #+end_src
 
 ** Aesthetics
@@ -402,7 +403,7 @@ Backups and auto-save files at ~/.emacs/backups
     (display-battery-mode 0)
     (global-diff-hl-mode 0)
     (setq global-hl-line-mode nil)
-    (text-scale-increase 2))
+    (text-scale-increase 3))
 
   (defun aadcg/working ()
     "Select my favourite production theme."
@@ -416,6 +417,9 @@ Backups and auto-save files at ~/.emacs/backups
     (global-diff-hl-mode)
     (global-hl-line-mode)
     (delete-other-windows))
+
+  ;; (use-package default-text-scale
+  ;;   :config (default-text-scale-mode))
 #+end_src
 
 * Programming
@@ -841,37 +845,7 @@ emacs -nw --batch --eval '(message (number-to-string (* 2 2)))'
 [[https://www.reddit.com/r/emacs/comments/9m76ak/termux_package_emacsx/][reddit]]
 [[https://wiki.termux.com/wiki/Graphical_Environment][termux]]
 
-** Zenburn theme on Termux
-background=#3F3F3F
-foreground=#DCDCCC
-cursor=#DCDCCC
-
-
-color0=#CC9393
-color1=#DFAF8F
-color2=#F0DFAF
-color3=#7F9F7F
-color4=#93E0E3
-color5=#8CD0D3
-color6=#DC8CC3
-
-
-color0=#073642
-color1=#dc322f
-color2=#859900
-color3=#b58900
-color4=#268bd2
-color5=#d33682
-color6=#2aa198
-color7=#eee8d5
-color8=#002b36
-color9=#cb4b16
-color10=#586e75
-color11=#657b83
-color12=#839496
-color13=#6c71c4
-color14=#93a1a1
-color15=#fdf6e3
+[[https://www.amazon.com/Adapter-Graphic-Converter-Android-Function/dp/B07TQ5BL1Q/ref=sr_1_3?keywords=micro+usb+hdmi&qid=1565211095&s=gateway&sr=8-3][HDMI adaptor]]
 
 * Startup
 #+begin_src emacs-lisp
