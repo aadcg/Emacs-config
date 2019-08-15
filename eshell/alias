@@ -1,0 +1,2 @@
+alias suspend systemctl suspend
+alias ll ls -Athl

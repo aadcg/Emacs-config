@@ -10,7 +10,8 @@ bookmarks
 auto-save-list
 backups
 elpa
-eshell
+eshell/*
+!eshell/alias
 games
 image-dired
 ltximg
