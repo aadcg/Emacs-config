@@ -188,89 +188,89 @@ Backups and auto-save files at ~/.emacs/backups
 - That's how I like my holidays
 
 #+begin_src emacs-lisp
-    (setq holiday-bahai-holidays nil
-          holiday-oriental-holidays nil
-          holiday-islamic-holidays nil
-          holiday-hebrew-holidays nil
-          holiday-christian-holidays nil
+  (setq holiday-bahai-holidays nil
+        holiday-oriental-holidays nil
+        holiday-islamic-holidays nil
+        holiday-hebrew-holidays nil
+        holiday-christian-holidays nil
 
-          holiday-general-holidays
-          '(;; Portuguese Public Holidays
-            (holiday-fixed 1 1 "Ano Novo")
-            (holiday-easter-etc -47 "Carnaval")
-            (holiday-easter-etc -2 "Sexta-feira Santa")
-            (holiday-easter-etc 0 "Domingo de Páscoa")
-            (holiday-fixed 3 19 "Dia do Pai")
-            (holiday-fixed 4 25 "Dia da Liberdade")
-            (holiday-fixed 5 1 "Dia do Trabalhador")
-            (holiday-easter-etc +60 "Corpo de Deus")
-            (holiday-float 5 0 1 "Dia da Mãe")
-            (holiday-fixed 6 10 "Dia de Portugal, de Camões e das Comunidades Portuguesas")
-            (holiday-fixed 8 15 "Assunção de Nossa Senhora")
-            (holiday-fixed 10 5 "Implantação da República")
-            (holiday-fixed 11 1 "Dia de Todos-os-Santos")
-            (holiday-fixed 12 1 "Restauração da Independência")
-            (holiday-fixed 12 8 "Imaculada Conceição")
-            (holiday-fixed 12 25 "Natal")
+        holiday-general-holidays
+        '(;; Portuguese Public Holidays
+          (holiday-fixed 1 1 "Ano Novo")
+          (holiday-easter-etc -47 "Carnaval")
+          (holiday-easter-etc -2 "Sexta-feira Santa")
+          (holiday-easter-etc 0 "Domingo de Páscoa")
+          (holiday-fixed 3 19 "Dia do Pai")
+          (holiday-fixed 4 25 "Dia da Liberdade")
+          (holiday-fixed 5 1 "Dia do Trabalhador")
+          (holiday-easter-etc +60 "Corpo de Deus")
+          (holiday-float 5 0 1 "Dia da Mãe")
+          (holiday-fixed 6 10 "Dia de Portugal, de Camões e das Comunidades Portuguesas")
+          (holiday-fixed 8 15 "Assunção de Nossa Senhora")
+          (holiday-fixed 10 5 "Implantação da República")
+          (holiday-fixed 11 1 "Dia de Todos-os-Santos")
+          (holiday-fixed 12 1 "Restauração da Independência")
+          (holiday-fixed 12 8 "Imaculada Conceição")
+          (holiday-fixed 12 25 "Natal")
 
-            ;; Russian Public Holidays
-            (holiday-fixed 1 1 "Новый год")
-            (holiday-fixed 1 2 "Новогодние каникулы")
-            (holiday-fixed 1 3 "Новогодние каникулы")
-            (holiday-fixed 1 4 "Новогодние каникулы")
-            (holiday-fixed 1 5 "Новогодние каникулы")
-            (holiday-fixed 1 6 "Новогодние каникулы")
-            (holiday-fixed 1 7 "Рождество Христово")
-            (holiday-fixed 1 8 "Новогодние каникулы")
-            (holiday-fixed 2 23 "День защитника Отечества")
-            (holiday-fixed 3 8 "Международный женский день")
-            (holiday-fixed 5 1 "Праздник Весны и Труда")
-            (holiday-fixed 5 9 "День Победы")
-            (holiday-fixed 6 12 "День России")
-            (holiday-fixed 11 4 "День народного единства")
+          ;; Russian Public Holidays
+          (holiday-fixed 1 1 "Новый год")
+          (holiday-fixed 1 2 "Новогодние каникулы")
+          (holiday-fixed 1 3 "Новогодние каникулы")
+          (holiday-fixed 1 4 "Новогодние каникулы")
+          (holiday-fixed 1 5 "Новогодние каникулы")
+          (holiday-fixed 1 6 "Новогодние каникулы")
+          (holiday-fixed 1 7 "Рождество Христово")
+          (holiday-fixed 1 8 "Новогодние каникулы")
+          (holiday-fixed 2 23 "День защитника Отечества")
+          (holiday-fixed 3 8 "Международный женский день")
+          (holiday-fixed 5 1 "Праздник Весны и Труда")
+          (holiday-fixed 5 9 "День Победы")
+          (holiday-fixed 6 12 "День России")
+          (holiday-fixed 11 4 "День народного единства")
 
-            ;; American Public Holidays
-            ;; (holiday-float 1 1 3 "Martin Luther King Day")
-            ;; (holiday-fixed 2 2 "Groundhog Day")
-            (holiday-fixed 2 14 "Valentine's Day")
-            ;; (holiday-float 2 1 3 "President's Day")
-            ;; (holiday-fixed 3 17 "St. Patrick's Day")
-            (holiday-fixed 4 1 "April Fools' Day")
-            ;; (holiday-float 5 0 2 "Mother's Day")
-            ;; (holiday-float 5 1 -1 "Memorial Day")
-            ;; (holiday-fixed 6 14 "Flag Day")
-            ;; (holiday-float 6 0 3 "Father's Day")
-            ;; (holiday-fixed 7 4 "Independence Day")
-            ;; (holiday-float 9 1 1 "Labor Day")
-            ;; (holiday-float 10 1 2 "Columbus Day")
-            (holiday-fixed 10 31 "Halloween")
-            ;; (holiday-fixed 11 11 "Veteran's Day")
-            ;; (holiday-float 11 4 4 "Thanksgiving")
-            )
+          ;; American Public Holidays
+          ;; (holiday-float 1 1 3 "Martin Luther King Day")
+          ;; (holiday-fixed 2 2 "Groundhog Day")
+          (holiday-fixed 2 14 "Valentine's Day")
+          ;; (holiday-float 2 1 3 "President's Day")
+          ;; (holiday-fixed 3 17 "St. Patrick's Day")
+          (holiday-fixed 4 1 "April Fools' Day")
+          ;; (holiday-float 5 0 2 "Mother's Day")
+          ;; (holiday-float 5 1 -1 "Memorial Day")
+          ;; (holiday-fixed 6 14 "Flag Day")
+          ;; (holiday-float 6 0 3 "Father's Day")
+          ;; (holiday-fixed 7 4 "Independence Day")
+          ;; (holiday-float 9 1 1 "Labor Day")
+          ;; (holiday-float 10 1 2 "Columbus Day")
+          (holiday-fixed 10 31 "Halloween")
+          ;; (holiday-fixed 11 11 "Veteran's Day")
+          ;; (holiday-float 11 4 4 "Thanksgiving")
+          )
 
-          holiday-other-holidays
-          '(;; Days Off for 2019
-            (holiday-fixed 12 24 "Day Off")
-            (holiday-fixed 12 26 "Day Off")
+        holiday-other-holidays
+        '(;; Days Off for 2019
+          (holiday-fixed 12 24 "Day Off")
+          (holiday-fixed 12 26 "Day Off")
 
-            ;; Company Holidays for 2019
-            (holiday-fixed 6 25 "Company Holiday")
-            (holiday-fixed 6 26 "Company Holiday")
-            (holiday-fixed 6 27 "Company Holiday")
-            (holiday-fixed 6 28 "Company Holiday")
-            (holiday-fixed 7 9 "Company Holiday")
-            (holiday-fixed 7 10 "Company Holiday")
-            (holiday-fixed 7 11 "Company Holiday")
-            (holiday-fixed 7 12 "Company Holiday")
-            (holiday-fixed 7 15 "Company Holiday")
-            (holiday-fixed 7 16 "Company Holiday")
-            (holiday-fixed 7 17 "Company Holiday")
-            (holiday-fixed 7 18 "Company Holiday")
-            (holiday-fixed 7 19 "Company Holiday"))
+          ;; Company Holidays for 2019
+          (holiday-fixed 6 25 "Company Holiday")
+          (holiday-fixed 6 26 "Company Holiday")
+          (holiday-fixed 6 27 "Company Holiday")
+          (holiday-fixed 6 28 "Company Holiday")
+          (holiday-fixed 7 9 "Company Holiday")
+          (holiday-fixed 7 10 "Company Holiday")
+          (holiday-fixed 7 11 "Company Holiday")
+          (holiday-fixed 7 12 "Company Holiday")
+          (holiday-fixed 7 15 "Company Holiday")
+          (holiday-fixed 7 16 "Company Holiday")
+          (holiday-fixed 7 17 "Company Holiday")
+          (holiday-fixed 7 18 "Company Holiday")
+          (holiday-fixed 7 19 "Company Holiday"))
 
-          holiday-local-holidays
-          '(;; Porto, PT
-            (holiday-fixed 6 24 "Dia de São João")))
+        holiday-local-holidays
+        '(;; Porto, PT
+          (holiday-fixed 6 24 "Dia de São João")))
 #+end_src
 
 * Org
@@ -797,8 +797,6 @@ in python source code blocks.
 #+end_src
 
 * TODO COMMENT
-** TODO Org export Latex russian
-
 ** TODO Create repo with portuguese holidays
 [[https://blog.aaronbieber.com/2015/08/04/authoring-emacs-packages.html][how to]]
 
