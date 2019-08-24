@@ -639,10 +639,12 @@ Ivy in Eshell
           ivy-count-format "%d/%d "
           ivy-wrap t
           ivy-extra-directories nil
-          ivy-initial-inputs-alist nil)
+          ivy-initial-inputs-alist nil
+          ivy-height-alist
+          '((t
+             lambda (_caller)
+             (/ (window-height) 2))))
     (add-to-list 'ivy-format-functions-alist '(t . ivy-format-function-arrow))
-    (when window-system
-      (setq ivy-height 25))
 
     :bind
     ("C-x B" . ivy-switch-buffer-other-window)
@@ -753,7 +755,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
   (use-package org-bullets
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-    (setq org-bullets-bullet-list '("◉")))
+    (setq org-bullets-bullet-list '("▹")))
 #+end_src
 
 ** TODO Pretty mode
@@ -845,6 +847,7 @@ emacs -nw --batch --eval '(message (number-to-string (* 2 2)))'
 - State "TODO"       from              [2019-08-05 Mon 20:07]
 [[https://www.reddit.com/r/emacs/comments/9m76ak/termux_package_emacsx/][reddit]]
 [[https://wiki.termux.com/wiki/Graphical_Environment][termux]]
+[[https://www.xda-developers.com/guide-installing-and-running-a-gnulinux-environment-on-any-android-device/][GNURoot Debian]]
 
 [[https://www.amazon.com/Adapter-Graphic-Converter-Android-Function/dp/B07TQ5BL1Q/ref=sr_1_3?keywords=micro+usb+hdmi&qid=1565211095&s=gateway&sr=8-3][HDMI adaptor]]
 
