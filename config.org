@@ -4,18 +4,10 @@
 
 * Meta
 ** Versions
-(shell-command "lsb_release -a")
-
-"Ubuntu 19.04"
-
-(emacs-version)
-
-"GNU Emacs 26.1 (build 2, x86_64-pc-linux-gnu, GTK+ Version 3.24.7) of
-2019-04-11, modified by Debian"
-
-(org-version)
-
-"9.2.4"
+| GNU/Linux    | GNU Emacs | Org-mode |
+|--------------+-----------+----------|
+| Ubuntu 19.04 |      26.1 |    9.2.5 |
+#+TBLFM: @>$3='(org-version)::@>$2='(substring (emacs-version) 10 -86)
 
 ** Me
 #+begin_src emacs-lisp
@@ -250,27 +242,15 @@ Backups and auto-save files at ~/.emacs/backups
 
         holiday-other-holidays
         '(;; Days Off for 2019
-          (holiday-fixed 12 24 "Day Off")
-          (holiday-fixed 12 26 "Day Off")
+          ;; (holiday-fixed 12 24 "Day Off")
+          ;; (holiday-fixed 12 26 "Day Off")
 
           ;; Company Holidays for 2019
-          (holiday-fixed 6 25 "Company Holiday")
-          (holiday-fixed 6 26 "Company Holiday")
-          (holiday-fixed 6 27 "Company Holiday")
-          (holiday-fixed 6 28 "Company Holiday")
-          (holiday-fixed 7 9 "Company Holiday")
-          (holiday-fixed 7 10 "Company Holiday")
-          (holiday-fixed 7 11 "Company Holiday")
-          (holiday-fixed 7 12 "Company Holiday")
-          (holiday-fixed 7 15 "Company Holiday")
-          (holiday-fixed 7 16 "Company Holiday")
-          (holiday-fixed 7 17 "Company Holiday")
-          (holiday-fixed 7 18 "Company Holiday")
-          (holiday-fixed 7 19 "Company Holiday"))
+          ;; (holiday-fixed 7 19 "Company Holiday"))
 
-        holiday-local-holidays
-        '(;; Porto, PT
-          (holiday-fixed 6 24 "Dia de São João")))
+          holiday-local-holidays
+          '(;; Porto, PT
+            (holiday-fixed 6 24 "Dia de São João")))
 #+end_src
 
 * Org
@@ -795,10 +775,14 @@ in python source code blocks.
 #+end_src
 
 ** Google Translate
+Not working, trying to figure out why...
+
 #+begin_src emacs-lisp
-  (use-package google-translate
-    :config
-    (defun google-translate--search-tkk () "Search TKK." (list 430675 2721866130)))
+  (require 'google-translate)
+  (require 'google-translate-default-ui)
+  (global-set-key "\C-ct" 'google-translate-at-point)
+  (global-set-key "\C-cT" 'google-translate-query-translate)
+  ;; (defun google-translate--search-tkk () "Search TKK." (list 430675 2721866130))
 #+end_src
 
 * TODO COMMENT
@@ -824,6 +808,7 @@ https://askubuntu.com/questions/886315/starting-session-with-exwm
 
 ** TODO Gmail
 [[https://www.emacswiki.org/emacs/GnusGmail][here]]
+[[https://www.reddit.com/r/emacs/comments/bfsck6/mu4e_for_dummies/][another tutorial]]
 
 ** TODO Syncthing for synchronizing org files?
 
