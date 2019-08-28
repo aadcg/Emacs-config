@@ -839,13 +839,8 @@ emacs -nw --batch --eval '(message (number-to-string (* 2 2)))'
 
 * Startup
 #+begin_src emacs-lisp
-  (defun fullscreen ()
-    (interactive)
-    (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
-                           '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
-
   (when window-system
-    (fullscreen))
+    (toggle-frame-fullscreen))
 
   (org-agenda-list 1)
   (delete-other-windows)
