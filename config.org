@@ -4,10 +4,10 @@
 
 * Meta
 ** Versions
-| GNU/Linux    | GNU Emacs | Org-mode |
-|--------------+-----------+----------|
-| Ubuntu 19.04 |      26.1 |    9.2.5 |
-#+TBLFM: @>$3='(org-version)::@>$2='(substring (emacs-version) 10 -86)
+| System    | Emacs |   Org |
+|-----------+-------+-------|
+| gnu/linux |  26.1 | 9.2.5 |
+#+TBLFM: @>$3='(org-version)::@>$2='(substring (emacs-version) 10 -86)::@>$1='(print system-type)
 
 ** Me
 #+begin_src emacs-lisp
@@ -315,7 +315,6 @@ Backups and auto-save files at ~/.emacs/backups
     ("\C-ca" . org-agenda)
     ("\C-cl" . org-store-link)
     ("\C-cc" . org-capture)
-    ("C-c i" . org-time-stamp-inactive)
     ("C-c j" . aadcg/org-checkbox-next)
     ("<mouse-1>" . aadcg/org-checkbox-next))
 #+end_src
@@ -679,6 +678,12 @@ Ivy in Eshell
   (use-package exwm)
 #+end_src
 
+** Whichkey
+#+begin_src emacs-lisp
+  (use-package which-key
+    :config (which-key-mode))
+#+end_src
+
 * Aesthetics
 Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 ** Theme
@@ -698,6 +703,9 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
       (transparency 90))
 
     (use-package doneburn-theme
+      :defer t)
+
+    (use-package spacemacs-theme
       :defer t))
 #+end_src
 
@@ -783,7 +791,7 @@ Not working, trying to figure out why...
   (require 'google-translate-default-ui)
   (global-set-key "\C-ct" 'google-translate-at-point)
   (global-set-key "\C-cT" 'google-translate-query-translate)
-  ;; (defun google-translate--search-tkk () "Search TKK." (list 430675 2721866130))
+  (setq google-translate-backend-method 'curl)
 #+end_src
 
 * TODO COMMENT
