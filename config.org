@@ -695,18 +695,11 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 
   (global-set-key (kbd "C-x t") 'transparency)
 
-  (when window-system
-    (use-package zenburn-theme
+  (use-package zenburn-theme
       :init
       (setq zenburn-scale-org-headlines t)
       (load-theme 'zenburn t)
       (transparency 90))
-
-    (use-package doneburn-theme
-      :defer t)
-
-    (use-package spacemacs-theme
-      :defer t))
 #+end_src
 
 ** Modeline
