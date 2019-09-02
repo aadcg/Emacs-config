@@ -383,7 +383,9 @@ Backups and auto-save files at ~/.emacs/backups
     (display-battery-mode 0)
     (global-diff-hl-mode 0)
     (setq global-hl-line-mode nil)
-    (text-scale-increase 3))
+    (default-text-scale-increase)
+    (default-text-scale-increase)
+    (command-log-mode))
 
   (defun aadcg/working ()
     "Select my favourite production theme."
@@ -396,10 +398,11 @@ Backups and auto-save files at ~/.emacs/backups
     (reset-text-size)
     (global-diff-hl-mode)
     (global-hl-line-mode)
-    (delete-other-windows))
+    (delete-other-windows)
+    (default-text-scale-reset))
 
-  ;; (use-package default-text-scale
-  ;;   :config (default-text-scale-mode))
+  (use-package default-text-scale
+    :config (default-text-scale-mode))
 #+end_src
 
 * Programming
