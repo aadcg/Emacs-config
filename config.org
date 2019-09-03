@@ -332,7 +332,9 @@ Backups and auto-save files at ~/.emacs/backups
 
   (setq exec-path (append exec-path '("/usr/bin/tex")))
 
-  (use-package ob-ipython)
+  (use-package ob-ipython
+    :defer t)
+
   (use-package ob-go)
 
   (org-babel-do-load-languages
@@ -347,7 +349,8 @@ Backups and auto-save files at ~/.emacs/backups
      (ditaa      . t)))
 
   (when window-system
-    (use-package org-pdfview))
+    (use-package org-pdfview
+      :defer t))
 
 
   (use-package cdlatex
@@ -357,7 +360,7 @@ Backups and auto-save files at ~/.emacs/backups
   (use-package org-tree-slide
     :config
     (setq org-tree-slide-slide-in-effect nil
-          org-tree-slide-heading-emphasis t
+          ;; org-tree-slide-heading-emphasis t
           org-tree-slide-cursor-init nil
           org-tree-slide-activate-message "Welcome to my presentation!"
           org-tree-slide-deactivate-message "Hope you have enjoyed!")
@@ -377,6 +380,7 @@ Backups and auto-save files at ~/.emacs/backups
     "Select a light theme suitable for a presentation."
     (interactive)
     (transparency 100)
+    (counsel-load-theme)
     (display-time-mode 0)
     (column-number-mode 0)
     (line-number-mode 0)
@@ -385,12 +389,14 @@ Backups and auto-save files at ~/.emacs/backups
     (setq global-hl-line-mode nil)
     (default-text-scale-increase)
     (default-text-scale-increase)
+    (default-text-scale-increase)
     (command-log-mode))
 
   (defun aadcg/working ()
     "Select my favourite production theme."
     (interactive)
     (transparency 90)
+    (counsel-load-theme)
     (display-time-mode)
     (column-number-mode)
     (line-number-mode)
@@ -454,6 +460,7 @@ Requires gocode for the autocomplete to work.
     :bind ("C-c s" . gofmt))
 
   (use-package company-go
+    :defer t
     :config (add-to-list 'company-backends 'company-go))
 #+end_src
 
@@ -553,7 +560,8 @@ Ivy in Eshell
 
 ** Misc
 #+begin_src emacs-lisp
-  (use-package gitlab-ci-mode)
+  (use-package gitlab-ci-mode
+    :defer t)
 #+end_src
 
 * Miscellaneous
@@ -569,6 +577,7 @@ Ivy in Eshell
 #+begin_src emacs-lisp
   (when window-system
     (use-package flyspell
+      :defer t
       :config
       (flyspell-prog-mode)))
       ;; (when org-mode-hook
@@ -663,7 +672,8 @@ Ivy in Eshell
 
 ** Games
 #+begin_src emacs-lisp
-  (use-package typit)
+  (use-package typit
+    :defer t)
 #+end_src
 
 ** Command log
@@ -699,10 +709,14 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
   (global-set-key (kbd "C-x t") 'transparency)
 
   (use-package zenburn-theme
-      :init
-      (setq zenburn-scale-org-headlines t)
-      (load-theme 'zenburn t)
-      (transparency 90))
+    :init
+    (setq zenburn-scale-org-headlines t)
+    (load-theme 'zenburn t)
+    (transparency 92))
+
+  (use-package solarized-theme
+    :config
+    (setq solarized-use-variable-pitch nil))
 #+end_src
 
 ** Modeline
