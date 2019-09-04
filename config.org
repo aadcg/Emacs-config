@@ -315,6 +315,7 @@ Backups and auto-save files at ~/.emacs/backups
     ("\C-ca" . org-agenda)
     ("\C-cl" . org-store-link)
     ("\C-cc" . org-capture)
+    ("C-c i" . org-time-stamp-inactive)
     ("C-c j" . aadcg/org-checkbox-next)
     ("<mouse-1>" . aadcg/org-checkbox-next))
 #+end_src
@@ -360,15 +361,15 @@ Backups and auto-save files at ~/.emacs/backups
   (use-package org-tree-slide
     :config
     (setq org-tree-slide-slide-in-effect nil
-          ;; org-tree-slide-heading-emphasis t
           org-tree-slide-cursor-init nil
+          org-tree-slide-never-touch-face t
           org-tree-slide-activate-message "Welcome to my presentation!"
           org-tree-slide-deactivate-message "Hope you have enjoyed!")
     :hook
     ((org-tree-slide-play . aadcg/presenting)
      (org-tree-slide-stop . aadcg/working)
-     ;; (org-tree-slide-play . global-command-log-mode)
-     ;; (org-tree-slide-stop . global-command-log-mode)
+     (org-tree-slide-play . global-command-log-mode)
+     (org-tree-slide-stop . global-command-log-mode)
      )
     :bind
     ("<f8>" . org-tree-slide-mode)
@@ -380,7 +381,7 @@ Backups and auto-save files at ~/.emacs/backups
     "Select a light theme suitable for a presentation."
     (interactive)
     (transparency 100)
-    (counsel-load-theme)
+    ;; (counsel-load-theme)
     (display-time-mode 0)
     (column-number-mode 0)
     (line-number-mode 0)
@@ -389,14 +390,13 @@ Backups and auto-save files at ~/.emacs/backups
     (setq global-hl-line-mode nil)
     (default-text-scale-increase)
     (default-text-scale-increase)
-    (default-text-scale-increase)
-    (command-log-mode))
+    (default-text-scale-increase))
 
   (defun aadcg/working ()
     "Select my favourite production theme."
     (interactive)
     (transparency 90)
-    (counsel-load-theme)
+    ;; (counsel-load-theme)
     (display-time-mode)
     (column-number-mode)
     (line-number-mode)
@@ -710,7 +710,10 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 
   (use-package zenburn-theme
     :init
-    (setq zenburn-scale-org-headlines t)
+    (setq zenburn-scale-org-headlines t
+          zenburn-height-plus-2 1.4
+          zenburn-height-plus-3 1.6
+          zenburn-height-plus-4 1.8)
     (load-theme 'zenburn t)
     (transparency 92))
 
