@@ -719,6 +719,17 @@ in python source code blocks.
     :config (default-text-scale-mode))
 #+end_src
 
+** Google Translate
+Not working, trying to figure out why...
+
+#+begin_src emacs-lisp
+  (require 'google-translate)
+  (require 'google-translate-default-ui)
+  (global-set-key "C-c t" 'google-translate-at-point)
+  (global-set-key "C-c T" 'google-translate-query-translate)
+  (setq google-translate-backend-method 'curl)
+#+end_src
+
 * Aesthetics
 Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 ** Theme
@@ -787,17 +798,6 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
   (use-package rainbow-delimiters
     :config
     (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
-#+end_src
-
-** Google Translate
-Not working, trying to figure out why...
-
-#+begin_src emacs-lisp
-  (require 'google-translate)
-  (require 'google-translate-default-ui)
-  (global-set-key "C-c t" 'google-translate-at-point)
-  (global-set-key "C-c T" 'google-translate-query-translate)
-  (setq google-translate-backend-method 'curl)
 #+end_src
 
 * Startup
