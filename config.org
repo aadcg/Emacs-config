@@ -733,9 +733,9 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
   (use-package zenburn-theme
     :init
     (setq zenburn-scale-org-headlines t
-          zenburn-height-plus-2 1.4
-          zenburn-height-plus-3 1.6
-          zenburn-height-plus-4 1.8)
+          zenburn-height-plus-2 1.3
+          zenburn-height-plus-3 1.5
+          zenburn-height-plus-4 1.7)
     (load-theme 'zenburn t)
     (transparency 92))
 #+end_src
@@ -800,6 +800,14 @@ Not working, trying to figure out why...
   (setq google-translate-backend-method 'curl)
 #+end_src
 
+* Startup
+#+begin_src emacs-lisp
+  (when window-system
+    (toggle-frame-fullscreen))
+
+  (org-agenda-list 1)
+  (delete-other-windows)
+#+end_src
 * TODO COMMENT
 ** TODO Create repo with portuguese holidays
 [[https://blog.aaronbieber.com/2015/08/04/authoring-emacs-packages.html][how to]]
@@ -850,12 +858,3 @@ emacs -nw --batch --eval '(message (number-to-string (* 2 2)))'
 [[https://www.xda-developers.com/guide-installing-and-running-a-gnulinux-environment-on-any-android-device/][GNURoot Debian]]
 
 [[https://www.amazon.com/Adapter-Graphic-Converter-Android-Function/dp/B07TQ5BL1Q/ref=sr_1_3?keywords=micro+usb+hdmi&qid=1565211095&s=gateway&sr=8-3][HDMI adaptor]]
-
-* Startup
-#+begin_src emacs-lisp
-  (when window-system
-    (toggle-frame-fullscreen))
-
-  (org-agenda-list 1)
-  (delete-other-windows)
-#+end_src
