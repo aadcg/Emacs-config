@@ -2,7 +2,9 @@
 #+OPTIONS: toc:nil num:nil email:t
 # (org-md-export-to-markdown)
 
-[![Build Status](https://travis-ci.org/aadcg/.emacs.d.svg?branch=master)](https://travis-ci.org/aadcg/.emacs.d)
+# [![Build
+# Status](https://travis-ci.org/aadcg/.emacs.d.svg?branch=master)](https://travis-ci.org/aadcg/.emacs.d)
+#+html : https://api.travis-ci.com/aadcg/.emacs.d.svg
 
 * How did I get here?
 I assume you're motivated to use Emacs. If you're not, [[https://www.youtube.com/watch?v=EsAkPl3On3E][convince yourself]].
