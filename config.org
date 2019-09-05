@@ -577,6 +577,21 @@ Ivy in Eshell
     (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 #+end_src
 
+*** TODO Pretty mode
+- State "TODO"       from              [2019-07-18 Thu 13:16]
+
+Global pretty mode breaks html export of org-mode files when there are functions
+in python source code blocks.
+
+#+begin_src emacs-lisp
+  (use-package pretty-mode
+    :config
+    (require 'pretty-mode)
+    ;; (global-pretty-mode t)
+    (pretty-activate-groups
+     '(:sub-and-superscripts :arithmetic-nary :quantifiers :types)))
+#+end_src
+
 * Miscellaneous
 ** Checking
 *** Flycheck
@@ -753,21 +768,6 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
     (minions-mode 1))
 #+end_src
 
-** TODO Pretty mode
-- State "TODO"       from              [2019-07-18 Thu 13:16]
-
-Global pretty mode breaks html export of org-mode files when there are functions
-in python source code blocks.
-
-#+begin_src emacs-lisp
-  (use-package pretty-mode
-    :config
-    (require 'pretty-mode)
-    ;; (global-pretty-mode t)
-    (pretty-activate-groups
-     '(:sub-and-superscripts :arithmetic-nary :quantifiers :types)))
-#+end_src
-
 ** Beacon
 #+begin_src emacs-lisp
   (when window-system
@@ -795,8 +795,8 @@ Not working, trying to figure out why...
 #+begin_src emacs-lisp
   (require 'google-translate)
   (require 'google-translate-default-ui)
-  (global-set-key "\C-ct" 'google-translate-at-point)
-  (global-set-key "\C-cT" 'google-translate-query-translate)
+  (global-set-key "C-c t" 'google-translate-at-point)
+  (global-set-key "C-c T" 'google-translate-query-translate)
   (setq google-translate-backend-method 'curl)
 #+end_src
 
