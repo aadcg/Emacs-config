@@ -3,13 +3,13 @@
 #+PROPERTY: header-args :results silent
 
 * Meta
-** Versions
+- Versions
 | System    | Emacs |   Org |
 |-----------+-------+-------|
-| gnu/linux |  26.1 | 9.2.5 |
+| gnu/linux |  26.1 | 9.2.6 |
 #+TBLFM: @>$3='(org-version)::@>$2='(substring (emacs-version) 10 -86)::@>$1='(print system-type)
 
-** Me
+- Me
 #+begin_src emacs-lisp
   (setq user-full-name "André Alexandre Gomes"
         user-mail-address "andremegafone@gmail.com"
@@ -18,7 +18,7 @@
         calendar-location-name "Porto, PT")
 #+end_src
 
-** Metaconfiguration
+- Visit and reload this config
 #+begin_src emacs-lisp
   (defun config-visit ()
     "Visits ~/.emacs.d/config.org."
@@ -131,6 +131,7 @@ Backups and auto-save files at ~/.emacs/backups
 - Highlight current line except on the terminal (looks terrible on my
   smartphone)
 - Dired as 'ls -Atlh' and auto revert
+- Aesthetic tweaks
 
 #+begin_src emacs-lisp
   (setq inhibit-startup-message t
@@ -151,22 +152,18 @@ Backups and auto-save files at ~/.emacs/backups
 
 ** Regional
 *** Input Method
-- Всё ясно, да?
+Всё ясно, да?
 
 #+begin_src emacs-lisp
   (setq default-input-method "russian-computer")
 #+end_src
 
 *** Calendar
-- Calendar starts on mondays
-
 #+begin_src emacs-lisp
   (setq calendar-week-start-day 1)
 #+end_src
 
 *** Clock
-- That's how I like my clock
-
 #+begin_src emacs-lisp
   (setq display-time-24hr-format t
         display-time-format "%k:%M %a %d %b"
@@ -177,8 +174,6 @@ Backups and auto-save files at ~/.emacs/backups
 #+end_src
 
 *** Holidays
-- That's how I like my holidays
-
 #+begin_src emacs-lisp
     (setq holiday-bahai-holidays nil
           holiday-oriental-holidays nil
@@ -255,25 +250,22 @@ Backups and auto-save files at ~/.emacs/backups
 #+end_src
 
 * Org
+** Basics
+Sets up:
+- preferences
+- agenda
+- refiling
+- orgtbl-mode
+- keybindings
+
 #+begin_src emacs-lisp
   (use-package org
     :config
-    (setq org-ellipsis " §"
-          org-goto-interface 'outline-path-completion
-          org-goto-max-level 10
-          org-startup-indented t
-          org-startup-with-inline-images t
-          org-image-actual-width 500
-          org-hide-leading-stars t
-          org-hide-emphasis-markers t
-          org-special-ctrl-a/e t
+    (setq org-special-ctrl-a/e t
           org-special-ctrl-k t
           org-return-follows-link t
-          org-cycle-include-plain-lists 'integrate
           org-directory "~/NextCloud/org/"
           org-agenda-files '("~/NextCloud/org")
-          org-refile-targets '((org-agenda-files :maxlevel . 5))
-          org-refile-allow-creating-parent-nodes t
           org-agenda-skip-deadline-prewarning-if-scheduled t
           org-agenda-include-diary t
           org-agenda-span 10
@@ -287,56 +279,32 @@ Backups and auto-save files at ~/.emacs/backups
                                         "CANCELED(c@)"))
           org-todo-keyword-faces '(("WIP" . "orange")
                                    ("WAITING" . "yellow"))
-          org-src-fontify-natively t
-          org-src-tab-acts-natively t
-          org-src-window-setup 'current-window
-          org-export-use-babel nil
-          org-confirm-babel-evaluate nil
-          org-highlight-latex-and-related (quote (latex script entities))
-          org-format-latex-options
-          (quote (:foreground default :background default :scale 2.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
-                              ("begin" "$1" "$" "$$" "\\(" "\\[")))
+          org-refile-targets '((org-agenda-files :maxlevel . 5))
+          org-refile-allow-creating-parent-nodes t
           orgtbl-mode t)
-    (custom-set-faces '(org-ellipsis ((t (:foreground "gray70" :underline nil)))))
-    (require 'org-tempo)
-    (require 'ox-beamer)
-    (add-to-list 'org-latex-packages-alist '("" "minted"))
-    (setq org-latex-listings 'minted)
-    ;; (setq org-latex-pdf-process
-    ;;       '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
-    (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-    (add-to-list 'org-structure-template-alist '("py" . "src python"))
-    (add-to-list 'org-structure-template-alist '("hs" . "src haskell"))
-    (add-to-list 'org-structure-template-alist '("go" . "src go"))
-    (add-to-list 'org-structure-template-alist '("sh" . "src sh"))
-    (add-to-list 'org-structure-template-alist '("co" . "comment"))
 
     :bind
-    ("\C-ca" . org-agenda)
-    ("\C-cl" . org-store-link)
-    ("\C-cc" . org-capture)
+    ("C-c a" . org-agenda)
+    ("C-c l" . org-store-link)
+    ("C-c c" . org-capture)
     ("C-c i" . org-time-stamp-inactive)
     ("C-c j" . aadcg/org-checkbox-next)
     ("<mouse-1>" . aadcg/org-checkbox-next))
 #+end_src
 
-** Extra
+** Literate Programming
 #+begin_src emacs-lisp
-  (defun aadcg/org-checkbox-next ()
-    "Mark checkboxes and sort"
-    (interactive)
-    (let ((home (point)))
-      (when (org-at-item-checkbox-p)
-        (org-toggle-checkbox)
-        (org-sort-list nil ?x))
-      (goto-char home)))
-
-  (setq exec-path (append exec-path '("/usr/bin/tex")))
+  (setq org-src-fontify-natively t
+        org-src-tab-acts-natively t
+        org-src-window-setup 'current-window
+        org-confirm-babel-evaluate nil)
 
   (use-package ob-ipython
     :defer t)
 
   (use-package ob-go)
+
+  (require 'org-tempo)
 
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -349,15 +317,42 @@ Backups and auto-save files at ~/.emacs/backups
      (shell      . t)
      (ditaa      . t)))
 
-  (when window-system
-    (use-package org-pdfview
-      :defer t))
+  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+  (add-to-list 'org-structure-template-alist '("py" . "src python"))
+  (add-to-list 'org-structure-template-alist '("hs" . "src haskell"))
+  (add-to-list 'org-structure-template-alist '("go" . "src go"))
+  (add-to-list 'org-structure-template-alist '("sh" . "src sh"))
+  (add-to-list 'org-structure-template-alist '("co" . "comment"))
+#+end_src
 
+** Exports
+#+begin_src emacs-lisp
+  (require 'ox-beamer)
+  (add-to-list 'org-latex-packages-alist '("newfloat" "minted"))
+  (setq org-latex-listings 'minted)
+#+end_src
 
+** Packages and Functions
+#+begin_src emacs-lisp
   (use-package cdlatex
-    :init
+     :init
     (org-cdlatex-mode))
 
+  (when window-system
+    (use-package org-pdfview))
+
+  (defun aadcg/org-checkbox-next ()
+    "Mark checkboxes and sort"
+    (interactive)
+    (let ((home (point)))
+      (when (org-at-item-checkbox-p)
+        (org-toggle-checkbox)
+        (org-sort-list nil ?x))
+      (goto-char home)))
+#+end_src
+
+** Presenting
+#+begin_src emacs-lisp
   (use-package org-tree-slide
     :config
     (setq org-tree-slide-slide-in-effect nil
@@ -367,10 +362,7 @@ Backups and auto-save files at ~/.emacs/backups
           org-tree-slide-deactivate-message "Hope you have enjoyed!")
     :hook
     ((org-tree-slide-play . aadcg/presenting)
-     (org-tree-slide-stop . aadcg/working)
-     (org-tree-slide-play . global-command-log-mode)
-     (org-tree-slide-stop . global-command-log-mode)
-     )
+     (org-tree-slide-stop . aadcg/non-presenting))
     :bind
     ("<f8>" . org-tree-slide-mode)
     ("<f7>" . org-tree-slide-play-with-timer)
@@ -378,10 +370,9 @@ Backups and auto-save files at ~/.emacs/backups
     ("C-<" . org-tree-slide-move-previous-tree))
 
   (defun aadcg/presenting ()
-    "Select a light theme suitable for a presentation."
+    "Presenting mode"
     (interactive)
     (transparency 100)
-    ;; (counsel-load-theme)
     (display-time-mode 0)
     (column-number-mode 0)
     (line-number-mode 0)
@@ -392,11 +383,10 @@ Backups and auto-save files at ~/.emacs/backups
     (default-text-scale-increase)
     (default-text-scale-increase))
 
-  (defun aadcg/working ()
-    "Select my favourite production theme."
+  (defun aadcg/non-presenting ()
+    "Non-presenting mode"
     (interactive)
     (transparency 90)
-    ;; (counsel-load-theme)
     (display-time-mode)
     (column-number-mode)
     (line-number-mode)
@@ -406,13 +396,34 @@ Backups and auto-save files at ~/.emacs/backups
     (global-hl-line-mode)
     (delete-other-windows)
     (default-text-scale-reset))
+#+end_src
 
-  (use-package default-text-scale
-    :config (default-text-scale-mode))
+** Aesthethics
+[[http://nadeausoftware.com/articles/2007/11/latency_friendly_customized_bullets_using_unicode_characters][Ideas for bullets]]
+
+#+begin_src emacs-lisp
+  (setq org-ellipsis " §"
+        org-hide-leading-stars t
+        org-startup-indented t
+        org-startup-with-inline-images t
+        org-image-actual-width 500
+        org-hide-emphasis-markers t
+        org-highlight-latex-and-related (quote (latex script entities))
+        org-format-latex-options
+        (quote (:foreground default :background default :scale 2.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+                            ("begin" "$1" "$" "$$" "\\(" "\\["))))
+
+  (custom-set-faces '(org-ellipsis ((t (:foreground "gray70" :underline nil)))))
+
+  (use-package org-bullets
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+    (setq org-bullets-bullet-list '("▹")))
 #+end_src
 
 * Programming
-** Python
+** Languages
+*** Python
 #+begin_src emacs-lisp
   (use-package elpy
     :init
@@ -442,7 +453,7 @@ Backups and auto-save files at ~/.emacs/backups
             (setq-default electric-indent-inhibit t))
 #+end_src
 
-** Haskell
+*** Haskell
 #+begin_src emacs-lisp
   (use-package haskell-mode)
 
@@ -452,7 +463,7 @@ Backups and auto-save files at ~/.emacs/backups
               (turn-on-haskell-indent)))
 #+end_src
 
-** Golang
+*** Golang
 Requires gocode for the autocomplete to work.
 
 #+begin_src emacs-lisp
@@ -464,7 +475,7 @@ Requires gocode for the autocomplete to work.
     :config (add-to-list 'company-backends 'company-go))
 #+end_src
 
-** \LaTeX
+*** \LaTeX
 #+begin_src emacs-lisp
   (use-package auctex
     :defer t
@@ -474,8 +485,8 @@ Requires gocode for the autocomplete to work.
     (setq-default TeX-master nil))
 #+end_src
 
-** Bash
-*** Shell
+*** Bash
+**** Shell
 Make M-n and M-p more intelligent in shell.
 
 #+begin_src emacs-lisp
@@ -492,7 +503,7 @@ Make M-n and M-p more intelligent in shell.
   (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 #+end_src
 
-*** Eshell
+**** Eshell
 I want eshell to behave like a typical terminal, i.e. I don't want tab to
 cycle through different options.
 
@@ -516,19 +527,39 @@ Ivy in Eshell
         eshell-history-size 9999)
 #+end_src
 
-** JS
+*** JS
 #+begin_src emacs-lisp
   ;; (add-hook 'js-mode-hook 'json-pretty-print-buffer-ordered)
 #+end_src
+** Files
+*** Yaml
+#+begin_src emacs-lisp
+  (use-package yaml-mode
+    :config
+    (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
+#+end_src
 
-** Projectile
+*** CSV
+#+begin_src emacs-lisp
+  (use-package csv-mode)
+#+end_src
+
+*** GitLab CI
+#+begin_src emacs-lisp
+  (use-package gitlab-ci-mode
+    :defer t)
+
+#+end_src
+
+** Utilities
+*** Projectile
 #+begin_src emacs-lisp
   (use-package projectile
     :init
     (projectile-mode 1))
 #+end_src
 
-** Magit
+*** Magit
 #+begin_src emacs-lisp
   (use-package magit
     :config
@@ -538,30 +569,12 @@ Ivy in Eshell
     ("C-x g" . magit-status))
 #+end_src
 
-** Highlight uncommitted changes
+*** Highlight uncommitted changes
 #+begin_src emacs-lisp
   (use-package diff-hl
     :config
     (global-diff-hl-mode)
     (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
-#+end_src
-
-** Yaml
-#+begin_src emacs-lisp
-  (use-package yaml-mode
-    :config
-    (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
-#+end_src
-
-** CSV
-#+begin_src emacs-lisp
-  (use-package csv-mode)
-#+end_src
-
-** Misc
-#+begin_src emacs-lisp
-  (use-package gitlab-ci-mode
-    :defer t)
 #+end_src
 
 * Miscellaneous
@@ -658,18 +671,6 @@ Ivy in Eshell
     (define-key company-active-map (kbd "C-p") 'company-select-previous))
 #+end_src
 
-** YouTube
-#+begin_src emacs-lisp
-  (defun youtube-dl ()
-    (interactive)
-    (let* ((str (current-kill 0))
-           (default-directory "~/Downloads")
-           (proc (get-buffer-process (ansi-term "/bin/bash"))))
-      (term-send-string
-       proc
-       (concat "cd ~/Downloads && youtube-dl " str "\n"))))
-#+end_src
-
 ** Games
 #+begin_src emacs-lisp
   (use-package typit
@@ -697,6 +698,12 @@ Ivy in Eshell
     :config (which-key-mode))
 #+end_src
 
+** Default Text Scale
+#+begin_src emacs-lisp
+  (use-package default-text-scale
+    :config (default-text-scale-mode))
+#+end_src
+
 * Aesthetics
 Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 ** Theme
@@ -716,10 +723,6 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
           zenburn-height-plus-4 1.8)
     (load-theme 'zenburn t)
     (transparency 92))
-
-  (use-package solarized-theme
-    :config
-    (setq solarized-use-variable-pitch nil))
 #+end_src
 
 ** Modeline
@@ -748,16 +751,6 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
           minions-mode-line-delimiters '("" . "")
           minions-direct '(org-tree-slide-mode text-scale-mode))
     (minions-mode 1))
-#+end_src
-
-** Org bullets
-[[http://nadeausoftware.com/articles/2007/11/latency_friendly_customized_bullets_using_unicode_characters][Ideas for bullets]]
-
-#+begin_src emacs-lisp
-  (use-package org-bullets
-    :config
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-    (setq org-bullets-bullet-list '("▹")))
 #+end_src
 
 ** TODO Pretty mode
@@ -866,9 +859,3 @@ emacs -nw --batch --eval '(message (number-to-string (* 2 2)))'
   (org-agenda-list 1)
   (delete-other-windows)
 #+end_src
-
-* Thanks
-- [[https://github.com/BigNaNet/emacs][BigNaNet]]
-- [[https://github.com/zamansky/using-emacs/blob/master/myinit.org][Mike Zamansky]]
-- [[https://github.com/hrs/dotfiles/blob/master/emacs/.emacs.d/configuration.org][Harry Schwartz]]
-- [[https://github.com/daedreth/UncleDavesEmacs][Dawid Eckert]]
