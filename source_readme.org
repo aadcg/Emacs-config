@@ -4,7 +4,12 @@
 
 # [![Build
 # Status](https://travis-ci.org/aadcg/.emacs.d.svg?branch=master)](https://travis-ci.org/aadcg/.emacs.d)
-#+html : https://api.travis-ci.com/aadcg/.emacs.d.svg
+#+html: https://api.travis-ci.com/aadcg/.emacs.d.svg
+#+html: <a href="https://gitlab.com/aadcg/hello_world/commits/master"><img alt="pipeline status" src="https://gitlab.com/aadcg/hello_world/badges/master/pipeline.svg"/></a>
+
+  [[https://travis-ci.org/jceb/vim-orgmode][file:https://travis-ci.org/jceb/vim-orgmode.svg]]
+
+[[https://travis-ci.com/aadcg/.emacs.d][https://travis-ci.com/aadcg/.emacs.d.svg?branch=master]]
 
 * How did I get here?
 I assume you're motivated to use Emacs. If you're not, [[https://www.youtube.com/watch?v=EsAkPl3On3E][convince yourself]].
