@@ -725,8 +725,8 @@ Not working, trying to figure out why...
 #+begin_src emacs-lisp
   (require 'google-translate)
   (require 'google-translate-default-ui)
-  (global-set-key "C-c t" 'google-translate-at-point)
-  (global-set-key "C-c T" 'google-translate-query-translate)
+  (global-set-key (kbd "C-c t") 'google-translate-at-point)
+  (global-set-key (kbd "C-c T") 'google-translate-query-translate)
   (setq google-translate-backend-method 'curl)
 #+end_src
 
