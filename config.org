@@ -1,5 +1,6 @@
 #+TITLE: GNU Emacs config
 #+OPTIONS: num:nil toc:nil email:t
+#+STARTUP: content
 #+PROPERTY: header-args :results silent
 
 * Meta
@@ -120,6 +121,7 @@ Backups and auto-save files at ~/.emacs/backups
 
 #+begin_src emacs-lisp
   (setq browse-url-browser-function '((".*youtube.*" . browse-url-firefox)
+                                      (".*aguasdoporto.*" . browse-url-firefox)
                                       ("." . eww-browse-url)))
   (add-hook 'eww-mode-hook 'visual-line-mode)
 #+end_src
@@ -263,6 +265,11 @@ Sets up:
     :config
     (setq org-special-ctrl-a/e t
           org-special-ctrl-k t
+          org-cycle-global-at-bob t
+          org-goto-auto-isearch nil
+          org-M-RET-may-split-line '((default . nil))
+          org-list-demote-modify-bullet '(("-" . "+") ("+" . "-"))
+          org-list-indent-offset 1
           org-return-follows-link t
           org-directory "~/NextCloud/org/"
           org-agenda-files '("~/NextCloud/org")
@@ -808,6 +815,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
   (org-agenda-list 1)
   (delete-other-windows)
 #+end_src
+
 * TODO COMMENT
 ** TODO Create repo with portuguese holidays
 [[https://blog.aaronbieber.com/2015/08/04/authoring-emacs-packages.html][how to]]
