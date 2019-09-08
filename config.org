@@ -294,7 +294,7 @@ Sets up:
     ("C-c a" . org-agenda)
     ("C-c l" . org-store-link)
     ("C-c c" . org-capture)
-    ("C-c i" . org-time-stamp-inactive)
+    ("C-c !" . org-time-stamp-inactive)
     ("C-c j" . aadcg/org-checkbox-next)
     ("<mouse-1>" . aadcg/org-checkbox-next))
 #+end_src
