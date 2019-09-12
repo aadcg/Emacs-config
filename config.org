@@ -100,6 +100,10 @@ Backups and auto-save files at ~/.emacs/backups
     (interactive)
     (switch-to-buffer "*Org Agenda*"))
 
+  (defun switch-to-presentation ()
+    (interactive)
+    (switch-to-buffer "slides.org"))
+
   (global-set-key (kbd "C-0")     'reset-text-size)
   (global-set-key (kbd "C-+")     'text-scale-increase)
   (global-set-key (kbd "C--")     'text-scale-decrease)
@@ -109,19 +113,21 @@ Backups and auto-save files at ~/.emacs/backups
   (global-set-key (kbd "<f5>")    'revert-buffer)
   (global-set-key (kbd "C-M-r")   'eval-buffer)
   (global-set-key (kbd "C-x w")   'eww)
+  (global-set-key (kbd "C-x f")   'browse-url-firefox)
   (global-set-key (kbd "S-SPC")   'cycle-spacing)
   (global-set-key (kbd "M-SPC")   'other-window)
   (global-set-key (kbd "C-c f")   'switch-to-agenda)
+  (global-set-key (kbd "C-<up>")   'switch-to-presentation)
   (global-set-key (kbd "M-o")     'mode-line-other-buffer)
 #+end_src
 
 ** Browser
 - Eww by default (w/ visual-line-mode)
-- Firefox for GUI stuff
+- Firefox for GUI/JavaScript stuff
 
 #+begin_src emacs-lisp
   (setq browse-url-browser-function '((".*youtube.*" . browse-url-firefox)
-                                      (".*aguasdoporto.*" . browse-url-firefox)
+                                      (".*cliente*" . browse-url-firefox)
                                       ("." . eww-browse-url)))
   (add-hook 'eww-mode-hook 'visual-line-mode)
 #+end_src
