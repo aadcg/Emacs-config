@@ -348,7 +348,7 @@ Sets up:
 ** Packages and Functions
 #+begin_src emacs-lisp
   (use-package cdlatex
-     :init
+    :init
     (org-cdlatex-mode))
 
   (when window-system
@@ -733,14 +733,19 @@ in python source code blocks.
 #+end_src
 
 ** Google Translate
-Not working, trying to figure out why...
-
 #+begin_src emacs-lisp
-  (require 'google-translate)
-  (require 'google-translate-default-ui)
-  (global-set-key (kbd "C-c t") 'google-translate-at-point)
-  (global-set-key (kbd "C-c T") 'google-translate-query-translate)
-  (setq google-translate-backend-method 'curl)
+  (use-package google-translate
+    :config
+    (require 'google-translate-default-ui)
+    (global-set-key (kbd "C-c t") 'google-translate-at-point)
+    (global-set-key (kbd "C-c T") 'google-translate-query-translate)
+    (setq google-translate-backend-method 'curl))
+
+  ;; (require 'google-translate)
+  ;; (require 'google-translate-default-ui)
+  ;; (global-set-key (kbd "C-c t") 'google-translate-at-point)
+  ;; (global-set-key (kbd "C-c T") 'google-translate-query-translate)
+  ;; (setq google-translate-backend-method 'curl)
 #+end_src
 
 * Aesthetics
@@ -761,7 +766,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
           zenburn-height-plus-3 1.5
           zenburn-height-plus-4 1.7)
     (load-theme 'zenburn t)
-    (transparency 92))
+    (transparency 90))
 #+end_src
 
 ** Modeline
