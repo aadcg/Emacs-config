@@ -3,6 +3,8 @@
 (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
 (package-initialize)
 
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+
 ;; Bootstrap use-package
 (when (not (package-installed-p 'use-package))
   (package-refresh-contents)
