@@ -126,8 +126,12 @@ Backups and auto-save files at ~/.emacs/backups
 - Firefox for GUI/JavaScript stuff
 
 #+begin_src emacs-lisp
-  (setq browse-url-browser-function '((".*youtube.*" . browse-url-firefox)
-                                      (".*cliente*" . browse-url-firefox)
+  (setq browse-url-browser-function '((".*youtube.*"
+                                       . browse-url-default-browser)
+                                      (".*cliente*"
+                                       . browse-url-default-browser)
+                                      (".*checkin*"
+                                      . browse-url-default-browser)
                                       ("." . eww-browse-url)))
   (add-hook 'eww-mode-hook 'visual-line-mode)
 #+end_src
