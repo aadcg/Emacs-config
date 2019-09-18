@@ -565,7 +565,11 @@ Ivy in Eshell
 #+begin_src emacs-lisp
   (use-package gitlab-ci-mode
     :defer t)
+#+end_src
 
+*** Dockerfiles
+#+begin_src emacs-lisp
+  (use-package dockerfile-mode)
 #+end_src
 
 ** Utilities
