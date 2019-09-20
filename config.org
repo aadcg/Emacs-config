@@ -885,3 +885,4 @@ emacs -nw --batch --eval '(message (number-to-string (* 2 2)))'
 [[https://www.xda-developers.com/guide-installing-and-running-a-gnulinux-environment-on-any-android-device/][GNURoot Debian]]
 
 [[https://www.amazon.com/Adapter-Graphic-Converter-Android-Function/dp/B07TQ5BL1Q/ref=sr_1_3?keywords=micro+usb+hdmi&qid=1565211095&s=gateway&sr=8-3][HDMI adaptor]]
+t
