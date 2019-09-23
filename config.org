@@ -4,37 +4,41 @@
 #+PROPERTY: header-args :results silent
 
 * Meta
-- Versions
-| System    | Emacs |   Org |
-|-----------+-------+-------|
-| gnu/linux |  26.1 | 9.2.6 |
-#+TBLFM: @>$3='(org-version)::@>$2='(substring (emacs-version) 10 -86)::@>$1='(print system-type)
+- *Versions*
+  | System    | Emacs |   Org |
+  |-----------+-------+-------|
+  | gnu/linux |  26.1 | 9.2.6 |
+  #+TBLFM: @>$3='(org-version)::@>$2='(substring (emacs-version) 10 -86)::@>$1='(print system-type)
 
-- Me
-#+begin_src emacs-lisp
-  (setq user-full-name "André Alexandre Gomes"
-        user-mail-address "andremegafone@gmail.com"
-        calendar-latitude 41.16
-        calendar-longitude -8.63
-        calendar-location-name "Porto, PT")
-#+end_src
+- *Me*
+  #+begin_src emacs-lisp
+    (setq user-full-name "André Alexandre Gomes"
+          user-mail-address "andremegafone@gmail.com"
+          calendar-latitude 41.16
+          calendar-longitude -8.63
+          calendar-location-name "Porto, PT"
+          ;; calendar-latitude 59.94
+          ;; calendar-longitude 30.31
+          ;; calendar-location-name "Санкт-Петербург"
+          )
+  #+end_src
 
-- Visit and reload this config
-#+begin_src emacs-lisp
-  (defun config-visit ()
-    "Visits ~/.emacs.d/config.org."
-    (interactive)
-    (find-file "~/.emacs.d/config.org"))
+- *Visit and reload this config*
+  #+begin_src emacs-lisp
+    (defun config-visit ()
+      "Visits ~/.emacs.d/config.org."
+      (interactive)
+      (find-file "~/.emacs.d/config.org"))
 
-  (global-set-key (kbd "C-c e") 'config-visit)
+    (global-set-key (kbd "C-c e") 'config-visit)
 
-  (defun config-reload ()
-    "Reloads ~/.emacs.d/config.org at runtime."
-    (interactive)
-    (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+    (defun config-reload ()
+      "Reloads ~/.emacs.d/config.org at runtime."
+      (interactive)
+      (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
 
-  (global-set-key (kbd "C-c r") 'config-reload)
-#+end_src
+    (global-set-key (kbd "C-c r") 'config-reload)
+  #+end_src
 
 * My tweaks
 Tweaking vanilla Emacs to my taste.
@@ -46,7 +50,7 @@ Tweaking vanilla Emacs to my taste.
 - Append a newline to the end of a file
 - 80 chars per line
 - Spaces over tabs
-- visual-line-mode while using non-GUI Emacs (because I use it on my smartphone)
+- visual-line-mode in Termux
 
 #+begin_src emacs-lisp
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -56,7 +60,8 @@ Tweaking vanilla Emacs to my taste.
   (setq-default fill-column 80)
   (add-hook 'text-mode-hook 'turn-on-auto-fill)
   (setq-default indent-tabs-mode nil)
-  (unless window-system (global-visual-line-mode t))
+  (when (cl-search "termux" abbreviated-home-dir)
+    (global-visual-line-mode t))
 #+end_src
 
 ** Cursor
@@ -502,6 +507,10 @@ Requires gocode for the autocomplete to work.
     (setq-default TeX-master nil))
 #+end_src
 
+*** JS
+#+begin_src emacs-lisp
+  ;; (add-hook 'js-mode-hook 'json-pretty-print-buffer-ordered)
+#+end_src
 *** Bash
 **** Shell
 Make M-n and M-p more intelligent in shell.
@@ -544,10 +553,6 @@ Ivy in Eshell
         eshell-history-size 9999)
 #+end_src
 
-*** JS
-#+begin_src emacs-lisp
-  ;; (add-hook 'js-mode-hook 'json-pretty-print-buffer-ordered)
-#+end_src
 ** Files
 *** Yaml
 #+begin_src emacs-lisp
@@ -789,7 +794,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 #+end_src
 
 #+begin_src emacs-lisp
-  (when window-system
+  (unless (cl-search "termux" abbreviated-home-dir)
     (display-battery-mode)
     (setq battery-mode-line-format " %p%"
           battery-mode-line-limit 99))
@@ -835,54 +840,14 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
   (delete-other-windows)
 #+end_src
 
-* TODO COMMENT
+* COMMENT
 ** TODO Create repo with portuguese holidays
 [[https://blog.aaronbieber.com/2015/08/04/authoring-emacs-packages.html][how to]]
 
-** TODO term, ansi-term, shell and eshell
-- [[https://emacs.stackexchange.com/questions/2101/terminal-is-not-fully-functional-over-ssh-in-a-shell-buffer][link1]]
-- [[https://emacs.stackexchange.com/questions/27/how-can-i-use-my-local-emacs-client-as-the-editor-for-remote-machines-i-access/893#893][link2]]
-- [[https://emacs.stackexchange.com/questions/241/what-are-all-the-ways-of-launching-a-shell-from-inside-emacs-and-what-are-their][link3]]
-- [[https://emacs.stackexchange.com/questions/241/what-are-all-the-ways-of-launching-a-shell-from-inside-emacs-and-what-are-their/242#242][link4]]
-
 ** TODO add personal holidays in a private file
 
-** TODO Emacs OS
-- State "TODO"       from              [2019-05-12 Sun 15:20]
-
-- [ ] Install Arch Linux
-- [ ] EXWM
-- [ ] Syncthing
-
-https://askubuntu.com/questions/886315/starting-session-with-exwm
-
-** TODO Gmail
+** TODO mu4e
 [[https://www.emacswiki.org/emacs/GnusGmail][here]]
 [[https://www.reddit.com/r/emacs/comments/bfsck6/mu4e_for_dummies/][another tutorial]]
 
-** TODO Syncthing for synchronizing org files?
-
-** DONE Emacs CI
-- State "DONE"       from "TODO"       [2019-06-09 Sun 23:09]
-- State "TODO"       from              [2019-06-01 Sat 10:10]
-
-#+begin_src sh
-emacs -nw --batch --eval '(message (number-to-string (* 2 2)))'
-#+end_src
-
-** TODO Port repo to Gitlab and mirror it to Github
-- State "TODO"       from              [2019-08-03 Sat 12:02]
-
-[[https://docs.gitlab.com/ee/workflow/repository_mirroring.html#setting-up-a-push-mirror-from-gitlab-to-github-core][how to mirror]]
-
-** TODO Fancy TODO
-[[https://thraxys.wordpress.com/2016/01/14/pimp-up-your-org-agenda/][here]]
-
-** TODO GUI Emacs on Android
-- State "TODO"       from              [2019-08-05 Mon 20:07]
-[[https://www.reddit.com/r/emacs/comments/9m76ak/termux_package_emacsx/][reddit]]
-[[https://wiki.termux.com/wiki/Graphical_Environment][termux]]
-[[https://www.xda-developers.com/guide-installing-and-running-a-gnulinux-environment-on-any-android-device/][GNURoot Debian]]
-
-[[https://www.amazon.com/Adapter-Graphic-Converter-Android-Function/dp/B07TQ5BL1Q/ref=sr_1_3?keywords=micro+usb+hdmi&qid=1565211095&s=gateway&sr=8-3][HDMI adaptor]]
-t
+** Syncthing vs Nextcloud vs cron?
