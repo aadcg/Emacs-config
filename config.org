@@ -618,6 +618,16 @@ in python source code blocks.
      '(:sub-and-superscripts :arithmetic-nary :quantifiers :types)))
 #+end_src
 
+*** Docker
+#+begin_src emacs-lisp
+  (use-package docker
+    :bind ("C-c d" . docker))
+
+  (use-package docker-tramp)
+
+  (use-package counsel-docker)
+#+end_src
+
 * Miscellaneous
 ** Checking
 *** Flycheck
