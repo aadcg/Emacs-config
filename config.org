@@ -371,6 +371,20 @@ Sets up:
         (org-toggle-checkbox)
         (org-sort-list nil ?x))
       (goto-char home)))
+
+  (defun aadcg/org-replace-link-by-link-description ()
+    "Replace an org link by its description or if empty its
+  address. Credit to
+  [[https://emacs.stackexchange.com/questions/10707/in-org-mode-how-to-remove-a-link][Andrew
+  Swann]]"
+    (interactive)
+    (if (org-in-regexp org-bracket-link-regexp 1)
+        (let ((remove (list (match-beginning 0) (match-end 0)))
+          (description (if (match-end 3)
+                   (org-match-string-no-properties 3)
+                   (org-match-string-no-properties 1))))
+      (apply 'delete-region remove)
+      (insert description))))
 #+end_src
 
 ** Presenting
@@ -429,7 +443,7 @@ Sets up:
         org-startup-indented t
         org-startup-with-inline-images t
         org-image-actual-width 500
-        org-hide-emphasis-markers t
+        ;; org-hide-emphasis-markers t
         org-highlight-latex-and-related (quote (latex script entities))
         org-format-latex-options
         (quote (:foreground default :background default :scale 2.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
@@ -861,3 +875,6 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 [[https://www.reddit.com/r/emacs/comments/bfsck6/mu4e_for_dummies/][another tutorial]]
 
 ** Syncthing vs Nextcloud vs cron?
+
+** Emacs inside a docker container
+[[https://medium.com/@sserialdev/emacs-in-the-container-age-5c0c222cfee][link]]
