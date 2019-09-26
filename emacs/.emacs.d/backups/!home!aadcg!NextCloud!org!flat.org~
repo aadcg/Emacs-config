@@ -1,0 +1,141 @@
+#+TITLE: Flat
+#+OPTIONS: toc:nil num:nil email:t author:t
+
+* TODO House keeping
+<2019-07-20 Sat +1w>
+:PROPERTIES:
+:LAST_REPEAT: [2019-07-13 Sat 11:58]
+:END:
+
+** Bedroom
+- [ ] Change sheets (every 3 weeks)
+- [ ] Vaccum the floor (every week)
+- [ ] Wash the floor (every month)
+
+** Bathroom
+- [ ] Change towels & kitchen towers (every week)
+- [ ] Vaccum the floor (every week)
+- [ ] Wash the floor (every month)
+
+** Kitchen
+- [ ] Change towels & kitchen towers (every week)
+- [ ] Vaccum the floor (every week)
+- [ ] Wash the floor (every month)
+- [ ] Wash dishes (everyday)
+- [ ] Take the trash (every week)
+
+** Living Room
+- [ ] Vaccum the floor (every week)
+- [ ] Wash the floor (every month)
+
+** Laundry
+- [ ] Wash clothes (every week)
+
+* Portugal
+** Sales
+- [ ] Bekant 44,70€? (offer)
+- [ ] transfer 50€ to savings (IKEA mattress)
+
+|                item |      € |
+|---------------------+--------|
+| 6275984230006690924 |  37.49 |
+| 6275984230006690932 |  29.98 |
+| 6275984230006650910 |  99.57 |
+|       mattress IKEA |     50 |
+|---------------------+--------|
+|                     | 217.04 |
+#+TBLFM: @>$2=vsum(@I..II)
+
+** Porto
+*** Bills
+**** TODO leitura água
+SCHEDULED: <2019-10-07 Mon +1m>
+:PROPERTIES:
+:ID:       9567b6b9-7605-4935-9104-c1a3eb733073
+:LAST_REPEAT: [2019-09-07 Sat 17:39]
+:END:
+- State "DONE"       from "TODO"       [2019-09-07 Sat 17:39]
+- State "DONE"       from "TODO"       [2019-08-07 Wed 22:48]
+- State "DONE"       from "TODO"       [2019-06-07 Fri 19:28]
+
+[[https://balcaodigital.aguasdoporto.pt/cliente/leituras][leituras]]
+
+Águas do Porto
+andremegafone@gmail.com
+shady?1993
+
+(/ (+ 10.02 10.88 25.68 22.51 21.35 5.11 29.23 39.35 11.59 21.22) 10)
+average = 19.70 €
+
+**** TODO leitura luz
+SCHEDULED: <2019-09-28 Sat +1m>
+:PROPERTIES:
+:LAST_REPEAT: [2019-08-30 Fri 22:41]
+:END:
+- State "DONE"       from "TODO"       [2019-08-30 Fri 22:41]
+[[https://www.edp.pt/particulares/apoio-cliente/envio-leituras/][leituras]]
+
+CPE
+PT 0002 000 031 795 142 QZ
+
+EDP
+andremegafone@gmail.com
+Shady?1993
+
+**** internet
+*** Leave Flat
+**** To hometown
+DEADLINE: <2019-12-20 Fri>
+- [ ] Living Room
+  - [ ] Black Desk + Grey Chair
+- [ ] Electrical Appliances
+  - [ ] Heaters (2 + 1)
+- [ ] Musical Equipment
+- [ ] Other
+  - [ ] Step Ladder
+
+**** To Spb
+DEADLINE: <2019-12-20 Fri>
+- Dell Monitor
+- Blender
+- Juice
+- Sandwich
+- Ironing
+
+*** WIP Pass to Francisco
+
+- State "WIP"        from "TODO"       [2019-09-16 Mon 11:44]
+
+Francisco wants the house. 550 euros.
+The landlord will contact him.
+
+*** Living Room
+**** Office
+***** TODO NAS
+Archive my stuff on WD hard drive.
+
+***** Internet
+vodafone
+laptop login pw
+
+zerkalo 2.4 GHz
+portugalrussia
+
++zerkalo 5 Ghz
+portugalrussia
+
+guest zerkala
+iamaguest
+
+TP powerline
+shady
+pw ubuntu
+
+**** Media
+Yamaha amplifier + pre-phono?
+
+** Oliveira de Azeméis
+* Russia
+* Ol. Azeméis - Porto
+
+* Porto - Ol. Azeméis

@@ -1,0 +1,24 @@
+;; Emacs-W3 HTTP cookies file
+;; Automatically generated file!!! DO NOT EDIT!!!
+
+(setq url-cookie-storage
+ '(("linuxize.com"
+  [url-cookie "ezCMPCCS" "false" "Thu, 17 Sep 2020 13:25:35 GMT" "/" "linuxize.com" nil])
+ ("github.com"
+  [url-cookie "has_recent_activity" "1" "Mon, 23 Sep 2019 16:48:47 -0000" "/" "github.com" nil])
+ (".stackexchange.com"
+  [url-cookie "prov" "ab7ce51b-7f87-de35-241a-d5a7460ba17a" "Fri, 01-Jan-2055 00:00:00 GMT" "/" ".stackexchange.com" nil])
+ (".github.com"
+  [url-cookie "_octo" "GH1.1.882613460.1568663109" "Thu, 16 Sep 2021 19:45:09 -0000" "/" ".github.com" nil]))
+)
+(setq url-cookie-secure-storage
+ '((".linuxize.com"
+  [url-cookie "__cfduid" "d816a0d6616dfe5b274d3411515f0141f1568726734" "Wed, 16-Sep-20 13:25:34 GMT" "/" ".linuxize.com" t])
+ (".github.com"
+  [url-cookie "logged_in" "no" "Fri, 16 Sep 2039 19:45:09 -0000" "/" ".github.com" t]))
+)
+
+;; Local Variables:
+;; version-control: never
+;; no-byte-compile: t
+;; End:

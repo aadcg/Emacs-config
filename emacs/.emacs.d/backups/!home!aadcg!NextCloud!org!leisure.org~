@@ -1,0 +1,573 @@
+#+TITLE: Leisure
+#+STARTUP: latexpreview
+#+OPTIONS: toc:nil num:nil email:t
+
+* Reading
+** WIP Abel's Theorem in Problems and Solutions - V.B Alekseev
+[2019-09-20]
+
+** DONE
+*** The Cathedral   and the Bazaar - Eric Raymond
+[2019-05-08]-[2019-06-25] 48d
+
+*** Never Split the Difference - Chris Voss
+[2019-06-25]-[2019-09-01] 68d
+
+*** Yesterday and Long Ago - V.I. Arnold
+[2019-09-04]-[2019-09-18] 14d
+
+* Science & Tech
+** [[https://hackacity.eu/porto/][Hack a city]]                                                     :ARCHIVE:
+<2019-04-03 Wed 7:50-20:40>
+
+** Seminário Mestrado Matemática FCUP                              :ARCHIVE:
+*** [[http://www.fc.up.pt/dmat/mm/resumo_caos.html][O caos e o acaso FCUP]]
+<2019-03-07 Thu 16:30-18:30>
+
+#+begin_theorem
+If an integer $n$ is greater than 2, then the equation $a^n + b^n = c^n$
+has no solutions in non-zero integers $a$, $b$, and $c$.
+
+ingredients:
+- $M$ phase space, compact manifold
+- $t$ time $/math{R}$ or $/math{N}$ (continuous or discrete)
+- $T: M \rightarrow M , x \mapsto T(x)$
+
+def: Given $(M, \math{Z}, T)$ we define the orbit of a point $x \in M$ as the
+sequence $..., T^-1(x), x, T(x), T(T(x)) = T^2(x), ...,$
+
+note: if $T$ is invertible.
+
+def: $x$ is periodic of period $p$ if $T^p(x) e T^j(x) != x \forall
+j=1,...,p-1$. if $p=1$ we say that $x$ is fixed.
+
+def: $x$ is pare periodic if $\exists j<p \in \math{N}: T^j(x) = T^p(x)$ such
+that $T^i(x)!=x  \forall i=1,2$
+
+def: $w_T(x) = {y \in M: \exists n_i T^\alpha i (x) \rightarrow y, i \mapsto
+\inf}$
+
+$\alpha_T(x) = {y \in M: \exists n_i T^ -\alpha i (x) \rightarrow y, i \mapsto
+\inf}$
+
+def: $x$ is ponto recurrente iffy $x \in W_T(x)$
+
+ex: if $x$ is periodic then $x$ is recurrente
+
+def: $x$ is err ante if $\exists V \in V_x$ \forall n\in \math{N} s.t T^n(V) \intersection V =
+\emptyset
+
+$\Omega (T)={x\in M: x is not errante}$
+
+obs: if
+
+$x$ is recurrente then $x$ is not errante
+
+if $x$ $p$ $\in$ then $$x^2$$
+
+
+Topologia C1
+#+end_theorem
+
+** [[https://www.fc.up.pt/iNIGMA/enemath/][Enemath]]                                                         :ARCHIVE:
+<2019-04-13 Sat>
+
+Speaker: [[https://cmup.fc.up.pt/cmup/pbgothen/][Peter Gothen]]
+
+Poincaré disk model
+Poincaré half-plane model
+
+** [[https://sigarra.up.pt/fcup/pt/noticias_geral.ver_noticia?p_nr=43733][Cibersegurança]]                                                  :ARCHIVE:
+<2019-03-26 Tue 17:00-19:30>
+
+** [[http://nucc.dcc.fc.up.pt/update2019/][UPdate @ FCUP]]                                                   :ARCHIVE:
+<2019-02-16 Sat>-<2019-02-17 Sun>
+
+*** À Descoberta de Rust
+[2019-02-16 Sat]
+
+Speaker: [[https://www.dcc.fc.up.pt/~pbv/index_en.html][Pedro Vasconcelos]]
+
+Have a look at the [[https://github.com/pbv/rust-taste][slides]].
+
+Impressions: There's a huge hype around Rust, but it seems to be justified. It
+seems to a 21st century C language in the sense that it gives you huge control
+over the hardware, without having those shitty memory side effects. (I don't
+know what I'm talking about.) In a world continuously concerned about
+cybersecurity, Rust is THE way to go.
+
+Multi-paradigm with cool functional features to it.
+
+*** Tendências Actuais da Inteligência Artificial
+[2019-02-16 Sat]
+
+Speaker: [[https://www.dcc.fc.up.pt/~ines/][Inês Dutra]]
+
+Top level overview on AI, non technical. The speaker made interesting points, to
+which I fully agree:
+- AI isn't robotics - that's control & automation.
+- machine learning is a bullshit name and it should be called statistical
+  learning. those methods are based on the idea that you get knowledge by
+  feeding shitloads of examples.
+- AI is an old research thing - neural networks were proposed in the 80s!
+  researchers often revisit old ideas in the hope that the computational power
+  will finally suffice to solve those problems...
+
+Mentioned technical stuff:
+- [[https://en.wikipedia.org/wiki/Monte_Carlo_tree_search][Monte carlo tree search]]
+- [[https://en.wikipedia.org/wiki/Alpha%25E2%2580%2593beta_pruning][$\alpha - \beta$]]
+- [[https://en.wikipedia.org/wiki/Simulated_annealing][Simulated Annealing]]
+- [[https://en.wikipedia.org/wiki/Hill_climbing][Hill Climbing]]
+- [[https://en.wikipedia.org/wiki/Tabu_search][Tabu Search]]
+- [[https://en.wikipedia.org/wiki/Evolutionary_algorithm][Evolutionary Algorithms]]
+- [[https://en.wikipedia.org/wiki/Bayesian_network][Bayesian Networks]]
+- [[https://en.wikipedia.org/wiki/Inductive_logic_programming][Inductive Logic Programming]]
+- natural language processing is poorly developed for the portuguese
+language!
+- [[https://en.wikipedia.org/wiki/Prolog][Prolog]] is widely used in AI
+
+Expected future things:
+- intelligent IoT
+- [[https://www.automl.org/][AutoML]]
+- DevOps -> AIOps
+- Explainable AI
+
+[[https://hci-kdd.org/make-explainable-artificial-intelligence-2019/][MAKE Explainable Artificial Intelligence]]
+
+Recommended book:
+- [[https://artint.info/2e/html/ArtInt2e.html][Artificial Intelligence: Foundations of Computational Agents]]
+
+AI Conferences:
+- [[https://www.ijcai.org/][IJCAI]]
+- [[https://www.aaai.org/][AAAI]]
+
+*** JS generator for a greater good
+[2019-02-16 Sat]
+
+Speaker: Gonçalo Matos
+
+It was about JavaScript. I don't know Java and I don't want to learn. The guy
+works at [[https://blip.pt/][BLIP]].
+
+The name of the talk is based on the following book. And I do want to learn
+Haskell!
+[[http://learnyouahaskell.com/chapters][Learn You a Haskell for Great Good]]
+
+*** Neural Computation and AI
+[2019-02-17 Sun]
+
+Speaker: [[https://www.ini.rub.de/the_institute/people/gregor-schoner/][Gregor Schöner]]
+
+A theoretical physicist talking about stuff. Non-technical, unfortunately.
+
+Concepts:
+- [[https://en.wikipedia.org/wiki/Hebbian_theory][Hebbian theory]]
+- [[https://en.wikipedia.org/wiki/Catastrophic_interference][Catostrophic Forgetting]]
+
+For more info, please have a look at his book:
+[[file:~/NextCloud/%5BSch%C3%B6ner,_Gregor%3B_Spencer,_John_P%5D_Dynamic_thinki(z-lib.org).pdf][Dynamic Thinking]]
+
+*** [[https://plato.stanford.edu/entries/lambda-calculus/][\lambda-calculus]]
+[2019-02-17 Sun]
+
+Speaker: [[https://scholar.google.com/citations?user%3DEDldY90AAAAJ&hl%3Den][Mário Florido]]
+
+Concepts:
+- [[https://en.wikipedia.org/wiki/%25CE%25A0-calculus][pi-calculus]]
+- [[https://en.wikipedia.org/wiki/Church%25E2%2580%2593Rosser_theorem][Church-Rosser theorem]]
+- [[https://en.wikipedia.org/wiki/Fixed-point_combinator][fixed-point combinator]]
+- [[https://en.wikipedia.org/wiki/Curry%25E2%2580%2593Howard_correspondence][Curry-Howard isomorphism]]
+
+Formal verification software:
+- Coq
+- AGDA
+- IDRIS
+
+** Meetups
+[[https://www.meetup.com/find/events/?allMeetups=true&radius=50&userFreeform=Porto%252C+Portugal&mcName=Porto%252C+PT&lat=41.148605&lon=-8.610992][check]]
+
+look:
+- [[https://www.meetup.com/Porto-Arte/events/261051924/][movies]]
+- [[https://www.meetup.com/portocodes/events/rsjhnqyzhbmb/][porto codes]]
+- [[https://www.meetup.com/datascienceportugal/events/261023054/][dspt]]
+- [[https://www.meetup.com/devopsporto/events/261268592/][devops]]
+- [[https://www.meetup.com/pyporto/events/dzkzhqyzhbzb/][pycoffee]]
+- [[https://www.meetup.com/pyporto/events/255823494/][python porto]]
+- [[https://www.meetup.com/Data-Science-For-Social-Good-Portugal/events/261231292/][data science]]
+- [[https://www.meetup.com/portocodes/events/rsjhnqyzjbrb/][porto codes]]
+
+*** Porto Codes 19:00
+<%%(diary-float t 4 2)>
+
+*** COMMENT Python Porto
+<2019-08-25 Sun 10:00-12:00 +1w>
+
+* Art
+** Cinema
+*** Mektoub My Love
+:PROPERTIES:
+:where: Teatro Campo Alegre
+:END:
+<2019-02-18 Mon 18:30>
+
+*** Андрей Рублёв
+:PROPERTIES:
+:where: Teatro Campo Alegre
+:END:
+<2019-05-21 Tue 21:00>
+
+*** Дылда
+:PROPERTIES:
+:where: Аврора, спб
+:END:
+<2019-07-18 Thu 21:00>
+
+** Concerts
+*** Serralves em Festa
+<2019-06-01 Sat>
+
+*** Луна
+<2019-10-26 Sat>
+
+One Love Fest
+<2019-01-01 Tue>
+
+* Sports
+** Tennis
+<2019-07-26 Fri 12:00-13:00>
+<2019-06-07 Fri 12:00-13:00>
+
+* Restaurant
+<2019-08-20 Tue 14:00>
+
+* Family
+** Mãe (IPO)
+<2019-07-30 Tue 11:20>
+
+* Social
+** Guedes
+<2019-08-21 Wed>
+<2019-08-02 Fri 17:00-18:00>
+<2019-05-29 Wed 20:00>
+
+** Simões
+<2019-08-22 Thu>
+
+** Tomás
+<2019-09-04 Wed 11:00-16:00>
+
+* Media
+** CDs
+*** SOLD [11/11]
+:PROPERTIES:
+:[€]: (+ (* 5 10) 25) 75€
+:END:
+- [X] "Foge Foge Bandido" - Manel Cruz
+- [X] "1" - Prana
+- [X] "40:02" - Peixe:Avião
+- [X] "A Grande Tribulação" - Dealema
+- [X] "An Electric Storm" - White Noise
+- [X] "Máscara" - Ex-Peão
+- [X] "Novae" - Juseph
+- [X] "Black Bombaim" - Black Bombaim
+- [X] "1970" - JP Simões
+- [X] Mix-Tape Contra-Cultura
+- [X] "Novos Talentos Fnac 2010"
+
+*** TO SELL [0/114]
+:PROPERTIES:
+:[€]: (* 5 114) 570€
+:END:
+- [ ] "An American Prayer" - The Doors
+- [ ] "Anthropocentric" - The Ocean
+- [ ] "Bipolar" - EAK/Crushing Sun Split
+- [ ] "City of Echoes" - Pelican
+- [ ] "Crack the Skye" - Mastodon
+- [ ] "Curtain Call: The Hits" - Eminem
+- [ ] "Encore" - Eminem
+- [ ] "Forever Is A Long Time" - Birth Signs
+- [ ] "Heliocentric" - The Ocean
+- [ ] "Hellstone" - Men Eater
+- [ ] "How Strange, Innocence" - Explosions in the Sky
+- [ ] "Hullabaloo" - Muse
+- [ ] "Joyce Alive!" - Zelig
+- [ ] "Lady Cobra" - Riding Pânico
+- [ ] "Meio Disco" - Os Quais
+- [ ] "Moon Pix" - Cat Power
+- [ ] "Olhos de Mongol" (Reedição) - Linda Martini
+- [ ] "Paranoid" - Black Sabbath
+- [ ] "Radio Venom" - TwentyInchBurial
+- [ ] "Red Album" - Baroness
+- [ ] "Relationship Of Command" - At The Drive-In
+- [ ] "Ser Solidário" - José Mário Branco
+- [ ] "Sexually Transmitted Electricity" - Lobster
+- [ ] "Survival of the Fittest" - For the Glory
+- [ ] "The Best Day" - Thurston Moore
+- [ ] "The Circleville Massacre" - Satans Revolver
+- [ ] "The Shape of Hell to Come" - We Are The Damned
+- [ ] "The Shape of Jazz to Come" - Ornette Coleman
+- [ ] "The Singles" - Eminem
+- [ ] "Vendaval" - Men Eater
+- [ ] "Vertigo" - Memoirs of a Secret Empire
+- [ ] "Wavering Radiant" - Isis
+- [ ] "We Are The Romans" - Botch
+- [ ] "Why Are We Not Perfect?" - Jesu
+- [ ] "Year One" - Adorno
+- [ ] "You Make Me Nervous" - If Lucy Fell
+- [ ] "Your Reward... A Bullet" - The Allstar Project
+- [ ] "Zebra Dance" - If Lucy Fell
+- [ ] "É Uma Água EP" - PAUS
+- [ ] Jesu/Sun Kil Moon - s/t
+- [ ] Khanate DVD
+- [ ] Memoirs of a Secret Empire EP
+- [ ] Minimus Ep
+- [ ] Rumo Entrópico EP
+- [ ] "Aenima" - Tool
+- [ ] "Affliction, Endocrine... Vertigo" - Overmars
+- [ ] "Amputechture" - The Mars Volta
+- [ ] "Astraea" - Rolo Tomassi
+- [ ] "Beyond Hypothermia" - Cave In
+- [ ] "Bird of Prey" - Zozobra
+- [ ] "Birds of Fire" - Mahavishnu Orchestra
+- [ ] "Cidade" - Sinistro
+- [ ] "Clearing the Eye" - Isis (DVD)
+- [ ] "Coilguns & Kunz Split" - Coilguns & Kunz
+- [ ] "Collective Oblivion" - The Ocean (DVD)
+- [ ] "Commuters" - Coilguns
+- [ ] "Darker Handcraft" - Trap Them
+- [ ] "De-Loused In The Comatorium" - The Mars Volta
+- [ ] "Dk_02" - Daikiri
+- [ ] "Ella & Louis" - Louis Armstrong / Ella Fitzgerald
+- [ ] "Gold" - Men Eater
+- [ ] "Hemeltraan" - Kingdom
+- [ ] "Jupiter" - Cave In
+- [ ] "Kinetic" - Catacombe
+- [ ] "Linhas" - Corvo Mudo
+- [ ] "Monochrome" - Rorcal
+- [ ] "Muzeak" - EAK
+- [ ] "Myrra, Mordvynn, Marayaa" - Rorcal
+- [ ] "Now and Forever" - Syndrome
+- [ ] "Occult Rock" - Aluk Todolo
+- [ ] "Salvation" - Cult of Luna
+- [ ] "Secret House" - Jodis
+- [ ] "Sentencia" - Orthodox
+- [ ] "Songs of Townes Van Zandt" - Scott Kelly, Steve Von Till and Wino
+- [ ] "Stadia Rods" - Coilguns
+- [ ] "The Very Best of Nat King Cole" - Nat King Cole
+- [ ] "The Wake" - Scott Kelly
+- [ ] "The many faces of.." - Joy Division
+- [ ] "Until Your Heart Stops" - Cave In
+- [ ] "Venerable" - KEN Mode
+- [ ] "Vertikal" - Cult of Luna
+- [ ] "You Will Not Survive" - The Saddest Landscape
+- [ ] "Blue Record" - Baroness
+- [ ] "untitled" - Cease Upon the Capitol
+- [ ] "Confusion Is Sex" - Sonic Youth
+- [ ] "Cão" - Ornatos Violeta
+- [ ] "Doismileoito" - Doismileoito
+- [ ] "Femina" - The Legendary Tiger Man
+- [ ] "Is This It" - The Strokes
+- [ ] "Novos Talentos Fnac 2009"
+- [ ] "O Monstro Precisa de Amigos" - Ornatos Violeta
+- [ ] "Option Paralysis" - The Dillinger Escape Plan
+- [ ] "Precambrian" - The Ocean
+- [ ] "Sons of Misfortune EP" - Sons of Misfortune
+- [ ] "Visions of Another Day" - Sawyer
+- [ ] The Lord of the Rings 1 Soundtrack
+- [ ] The Lord of the Rings 2 Soundtrack
+- [ ] The Lord of the Rings 3 Soundtrack
+- [ ] Underground Soundtrack
+- [ ] "()" - Sigur Rós
+- [ ] "Aeolian" - The Ocean
+- [ ] "Behind a New Dawn" - Apply Zii
+- [ ] "Ire Works" - The Dillinger Escape Plan
+- [ ] "Lost Fathers" - Wild Tiger Affair
+- [ ] "Love Is Love // Return To Dust" - Code Orange Kids
+- [ ] "Mass III-IIII" - Amenra
+- [ ] "No Heroes" - Converge
+- [ ] "No Regrets" - No Turning Back
+- [ ] "Obzen" - Meshuggah
+- [ ] "So Tonight That I Might See" - Mazzy Star
+- [ ] "Sonic Prayer" - Earthless
+- [ ] "System of a Down" - System of a Down
+- [ ] "The Fool" - Warpaint
+- [ ] "The Velvet Underground & Nico" - The Velvet Underground
+
+** Vinyls [0/32]
+- [ ] Amenra – "Mass III"
+- [ ] Amenra – "Mass IIII"
+- [ ] Amenra – "Mass VI"
+- [ ] Amenra – "Live II"
+- [ ] Celeste – "Nihiliste(s)"
+- [ ] Cold Cave – "Cherish The Light Years"
+- [ ] Colour Haze – "Colour Haze"
+- [ ] Converge – "No Heroes"
+- [ ] Godspeed you black emperor – "Asunder, Sweet And Other Distress’"
+- [ ] Halshug – "Blodets Bånd"
+- [ ] Haydn (2x)
+- [ ] Hessian – "Mànégarmr"
+- [ ] Joy Division – "Closer"
+- [ ] Kowloon Walled City – "Grievances"
+- [ ] Lana del Rey – "Ultraviolence"
+- [ ] Mamiffer – "Mare Decendrii"
+- [ ] Mamiffer – "Statu Nascendi"
+- [ ] Oathbreaker – "Eros/Anteros"
+- [ ] Oathbreaker – "Maelstrom"
+- [ ] Om – "Conference of the Birds"
+- [ ] Oxbow – Oxbow Presents Love’s Holiday Orchestra (Live At Supersonic, 2007)
+- [ ] Peter Murphy – "Love Hysteria"
+- [ ] Skull Defekts – "Dreams in the Known Unknown"
+- [ ] Sumac – "The Deal"
+- [ ] The Black Heart Rebellion – "Har Nevo"
+- [ ] The Ocean – "Precambrian"
+- [ ] The Ocean – "Aeolian"
+- [ ] The United Stated of America – s/t
+- [ ] Tool – "Undertow"
+- [ ] Wiegedood – "De Doden Hebben Het Goed"
+- [ ] ДДТ – "Оттепель"
+- [ ] Калонов Мост – "Дарза"
+
+** Cinema [0/10]
+- [ ] Lars Von Trier - Ninfomaníaca
+- [ ] Oliver Hirschbiegel - A Queda
+- [ ] Joel Schumacher - Número 23
+- [ ] Giuseppe Tornatore - Cinema Paraíso
+- [ ] Lars Von Trier - Europa
+- [ ] Gaspar Noé - Irreversível
+- [ ] Nuri Bilge Caylan - Climas
+- [ ] Miguel Gomes - As 1001 noites
+- [ ] Andrei Tarkovsky (8 DVDs)
+- [ ] Xavier Nolan - Mommy
+
+** Books
+** Digital
+*** рутракер
+Fyz14
+b5630d2dae4
+
+*** TODO Media Filesystem
+:PROPERTIES:
+:ID:       e3609216-ca74-4d2e-a5bf-bb2424022508
+:END:
+- [ ] photos
+- [ ] video
+- [ ] music
+- [ ] library
+
+* Anniversaries
+** Family
+%%(org-anniversary 2018 9 21) Me and Аня got married %d years ago
+%%(org-anniversary 1993 3 30) I am %d years old
+%%(org-anniversary 1995 2 15) Аня is %d years old
+%%(org-anniversary 1965 10 8) Mum is %d years old
+%%(org-anniversary 1965 8 20) Papa is %d years old
+%%(org-anniversary 1939 3 24) Avó is %d years old
+%%(org-anniversary 1964 1 11) Марина is %d years old
+%%(org-anniversary 1960 4 12) Владимир is %d years old
+%%(org-anniversary 1933 2 12) Бабуля is %d years old
+
+** Work
+%%(org-anniversary 2019 9 16) Started to work for Bold %d year ago
+%%(org-anniversary 2018 7 30) Started to work for Vestas %d years ago
+%%(org-anniversary 2019 7 29) Stopped working for Vestas %d years ago
+
+** Friends
+
+* Timetable
+|       | Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday |
+|-------+--------+---------+-----------+----------+--------+----------+--------|
+| 7/8   | zZ     | zZ      | zZ        | zZ       | zZ     |          |        |
+| 8/9   | Work   | Work    | Work      | Work     | Work   |          |        |
+| 9/10  | Work   | Work    | Work      | Work     | Work   |          |        |
+| 10/11 | Work   | Work    | Work      | Work     | Work   |          |        |
+| 11/12 | Work   | Work    | Work      | Work     | Work   |          |        |
+| 12/13 | Work   | Work    | Work      | Work     | Work   |          |        |
+| 13/14 | Work   | Work    | Work      | Work     | Work   |          |        |
+| 14/15 | Work   | Work    | Work      | Work     | Work   |          |        |
+| 15/16 | Work   | Work    | Work      | Work     | Work   |          |        |
+| 16/17 | Work   | Work    | Work      | Work     | Work   |          |        |
+| 17/18 |        |         |           |          |        |          |        |
+| 18/19 |        |         |           |          |        |          |        |
+| 19/20 |        |         |           |          |        |          |        |
+| 20/21 |        |         |           |          |        |          |        |
+| 21/22 |        |         |           |          |        |          |        |
+| 22/23 |        |         |           |          |        |          |        |
+| 23/24 | zZ     | zZ      | zZ        | zZ       | zZ     |          |        |
+
+* Negrume                                                           :ARCHIVE:
+
+[[https://www.ikea.com/pt/pt/search/?query=velcro][IKEA cable management]]
+
+- [[http://www.mundomusicgear.co.uk/product/mundo-guitar-strap/][strap]]
+
+- strings
+  - [[https://wahiduddin.net/calc/calc_guitar_string.htm][1]]
+  - [[http://store.kaliumstrings.com/][2]]
+  - [[https://www.thomann.de/pt/daddario_xl156.htm?ref=search_rslt_EXL+156_117274_0][3]]
+  - [[https://www.thomann.de/pt/ernie_ball_eb_2837_slinky_baritone.htm?ref=search_rslt_ernie+ball+2837_173688_0][4]]
+
+- sovtek
+  - [[https://wgs4.com/][speakers]]
+  - [[https://reverb.com/pt/item/11672633-electro-harmonix-mig-50-2018#policies-tab][mig 50]]
+
+- basses
+  - [[https://www.musik-produktiv.com/intl/ibanez-soundgear-src6-wnf.html][ibanez]]
+  - [[https://dunableguitars.com/product/yeti-6/][yeti]]
+  - [[https://www.musik-produktiv.com/intl/schecter-hellraiser-c-vi-bch.html][schecter]]
+  - [[https://www.reverendguitars.com/guitars][reverend]]
+  - [[https://www.muziker.pt/ibanez-src6-walnut-flat][ibanez src]]
+
+- boss ES 5
+  - [[https://www.boss.info/us/support/by_product/es-5/updates_drivers/][drivers]]
+  - [[https://www.rolandcorp.com.au/blog/the-ultimate-guide-to-the-boss-es-5-effects-switching-system#ES5-12][guide]]
+
+** Eastwood Sidejack VI
+:PROPERTIES:
+:PRICE: 775
+:END:
+
+- hardcase
+  - picks (2)
+  - strange pick
+  - 3 instrument cables
+  - cloth
+
+** Sovtek Mig 50 & Sovtek 2x12'
+:PROPERTIES:
+:PRICE: 500
+:END:
+
+** Pedalboard
+
+*** Pedals
+
+**** Boss ES-5
+
+**** Pigtronix Infinity
+
+**** Pigtronix Philopher King
+
+**** Source Audio Nemesis
+
+**** TC-Electronics T2
+
+**** Carl Martin Headroom
+
+**** Empress stereo buffer +
+
+**** Boss PQ-3B
+
+**** Boss GE-7B
+
+**** Rockturner
+
+*** Rockboard (soft bag)
+
+*** Power
+
+T-rex chameleon
+
+*** Cables
+
+- patch ()
+- MIDI

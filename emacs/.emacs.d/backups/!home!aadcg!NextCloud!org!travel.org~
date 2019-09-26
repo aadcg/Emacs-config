@@ -1,0 +1,282 @@
+#+TITLE: Travelling
+#+TODO: PLAN(p) TODO(t) | PLANNED(f)
+#+OPTIONS: toc:nil
+
+* List
+[[https://packhacker.com/packing-list/digital-nomad/][digital nomad packing list]]
+
+** Clothes [0/6]
+- [ ] Slippers
+- [ ] Clothes
+- [ ] Pajamas
+- [ ] Leggings
+- [ ] Boxers & Socks
+- [ ] Shoes
+
+** Hygiene [0/10]
+- [ ] Toothbrush and toothpaste
+- [ ] Cotton buds
+- [ ] Haircomber
+- [ ] Scissors, nail clipper and tweezers
+- [ ] Perfume and Deodorant
+- [ ] Shampoo and gel
+- [ ] Shaving tools
+- [ ] Condoms
+- [ ] Cream
+- [ ] Tissues
+
+** Documents [0/8]
+- [ ] Transport Cards
+- [ ] CC
+- [ ] Driving License
+- [ ] Health Insurance
+- [ ] Passport
+- [ ] Student's Card
+- [ ] Tickets
+- [ ] Money
+
+** Technology [0/5]
+- [ ] Laptop & charger
+- [ ] Head/Earphones
+- [ ] Keyboard
+- [ ] Camera & charger
+- [ ] Phone & charger
+
+** Misc [0/7]
+- [ ] Food
+- [ ] Keys
+- [ ] Turn off electrical stuff at home
+- [ ] Medicine
+- [ ] Electrical adapter
+- [ ] Gifts
+- [ ] Books
+
+*** Beach [0/3]
+- [ ] Towel
+- [ ] Shorts
+- [ ] Solar Screen
+
+* Командировка
+** Lx
+<2019-09-23 Mon>-<2019-09-27 Fri>
+
+- *Trips*
+
+| From - To  | Date                         |
+|------------+------------------------------|
+| Transfer   | <2019-09-23 Mon 09:00>       |
+| Porto - Lx | <2019-09-23 Mon 09:40-12:22> |
+|------------+------------------------------|
+| Lx - Porto | <2019-09-27 Fri 17:09-19:50> |
+
+- *Stay*
+
+Bold's apartment
+
+- *$*
+
+*Company*
+| Item  | €     |
+|-------+-------|
+| Train | 56,50 |
+
+** PLAN Herzogenaurach
+<2019-10-14 Mon>-<2019-10-18 Fri>
+
+- *Trip*
+
+  | From - To | Date |
+  |-----------+------|
+  |           |      |
+
+- *Stay*
+
+- *$*
+
+  *Company*
+  | Item  | € |
+  |-------+---|
+  | item  | 5 |
+  |-------+---|
+  | TOTAL | 5 |
+  #+TBLFM: @>$>=vsum(@I..II)
+
+  *Personal*
+  | Item  | € |
+  |-------+---|
+  | item  | 5 |
+  |-------+---|
+  | TOTAL | 5 |
+  #+TBLFM: @>$>=vsum(@I..II)
+
+** BEEN Amsterdam                                                  :ARCHIVE:
+<2019-09-16 Mon>-<2019-09-20 Fri>
+
+- *Trip*
+
+  | From - To      | Date                         |
+  |----------------+------------------------------|
+  | home - OPO     | <2019-09-16 Mon 09:00-09:40> |
+  | OPO - AMS      | <2019-09-16 Mon 11:40-15:20> |
+  |----------------+------------------------------|
+  | Intercity 3142 | <2019-09-20 Fri 13:46-13:59> |
+  | AMS - OPO      | <2019-09-20 Fri 16:05-17:45> |
+
+- *Stay*
+
+  [[http://hotellevell.nl/en][Hotel Levell]]
+
+- *$*
+
+  *Company*
+  | Item                      |     € |
+  |---------------------------+-------|
+  | Airport Transfer          | 10.20 |
+  | Touristic tax + Breakfast | 75.91 |
+  | Porto Airport -> Home     |  2.00 |
+  | Metro                     |  6.40 |
+  |---------------------------+-------|
+  | TOTAL                     | 94.51 |
+  #+TBLFM: @>$>=vsum(@I..II)
+
+  *Personal*
+  | Item                |     € |
+  |---------------------+-------|
+  | Dinner Monday Kebab |  6.75 |
+  | Lunch Tuesday       |     7 |
+  | Vegan Junk Food     | 14.95 |
+  | Lunch Wednesday     |    10 |
+  | Dinner Wednesday    |     9 |
+  | Lunch Thursday      |    10 |
+  | Lunch Friday        |     4 |
+  | Metro (7)           |    16 |
+  |---------------------+-------|
+  | TOTAL               |  77.7 |
+  #+TBLFM: @>$>=vsum(@I..II)
+
+** BEEN Denmark                                           :ARCHIVE:
+<2019-02-04 Mon>-<2019-02-10 Sun>
+
+The first time I travelled in 1st class (thanks Vestas).
+
+* Россия
+** Autumn 2019
+<2019-10-01 Tue>-?
+
+buy port wine bottle @ airport
+
+- *Trip*
+
+| *From - To*      | *Date*                         |
+|----------------+------------------------------|
+| Porto - London | <2019-10-01 Tue 15:40-18:05> |
+| London - Spb   | <2019-10-01 Tue 22:40-04:05> |
+|----------------+------------------------------|
+
+- *$*
+
+| Item    |  € |
+|---------+----|
+| Flights | 80 |
+| Stay    |    |
+|---------+----|
+| *TOTAL*   | 80 |
+#+TBLFM: @>$>=vsum(@I..II)
+
+** Visa
+[2019-06-24 Mon]-[2020-06-22 Mon]
+
+| Item                    |   € |
+|-------------------------+-----|
+| Embassy                 |  35 |
+| Visa Center             |  30 |
+| LusitanaSol             |  35 |
+| Insurance (1€/day)      |  27 |
+| Invitation (Visa House) | 100 |
+| Sending the documents   |  10 |
+|-------------------------+-----|
+| *TOTAL*                   | 237 |
+|-------------------------+-----|
+#+TBLFM: @>$>=vsum(@I..II)
+
+** BEEN New Year 2018                                       :ARCHIVE:
+<2018-12-28 Fri>-<2019-01-08 Tue>
+
+|-------------------+------------------------------|
+| *From - To*       | *Date*                       |
+|-------------------+------------------------------|
+| Porto - Lx        | <2018-12-28 Fri 09:40-12:22> |
+| Lx - Riga         | <2018-12-28 Fri 16:10-22:40> |
+| Riga - Spb        | <2018-12-28 Fri 23:20-01:40> |
+|-------------------+------------------------------|
+| Spb - Milan       | <2019-01-08 Tue 11:00-12:25> |
+| Milan - Barcelona | <2019-01-08 Tue 15:50-17:30> |
+| Barcelona - Porto | <2019-01-08 Tue 19:40-20:40> |
+|-------------------+------------------------------|
+
+| *Description*             | *EUR* |
+|-------------------------+-----|
+| *Flights*                 | 264 |
+|-------------------------+-----|
+| *Visa*                    | 152 |
+|-------------------------+-----|
+| Embassy                 |  35 |
+| Insurance (1€/day)      |  15 |
+| Invitation (Visa House) |  27 |
+| LusitanaSol             |  35 |
+| Sending the documents   |  10 |
+| Visa Center             |  30 |
+|-------------------------+-----|
+| *Stay*                    | 250 |
+|-------------------------+-----|
+| *TOTAL*                   | 666 |
+#+TBLFM: @4$2=vsum(@III..IIII)::@12$2=vsum(@I..II, @II..III, @IIII..IIIII)
+
+** BEEN Summer 2019                                         :ARCHIVE:
+<2019-06-25 Tue>-<2019-07-21 Sun>
+
+|-------------------+------------------------------|
+| *From - To*       | *Date*                       |
+|-------------------+------------------------------|
+| Uber              | <2019-06-25 Tue 05:00-05:20> |
+| Porto - Lx        | <2019-06-25 Tue 05:40-08:22> |
+| Lx - Paris        | <2019-06-25 Tue 12:15-15:45> |
+| Paris - Spb       | <2019-06-25 Tue 20:20-00:40> |
+|-------------------+------------------------------|
+| Spb - Barcelona   | <2019-07-21 Sun 05:10-08:20> |
+| Barcelona - Porto | <2019-07-21 Sun 22:25-23:25> |
+|-------------------+------------------------------|
+
+|-------------------------+-----|
+| *Description*             | *EUR* |
+|-------------------------+-----|
+| *Flights*                 | 315 |
+|-------------------------+-----|
+| *Visa*                    | 237 |
+|-------------------------+-----|
+| Embassy                 |  35 |
+| Visa Center             |  30 |
+| LusitanaSol             |  35 |
+| Insurance (1€/day)      |  27 |
+| Invitation (Visa House) | 100 |
+| Sending the documents   |  10 |
+|-------------------------+-----|
+| *Stay*                    | 400 |
+|-------------------------+-----|
+| *TOTAL*                   | 852 |
+|-------------------------+-----|
+#+TBLFM: @3$>=vsum(@IIII..IIIII)::@>$>=vsum(@II..III, @III..IIII, @IIIII..IIIIII)
+
+* Portugal
+** BEEN Nazaré                                                     :ARCHIVE:
+:PROPERTIES:
+:€: 77.60€ (flat)
+:how: 2h by car
+:END:
+<2019-03-23 Sat>-<2019-03-24 Sun>
+
+Marriage (6 months commemoration)
+
+* Spain
+** BEEN Barcelona                                                  :ARCHIVE:
+<2019-07-21 Sun 9:00-22:00>

@@ -1,0 +1,111 @@
+#+TITLE: Bureaucracy
+#+OPTIONS: toc:nil num:nil email:t
+
+* $
+|-------------+----------|
+|             |        € |
+|-------------+----------|
+| Salary      | +1094.93 |
+|-------------+----------|
+| Eat out     |     -100 |
+| Supermarket |     -150 |
+| Water       |      -20 |
+| Car         |      -50 |
+| Electricity |      -80 |
+|-------------+----------|
+| Balance     |   694.93 |
+|-------------+----------|
+#+TBLFM: @>$2=vsum(@II..III) + vsum(@III..IIII)
+
+** TODO Savings
+SCHEDULED: <2019-09-30 Mon +1m>
+:PROPERTIES:
+:LAST_REPEAT: [2019-08-30 Fri 19:36]
+:END:
+
+|-------+------|
+|       |    € |
+|-------+------|
+| Bank  | 7921 |
+| Paper |  335 |
+|-------+------|
+| TOTAL | 8256 |
+|-------+------|
+#+TBLFM: @>$>=vsum(@II..III)
+
+** Banking
+*** Mama's credit card
+4035 4100 7290 6813
+11/22
+102
+
+*** Papa's IBAN
+IBAN pai
+PT50003506510037884180090
+
+*** [[matriz]]
+*** CGD
+
+IBAN
+PT50003505580004699750008
+
+* TODO Documents
+
+- State "TODO"       from              [2019-09-04 Wed 21:04]
+
+organize all docs
+
+** Passport
+DEADLINE: <2021-12-23 Thu -6m>
+
+** ID
+DEADLINE: <2021-05-03 Mon -6m>
+
+** Europen Health Card
+DEADLINE: <2021-11-09 Tue -6m>
+
+** Driver's Licence
+DEADLINE: <2043-03-29 Sun -6m>
+
+** Student (FCUP)
+DEADLINE: <2021-12-31 Fri -6m>
+
+** Banking
+*** CGD
+DEADLINE: <2020-05-01 Fri -6m>
+
+*** Revolut
+DEADLINE: <2024-06-01 Sat -6m>
+
+* Car
+** Refill
+
+- State "DONE"       from "TODO"       [2019-06-18 Tue 14:01]
+- State "DONE"       from "TODO"       [2019-05-27 Mon 08:50]
+- State "DONE"       from "TODO"       [2019-04-28 Sun 21:15]
+
+** TODO Car Wash
+<2019-12-18 Wed +6m>
+:PROPERTIES:
+:LAST_REPEAT: [2019-06-18 Tue 14:02]
+:END:
+
+- State "DONE"       from "TODO"       [2019-06-18 Tue 14:02]
+
+* Address
+** Hometown
+André Alexandre Gomes
+Rua Dr. Abel Portal, 26, 2K
+3720-265 Oliveira de Azeméis
+PORTUGAL
+
+** Аня
+Velichko Anna Vladimirovna
+Bulvar Novatorov 37 30
+198216, Saint Petersburg
+RUSSIA
+** Porto
+André Alexandre Gomes
+Rua dos Vanzeleres, 122 R/C dto.
+4100-482 Porto
+PORTUGAL

@@ -1,0 +1,568 @@
+#+TITLE: Learn
+#+STARTUP: latexpreview overview hideblocks
+#+OPTIONS: toc:nil num:nil email:nil tex:t
+
+* Mathematics
+Nice blogs:
+- [[https://jeremykun.com/][Math and Programming]]
+- [[https://oleksandrmanzyuk.wordpress.com/][Musings of a mathematician and aspiring programmer]]
+
+** Category Theory
+[[pdfview:~/NextCloud/Library/%5BDavid_Spivak%5D_Category_Theory_for_the_Sciences(z-lib.org).pdf::56][Category Theory for Scientists - David I. Spivak]]
+
+Plan:
+read & solve exercises
+
+*** Introduction
+The world of applied mathematics is much smaller than the world of applicable
+mathematics. (from [[pdfview:~/NextCloud/%5BDavid_Spivak%5D_Category_Theory_for_the_Sciences(z-lib.org).pdf::14][here]])
+
+*** The Category of Sets
+**** Sets and functions
+***** Exercise 2.1.1.2 (extended)
+*Prove that for a set $A$, such that $|A|=n$, $|\mathcal{P}(A)|=2^n$.*
+
+\(\mathcal{P}(A)\) is the set of all subsets of \(A\).
+
+Hence:
+
+$$|\mathcal{P}(A)| = \sum_{i=0}^{n}{n \choose i}$$
+
+Noticing that this is a special case of the binomial theorem the proof follows.
+
+Also recall the Pascal's rule:
+
+$${n \choose k} = {n-1 \choose k} + {n-1 \choose k-1}$$
+
+Prove it either by algebraic substituition or by a combinational argument.
+
+***** Exercise 2.1.2.3
+a. Only \(PR \mapsto RG\) is a function.
+
+***** Exercise 2.1.2.5
+a. 4
+b. 0
+c. \(-2 \notin \mathbb{N}\)
+d. 25
+
+***** Exercise 2.1.2.8
+\(f(A) = \{0, 1, 4, 9\} \)
+
+***** Exercise 2.1.2.12
+a. \( 2^5\)
+b. \( 5^2 \)
+
+***** Exercise 2.1.2.13
+a. Any \(X\) such that \(|X|=1\)
+b. \(\emptyset\)
+
+***** Exercise 2.1.2.17
+a. \(n!\)
+b. Sure. \( \emptyset \mapsto \emptyset\)
+
+***** Exercise 2.1.2.20
+Pick \(A\) such that \(|A|=1\). Then there's a bijection between \(X\) and
+$Hom_{Set} (A,X)$.
+
+***** Exercise 2.1.2.22
+a. \(c\)
+b. \(s = (1, 4, 9, 16, 25, 36, 49)\)
+
+***** Exercise 2.1.2.24
+a. \(3\)
+b. \(3\)
+c. \(\inf\)
+d. \(6\)
+
+**** Commutative diagrams
+
+**** Ologs
+
+*** Fundamental Considerations in Set
+**** Products and coproducts
+***** Exercise 3.1.1.4
+12
+
+***** Exercise 3.1.1.8
+Only c. commutes.
+
+***** Exercise 3.1.1.13
+For every set $A$ there is some relationship between the following three sets:
+
+- \( \text{Hom}_{\text{Set}} (A,X)\)
+- \( \text{Hom}_{\text{Set}} (A,Y)\)
+- \( \text{Hom}_{\text{Set}} (A,X \times Y)\)
+
+\(| \text{Hom}_{\text{Set}} (A,X \times Y) |\) =  \(| \text{Hom}_{\text{Set}}
+ (A,X) | + | \text{Hom}_{\text{Set}} (A,Y) |\)
+
+In other words,
+$$ \text{Hom}_{\text{Set}} (A,X \times Y) \simeq \text{Hom}_{\text{Set}} (A,X)
+\times \text{Hom}_{\text{Set}} (A,Y)$$
+
+***** TODO Exercise 3.1.1.14
+a. trivial
+b. TODO
+
+- State "TODO"       from              [2019-05-24 Fri 15:17]
+**** Finite limits in Set
+**** Finite colimits in Set
+**** Other notions in Set
+
+*** Categories and Functors,Without Admitting It
+
+*** Basic Category Theory
+
+*** Fundamental Considerations of Categories
+
+*** Categories at Work
+
+* GNU/Linux and GNU Emacs
+- Zamansky series
+- [[https://m00natic.github.io/emacs/emacs-wiki.html#orgd85f9c1][Andrey's Opinionated Emacs Guide]]
+- [[http://pragmaticemacs.com/][Pragmatic Emacs]]
+- [[http://www.modernemacs.com/][Modern Emacs]]
+- [[http://www.cachestocaches.com/2016/9/my-workflow-org-agenda/][org mode experience]]
+
+Elisp
+[[https://www.amazon.com/Writing-GNU-Emacs-Extensions-Glickstein/dp/1565922611][book]]
+[[http://ergoemacs.org/emacs/buy_xah_emacs_tutorial.html][tutorial]]
+
+[[https://www.youtube.com/watch?v=cSSWl4Y4G0g][GNU Guix]]
+
+#+begin_src emacs-lisp
+(mapcar (lambda (x) (* x x)) (number-sequence 1 10))
+#+end_src
+
+#+RESULTS:
+| 1 | 4 | 9 | 16 | 25 | 36 | 49 | 64 | 81 | 100 |
+
+- [[https://ryanstutorials.net/linuxtutorial/][Linux Tutorial]]
+- [[https://ryanstutorials.net/regular-expressions-tutorial/][Regex Tutorial]]
+- [[https://ryanstutorials.net/bash-scripting-tutorial/][Bash Tutorial]]
+
+* Programming
+** Python
+- [[https://jakevdp.github.io/PythonDataScienceHandbook/][Python Data Science Handbook]]
+- [[https://ipython-books.github.io/][IPython Cookbook]]
+- [[https://docs.python-guide.org/][Hitchhiker's Guide to Python]]
+- [[http://book.pythontips.com/en/latest/ternary_operators.html][Intermediate Python]]
+- [[https://towardsdatascience.com/how-i-learned-to-love-parallelized-applies-with-python-pandas-dask-and-numba-f06b0b367138][Article on numba and dask]]
+- [[pdfview:/home/aadco/Desktop/functional-programming-python.pdf::28][Functional Programming with Python]]
+- [[https://docs.python-guide.org/writing/structure/][python architecture]]
+- [[https://www.datacamp.com/community/tutorials/exception-handling-python][Errors]]
+- [[https://www.toptal.com/python/python-design-patterns][Python Design Patterns]]
+
+*** Exercises
+Write a function:
+
+    def solution(A)
+
+that, given an array A of N integers, returns the smallest positive integer
+(greater than 0) that does not occur in A.
+
+For example, given A = [1, 3, 6, 4, 1, 2], the function should return 5.
+
+Given A = [1, 2, 3], the function should return 4.
+
+Given A = [−1, −3], the function should return 1.
+
+Write an efficient algorithm for the following assumptions:
+
+N is an integer within the range [1..100,000]; each element of array A is an
+integer within the range [−1,000,000..1,000,000].
+
+#+begin_src python :results output
+  def solution(A):
+      n = 1
+      for elem in set(sorted(elem for elem in A if elem>0)):
+          if elem == n:
+              n+=1
+          else:
+              break
+      return n
+
+  print(solution([1, 3, 6, 4, 1, 2,10]))
+  print(solution([1, 2, 3]))
+  print(solution([-1, -3]))
+  print(solution(list(range(10000000))))
+#+end_src
+
+#+RESULTS:
+: 5
+: 4
+: 1
+: 10000000
+
+** Haskell
+[[https://stackoverflow.com/questions/1012573/getting-started-with-haskell][resources]]
+[[https://youtu.be/02_H3LjqMr8][Tutorial]]
+[[http://learnyouahaskell.com/chapters][Learn You a Haskell for Great Good]]
+[[https://en.wikibooks.org/wiki/Haskell/Category_theory][Haskell and Category Theory]]
+
+#+begin_src haskell
+  module Main (main) where
+
+  main :: IO ()
+  main = putStrLn "Hello, World!"
+#+end_src
+
+#+RESULTS:
+: Prelude> Hello, World!
+
+#+begin_src haskell
+  (reverse [10,20 ..30])
+#+end_src
+
+*** [[http://learnyouahaskell.com/chapters][Learn You a Haskell for Great Good]]
+**** DONE Intro
+DEADLINE: <2019-05-23 Thu>
+
+- State "DONE"       from "TODO"       [2019-05-23 Thu 09:00]
+- State "TODO"       from              [2019-05-23 Thu 08:53]
+
+:l file.hs
+:r run the script
+
+**** DONE Starting Out
+DEADLINE: <2019-05-24 Fri>
+
+- State "DONE"       from "TODO"       [2019-05-23 Thu 11:49]
+- State "TODO"       from              [2019-05-23 Thu 08:53]
+
+*Remark:*
+#+begin_src haskell
+  a = "hey "
+  b = "you"
+  a:b
+#+end_src
+
+In Haskell, chars are declared with '' and strings with ""!
+
+The above outputs an error since a is not a character.
+
+#+begin_src haskell
+  a = "hey "
+  b = "you"
+  a++b
+#+end_src
+
+#+RESULTS:
+: hey you
+
+#+begin_src haskell
+a !! 1
+#+end_src
+
+#+RESULTS:
+: e
+
+*Remark:*
+#+begin_src haskell
+l1 = [[1,2], [3,4]]
+l2 = [1,2,3,4]
+[0,0]:l1
+[0,0]:l2
+#+end_src
+
+Notice that the first is valid whereas the second isn't. The : prepends an
+element to a list.
+
+- head
+- tail
+
+- last
+- init
+
+- length
+- null
+- take
+- drop
+- reverse
+- maximum
+- minimum
+- sum, product
+
+#+begin_src haskell
+take (length "hello " * 5) (cycle "Hello ")
+#+end_src
+
+#+RESULTS:
+: Hello Hello Hello Hello Hello
+
+Awesome!
+
+#+begin_src haskell :results list
+take 24 [13,26..]
+#+end_src
+
+#+RESULTS:
+- 13
+- 26
+- 39
+- 52
+- 65
+- 78
+- 91
+- 104
+- 117
+- 130
+- 143
+- 156
+- 169
+- 182
+- 195
+- 208
+- 221
+- 234
+- 247
+- 260
+- 273
+- 286
+- 299
+- 312
+
+#+begin_src haskell
+  rightTriangles' = [(a,b,c) | c <- [1..10], b <- [1..c], a <- [1..b], a^2 + b^2 == c^2, a+b+c == 24]
+  rightTriangles'
+#+end_src
+
+#+RESULTS:
+| 6 | 8 | 10 |
+
+**** DONE Types and Typeclasses
+DEADLINE: <2019-05-31 Fri>
+
+- State "DONE"       from "TODO"       [2019-05-24 Fri 09:57]
+- State "TODO"       from              [2019-05-23 Thu 08:53]
+
+types
+#+begin_src haskell :results raw
+  :t True
+  :t [1]
+  :t "hey"
+#+end_src
+
+#+RESULTS:
+"hey" :: [Char]
+
+#+begin_src haskell :results raw
+  doubleMe x = x**2
+  :t doubleMe
+#+end_src
+
+#+RESULTS:
+doubleMe :: Floating a => a -> a
+
+- Int
+- Integer
+- Float
+- Double
+- Char
+- [Char] == String
+- Bool
+
+#+begin_src haskell
+minBound :: Int
+#+end_src
+
+#+RESULTS:
+: -9.223372036854776e+18
+
+**** TODO Syntax in Functions
+- State "TODO"       from              [2019-05-23 Thu 08:53]
+
+**** TODO Recursion
+- State "TODO"       from              [2019-05-23 Thu 08:53]
+
+**** TODO Higher Order Functions
+- State "TODO"       from              [2019-05-23 Thu 08:54]
+
+*** CodeWars
+#+NAME: Multiply
+#+begin_src haskell
+  multiply a b = a * b
+  multiply 2 200
+#+end_src
+
+#+RESULTS: Multiply
+: 400
+
+#+begin_src haskell
+  read "2" ** 2
+#+end_src
+
+#+RESULTS:
+: 4.0
+
+#+begin_src haskell
+myFunc x = show (round (fromInteger (read [x]) ** 2))
+concat (map myFunc "2226")
+#+end_src
+
+#+RESULTS:
+: 44436
+
+#+begin_src haskell
+  :{
+
+  digs :: Integral x => x -> [x]
+  digs 0 = []
+  digs x = digs (x `div` 10) ++ [(x `mod` 10)^2]
+
+  joiner :: [Int] -> Integer
+  joiner = read . concatMap show
+  :}
+
+  joiner (digs 10)
+#+end_src
+
+#+RESULTS:
+: Prelude| Prelude| Prelude| Prelude| Prelude| Prelude| Prelude| Prelude| Prelude> Prelude> 10
+
+#+begin_src haskell
+  digs :: Integral x => x -> [x]
+  digs 0 = []
+  digs x = digs (x `div` 10) ++ [(x `mod` 10)^2]
+
+  joiner :: [Int] -> Integer
+  joiner = read . concatMap show
+#+end_src
+
+#+RESULTS:
+: <interactive>:20:1-26: error:
+:     • No instance for (Show ([Int] -> Integer))
+:         arising from a use of ‘print’
+:         (maybe you haven't applied a function to enough arguments?)
+:     • In a stmt of an interactive GHCi command: print it
+
+** Lisp
+
+** TODO Go
+- State "TODO"       from              [2019-07-22 Mon 15:03]
+
+[[https://www.youtube.com/watch?v=CF9S4QZuV30][tutorial]]
+
+square every digit
+
+#+begin_src go
+package main
+
+import "fmt"
+import "strconv"
+import "strings"
+
+
+func main() {
+        var digit int = 678967899
+	// var digit int = 6789678999
+	fmt.Println(squareEveryDigit(digit))
+	fmt.Println(squareEveryDigit2(digit))
+
+}
+
+func squareEveryDigit(num int) int{
+	return slice_to_int(aux(num))}
+
+func slice_to_int (list_str []string) int {
+	integer, _ := strconv.Atoi(strings.Join(list_str[:], ""))
+	return integer}
+
+func aux (digit int) []string {
+	l := []string{}
+	out := strconv.Itoa((digit % 10) * (digit % 10))
+	if digit / 10 == 0 {
+		return append(l, out)}
+	return append(aux(digit/10), out)
+}
+
+
+func squareEveryDigit2(num int) int {
+	var digits string = strconv.Itoa(num)
+	slice_digits := []string{}
+	for _, char := range digits {
+		n_int, _ := strconv.Atoi(string(char))
+		pow_n_str := strconv.Itoa(n_int * n_int)
+		slice_digits = append(slice_digits, pow_n_str)
+	}
+	out, _ := strconv.Atoi(strings.Join(slice_digits[:], ""))
+	return out
+
+}
+#+end_src
+
+#+RESULTS:
+: 364964813649648181
+: 364964813649648181
+
+** Read
+https://research.swtch.com/vgo-eng
+https://www.ams.org/profession/career-info/math-work/math-work
+
+* How to contribute?
+[[https://opensource.guide/how-to-contribute/][How to Contribute to Open Source]]
+
+* Yandex Exercises
+[[https://efiminem.github.io/supershad/][solutions]]
+
+* Russian
+** Resources
+- [[https://russian.stackexchange.com/questions/833/resources-for-learning-russian][SE list]]
+- [[https://www.duolingo.com/][Duolingo]]
+- [[http://learnrussian.rt.com/lessons/][RT]]
+- [[http://www.parom.tv/ru][ParomTV]]
+- [[https://en.openrussian.org/][Open Russian]]
+- [[http://www.etovidel.net/sights/city//id/][About Petersburg]]
+
+** Луна
+*** Сила стона
+
+Я знаю не за слов что и солнце
+если же смурат сильно то потекло слёзы
+и что мы не в стела слеза
+не звкрывай глаза
+
+бесконечная с твоя сут
+я давит лавит
+для тебя не правильно тут
+и ты для них не улавила
+все думали
+скорей
+
+
+и только сила стона
+и только доха сила
+
+закат
+
+ты уже не боишься за сраха
+
+бойться
+
+смотрю злаза твои мечты
+
+меня
+
+твоё дыхание парит
+и дело дышат так красиво
+
+* Data World
+[[https://www.coursera.org/specializations/big-data-engineering][Big Data Coursera]]
+- spark
+- bokeh
+- plotly
+- gensim
+- nltk
+- spaCy
+- neo4j
+- databricks
+- seaborn
+- AWS (amazon web services)
+- REST api
+- hive
+- parquet
+- keras
+- tensorflow
+- mesos
+- impala
+- marathon

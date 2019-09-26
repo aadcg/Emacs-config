@@ -1,0 +1,2 @@
+;;; -*- no-byte-compile: t -*-
+(define-package "org-tree-slide" "20190729.1550" "A presentation tool for org-mode" 'nil :commit "036a36eec1cf712d3db155572aed325daa372eb5" :keywords '("convenience" "org-mode" "presentation" "narrowing") :authors '(("Takaaki ISHIKAWA <takaxp at ieee dot org>")) :maintainer '("Takaaki ISHIKAWA <takaxp at ieee dot org>") :url "https://github.com/takaxp/org-tree-slide")
