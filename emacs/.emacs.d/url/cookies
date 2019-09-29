@@ -4,16 +4,28 @@
 (setq url-cookie-storage
  '(("linuxize.com"
   [url-cookie "ezCMPCCS" "false" "Thu, 17 Sep 2020 13:25:35 GMT" "/" "linuxize.com" nil])
- ("github.com"
-  [url-cookie "has_recent_activity" "1" "Mon, 23 Sep 2019 16:48:47 -0000" "/" "github.com" nil])
+ ("www.vivobarefoot.com"
+  [url-cookie ".dv.bunl" "us" "Sun, 26-Jan-2020 17:32:23 GMT" "/" "www.vivobarefoot.com" nil]
+  [url-cookie "_de" "DE.Q_95nyL2t0KP47qfROyV6Q." "Tue, 19-Jan-2038 00:00:00 GMT" "/" "www.vivobarefoot.com" nil])
+ (".vivobarefoot.com"
+  [url-cookie "__cfduid" "dd5e7f88f414f6461e891903d1697e5261569688343" "Sun, 27-Sep-20 16:32:23 GMT" "/" ".vivobarefoot.com" nil])
  (".stackexchange.com"
   [url-cookie "prov" "ab7ce51b-7f87-de35-241a-d5a7460ba17a" "Fri, 01-Jan-2055 00:00:00 GMT" "/" ".stackexchange.com" nil])
+ (".fidelodesigns.com"
+  [url-cookie "__cfduid" "da2a88343806f1f1a192322fd73dcf1a71569758907" "Mon, 28-Sep-20 12:08:27 GMT" "/" ".fidelodesigns.com" nil])
+ ("fidelodesigns.com"
+  [url-cookie "_shopify_y" "ad44e67b-621a-4ae3-a2b2-e98ee851103d" "Tue, 28 Sep 2021 23:46:51 -0000" "/" "fidelodesigns.com" nil]
+  [url-cookie "_orig_referrer" "" "Sun, 13-Oct-19 12:08:27 GMT" "/" "fidelodesigns.com" nil]
+  [url-cookie "_landing_page" "%2Fproducts%2Ffidelo-carbon-fiber-minimalist-slim-wallets-for-men-front-pocket-rfid-blocking-credit-card-holder-mens-wallet-with-4-money-clip-bands" "Sun, 13-Oct-19 12:08:27 GMT" "/" "fidelodesigns.com" nil]
+  [url-cookie "cart_sig" "" "Sun, 13 Oct 2019 12:31:45 -0000" "/" "fidelodesigns.com" nil])
  (".github.com"
   [url-cookie "_octo" "GH1.1.882613460.1568663109" "Thu, 16 Sep 2021 19:45:09 -0000" "/" ".github.com" nil]))
 )
 (setq url-cookie-secure-storage
  '((".linuxize.com"
   [url-cookie "__cfduid" "d816a0d6616dfe5b274d3411515f0141f1568726734" "Wed, 16-Sep-20 13:25:34 GMT" "/" ".linuxize.com" t])
+ ("fidelodesigns.com"
+  [url-cookie "secure_customer_sig" "" "Thu, 29 Sep 2039 12:31:45 -0000" "/" "fidelodesigns.com" t])
  (".github.com"
   [url-cookie "logged_in" "no" "Fri, 16 Sep 2039 19:45:09 -0000" "/" ".github.com" t]))
 )
