@@ -1,1 +1,0 @@
-("~/dotfiles/" "~/.emacs.d/" "~/Repos/docker-airflow/" "~/docker_test/")
