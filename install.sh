@@ -1,0 +1,2 @@
+stow emacs
+# stow termux
