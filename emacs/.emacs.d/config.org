@@ -14,12 +14,12 @@
   #+begin_src emacs-lisp
     (setq user-full-name "André Alexandre Gomes"
           user-mail-address "andremegafone@gmail.com"
-          calendar-latitude 41.16
-          calendar-longitude -8.63
-          calendar-location-name "Porto, PT"
-          ;; calendar-latitude 59.94
-          ;; calendar-longitude 30.31
-          ;; calendar-location-name "Санкт-Петербург"
+          ;; calendar-latitude 41.16
+          ;; calendar-longitude -8.63
+          ;; calendar-location-name "Porto, PT"
+          calendar-latitude 59.94
+          calendar-longitude 30.31
+          calendar-location-name "Санкт-Петербург, Россия"
           )
   #+end_src
 
@@ -40,6 +40,11 @@
     (global-set-key (kbd "C-c r") 'config-reload)
   #+end_src
 
+- *Default*
+  #+begin_src emacs-lisp
+    (setq vc-follow-symlinks t)
+  #+end_src
+
 * My tweaks
 Tweaking vanilla Emacs to my taste.
 
@@ -53,7 +58,7 @@ Tweaking vanilla Emacs to my taste.
 - visual-line-mode in Termux
 
 #+begin_src emacs-lisp
-  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+  (add-hook 'before-save-hook 'delete-trailing)
   (global-subword-mode t)
   (delete-selection-mode t)
   (setq require-final-newline t)
@@ -90,6 +95,9 @@ Tweaking vanilla Emacs to my taste.
 Backups and auto-save files at ~/.emacs/backups
 
 #+begin_src emacs-lisp
+  (unless (file-exists-p (concat user-emacs-directory "backups/"))
+    (mkdir concat user-emacs-directory "backups/"))
+
   (setq temporary-file-directory (concat user-emacs-directory "backups/")
         backup-directory-alist `((".*" . ,temporary-file-directory))
         auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
@@ -586,6 +594,11 @@ Ivy in Eshell
     :defer t)
 #+end_src
 
+*** Groovy
+#+begin_src emacs-lisp
+  (use-package groovy-mode)
+#+end_src
+
 *** Dockerfiles
 #+begin_src emacs-lisp
   (use-package dockerfile-mode)
@@ -639,7 +652,7 @@ in python source code blocks.
 
   (use-package docker-tramp)
 
-  (use-package counsel-docker)
+  ;; (use-package counsel-docker)
 #+end_src
 
 * Miscellaneous
@@ -865,6 +878,11 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 #+end_src
 
 * COMMENT
+** dot files
+- how to have org latest version installed?
+- need to create backups folder
+- pdf tools gnu install emacs-pdf-tools 
+
 ** TODO Create repo with portuguese holidays
 [[https://blog.aaronbieber.com/2015/08/04/authoring-emacs-packages.html][how to]]
 
@@ -873,8 +891,16 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 ** TODO mu4e
 [[https://www.emacswiki.org/emacs/GnusGmail][here]]
 [[https://www.reddit.com/r/emacs/comments/bfsck6/mu4e_for_dummies/][another tutorial]]
+[[https://vxlabs.com/2014/06/06/configuring-emacs-mu4e-with-nullmailer-offlineimap-and-multiple-identities/][here]]
 
 ** Syncthing vs Nextcloud vs cron?
 
-** Emacs inside a docker container
+** Emacs inside a docker container?
 [[https://medium.com/@sserialdev/emacs-in-the-container-age-5c0c222cfee][link]]
+
+** Eshell docs
+[[https://github.com/howardabrams/dot-files/blob/master/emacs-eshell.org][link]]
+[[https://www.masteringemacs.org/article/complete-guide-mastering-eshell][link2]]
+
+** Italics in org-mode
+[[https://superuser.com/questions/439159/underline-instead-of-italic-in-org-mode][possible fix]]
