@@ -58,7 +58,7 @@ Tweaking vanilla Emacs to my taste.
 - visual-line-mode in Termux
 
 #+begin_src emacs-lisp
-  (add-hook 'before-save-hook 'delete-trailing)
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
   (global-subword-mode t)
   (delete-selection-mode t)
   (setq require-final-newline t)
