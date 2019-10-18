@@ -655,6 +655,11 @@ in python source code blocks.
   ;; (use-package counsel-docker)
 #+end_src
 
+*** S3
+#+begin_src emacs-lisp
+  (use-package s3ed)
+#+end_src
+
 * Miscellaneous
 ** Checking
 *** Flycheck
