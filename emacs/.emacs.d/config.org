@@ -878,10 +878,35 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 #+end_src
 
 * COMMENT
-** dot files
+** dotfiles
 - how to have org latest version installed?
 - need to create backups folder
-- pdf tools gnu install emacs-pdf-tools 
+- pdf tools gnu install emacs-pdf-tools
+
+Tasks:
+
+- [ ] virtual machine (personal laptop or work laptop?)
+- [ ] firefox dotfiles?
+- [X] add termux dotfiles
+- [X] change emacs repo to dotfiles and stow
+
+Roadmap:
+- [ ] GNU Guix (GNOME)
+- [ ] Emacs config
+- [ ] Firefox/next?
+- [ ] Nextcloud/owncloud
+- [ ] Telegram
+- [ ] +Paromtv+
+- [ ] Termux dotfiles
+- [ ] packages (guix package --list-installed)
+
+python
+haskell
+go
+docker
+
+gsettings set org.gnome.desktop.background picture-uri
+file:///home/aadcg/dotfiles/wallpaper.png
 
 ** TODO Create repo with portuguese holidays
 [[https://blog.aaronbieber.com/2015/08/04/authoring-emacs-packages.html][how to]]

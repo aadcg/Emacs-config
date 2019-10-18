@@ -13,9 +13,9 @@
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 
-(use-package auto-package-update
-  :config
-  (auto-package-update-maybe))
+;; (use-package auto-package-update
+;;   :config
+;;   (auto-package-update-maybe))
 
 (setq use-package-compute-statistics t)
 
