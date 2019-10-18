@@ -889,6 +889,7 @@ Tasks:
 - [ ] firefox dotfiles?
 - [X] add termux dotfiles
 - [X] change emacs repo to dotfiles and stow
+- [ ] git config file
 
 Roadmap:
 - [ ] GNU Guix (GNOME)
