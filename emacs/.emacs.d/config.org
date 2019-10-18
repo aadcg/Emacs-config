@@ -890,6 +890,7 @@ Tasks:
 - [X] add termux dotfiles
 - [X] change emacs repo to dotfiles and stow
 - [ ] git config file
+- [ ] how to handle ssh keys?
 
 Roadmap:
 - [ ] GNU Guix (GNOME)
