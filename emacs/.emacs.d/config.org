@@ -16,7 +16,7 @@
           user-mail-address "andremegafone@gmail.com"
           ;; calendar-latitude 41.16
           ;; calendar-longitude -8.63
-          ;; calendar-location-name "Porto, PT"
+          ;; calendar-location-name "Porto, Portugal"
           calendar-latitude 59.94
           calendar-longitude 30.31
           calendar-location-name "Санкт-Петербург, Россия"
@@ -914,6 +914,8 @@ docker
 
 gsettings set org.gnome.desktop.background picture-uri
 file:///home/aadcg/dotfiles/wallpaper.png
+
+[[https://ambrevar.xyz/guix-advance/][more on guix]]
 
 ** TODO Create repo with portuguese holidays
 [[https://blog.aaronbieber.com/2015/08/04/authoring-emacs-packages.html][how to]]
