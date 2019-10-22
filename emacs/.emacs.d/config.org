@@ -507,6 +507,11 @@ Sets up:
               (turn-on-haskell-indent)))
 #+end_src
 
+*** Scala
+#+begin_src emacs-lisp
+  (use-package scala-mode)
+#+end_src
+
 *** Golang
 Requires gocode for the autocomplete to work.
 
