@@ -3,7 +3,7 @@
 #+STARTUP: content
 #+PROPERTY: header-args :results silent
 
-* Metaa
+* Meta
 - *Versions*
   | System    | Emacs |   Org |
   |-----------+-------+-------|
