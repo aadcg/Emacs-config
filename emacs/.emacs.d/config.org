@@ -175,6 +175,11 @@ Backups and auto-save files at ~/.emacs/backups
     (fringe-mode '(5 . 0)))
 #+end_src
 
+** Font
+#+begin_src emacs-lisp
+  (set-frame-font "Fira Code 13" nil t)
+#+end_src
+
 ** Regional
 *** Input Method
 Всё ясно, да?
