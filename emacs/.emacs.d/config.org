@@ -510,6 +510,10 @@ Sets up:
 *** Scala
 #+begin_src emacs-lisp
   (use-package scala-mode)
+
+  (use-package ensime)
+
+  (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 #+end_src
 
 *** Golang
