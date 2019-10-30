@@ -7,8 +7,8 @@
 - *Versions*
   | System    | Emacs |   Org |
   |-----------+-------+-------|
-  | gnu/linux |  26.1 | 9.2.6 |
-  #+TBLFM: @>$3='(org-version)::@>$2='(substring (emacs-version) 10 -86)::@>$1='(print system-type)
+  | gnu/linux |  26.2 | 9.2.6 |
+  #+TBLFM: @>$3='(org-version)::@>$2='(substring (emacs-version) 10 14)::@>$1='(print system-type)
 
 - *Me*
   #+begin_src emacs-lisp
@@ -193,7 +193,9 @@ Backups and auto-save files at ~/.emacs/backups
   (setq calendar-week-start-day 1)
 #+end_src
 
-*** Clock
+*** TODO Clock
+disable if I'm using stumpwm!
+
 #+begin_src emacs-lisp
   (setq display-time-24hr-format t
         display-time-format "%k:%M %a %d %b"
@@ -899,12 +901,8 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 * COMMENT
 ** dotfiles
 - how to have org latest version installed?
-- need to create backups folder
-- pdf tools gnu install emacs-pdf-tools
 
 Tasks:
-
-- [ ] virtual machine (personal laptop or work laptop?)
 - [ ] firefox dotfiles?
 - [X] add termux dotfiles
 - [X] change emacs repo to dotfiles and stow
@@ -912,14 +910,14 @@ Tasks:
 - [ ] how to handle ssh keys?
 
 Roadmap:
-- [ ] GNU Guix (GNOME)
+- [ ] GNU Guix (GNOME/stumpwm)
 - [ ] Emacs config
 - [ ] Firefox/next?
 - [ ] Nextcloud/owncloud
 - [ ] Telegram
 - [ ] +Paromtv+
 - [ ] Termux dotfiles
-- [ ] packages (guix package --list-installed)
+- [ ] packages (guix package --list-installed) and nix
 
 python
 haskell
