@@ -899,37 +899,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 #+end_src
 
 * COMMENT
-** dotfiles
-- how to have org latest version installed?
-
-Tasks:
-- [ ] firefox dotfiles?
-- [X] add termux dotfiles
-- [X] change emacs repo to dotfiles and stow
-- [ ] git config file
-- [ ] how to handle ssh keys?
-
-Roadmap:
-- [ ] GNU Guix (GNOME/stumpwm)
-- [ ] Emacs config
-- [ ] Firefox/next?
-- [ ] Nextcloud/owncloud
-- [ ] Telegram
-- [ ] +Paromtv+
-- [ ] Termux dotfiles
-- [ ] packages (guix package --list-installed) and nix
-
-python
-haskell
-go
-docker
-
-gsettings set org.gnome.desktop.background picture-uri
-file:///home/aadcg/dotfiles/wallpaper.png
-
-[[https://ambrevar.xyz/guix-advance/][more on guix]]
-
-** TODO Create repo with portuguese holidays
+** TODO Create package with portuguese holidays
 [[https://blog.aaronbieber.com/2015/08/04/authoring-emacs-packages.html][how to]]
 
 ** TODO add personal holidays in a private file
