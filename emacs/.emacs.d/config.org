@@ -485,7 +485,8 @@ Sets up:
           python-shell-interpreter-args "-i --simple-prompt"
           python-shell-prompt-detect-failure-warning nil
           pyvenv-activate "~/anaconda3"
-          pyvenv-mode-line-indicator nil)
+          pyvenv-mode-line-indicator nil
+          elpy-rpc-virtualenv-path 'current)
 
     :bind
     ("C-c p" . elpy-autopep8-fix-code)
