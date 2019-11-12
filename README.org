@@ -1,7 +1,15 @@
+#+TITLE: dotfiles readme
 #+STARTUP: latexpreview
 #+OPTIONS: toc:nil num:nil email:t
 
-[[https://travis-ci.com/aadcg/.emacs.d][https://travis-ci.com/aadcg/.emacs.d.svg?branch=master]]
+# [[https://travis-ci.com/aadcg/.emacs.d][https://travis-ci.com/aadcg/.emacs.d.svg?branch=master]]
+
+* Motivation
+Free software grants us the 4 freedoms to run, study, redistribute and improve
+programs. As a result, these programs are usually so extensible and flexible
+that the configuration can be saved as text files. The user wants to keep all
+these files so that his environment, i.e. the behaviour of his operating system,
+is easily reproducible. That's what the scope of this project.
 
 * How did I get here?
 I assume you're motivated to use Emacs. If you're not, [[https://www.youtube.com/watch?v=EsAkPl3On3E][convince yourself]].

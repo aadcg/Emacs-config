@@ -1,0 +1,85 @@
+#+TITLE: dotfiles planning
+
+- State "TODO"       from              [2019-07-22 Mon]
+
+* TODO
+Tasks:
+- [ ] ssh keys?
+
+Roadmap:
+- [ ] GNU Guix (GNOME/stumpwm)
+- [ ] Emacs config
+- [ ] Firefox/next?
+- [ ] Nextcloud/owncloud
+- [ ] Telegram (try telega or get it from nix or brett)
+- [ ] Termux dotfiles
+- [ ] packages (guix package --list-installed) and nix (nix-env -q)
+   + git
+   + stow
+   + emacs
+   + texlivex
+   + tor
+   + telegram
+   + docker
+   + dvipng
+
+ssh keys?
+
+gsettings set org.gnome.desktop.background picture-uri
+file:///home/aadcg/dotfiles/wallpaper.png
+
+[[https://ambrevar.xyz/guix-advance/][more on guix]]
+
+owncloudcmd -s -u up201106482@fc.up.pt -p pw $HOME/NextCloud/
+https://cloud.owncube.com/remote.php/webdav/
+[[https://github.com/owncloud/client/issues/2002#issuecomment-98747743][cron script for owncloud]]
+
+* OS
+There's only one operating system worth using - GNU/Linux. It comes in many
+shapes and flavours, people call them distributions (distros). [[https://www.gnu.org/distros/free-distros.en.html][Only a small
+minority is endorsed by the FSF]]. Beginners should consider using PureOS. On the
+non-free side, consider Ubuntu. More advanced users might be interested in
+GuixSD (or NixOS, the non-free counterpart). Guix and Nix can also be used a
+package managers.
+
+GuixSD supports a declarative system configuration, which suits the aim of this
+project.
+
+Packages from Nix might be used if the package isn't available in Guix. Users
+should consider define their our packages when they're missing.
+
+* Window Managers and Desktop Environments
+After some considerations regarding package managers of distros, one of the things
+that distinctively changes the user's productivity is the way he manages
+windows.
+
+There are full-blown desktop environments like GNOME that take lots of
+RAM. Although they're beginner friendly, tilling window managers (think how
+Emacs handles buffers) are more interesting options.
+
+I shall be using StumpWM since I can configure it in Common Lisp.
+
+[[https://github.com/sdilts/mahogany][This]] looks cool.
+
+* Browser
+Eww as a text-based browser.
+Icecat for the rest. (Firefox based)
+
+Extensions:
+- dark reader
+- saka key
+
+* Programming languages
+- Python
+- Haskell
+- Go
+- \LaTeX
+
+* Appearance
+- transparent Emacs and desktop image
+- top bar with watch
+
+* Keyboard
+- Caps lock as left CTRL
+- left CTRL as compose key
+- US and RU keyboards
