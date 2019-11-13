@@ -2,16 +2,13 @@ emacs/.emacs.d/config.el
 emacs/.emacs.d/recentf
 emacs/.emacs.d/places
 emacs/.emacs.d/tramp
-emacs/.emacs.d/bookmarks
-emacs/.emacs.d/.org-id-locations
 emacs/.emacs.d/.last-package-update-day
 emacs/.emacs.d/*.dat
 emacs/.emacs.d/*.eld
 emacs/.emacs.d/auto-save-list
 emacs/.emacs.d/backups
 emacs/.emacs.d/elpa
-emacs/.emacs.d/eshell/*
-emacs/.emacs.d/!eshell/alias
+emacs/.emacs.d/eshell/
 emacs/.emacs.d/games
 emacs/.emacs.d/image-dired
 emacs/.emacs.d/ltximg
@@ -20,3 +17,4 @@ emacs/.emacs.d/snippets
 emacs/.emacs.d/transient
 emacs/.emacs.d/url
 emacs/.emacs.d/smex-items
+stumpwm/.stumpwm.d/stumpwm-contrib/*
