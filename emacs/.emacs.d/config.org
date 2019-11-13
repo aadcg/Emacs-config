@@ -892,8 +892,8 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 
 * Startup
 #+begin_src emacs-lisp
-  (when window-system
-    (toggle-frame-fullscreen))
+  ;; (when window-system
+  ;;   (toggle-frame-fullscreen))
 
   (org-agenda-list 1)
   (delete-other-windows)
