@@ -202,7 +202,7 @@ disable if I'm using stumpwm!
         display-time-default-load-average nil
         display-time-world-list '(("Europe/Moscow" "Москва")
                                   ("Europe/Lisbon" "Lisboa")))
-  (display-time-mode 1)
+  ;; (display-time-mode 1)
 #+end_src
 
 *** Holidays
