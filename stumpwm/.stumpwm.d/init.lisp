@@ -10,13 +10,14 @@
 (load-module "cpu")
 (load-module "mem")
 
-(setf *mode-line-pad-x* 8
-      *mode-line-pad-y* 1
+(setf *mode-line-position* :top
       *mode-line-timeout* 60
+      ;; *mode-line-pad-x* 8
+      ;; *mode-line-pad-y* 1
       *time-modeline-string* "%a %d %b %k:%M"
-      *window-border-style* :thin
+      ;; *window-border-style* :thin
+      *window-border-style* 1
       *frame-number-map* "1234567890"
-      *mode-line-position* :top
       *window-format* "%m%n%s%c"
       *cpu-modeline-fmt* "%C"
       *delim* " ^2::^7 "
