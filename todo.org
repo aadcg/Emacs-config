@@ -3,36 +3,10 @@
 - State "TODO"       from              [2019-07-22 Mon]
 
 * TODO
-Tasks:
-- [ ] ssh keys?
-
-Roadmap:
-- [ ] GNU Guix (GNOME/stumpwm)
-- [ ] Emacs config
-- [ ] Firefox/next?
-- [ ] Nextcloud/owncloud
-- [ ] Telegram (try telega or get it from nix or brett)
-- [ ] Termux dotfiles
-- [ ] packages (guix package --list-installed) and nix (nix-env -q)
-   + git
-   + stow
-   + emacs
-   + texlivex
-   + tor
-   + telegram
-   + docker
-   + dvipng
-
-ssh keys?
-
-gsettings set org.gnome.desktop.background picture-uri
-file:///home/aadcg/dotfiles/wallpaper.png
+guix package --list-installed
+nix-env -q
 
 [[https://ambrevar.xyz/guix-advance/][more on guix]]
-
-owncloudcmd -s -u up201106482@fc.up.pt -p pw $HOME/NextCloud/
-https://cloud.owncube.com/remote.php/webdav/
-[[https://github.com/owncloud/client/issues/2002#issuecomment-98747743][cron script for owncloud]]
 
 * OS
 There's only one operating system worth using - GNU/Linux. It comes in many
@@ -69,6 +43,8 @@ Extensions:
 - dark reader
 - saka key
 
+The next browser also looks interesting.
+
 * Programming languages
 - Python
 - Haskell
@@ -79,7 +55,40 @@ Extensions:
 - transparent Emacs and desktop image
 - top bar with watch
 
+gsettings set org.gnome.desktop.background picture-path
+
 * Keyboard
 - Caps lock as left CTRL
 - left CTRL as compose key
 - US and RU keyboards
+
+* Sync org files
+owncloudcmd -s -u user -p pw $HOME/NextCloud/
+https://cloud.owncube.com/remote.php/webdav/
+[[https://github.com/owncloud/client/issues/2002#issuecomment-98747743][cron script for owncloud]]
+
+* Telegram
+telega for emacs?
+
+* ssh keys?
+
+* Email
+[[https://www.fsf.org/resources/webmail-systems][fsf advice]]
+
+[[https://www.emacswiki.org/emacs/GnusGmail][gnus tutorial]]
+
+i68scb+18z6fep0c@sharklasers.com
+aadcg@sharklasers.com
+
+setup posteo email
+
+webmail fcup?
+
+aagomes@protonmail.com
+aagomes@pm.com
+
+* Emacs keybindings outside Emacs
+~/.gtkrc
+#+begin_comment
+gtk-key-theme-name = "Emacs"
+#+end_comment
