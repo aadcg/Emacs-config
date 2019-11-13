@@ -3,7 +3,7 @@
 (setq *startup-message* nil)
 (setq *startup-mode-line* t)
 
-(set-module-dir "~/stumpwm/contrib")
+(set-module-dir "~/.stumpwm.d/stumpwm-contrib")
 
 ;; Modeline Battery
 (load-module "battery-portable")
