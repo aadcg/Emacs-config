@@ -12,7 +12,8 @@
 
 (setf *mode-line-pad-x* 8
       *mode-line-pad-y* 1
-      *mode-line-timeout* 2
+      *mode-line-timeout* 60
+      *time-modeline-string* "%a %d %b %k:%M"
       *window-border-style* :thin
       *frame-number-map* "1234567890"
       *mode-line-position* :top
@@ -32,7 +33,7 @@
                                  ;; Date
                                  "%d"
                                  )
-      *time-modeline-string* "MSK %a %b %e %k:%M")
+      )
 
 ;; launch Web browser
 (defcommand firefox () ()
