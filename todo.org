@@ -33,9 +33,12 @@ Emacs handles buffers) are more interesting options.
 
 I shall be using StumpWM since I can configure it in Common Lisp.
 
-Requires stumpwm contrib [[https://github.com/stumpwm/stumpwm-contrib.git][repo]].
+Requires stumpwm contrib [[https://github.com/stumpwm/stumpwm-contrib.git][repo]]. Clone inside .stumpwm.d.
 
 [[https://github.com/sdilts/mahogany][This]] looks cool.
+
+- C-t breaks C-x C-t
+root key on super key?
 
 * Browser
 Eww as a text-based browser.
