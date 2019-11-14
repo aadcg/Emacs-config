@@ -424,10 +424,8 @@ Sets up:
     "Presenting mode"
     (interactive)
     (transparency 100)
-    (display-time-mode 0)
     (column-number-mode 0)
     (line-number-mode 0)
-    (display-battery-mode 0)
     (global-diff-hl-mode 0)
     (setq global-hl-line-mode nil)
     (default-text-scale-increase)
@@ -438,10 +436,8 @@ Sets up:
     "Non-presenting mode"
     (interactive)
     (transparency 90)
-    (display-time-mode)
     (column-number-mode)
     (line-number-mode)
-    (display-battery-mode)
     (reset-text-size)
     (global-diff-hl-mode)
     (global-hl-line-mode)
@@ -853,10 +849,10 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 #+end_src
 
 #+begin_src emacs-lisp
-  (unless (cl-search "termux" abbreviated-home-dir)
-    (display-battery-mode)
-    (setq battery-mode-line-format " %p%"
-          battery-mode-line-limit 99))
+  (setq battery-mode-line-format " %p%"
+        battery-mode-line-limit 99)
+
+  ;; (display-battery-mode)
 #+end_src
 
 ** Minions
