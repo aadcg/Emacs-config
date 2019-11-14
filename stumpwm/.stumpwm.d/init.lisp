@@ -3,11 +3,15 @@
 (setq *startup-message* nil)
 (setq *startup-mode-line* t)
 
+;; keybindings
+(stumpwm:set-prefix-key (stumpwm:kbd "s"))
+
 ;; Setting up and load extra modules
 (set-module-dir "~/.stumpwm.d/stumpwm-contrib")
 (load-module "battery-portable")
 (load-module "cpu")
 (load-module "mem")
+(load-module "net")
 
 (setf *mode-line-position* :top
       *mode-line-timeout* 10
@@ -30,8 +34,9 @@
                                  "%M" *delim*
                                  ;; Battery
                                  ;; '(:eval (stumpwm:run-shell-command "cat /sys/class/power_supply/BAT0/capacity | tr -d '\n'" t))
-                                 "%B"
-                                 *delim*
+                                 "%B" *delim*
+                                 ;; net
+                                 "%l" *delim*
                                  ;; Date
                                  "%d"
                                  )
