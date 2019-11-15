@@ -16,7 +16,8 @@
       *delim* " ^2::^7 "
       *screen-mode-line-format* (list
                                  ;; Windows
-                                 "%v | "
+                                 ;; "%v | "
+                                 "^7%W ^>^7"
                                  ;; CPU
                                  "%C" *delim*
                                  ;; RAM
@@ -32,19 +33,26 @@
 ;; Keybindings
 (set-prefix-key (kbd "C-i"))
 
-;; launch Web browser
-(defcommand icecat () ()
-  "Start Icecat or switch to it, if it is already running."
+;; Web Browser
+(defcommand gui-browser () ()
+  "Start Icecat (Firefox otherwise) or switch to it, if it is already running."
   (run-or-raise "icecat || firefox" '(:instance "Navigator")))
 
-(define-key *root-map* (kbd "w") "icecat")
+(define-key *root-map* (kbd "w") "gui-browser")
 
-;; launch terminal
+;; Terminal
 (defcommand xterm () ()
   "Start Xterm or switch to it, if it is already running."
   (run-or-raise "xterm" '(:instance "xterm")))
 
 (define-key *root-map* (kbd "c") "xterm")
+
+;; Telegram
+(defcommand telegram () ()
+  "Start Telegram or switch to it, if it is already running."
+  (run-or-raise "telegram-desktop" '(:instance "telegram-desktop")))
+
+(define-key *root-map* (kbd "t") "telegram")
 
 ;; Volume Management
 ;; (progn
