@@ -22,13 +22,13 @@ source /etc/bashrc
 # Adjust the prompt depending on whether we're in 'guix environment'.
 if [ -n "$GUIX_ENVIRONMENT" ]
 then
-    PS1='\u@\h \w [env]\$ '
+    PS1='\u@\h \w [env]\$\n'
 else
-    PS1='\u@\h \w\$ '
+    PS1='\u@\h \w\$\n'
 fi
 
 # alias
-alias tree = find . -type d -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'
+alias tree="find . -type d -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 alias ll = 'ls -Athlb'
 
 # infinite history, ignore duplicates and lines starting with a space
