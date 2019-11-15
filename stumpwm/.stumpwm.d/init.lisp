@@ -3,31 +3,20 @@
 (setq *startup-message* nil)
 (setq *startup-mode-line* t)
 
-;; keybindings
-(stumpwm:set-prefix-key (stumpwm:kbd "s"))
-
-;; Setting up and load extra modules
+;; Modeline
+;; Setting up and loading extra modules
 (set-module-dir "~/.stumpwm.d/stumpwm-contrib")
 (load-module "battery-portable")
 (load-module "cpu")
 (load-module "mem")
-(load-module "net")
 
-(setf *mode-line-position* :top
-      *mode-line-timeout* 10
+(setf *mode-line-timeout* 10
       *time-modeline-string* "%a %d %b %H:%M"
-      ;; *mode-line-pad-x* 8
-      ;; *mode-line-pad-y* 1
-      ;; *window-border-style* :thin
-      ;; *window-border-style* 1
-      ;; *frame-number-map* "1234567890"
-      ;; *window-format* "%m%n%s%c"
       *cpu-modeline-fmt* "%C"
       *delim* " ^2::^7 "
       *screen-mode-line-format* (list
                                  ;; Windows
-                                 ;;"[^B%n^b]"
-                                 "^7%W ^>^7"
+                                 "%v | "
                                  ;; CPU
                                  "%C" *delim*
                                  ;; RAM
@@ -35,27 +24,27 @@
                                  ;; Battery
                                  ;; '(:eval (stumpwm:run-shell-command "cat /sys/class/power_supply/BAT0/capacity | tr -d '\n'" t))
                                  "%B" *delim*
-                                 ;; net
-                                 "%l" *delim*
                                  ;; Date
                                  "%d"
                                  )
       )
 
+;; Keybindings
+(set-prefix-key (kbd "C-i"))
+
 ;; launch Web browser
-(defcommand firefox () ()
-  "Start Firefox or switch to it, if it is already running."
-  (run-or-raise "firefox" '(:class "Firefox")))
-(define-key *root-map* (kbd "B") "firefox")
+(defcommand icecat () ()
+  "Start Icecat or switch to it, if it is already running."
+  (run-or-raise "icecat || firefox" '(:instance "Navigator")))
+
+(define-key *root-map* (kbd "w") "icecat")
 
 ;; launch terminal
-;; (defcommand urxvt () ()
-;;   "Start Urxvt or switch to it, if it is already running."
-;;   (run-or-raise "urxvt" '(:class "Urxvt")))
-;; (define-key *root-map* (kbd "c") "urxvt")
+(defcommand xterm () ()
+  "Start Xterm or switch to it, if it is already running."
+  (run-or-raise "xterm" '(:instance "xterm")))
 
-;; Change xterm to urxvt
-;; (define-key *root-map* (kbd "C") "exec urxvt")
+(define-key *root-map* (kbd "c") "xterm")
 
 ;; Volume Management
 ;; (progn
@@ -63,6 +52,5 @@
 ;;   (define-key *top-map* (kbd "XF86AudioRaiseVolume") "exec amixer -q sset Master 3%+")
 ;;   (define-key *top-map* (kbd "XF86AudioMute") "amixer -q sset Master toggle"))
 
-;; Mode-line
 (progn
   (enable-mode-line (current-screen) (current-head) t))
