@@ -28,9 +28,13 @@ else
 fi
 
 # alias
-alias tree="find . -type d -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
-alias ll='ls -Athlb --color=auto'
 alias ls='ls --color=auto'
+alias ll='ls -Athlb'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias tree="find . -type d -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
+
 
 # infinite history, ignore duplicates and lines starting with a space
 HISTSIZE=-1
