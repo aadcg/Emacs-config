@@ -22,14 +22,15 @@ source /etc/bashrc
 # Adjust the prompt depending on whether we're in 'guix environment'.
 if [ -n "$GUIX_ENVIRONMENT" ]
 then
-    PS1='\u@\h \w [env]\$\n'
+    PS1='\u@\h \w [env] \n\$ '
 else
-    PS1='\u@\h \w\$\n'
+    PS1='\u@\h \w \n\$ '
 fi
 
 # alias
 alias tree="find . -type d -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
-alias ll = 'ls -Athlb'
+alias ll='ls -Athlb --color=auto'
+alias ls='ls --color=auto'
 
 # infinite history, ignore duplicates and lines starting with a space
 HISTSIZE=-1
@@ -38,3 +39,7 @@ HISTCONTROL=ignoreboth:erasedups
 
 # append to the history file, don't overwrite it
 shopt -s histappend
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+shopt -s globstar
