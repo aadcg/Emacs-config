@@ -99,3 +99,6 @@ aagomes@pm.com
 #+begin_comment
 gtk-key-theme-name = "Emacs"
 #+end_comment
+
+* Wifi
+nmtui
