@@ -17,29 +17,27 @@
 ;; (set-font "Fira Code")
 
 
-(setf *mode-line-timeout* 10
-      *time-modeline-string* "%a %d %b %H:%M"
+(setf *mode-line-timeout* 5
+      *time-modeline-string* "%a %d %b %k:%M"
       *window-border-style* :thin
       *mode-line-background-color* "#3F3F3F"
       *mode-line-foreground-color* "#DCDCCC"
       *cpu-modeline-fmt* "%C"
-      *delim* " ^2::^7 "
+      *window-name-source* :class
+      *delim* " ^5|^7 "
       *screen-mode-line-format* (list
                                  ;; Windows
-                                 ;; "%v | "
-                                 "^7%W ^>^7"
-                                 ;; "[^B%n^b] %W ^>"
+                                 "%W ^>"
                                  ;; CPU
-                                 ;; "%C" *delim*
+                                 "%C" *delim*
                                  ;; RAM
-                                 ;; "%M" *delim*
+                                 "%M" *delim*
                                  ;; Battery
-                                 ;; '(:eval (stumpwm:run-shell-command "cat /sys/class/power_supply/BAT0/capacity | tr -d '\n'" t))
+                                 ;; '(:eval (stumpwm:run-shell-command "cat /sys/class/power_supply/BAT0/capacity | tr -d '\n'" t)) *delim*
                                  "%B" *delim*
                                  ;; Date
-                                 "%d"
-                                 )
-      )
+                                 "%d"))
+
 
 ;; Keybindings
 (set-prefix-key (kbd "C-i"))
