@@ -7,7 +7,7 @@
 - *Versions*
   | System    | Emacs |   Org |
   |-----------+-------+-------|
-  | gnu/linux |  26.2 | 9.2.6 |
+  | gnu/linux |  26.3 | 9.2.6 |
   #+TBLFM: @>$3='(org-version)::@>$2='(substring (emacs-version) 10 14)::@>$1='(print system-type)
 
 - *Me*
@@ -633,6 +633,10 @@ Ivy in Eshell
           (quote magit-display-buffer-same-window-except-diff-v1))
     :bind
     ("C-x g" . magit-status))
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package gitignore-mode)
 #+end_src
 
 *** Highlight uncommitted changes
