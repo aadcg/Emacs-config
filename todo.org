@@ -70,8 +70,10 @@ gsettings set org.gnome.desktop.background picture-path
 - US and RU keyboards
 
 * Sync org files
-owncloudcmd -s -u user -p pw $HOME/NextCloud/
-https://cloud.owncube.com/remote.php/webdav/
+#+begin_src bash
+  owncloudcmd -s -u user -p pw $HOME/NextCloud/ https://cloud.owncube.com/remote.php/webdav/
+#+end_src
+
 [[https://github.com/owncloud/client/issues/2002#issuecomment-98747743][cron script for owncloud]]
 
 * Telegram
@@ -102,3 +104,6 @@ gtk-key-theme-name = "Emacs"
 
 * Wifi
 nmtui
+
+* Dictionary
+aspell
