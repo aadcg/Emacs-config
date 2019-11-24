@@ -52,3 +52,5 @@ shopt -s histappend
 # files and zero or more directories and subdirectories. If the pattern is
 # followed by a /, only directories and subdirectories match.
 shopt -s globstar
+
+bind Space:magic-space
