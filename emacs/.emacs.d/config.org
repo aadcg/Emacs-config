@@ -177,7 +177,7 @@ Backups and auto-save files at ~/.emacs/backups
 
 ** Font
 #+begin_src emacs-lisp
-  (set-frame-font "Fira Code 13" nil t)
+  (set-frame-font "Fira Code 12" nil t)
 #+end_src
 
 ** Regional
