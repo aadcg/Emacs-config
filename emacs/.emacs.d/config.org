@@ -821,6 +821,15 @@ in python source code blocks.
   ;; (setq google-translate-backend-method 'curl)
 #+end_src
 
+** Media
+#+begin_src emacs-lisp
+  (use-package emms
+    :config
+    (require 'emms-setup)
+    (emms-standard)
+    (emms-default-players))
+#+end_src
+
 * Aesthetics
 Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 ** Theme
