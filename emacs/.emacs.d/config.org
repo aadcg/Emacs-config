@@ -96,7 +96,7 @@ Backups and auto-save files at ~/.emacs/backups
 
 #+begin_src emacs-lisp
   (unless (file-exists-p (concat user-emacs-directory "backups/"))
-    (mkdir concat user-emacs-directory "backups/"))
+    (mkdir (concat user-emacs-directory "backups/")))
 
   (setq temporary-file-directory (concat user-emacs-directory "backups/")
         backup-directory-alist `((".*" . ,temporary-file-directory))
