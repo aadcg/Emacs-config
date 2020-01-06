@@ -107,3 +107,7 @@ nmtui
 
 * Dictionary
 aspell
+
+* Brightness
+xrand -s 2560x1440
+xrand --output <screen> --brightness 0.x / 1
