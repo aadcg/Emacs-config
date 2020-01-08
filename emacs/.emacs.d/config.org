@@ -56,6 +56,7 @@ Tweaking vanilla Emacs to my taste.
 - 80 chars per line
 - Spaces over tabs
 - visual-line-mode in Termux
+- kill whole line
 
 #+begin_src emacs-lisp
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -67,6 +68,7 @@ Tweaking vanilla Emacs to my taste.
   (setq-default indent-tabs-mode nil)
   (when (cl-search "termux" abbreviated-home-dir)
     (global-visual-line-mode t))
+  (setq kill-whole-line t)
 #+end_src
 
 ** Cursor
