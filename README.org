@@ -4,6 +4,11 @@
 
 # [[https://travis-ci.com/aadcg/.emacs.d][https://travis-ci.com/aadcg/.emacs.d.svg?branch=master]]
 
+# Amongst the decay of virtue lies a greater crime.
+# It’s not just us against them. It starts with I against I.
+# "I want to see the world go wild" - This routine is hell / Swain
+
+
 * Motivation
 Free software grants us the 4 freedoms to run, study, redistribute and improve
 programs. As a result, these programs are usually so extensible and flexible
