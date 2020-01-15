@@ -1,3 +1,4 @@
+
 #+TITLE: GNU Emacs config
 #+OPTIONS: num:nil toc:nil email:t
 #+STARTUP: content
@@ -7,7 +8,7 @@
 - *Versions*
   | System    | Emacs |   Org |
   |-----------+-------+-------|
-  | gnu/linux |  26.3 | 9.2.6 |
+  | gnu/linux |  26.3 | 9.3.1 |
   #+TBLFM: @>$3='(org-version)::@>$2='(substring (emacs-version) 10 14)::@>$1='(print system-type)
 
 - *Me*
@@ -68,7 +69,7 @@ Tweaking vanilla Emacs to my taste.
   (setq-default indent-tabs-mode nil)
   (when (cl-search "termux" abbreviated-home-dir)
     (global-visual-line-mode t))
-  (setq kill-whole-line t)
+  ;; (setq kill-whole-line t)
 #+end_src
 
 ** Cursor
@@ -179,7 +180,17 @@ Backups and auto-save files at ~/.emacs/backups
 
 ** Font
 #+begin_src emacs-lisp
-  (set-frame-font "Fira Code 12" nil t)
+  (set-frame-font "Fira Code 15" nil t)
+
+  (defun auto-font ()
+    "idiotic stuff"
+    (interactive)
+    (let ((size 10))
+      (set-frame-font (concat "Fira Code " (number-to-string size)) nil t)
+      (delete-other-windows)
+      (while (> (window-max-chars-per-line) 200)
+        (setq size (+ size 1))
+        (set-frame-font (concat "Fira Code " (number-to-string size)) nil t))))
 #+end_src
 
 ** Regional
@@ -381,7 +392,7 @@ Sets up:
   (when window-system
     (use-package org-pdfview))
 
-  (defun aadcg/org-checkbox-next ()
+  (ndefun aadcg/org-checkbox-next ()
     "Mark checkboxes and sort"
     (interactive)
     (let ((home (point)))
@@ -403,6 +414,23 @@ Sets up:
                    (org-match-string-no-properties 1))))
       (apply 'delete-region remove)
       (insert description))))
+
+  (defun diary-last-day-of-month (date)
+    "Return `t` if DATE is the last day of the month."
+    (let* ((day (calendar-extract-day date))
+           (month (calendar-extract-month date))
+           (year (calendar-extract-year date))
+           (last-day-of-month
+            (calendar-last-day-of-month month year)))
+      (= day last-day-of-month)))
+
+  ;; org-cycle if tree is all checkboxes are ticked
+  ;; (defun org-at-item-checkbox-p ()
+  ;;   "Is point at a line starting a plain-list item with a checklet?"
+  ;;   (org-list-at-regexp-after-bullet-p "\\(\\[[- X]\\]\\)[ \t]+"))
+  ;; (cookie-re "\\(\\(\\[[0-9]*%\\]\\)\\|\\(\\[[0-9]*/[0-9]*\\]\\)\\)")
+  ;; matches digits / same digits
+  ;; \[\([0-9]*\)/\1\]
 #+end_src
 
 ** Presenting
@@ -610,11 +638,6 @@ Ivy in Eshell
     :defer t)
 #+end_src
 
-*** Groovy
-#+begin_src emacs-lisp
-  (use-package groovy-mode)
-#+end_src
-
 *** Dockerfiles
 #+begin_src emacs-lisp
   (use-package dockerfile-mode)
@@ -673,11 +696,6 @@ in python source code blocks.
   (use-package docker-tramp)
 
   ;; (use-package counsel-docker)
-#+end_src
-
-*** S3
-#+begin_src emacs-lisp
-  (use-package s3ed)
 #+end_src
 
 * Miscellaneous
@@ -778,21 +796,6 @@ in python source code blocks.
 #+begin_src emacs-lisp
   (use-package typit
     :defer t)
-#+end_src
-
-** Command log
-#+begin_src emacs-lisp
-  (use-package command-log-mode
-    :config
-    (setq command-log-mode-auto-show t
-          clm/log-command-indentation 8))
-#+end_src
-
-** COMMENT EXWM
-#+begin_src emacs-lisp
-  (use-package xelb)
-
-  (use-package exwm)
 #+end_src
 
 ** Whichkey
@@ -902,6 +905,22 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
     (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 #+end_src
 
+* My Utils
+** Learning Russian
+#+begin_src emacs-lisp
+  (defun openru-search (word)
+    "Search using https://en.openrussian.org"
+    (interactive "MЧто для Вас сударь? ")
+    (let ((url "https://en.openrussian.org/ru/"))
+      (eww (concat url word))))
+
+  (defun openru-search-at-point ()
+    "Search using https://en.openrussian.org at point"
+    (interactive)
+    (let ((url "https://en.openrussian.org/ru/"))
+      (eww (concat url (current-word)))))
+#+end_src
+
 * Startup
 #+begin_src emacs-lisp
   ;; (when window-system
@@ -909,6 +928,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 
   (org-agenda-list 1)
   (delete-other-windows)
+  (auto-font)
 #+end_src
 
 * COMMENT
@@ -917,19 +937,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 
 ** TODO add personal holidays in a private file
 
-** TODO mu4e
-[[https://www.emacswiki.org/emacs/GnusGmail][here]]
-[[https://www.reddit.com/r/emacs/comments/bfsck6/mu4e_for_dummies/][another tutorial]]
-[[https://vxlabs.com/2014/06/06/configuring-emacs-mu4e-with-nullmailer-offlineimap-and-multiple-identities/][here]]
-
 ** Syncthing vs Nextcloud vs cron?
 
 ** Emacs inside a docker container?
 [[https://medium.com/@sserialdev/emacs-in-the-container-age-5c0c222cfee][link]]
-
-** Eshell docs
-[[https://github.com/howardabrams/dot-files/blob/master/emacs-eshell.org][link]]
-[[https://www.masteringemacs.org/article/complete-guide-mastering-eshell][link2]]
-
-** Italics in org-mode
-[[https://superuser.com/questions/439159/underline-instead-of-italic-in-org-mode][possible fix]]
