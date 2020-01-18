@@ -96,6 +96,8 @@ webmail fcup?
 aagomes@protonmail.com
 aagomes@pm.com
 
+disroot
+
 * Emacs keybindings outside Emacs
 ~/.gtkrc
 #+begin_comment
