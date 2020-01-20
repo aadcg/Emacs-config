@@ -10,6 +10,8 @@
            '("battery-portable"
              "cpu"
              "mem"))
+;; (ql:quickload :clx-truetype)
+;; (set-font (make-instance 'xft:font :font "-*-terminus-medium-r-*-*-*-125-75-75-*-*-iso8859-15")
 ;; set font
 ;; (ql:quickload "clx-truetype")
 ;; (load-module "ttf-fonts")
@@ -29,10 +31,12 @@
                                  ;; Windows
                                  "%W ^>"
                                  ;; CPU
-                                 "%C" *delim*
+                                 ;; "%C" *delim*
                                  ;; RAM
-                                 "%M" *delim*
+                                 ;; "%M" *delim*
                                  ;; Battery
+                                 ;; '(:eval (stumpwm:run-shell-command "cat /sys/class/power_supply/BAT0/capacity | tr -d '\n'" t)) *delim*
+                                 ;; Weather
                                  ;; '(:eval (stumpwm:run-shell-command "cat /sys/class/power_supply/BAT0/capacity | tr -d '\n'" t)) *delim*
                                  "%B" *delim*
                                  ;; Date
