@@ -132,7 +132,7 @@ Backups and auto-save files at ~/.emacs/backups
   (global-set-key (kbd "S-SPC")   'cycle-spacing)
   (global-set-key (kbd "M-SPC")   'other-window)
   (global-set-key (kbd "C-c f")   'switch-to-agenda)
-  (global-set-key (kbd "C-<up>")   'switch-to-presentation)
+  (global-set-key (kbd "C-<up>")  'switch-to-presentation)
   (global-set-key (kbd "M-o")     'mode-line-other-buffer)
 #+end_src
 
@@ -831,7 +831,13 @@ in python source code blocks.
     :config
     (require 'emms-setup)
     (emms-standard)
-    (emms-default-players))
+    (emms-default-players)
+    :bind
+    ("<XF86AudioRaiseVolume>" . emms-volume-raise)
+    ("<XF86AudioLowerVolume>" . emms-volume-lower)
+    ("<XF86AudioPlay>"        . emms-pause)
+    ("<XF86AudioNext>"        . emms-next)
+    ("<XF86AudioPrev>"        . emms-previous))
 #+end_src
 
 * Aesthetics
