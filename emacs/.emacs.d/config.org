@@ -1,4 +1,3 @@
-
 #+TITLE: GNU Emacs config
 #+OPTIONS: num:nil toc:nil email:t
 #+STARTUP: content
@@ -392,7 +391,7 @@ Sets up:
   (when window-system
     (use-package org-pdfview))
 
-  (ndefun aadcg/org-checkbox-next ()
+  (defun aadcg/org-checkbox-next ()
     "Mark checkboxes and sort"
     (interactive)
     (let ((home (point)))
@@ -912,13 +911,15 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
     "Search using https://en.openrussian.org"
     (interactive "MЧто для Вас сударь? ")
     (let ((url "https://en.openrussian.org/ru/"))
-      (eww (concat url word))))
+      (eww (concat url word))
+      (forward-line 27)))
 
   (defun openru-search-at-point ()
     "Search using https://en.openrussian.org at point"
     (interactive)
     (let ((url "https://en.openrussian.org/ru/"))
-      (eww (concat url (current-word)))))
+      (eww (concat url (current-word)))
+      (forward-line 20)))
 #+end_src
 
 * Startup
