@@ -647,7 +647,9 @@ Ivy in Eshell
 #+begin_src emacs-lisp
   (use-package projectile
     :init
-    (projectile-mode 1))
+    (projectile-mode 1)
+    :config
+    (setq projectile-completion-system 'ivy))
 #+end_src
 
 *** Magit
@@ -753,6 +755,8 @@ in python source code blocks.
 #+end_src
 
 ** Emacs completion
+(info "(ivy)API")
+
 #+begin_src emacs-lisp
   (use-package counsel
     :init
@@ -760,8 +764,7 @@ in python source code blocks.
     (counsel-mode)
 
     :config
-    (setq ivy-use-virtual-buffers t
-          ivy-count-format "%d/%d "
+    (setq ivy-count-format "%d/%d "
           ivy-wrap t
           ivy-extra-directories nil
           ivy-initial-inputs-alist nil
@@ -772,8 +775,7 @@ in python source code blocks.
     (add-to-list 'ivy-format-functions-alist '(t . ivy-format-function-arrow))
 
     :bind
-    ("C-x B" . ivy-switch-buffer-other-window)
-    ("C-s" . swiper))
+    ("C-x B" . ivy-switch-buffer-other-window))
 
   (use-package smex)
 #+end_src
