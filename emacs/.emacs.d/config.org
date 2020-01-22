@@ -68,7 +68,6 @@ Tweaking vanilla Emacs to my taste.
   (setq-default indent-tabs-mode nil)
   (when (cl-search "termux" abbreviated-home-dir)
     (global-visual-line-mode t))
-  ;; (setq kill-whole-line t)
 #+end_src
 
 ** Cursor
