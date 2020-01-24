@@ -19,8 +19,7 @@
           ;; calendar-location-name "Porto, Portugal"
           calendar-latitude 59.94
           calendar-longitude 30.31
-          calendar-location-name "Санкт-Петербург, Россия"
-          )
+          calendar-location-name "Санкт-Петербург, Россия")
   #+end_src
 
 - *Visit and reload this config*
@@ -38,11 +37,6 @@
       (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
 
     (global-set-key (kbd "C-c r") 'config-reload)
-  #+end_src
-
-- *Default*
-  #+begin_src emacs-lisp
-    (setq vc-follow-symlinks t)
   #+end_src
 
 * My tweaks
@@ -333,11 +327,11 @@ Sets up:
           orgtbl-mode t)
 
     :bind
-    ("C-c a" . org-agenda)
-    ("C-c l" . org-store-link)
-    ("C-c c" . org-capture)
-    ("C-c !" . org-time-stamp-inactive)
-    ("C-c j" . aadcg/org-checkbox-next)
+    ("C-c a"     . org-agenda)
+    ("C-c l"     . org-store-link)
+    ("C-c c"     . org-capture)
+    ("C-c !"     . org-time-stamp-inactive)
+    ("C-c j"     . aadcg/org-checkbox-next)
     ("<mouse-1>" . aadcg/org-checkbox-next))
 #+end_src
 
@@ -504,15 +498,11 @@ Sets up:
   (use-package elpy
     :init
     (elpy-enable)
-
     :config
     (setq python-shell-interpreter "ipython"
           python-shell-interpreter-args "-i --simple-prompt"
           python-shell-prompt-detect-failure-warning nil
-          pyvenv-activate "~/anaconda3"
-          pyvenv-mode-line-indicator nil
           elpy-rpc-virtualenv-path 'current)
-
     :bind
     ("C-c p" . elpy-autopep8-fix-code)
     ("C-c b" . elpy-black-fix-code))
@@ -540,12 +530,10 @@ Sets up:
               (turn-on-haskell-indent)))
 #+end_src
 
-*** Scala
+*** COMMENT Scala
 #+begin_src emacs-lisp
   (use-package scala-mode)
-
   (use-package ensime)
-
   (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 #+end_src
 
@@ -575,6 +563,7 @@ Requires gocode for the autocomplete to work.
 #+begin_src emacs-lisp
   ;; (add-hook 'js-mode-hook 'json-pretty-print-buffer-ordered)
 #+end_src
+
 *** Bash
 **** Shell
 Make M-n and M-p more intelligent in shell.
@@ -616,6 +605,24 @@ Ivy in Eshell
   (setq eshell-history-file-name "~/.bash_history"
         eshell-history-size 9999)
 #+end_src
+** Version Control
+#+begin_src emacs-lisp
+  (use-package magit
+    :config
+    (setq magit-display-buffer-function
+          (quote magit-display-buffer-same-window-except-diff-v1))
+    :bind
+    ("C-x g" . magit-status))
+
+  (use-package diff-hl
+    :config
+    (global-diff-hl-mode)
+    (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+
+  (use-package gitignore-mode)
+
+  (setq vc-follow-symlinks t)
+#+end_src
 
 ** Files
 *** Yaml
@@ -649,28 +656,6 @@ Ivy in Eshell
     (projectile-mode 1)
     :config
     (setq projectile-completion-system 'ivy))
-#+end_src
-
-*** Magit
-#+begin_src emacs-lisp
-  (use-package magit
-    :config
-    (setq magit-display-buffer-function
-          (quote magit-display-buffer-same-window-except-diff-v1))
-    :bind
-    ("C-x g" . magit-status))
-#+end_src
-
-#+begin_src emacs-lisp
-  (use-package gitignore-mode)
-#+end_src
-
-*** Highlight uncommitted changes
-#+begin_src emacs-lisp
-  (use-package diff-hl
-    :config
-    (global-diff-hl-mode)
-    (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 #+end_src
 
 *** TODO Pretty mode
@@ -871,23 +856,14 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
             x-underline-at-descent-line t)
       (moody-replace-mode-line-buffer-identification)
       (moody-replace-vc-mode)))
-#+end_src
 
-#+begin_src emacs-lisp
-  (setq battery-mode-line-format " %p%"
-        battery-mode-line-limit 99)
-
-  ;; (display-battery-mode)
-#+end_src
-
-** Minions
-#+begin_src emacs-lisp
   (use-package minions
     :config
-    (setq minions-mode-line-lighter ""
-          minions-mode-line-delimiters '("" . "")
-          minions-direct '(org-tree-slide-mode text-scale-mode))
-    (minions-mode 1))
+    (minions-mode 1)
+    (setq minions-direct '(org-tree-slide-mode text-scale-mode)))
+
+  (setq battery-mode-line-format " %p%"
+        battery-mode-line-limit 99)
 #+end_src
 
 ** Beacon
