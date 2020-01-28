@@ -1,7 +1,7 @@
 xterm*utf8: always
 xterm*metaSendsEscape: true
 xterm*selectToClipboard: true
-xterm*font: xft:firacode:pixelsize=15:autohint=true
+xterm*font: xft:firacode:pixelsize=16:autohint=true
 xterm*loginShell: true
 xterm*saveLines: 2000
 xterm*charClass: 33:48,35:48,37:48,43:48,45-47:48,64:48,95:48,126:48

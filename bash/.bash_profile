@@ -7,9 +7,10 @@ export PATH=$PATH:~/.nix-profile/bin
 # Capslock LED shows that ru layout is active
 # Compose key on left ctrl
 # Capslock as ctrl
-# setxkbmap -layout us,ru -option grp:win_space_toggle,grp_led:caps,compose:lctrl,caps:ctrl_modifier
-setxkbmap -layout us,ru -option grp:alt_shift_toggle,grp_led:scroll,compose:lctrl,caps:ctrl_modifier
+setxkbmap -layout us,ru -option grp:win_space_toggle,grp_led:caps,compose:lctrl,caps:ctrl_modifier
 
+# Screen settings
+xrandr --output eDP-1 --mode 1920x1080 --brightness 1
 
 # Honor per-interactive-shell startup file
 if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
