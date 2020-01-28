@@ -774,7 +774,8 @@ in python source code blocks.
     (add-to-list 'ivy-format-functions-alist '(t . ivy-format-function-arrow))
 
     :bind
-    ("C-x B" . ivy-switch-buffer-other-window))
+    ("C-x B" . ivy-switch-buffer-other-window)
+    ("C-s" . swiper))
 
   (use-package smex)
 #+end_src
