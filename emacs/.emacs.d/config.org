@@ -347,7 +347,8 @@ Sets up:
 
   (use-package ob-go)
 
-  (require 'org-tempo)
+  (unless (compare-strings org-version nil nil "9.1.9" nil nil)
+    (require 'org-tempo))
 
   (org-babel-do-load-languages
    'org-babel-load-languages
