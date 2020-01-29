@@ -31,16 +31,19 @@
                                  ;; Windows
                                  "%W ^>"
                                  ;; CPU
-                                 ;; "%C" *delim*
+                                 "%C" *delim*
                                  ;; RAM
-                                 ;; "%M" *delim*
+                                 "%M" *delim*
                                  ;; Battery
                                  ;; '(:eval (stumpwm:run-shell-command "cat /sys/class/power_supply/BAT0/capacity | tr -d '\n'" t)) *delim*
                                  ;; Weather
                                  ;; '(:eval (stumpwm:run-shell-command "cat /sys/class/power_supply/BAT0/capacity | tr -d '\n'" t)) *delim*
                                  "%B" *delim*
                                  ;; Date
-                                 "%d"))
+                                 "%d" *delim*
+                                 '(:eval (stumpwm:run-shell-command
+                                          "TZ='Europe/Lisbon' date +%k:%M" t))
+                                 ))
 
 
 ;; Keybindings
