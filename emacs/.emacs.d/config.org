@@ -854,7 +854,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
   (when window-system
     (use-package moody
       :config
-      (setq moody-mode-line-height 25
+      (setq moody-mode-line-height 20
             x-underline-at-descent-line t)
       (moody-replace-mode-line-buffer-identification)
       (moody-replace-vc-mode)))
@@ -862,7 +862,9 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
   (use-package minions
     :config
     (minions-mode 1)
-    (setq minions-direct '(org-tree-slide-mode text-scale-mode)))
+    (setq minions-direct '(org-tree-slide-mode text-scale-mode)
+          minions-mode-line-lighter ""
+          minions-mode-line-delimiters '("" . "")))
 
   (setq battery-mode-line-format " %p%"
         battery-mode-line-limit 99)
