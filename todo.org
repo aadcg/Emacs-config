@@ -57,6 +57,10 @@ The next browser also looks interesting. Worth having a look.
 
 gsettings set org.gnome.desktop.background picture-path
 
+
+compton (transparency)
+nitrogen (wallpeper)
+
 * Keyboard
 Check base.lst for documention.
 
