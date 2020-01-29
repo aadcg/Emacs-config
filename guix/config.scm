@@ -5,28 +5,32 @@
 (use-service-modules desktop networking ssh xorg)
 
 (operating-system
-  (host-name "xps")
-  (timezone "Europe/Moscow")
   (locale "en_US.utf8")
+  (timezone "Europe/Moscow")
   (keyboard-layout
     (keyboard-layout "us" "altgr-intl"))
   (bootloader
     (bootloader-configuration
-      (bootloader grub-bootloader)
-      (target "/dev/sda")
+      (bootloader grub-efi-bootloader)
+      (target "/boot/efi")
       (keyboard-layout keyboard-layout)))
-  (swap-devices (list "/dev/sda2"))
+  (swap-devices (list "/dev/nvme0n1p2"))
   (file-systems
     (cons* (file-system
+             (mount-point "/boot/efi")
+             (device (uuid "C820-AFF2" 'fat32))
+             (type "vfat"))
+           (file-system
              (mount-point "/")
              (device
-               (uuid "c492a3da-1754-4ab1-bed5-172cc785840f"
+               (uuid "3ea09f5b-08a4-4b22-8c2a-f3b20ce5de26"
                      'ext4))
              (type "ext4"))
            %base-file-systems))
+  (host-name "xps13")
   (users (cons* (user-account
                   (name "aadcg")
-                  (comment "Aadcg")
+                  (comment "")
                   (group "users")
                   (home-directory "/home/aadcg")
                   (supplementary-groups
@@ -53,7 +57,7 @@
             "stumpwm"
             "xterm"
             ))
-     %base-packages))
+      %base-packages))
   (services
     (append
       (list (service gnome-desktop-service-type)
