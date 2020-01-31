@@ -9,6 +9,15 @@
 # "I want to see the world go wild" - This routine is hell / Swain
 
 
+| OS              | GNU/Linux Guix |
+| Emacs version   | 26.3           |
+| Org Version     | 9.1.9          |
+| Window manager  | StumpWM        |
+| Version Control | git            |
+| Media           | EMMS           |
+| Mail            |                |
+#+TBLFM: @3$2='(org-version)::@2$2='(substring (emacs-version) 10 14)
+
 * Motivation
 Free software grants us the 4 freedoms to run, study, redistribute and improve
 programs. As a result, these programs are usually so extensible and flexible
