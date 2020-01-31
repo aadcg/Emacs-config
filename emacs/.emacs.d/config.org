@@ -868,6 +868,8 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 
   (setq battery-mode-line-format " %p%"
         battery-mode-line-limit 99)
+
+  (use-package hide-mode-line)
 #+end_src
 
 ** Beacon
