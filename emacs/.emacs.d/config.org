@@ -931,3 +931,17 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 
 ** Emacs inside a docker container?
 [[https://medium.com/@sserialdev/emacs-in-the-container-age-5c0c222cfee][link]]
+** Termux
+I do. I have the following predicate in my init.el (think it is from Sacha Chua)
+
+    (defvar in-termux-p
+      (and (equal (system-name) "localhost")
+           (not (equal user-login-name "mylaptopusername")))
+      "t if we are in termux emacs.")
+
+Then for any package, that I do not want installed in termux, I start the use-package block with:
+
+    (use-package pkgname
+      :unless in-termux-p
+
+I use straight.el, so getting my config working on termux was pretty much just: git clone dotfiles, cd dotfiles, stow emacs
