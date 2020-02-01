@@ -899,10 +899,10 @@ Visit and reload this config
 * Startup
 #+begin_src emacs-lisp
   (setq inhibit-startup-message t
-        initial-scratch-message nil)
+	initial-scratch-message nil)
 
-  ;; (when window-system
-  ;;   (toggle-frame-fullscreen))
+  (when (getenv "DESKTOP_SESSION")
+    (toggle-frame-fullscreen))
 
   (org-agenda-list 1)
   (delete-other-windows)
