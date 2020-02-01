@@ -40,7 +40,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 
 *** Text
 #+begin_src emacs-lisp
-  ;; (set-frame-font "Fira Code 12" nil t)
+  (set-frame-font "Fira Code 12" nil t)
 
   (defun auto-font ()
     "idiotic stuff"
@@ -49,9 +49,9 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
       (set-frame-font (concat "Fira Code " (number-to-string size)) nil t)
       (delete-other-windows)
       (while (> (window-max-chars-per-line) 190)
-	(setq size (+ size 1))
-	(set-frame-font (concat "Fira Code " (number-to-string size)) nil t)
-	(message "Correct size is %d" size))))
+        (setq size (+ size 1))
+        (set-frame-font (concat "Fira Code " (number-to-string size)) nil t)
+        (message "Correct size is %d" size))))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -901,8 +901,8 @@ Visit and reload this config
   (setq inhibit-startup-message t
         initial-scratch-message nil)
 
-  (when (getenv "DESKTOP_SESSION")
-    (toggle-frame-fullscreen))
+  ;; (when (getenv "DESKTOP_SESSION")
+  ;;   (toggle-frame-fullscreen))
 
   ;; (org-agenda-list 1)
   ;; (delete-other-windows)
