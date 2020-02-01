@@ -1,22 +1,6 @@
-# a more elegant solution would be ad emacs/.emacs.d except the needed files
-emacs/.emacs.d/config.el
-emacs/.emacs.d/recentf
-emacs/.emacs.d/places
-emacs/.emacs.d/tramp
-emacs/.emacs.d/.last-package-update-day
-emacs/.emacs.d/*.dat
-emacs/.emacs.d/*.eld
-emacs/.emacs.d/auto-save-list
-emacs/.emacs.d/backups
-emacs/.emacs.d/elpa
-emacs/.emacs.d/eshell/
-emacs/.emacs.d/games
-emacs/.emacs.d/image-dired
-emacs/.emacs.d/ltximg
-emacs/.emacs.d/request
-emacs/.emacs.d/snippets
-emacs/.emacs.d/transient
-emacs/.emacs.d/url
-emacs/.emacs.d/smex-items
-emacs/.emacs.d/emms
+emacs/.emacs.d/*
+!emacs/.emacs.d/travis.yml
+!emacs/.emacs.d/config.org
+!emacs/.emacs.d/init.el
+!emacs/.emacs.d/test_startup.sh
 stumpwm/.stumpwm.d/stumpwm-contrib
