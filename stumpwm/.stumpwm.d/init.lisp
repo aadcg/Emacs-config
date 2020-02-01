@@ -9,7 +9,8 @@
 (mapcar #'load-module
            '("battery-portable"
              "cpu"
-             "mem"))
+             "mem"
+             "amixer"))
 ;; (ql:quickload :clx-truetype)
 ;; (set-font (make-instance 'xft:font :font "-*-terminus-medium-r-*-*-*-125-75-75-*-*-iso8859-15")
 ;; set font
@@ -71,10 +72,10 @@
 (define-key *root-map* (kbd "t") "telegram")
 
 ;; Volume Management
-;; (progn
-;;   (define-key *top-map* (kbd "XF86AudioLowerVolume") "exec amixer -q sset Master 3%-")
-;;   (define-key *top-map* (kbd "XF86AudioRaiseVolume") "exec amixer -q sset Master 3%+")
-;;   (define-key *top-map* (kbd "XF86AudioMute") "amixer -q sset Master toggle"))
+(progn
+  (define-key *top-map* (kbd "XF86AudioLowerVolume") "exec amixer -q sset Master 3%-")
+  (define-key *top-map* (kbd "XF86AudioRaiseVolume") "exec amixer -q sset Master 3%+")
+  (define-key *top-map* (kbd "XF86AudioMute") "amixer -q sset Master toggle"))
 
 (progn
   (enable-mode-line (current-screen) (current-head) t))
