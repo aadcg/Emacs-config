@@ -40,7 +40,6 @@
     (append
      (map specification->package
           '(
-	    "xrandr"
             "aspell"
             "aspell-dict-en"
             "aspell-dict-pt-pt"
@@ -55,6 +54,7 @@
             "setxkbmap"
             "stow"
             "stumpwm"
+	    "xrandr"
             "xterm"
             ))
       %base-packages))
