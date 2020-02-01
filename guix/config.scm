@@ -23,11 +23,11 @@
            (file-system
              (mount-point "/")
              (device
-               (uuid "3ea09f5b-08a4-4b22-8c2a-f3b20ce5de26"
+               (uuid "76936a31-ce9b-4a50-a373-31db7a89ce41"
                      'ext4))
              (type "ext4"))
            %base-file-systems))
-  (host-name "xps13")
+  (host-name "guix-xps13")
   (users (cons* (user-account
                   (name "aadcg")
                   (comment "")
@@ -40,6 +40,7 @@
     (append
      (map specification->package
           '(
+	    "xrandr"
             "aspell"
             "aspell-dict-en"
             "aspell-dict-pt-pt"
@@ -49,7 +50,6 @@
             "font-fira-code"
             "git"
             "icecat"
-            "nix"
             "nss-certs"
             "owncloud-client"
             "setxkbmap"
