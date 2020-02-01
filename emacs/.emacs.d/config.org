@@ -150,7 +150,6 @@ Backups and auto-save files at ~/.emacs/backups
 #+begin_src emacs-lisp
   (when window-system
     (use-package moody
-      :ensure t
       :config
       (setq moody-mode-line-height 20
             x-underline-at-descent-line t)
@@ -158,7 +157,6 @@ Backups and auto-save files at ~/.emacs/backups
       (moody-replace-vc-mode)))
 
   (use-package minions
-    :ensure t
     :config
     (minions-mode 1)
     (setq minions-direct '(org-tree-slide-mode text-scale-mode)
@@ -310,7 +308,6 @@ Requires gocode for the autocomplete to work.
 ** Version Control
 #+begin_src emacs-lisp
   (use-package magit
-    :ensure t
     :config
     (setq magit-display-buffer-function
           (quote magit-display-buffer-same-window-except-diff-v1))
@@ -318,13 +315,11 @@ Requires gocode for the autocomplete to work.
     ("C-x g" . magit-status))
 
   (use-package diff-hl
-    :ensure t
     :config
     (global-diff-hl-mode)
     (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 
-  (use-package gitignore-mode
-    :ensure t)
+  (use-package gitignore-mode)
 
   (setq vc-follow-symlinks t)
 #+end_src
@@ -595,8 +590,7 @@ in python source code blocks.
 * Emacs OS - The Kitchen Sink
 ** Guix
 #+begin_src emacs-lisp
-  (use-package guix
-    :ensure t)
+  (use-package guix)
 #+end_src
 
 ** Eww
@@ -657,10 +651,8 @@ in python source code blocks.
 
 ** Emacs completion
 (info "(ivy)API")
-
 #+begin_src emacs-lisp
   (use-package counsel
-    :ensure t
     :init
     (ivy-mode 1)
     (counsel-mode)
@@ -678,8 +670,7 @@ in python source code blocks.
     ("C-x B" . ivy-switch-buffer-other-window)
     ("C-s" . swiper))
 
-  (use-package smex
-    :ensure t)
+  (use-package smex)
 #+end_src
 
 ** Auto-complete
@@ -915,7 +906,7 @@ Visit and reload this config
 
   (org-agenda-list 1)
   (delete-other-windows)
-  (auto-font)
+  ;; (auto-font)
 #+end_src
 
 * TODO COMMENT
@@ -928,3 +919,5 @@ Visit and reload this config
 
 ** Emacs inside a docker container?
 [[https://medium.com/@sserialdev/emacs-in-the-container-age-5c0c222cfee][link]]
+** use-package and guix
+if pkgs is available in guix, then use it rather than melpa
