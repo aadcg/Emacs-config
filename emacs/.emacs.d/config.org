@@ -3,44 +3,68 @@
 #+STARTUP: content
 #+PROPERTY: header-args :results silent
 
-* Meta
-- *Versions*
-  | System    | Emacs |   Org |
-  |-----------+-------+-------|
-  | gnu/linux |  26.3 | 9.3.1 |
-  #+TBLFM: @>$3='(org-version)::@>$2='(substring (emacs-version) 10 14)::@>$1='(print system-type)
+* Defaults, Preferences and Aesthetics
+Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
+** Aesthethics
+*** UI
+#+begin_src emacs-lisp
+  (fset 'yes-or-no-p 'y-or-n-p)
+  ;; (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+  (menu-bar-mode -1)
+  (when window-system
+    (tool-bar-mode -1)
+    (scroll-bar-mode -1)
+    (horizontal-scroll-bar-mode -1)
+    (global-hl-line-mode)
+    (fringe-mode '(4 . 0)))
+#+end_src
 
-- *Me*
-  #+begin_src emacs-lisp
-    (setq user-full-name "André Alexandre Gomes"
-          user-mail-address "andremegafone@gmail.com"
-          ;; calendar-latitude 41.16
-          ;; calendar-longitude -8.63
-          ;; calendar-location-name "Porto, Portugal"
-          calendar-latitude 59.94
-          calendar-longitude 30.31
-          calendar-location-name "Санкт-Петербург, Россия")
-  #+end_src
+*** Theme
+#+begin_src emacs-lisp
+  (defun transparency (value)
+    "Sets the transparency of the frame window. 0=transparent/100=opaque."
+    (interactive "nTransparency Value 0 - 100 opaque:")
+    (set-frame-parameter (selected-frame) 'alpha value))
 
-- *Visit and reload this config*
-  #+begin_src emacs-lisp
-    (defun config-visit ()
-      "Visits ~/.emacs.d/config.org."
-      (interactive)
-      (find-file "~/.emacs.d/config.org"))
+  (global-set-key (kbd "C-x t") 'transparency)
 
-    (global-set-key (kbd "C-c e") 'config-visit)
+  (use-package zenburn-theme
+    :init
+    (setq zenburn-scale-org-headlines t
+          zenburn-height-plus-2 1.3
+          zenburn-height-plus-3 1.5
+          zenburn-height-plus-4 1.7)
+    (load-theme 'zenburn t)
+    (transparency 90))
+#+end_src
 
-    (defun config-reload ()
-      "Reloads ~/.emacs.d/config.org at runtime."
-      (interactive)
-      (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+*** Text
+#+begin_src emacs-lisp
+  (set-frame-font "Fira Code 12" nil t)
 
-    (global-set-key (kbd "C-c r") 'config-reload)
-  #+end_src
+  (defun auto-font ()
+    "idiotic stuff"
+    (interactive)
+    (let ((size 10))
+      (set-frame-font (concat "Fira Code " (number-to-string size)) nil t)
+      (delete-other-windows)
+      (while (> (window-max-chars-per-line) 190)
+        (setq size (+ size 1))
+        (set-frame-font (concat "Fira Code " (number-to-string size)) nil t)
+        (message "Correct size is %d" size))))
+#+end_src
 
-* My tweaks
-Tweaking vanilla Emacs to my taste.
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters
+    :config
+    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+#+end_src
+
+** Avy
+#+begin_src emacs-lisp
+  (use-package avy
+    :bind ("C-r" . avy-goto-word-1))
+#+end_src
 
 ** Words, white spaces and text
 - No trailing whitespaces when a file is saved
@@ -60,20 +84,8 @@ Tweaking vanilla Emacs to my taste.
   (setq-default fill-column 80)
   (add-hook 'text-mode-hook 'turn-on-auto-fill)
   (setq-default indent-tabs-mode nil)
-  (when (cl-search "termux" abbreviated-home-dir)
+  (when in-termux-p
     (global-visual-line-mode t))
-#+end_src
-
-** Cursor
-- Preserve cursor position after C-v or M-v
-- Preserve cursor position after closing a file
-- No blinking cursor
-
-#+begin_src emacs-lisp
-  (setq scroll-preserve-screen-position 'always)
-  (save-place-mode 1)
-  (when window-system
-    (setq blink-cursor-mode nil))
 #+end_src
 
 ** Windows and buffers
@@ -128,61 +140,596 @@ Backups and auto-save files at ~/.emacs/backups
   (global-set-key (kbd "C-<up>")  'switch-to-presentation)
   (global-set-key (kbd "M-o")     'mode-line-other-buffer)
 #+end_src
-
-** Browser
-- Eww by default (w/ visual-line-mode)
-- Firefox for GUI/JavaScript stuff
+** Modeline
+- Moody is a modern, practical and good-looking modeline
+- Minion hides minor modes
+- I usually check the battery status from the window manager modeline
+- Tuple (#line, #column) on the modeline
+- Hide-mode-line does the obvious and it's handy for presentations
 
 #+begin_src emacs-lisp
-  (setq browse-url-browser-function '((".*youtube.*"
-                                       . browse-url-default-browser)
-                                      (".*cliente*"
-                                       . browse-url-default-browser)
-                                      (".*checkin*"
-                                      . browse-url-default-browser)
-                                      ("." . eww-browse-url)))
-  (add-hook 'eww-mode-hook 'visual-line-mode)
+  (when window-system
+    (use-package moody
+      :ensure t
+      :config
+      (setq moody-mode-line-height 20
+            x-underline-at-descent-line t)
+      (moody-replace-mode-line-buffer-identification)
+      (moody-replace-vc-mode)))
+
+  (use-package minions
+    :ensure t
+    :config
+    (minions-mode 1)
+    (setq minions-direct '(org-tree-slide-mode text-scale-mode)
+          minions-mode-line-lighter ""
+          minions-mode-line-delimiters '("" . "")))
+
+  (setq battery-mode-line-format " %p%"
+        battery-mode-line-limit 99)
+
+  (column-number-mode)
+
+  (use-package hide-mode-line)
 #+end_src
 
-** Aesthetics
-- Hide useless stuff and simplify verbose stuff
-- Number lines while programming
-- Tuple (#line, #column) on the modeline
-- Highlight current line except on the terminal (looks terrible on my
-  smartphone)
-- Dired as 'ls -Atlh' and auto revert
-- Aesthetic tweaks
+** Cursor
+- Beacon let's me find the easily cursor when I change buffers
+- Preserve cursor position after C-v or M-v
+- Preserve cursor position after closing a file
+- No blinking cursor
 
 #+begin_src emacs-lisp
-  (setq inhibit-startup-message t
-        initial-scratch-message nil)
-  (fset 'yes-or-no-p 'y-or-n-p)
-  (add-hook 'prog-mode-hook 'display-line-numbers-mode)
-  (column-number-mode)
+  (when window-system
+    (use-package beacon
+    :config
+    (beacon-mode 1)
+    (setq beacon-blink-when-window-scrolls nil)))
+
+  (setq scroll-preserve-screen-position 'always)
+  (save-place-mode 1)
+  (when window-system
+    (setq blink-cursor-mode nil))
+
+#+end_src
+
+* Programming
+** Languages
+*** Python
+#+begin_src emacs-lisp
+  (use-package elpy
+    :init
+    (elpy-enable)
+    :config
+    (setq python-shell-interpreter "ipython"
+          python-shell-interpreter-args "-i --simple-prompt"
+          python-shell-prompt-detect-failure-warning nil
+          elpy-rpc-virtualenv-path 'current)
+    :bind
+    ("C-c p" . elpy-autopep8-fix-code)
+    ("C-c b" . elpy-black-fix-code))
+
+  (use-package company-jedi
+    :config (add-to-list 'company-backends 'company-jedi))
+
+  (use-package ein)
+
+  (add-hook 'python-mode-hook (lambda ()
+                                (require 'sphinx-doc)
+                                (sphinx-doc-mode t)))
+
+  (add-hook 'python-mode-hook
+            (setq-default electric-indent-inhibit t))
+#+end_src
+
+*** Haskell
+#+begin_src emacs-lisp
+  (use-package haskell-mode)
+
+  (add-hook 'haskell-mode-hook
+            (lambda ()
+              (haskell-doc-mode)
+              (turn-on-haskell-indent)))
+#+end_src
+
+*** Bash
+**** Shell
+Make M-n and M-p more intelligent in shell.
+
+#+begin_src emacs-lisp
+  (eval-after-load 'comint
+    '(progn
+       ;; originally on C-c M-r and C-c M-s
+       (define-key comint-mode-map (kbd "M-p") #'comint-previous-matching-input-from-input)
+       (define-key comint-mode-map (kbd "M-n") #'comint-next-matching-input-from-input)
+       ;; originally on M-p and M-n
+       (define-key comint-mode-map (kbd "C-c M-r") #'comint-previous-input)
+       (define-key comint-mode-map (kbd "C-c M-s") #'comint-next-input)))
+
+  (define-key shell-mode-map (kbd "SPC") 'comint-magic-space)
+  (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+#+end_src
+
+**** Eshell
+I want eshell to behave like a typical terminal, i.e. I don't want tab to
+cycle through different options.
+
+#+begin_src emacs-lisp
+  (add-hook 'eshell-mode-hook
+   (lambda ()
+     (setq pcomplete-cycle-completions nil)))
+#+end_src
+
+Ivy in Eshell
+#+begin_src emacs-lisp
+  (add-hook 'eshell-mode-hook
+    (lambda ()
+      (define-key eshell-mode-map (kbd "<M-tab>") nil)
+      (define-key eshell-mode-map (kbd "<tab>")
+        (lambda () (interactive) (completion-at-point)))))
+#+end_src
+
+#+begin_src emacs-lisp
+  (setq eshell-history-file-name "~/.bash_history"
+        eshell-history-size 9999)
+#+end_src
+
+*** COMMENT Scala
+#+begin_src emacs-lisp
+  (use-package scala-mode)
+  (use-package ensime)
+  (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+#+end_src
+
+*** COMMENT Golang
+Requires gocode for the autocomplete to work.
+
+#+begin_src emacs-lisp
+  (use-package go-mode
+    :bind ("C-c s" . gofmt))
+
+  (use-package company-go
+    :defer t
+    :config (add-to-list 'company-backends 'company-go))
+#+end_src
+
+*** COMMENT \LaTeX
+#+begin_src emacs-lisp
+  (use-package auctex
+    :defer t
+    :config
+    (setq TeX-auto-save t
+          TeX-parse-self t)
+    (setq-default TeX-master nil))
+#+end_src
+
+*** COMMENT JS
+#+begin_src emacs-lisp
+  (add-hook 'js-mode-hook 'json-pretty-print-buffer-ordered)
+#+end_src
+** Version Control
+#+begin_src emacs-lisp
+  (use-package magit
+    :ensure t
+    :config
+    (setq magit-display-buffer-function
+          (quote magit-display-buffer-same-window-except-diff-v1))
+    :bind
+    ("C-x g" . magit-status))
+
+  (use-package diff-hl
+    :ensure t
+    :config
+    (global-diff-hl-mode)
+    (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+
+  (use-package gitignore-mode
+    :ensure t)
+
+  (setq vc-follow-symlinks t)
+#+end_src
+
+** COMMENT Files
+*** Yaml
+#+begin_src emacs-lisp
+  (use-package yaml-mode
+    :config
+    (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
+#+end_src
+
+*** CSV
+#+begin_src emacs-lisp
+  (use-package csv-mode)
+#+end_src
+
+*** GitLab CI
+#+begin_src emacs-lisp
+  (use-package gitlab-ci-mode
+    :defer t)
+#+end_src
+
+*** Dockerfiles
+#+begin_src emacs-lisp
+  (use-package dockerfile-mode)
+#+end_src
+
+** Misc
+*** Projectile
+#+begin_src emacs-lisp
+  (use-package projectile
+    :init
+    (projectile-mode 1)
+    :config
+    (setq projectile-completion-system 'ivy))
+#+end_src
+
+*** TODO COMMENT Pretty mode
+- State "TODO"       from              [2019-07-18 Thu 13:16]
+
+Global pretty mode breaks html export of org-mode files when there are functions
+in python source code blocks.
+
+#+begin_src emacs-lisp
+  (use-package pretty-mode
+    :config
+    (require 'pretty-mode)
+    ;; (global-pretty-mode t)
+    (pretty-activate-groups
+     '(:sub-and-superscripts :arithmetic-nary :quantifiers :types)))
+#+end_src
+
+*** COMMENT Docker
+#+begin_src emacs-lisp
+  (use-package docker
+    :bind ("C-c d" . docker))
+
+  (use-package docker-tramp)
+
+  ;; (use-package counsel-docker)
+#+end_src
+
+* Org
+** Basics
+#+begin_src emacs-lisp
+  (use-package org
+    :config
+    (setq org-special-ctrl-a/e t
+          org-special-ctrl-k t
+          org-cycle-global-at-bob t
+          org-goto-auto-isearch nil
+          org-M-RET-may-split-line '((default . nil))
+          org-list-demote-modify-bullet '(("-" . "+") ("+" . "-"))
+          org-list-indent-offset 1
+          org-return-follows-link t
+          org-directory "~/NextCloud/org/"
+          org-agenda-files '("~/NextCloud/org")
+          org-agenda-skip-deadline-prewarning-if-scheduled t
+          org-agenda-include-diary t
+          org-agenda-span 10
+          org-agenda-start-on-weekday nil
+          org-todo-keywords '((sequence "TODO(t!)"
+                                        "WIP(s!)"
+                                        "WAITING(w@)"
+                                        "|"
+                                        "DONE(d!)"
+                                        "NOT TODO(n@)"
+                                        "CANCELED(c@)"))
+          org-todo-keyword-faces '(("WIP" . "orange")
+                                   ("WAITING" . "yellow"))
+          org-refile-targets '((org-agenda-files :maxlevel . 5))
+          org-refile-allow-creating-parent-nodes t
+          orgtbl-mode t)
+
+    :bind
+    ("C-c a"     . org-agenda)
+    ("C-c l"     . org-store-link)
+    ("C-c c"     . org-capture)
+    ("C-c !"     . org-time-stamp-inactive)
+    ("C-c j"     . aadcg/org-checkbox-next)
+    ("<mouse-1>" . aadcg/org-checkbox-next))
+#+end_src
+
+** Literate Programming
+#+begin_src emacs-lisp
+  (setq org-src-fontify-natively t
+        org-src-tab-acts-natively t
+        org-src-window-setup 'current-window
+        org-confirm-babel-evaluate nil)
+
+  (use-package ob-ipython
+    :defer t)
+
+  (use-package ob-go)
+
+  (unless (compare-strings org-version nil nil "9.1.9" nil nil)
+    (require 'org-tempo))
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (python     . t)
+     (ipython    . t)
+     (haskell    . t)
+     (go         . t)
+     (latex      . t)
+     (shell      . t)
+     (ditaa      . t)))
+
+  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+  (add-to-list 'org-structure-template-alist '("py" . "src python"))
+  (add-to-list 'org-structure-template-alist '("hs" . "src haskell"))
+  (add-to-list 'org-structure-template-alist '("go" . "src go"))
+  (add-to-list 'org-structure-template-alist '("sh" . "src sh"))
+  (add-to-list 'org-structure-template-alist '("co" . "comment"))
+#+end_src
+
+** Exports
+- Ox-beamer exports org files to beamer presentation
+- Minted gives syntax highlighting to latex exports
+- Htmlize gives syntax highlighting to html exports
+
+#+begin_src emacs-lisp
+  (require 'ox-beamer)
+  (add-to-list 'org-latex-packages-alist '("newfloat" "minted"))
+  (setq org-latex-listings 'minted)
+
+  (use-package htmlize)
+#+end_src
+
+** Packages and Extensions
+#+begin_src emacs-lisp
+  (use-package cdlatex
+    :init
+    (org-cdlatex-mode))
+
+  (when window-system
+    (use-package org-pdfview))
+
+  (defun aadcg/org-checkbox-next ()
+    "Mark checkboxes and sort"
+    (interactive)
+    (let ((home (point)))
+      (when (org-at-item-checkbox-p)
+        (org-toggle-checkbox)
+        (org-sort-list nil ?x))
+      (goto-char home)))
+
+  (defun aadcg/org-replace-link-by-link-description ()
+    "Replace an org link by its description or if empty its
+  address. Credit to
+  [[https://emacs.stackexchange.com/questions/10707/in-org-mode-how-to-remove-a-link][Andrew
+  Swann]]"
+    (interactive)
+    (if (org-in-regexp org-bracket-link-regexp 1)
+        (let ((remove (list (match-beginning 0) (match-end 0)))
+          (description (if (match-end 3)
+                   (org-match-string-no-properties 3)
+                   (org-match-string-no-properties 1))))
+      (apply 'delete-region remove)
+      (insert description))))
+
+  (defun diary-last-day-of-month (date)
+    "Return `t` if DATE is the last day of the month."
+    (let* ((day (calendar-extract-day date))
+           (month (calendar-extract-month date))
+           (year (calendar-extract-year date))
+           (last-day-of-month
+            (calendar-last-day-of-month month year)))
+      (= day last-day-of-month)))
+
+  ;; org-cycle if tree is all checkboxes are ticked
+  ;; (defun org-at-item-checkbox-p ()
+  ;;   "Is point at a line starting a plain-list item with a checklet?"
+  ;;   (org-list-at-regexp-after-bullet-p "\\(\\[[- X]\\]\\)[ \t]+"))
+  ;; (cookie-re "\\(\\(\\[[0-9]*%\\]\\)\\|\\(\\[[0-9]*/[0-9]*\\]\\)\\)")
+  ;; matches digits / same digits
+  ;; \[\([0-9]*\)/\1\]
+#+end_src
+
+** Presenting
+#+begin_src emacs-lisp
+  (use-package org-tree-slide
+    :config
+    (setq org-tree-slide-slide-in-effect nil
+          org-tree-slide-cursor-init nil
+          org-tree-slide-never-touch-face t
+          org-tree-slide-activate-message "Welcome to my presentation!"
+          org-tree-slide-deactivate-message "Hope you have enjoyed!")
+    :hook
+    ((org-tree-slide-play . aadcg/presenting)
+     (org-tree-slide-stop . aadcg/non-presenting))
+    :bind
+    ("<f8>" . org-tree-slide-mode)
+    ("<f7>" . org-tree-slide-play-with-timer)
+    ("C->" . org-tree-slide-move-next-tree)
+    ("C-<" . org-tree-slide-move-previous-tree))
+
+  (defun aadcg/presenting ()
+    "Presenting mode"
+    (interactive)
+    (transparency 100)
+    (column-number-mode 0)
+    (line-number-mode 0)
+    (global-diff-hl-mode 0)
+    (setq global-hl-line-mode nil)
+    (default-text-scale-increase)
+    (default-text-scale-increase)
+    (default-text-scale-increase))
+
+  (defun aadcg/non-presenting ()
+    "Non-presenting mode"
+    (interactive)
+    (transparency 90)
+    (column-number-mode)
+    (line-number-mode)
+    (reset-text-size)
+    (global-diff-hl-mode)
+    (global-hl-line-mode)
+    (delete-other-windows)
+    (default-text-scale-reset))
+#+end_src
+
+** Look and Feel
+[[http://nadeausoftware.com/articles/2007/11/latency_friendly_customized_bullets_using_unicode_characters][Ideas for bullets]]
+
+#+begin_src emacs-lisp
+  (setq org-ellipsis " ↓"
+        org-hide-leading-stars t
+        org-startup-indented t
+        org-startup-with-inline-images t
+        org-image-actual-width 500
+        ;; org-hide-emphasis-markers t
+        org-highlight-latex-and-related (quote (latex script entities))
+        org-format-latex-options
+        (quote (:foreground default :background default :scale 2.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+                            ("begin" "$1" "$" "$$" "\\(" "\\["))))
+
+  (custom-set-faces '(org-ellipsis ((t (:foreground "gray70" :underline nil)))))
+
+  (use-package org-bullets
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+    (setq org-bullets-bullet-list '("§")))
+#+end_src
+
+* Emacs OS - The Kitchen Sink
+** Guix
+#+begin_src emacs-lisp
+  (use-package guix
+    :ensure t)
+#+end_src
+
+** Eww
+** Dired
+#+begin_src emacs-lisp
   (setq-default dired-listing-switches "-Atlh")
   (setq dired-auto-revert-buffer t)
-  (menu-bar-mode -1)
-  (when window-system
-    (tool-bar-mode -1)
-    (scroll-bar-mode -1)
-    (horizontal-scroll-bar-mode -1)
-    (global-hl-line-mode)
-    (fringe-mode '(5 . 0)))
 #+end_src
 
-** Font
+** Checking
+*** Flycheck
 #+begin_src emacs-lisp
-  (set-frame-font "Fira Code 15" nil t)
+  (use-package flycheck
+    :init
+    (global-flycheck-mode t))
+#+end_src
 
-  (defun auto-font ()
-    "idiotic stuff"
-    (interactive)
-    (let ((size 10))
-      (set-frame-font (concat "Fira Code " (number-to-string size)) nil t)
-      (delete-other-windows)
-      (while (> (window-max-chars-per-line) 200)
-        (setq size (+ size 1))
-        (set-frame-font (concat "Fira Code " (number-to-string size)) nil t))))
+*** Flyspell
+#+begin_src emacs-lisp
+  (when window-system
+    (use-package flyspell
+      :defer t
+      :config
+      (flyspell-prog-mode)))
+      ;; (when org-mode-hook
+      ;;   (flyspell-mode-off))))
+#+end_src
+
+** PDF
+#+begin_src emacs-lisp
+  (when window-system
+    (use-package pdf-tools
+      :unless in-termux-p
+      :config
+      (pdf-tools-install)
+      (setq pdf-view-midnight-colors '("#d2c8c8" . "#3F3F3F"))
+      :hook
+      (pdf-tools-enabled . pdf-view-midnight-minor-mode)
+      (pdf-tools-enabled . pdf-view-auto-slice-minor-mode)
+      (pdf-tools-enabled . pdf-view-fit-height-to-window)))
+#+end_src
+
+** Parenthesis
+#+begin_src emacs-lisp
+  (use-package smartparens
+    :config
+    (require 'smartparens-config)
+    (smartparens-global-strict-mode)
+    (show-smartparens-global-mode)
+    (sp-local-pair 'org-mode "$$" "$$"))
+#+end_src
+
+** Expand region
+#+begin_src emacs-lisp
+  (use-package expand-region
+    :bind ("C-=". 'er/expand-region))
+#+end_src
+
+** Emacs completion
+(info "(ivy)API")
+
+#+begin_src emacs-lisp
+  (use-package counsel
+    :ensure t
+    :init
+    (ivy-mode 1)
+    (counsel-mode)
+    :config
+    (setq ivy-count-format "%d/%d "
+          ivy-wrap t
+          ivy-extra-directories nil
+          ivy-initial-inputs-alist nil
+          ivy-height-alist
+          '((t
+             lambda (_caller)
+             (/ (window-height) 2))))
+    (add-to-list 'ivy-format-functions-alist '(t . ivy-format-function-arrow))
+    :bind
+    ("C-x B" . ivy-switch-buffer-other-window)
+    ("C-s" . swiper))
+
+  (use-package smex
+    :ensure t)
+#+end_src
+
+** Auto-complete
+#+begin_src emacs-lisp
+  (use-package company
+    :config
+    (global-company-mode t)
+    (setq company-idle-delay 0.1
+          company-minimum-prefix-length 3)
+    (define-key company-active-map (kbd "C-j") 'company-complete-selection)
+    (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
+    (define-key company-active-map (kbd "C-n") 'company-select-next)
+    (define-key company-active-map (kbd "C-p") 'company-select-previous))
+#+end_src
+
+** Games
+#+begin_src emacs-lisp
+  (use-package typit
+    :defer t)
+#+end_src
+
+** Default Text Scale
+#+begin_src emacs-lisp
+  (use-package default-text-scale
+    :config (default-text-scale-mode))
+#+end_src
+
+** Google Translate
+#+begin_src emacs-lisp
+  (use-package google-translate
+    :config
+    (require 'google-translate-default-ui)
+    (global-set-key (kbd "C-c t") 'google-translate-at-point)
+    (global-set-key (kbd "C-c T") 'google-translate-query-translate)
+    (setq google-translate-backend-method 'curl))
+#+end_src
+
+** Media
+#+begin_src emacs-lisp
+  (use-package emms
+    :config
+    (require 'emms-setup)
+    (emms-standard)
+    (emms-default-players)
+    :bind
+    ("<XF86AudioRaiseVolume>" . emms-volume-raise)
+    ("<XF86AudioLowerVolume>" . emms-volume-lower)
+    ("<XF86AudioPlay>"        . emms-pause)
+    ("<XF86AudioNext>"        . emms-next)
+    ("<XF86AudioPrev>"        . emms-previous))
 #+end_src
 
 ** Regional
@@ -287,613 +834,52 @@ disable if I'm using stumpwm!
             (holiday-fixed 6 24 "Dia de São João")))
 #+end_src
 
-* Org
-** Basics
-Sets up:
-- preferences
-- agenda
-- refiling
-- orgtbl-mode
-- keybindings
+** Browser
+- Eww by default (w/ visual-line-mode)
+- Firefox for GUI/JavaScript stuff
 
 #+begin_src emacs-lisp
-  (use-package org
-    :config
-    (setq org-special-ctrl-a/e t
-          org-special-ctrl-k t
-          org-cycle-global-at-bob t
-          org-goto-auto-isearch nil
-          org-M-RET-may-split-line '((default . nil))
-          org-list-demote-modify-bullet '(("-" . "+") ("+" . "-"))
-          org-list-indent-offset 1
-          org-return-follows-link t
-          org-directory "~/NextCloud/org/"
-          org-agenda-files '("~/NextCloud/org")
-          org-agenda-skip-deadline-prewarning-if-scheduled t
-          org-agenda-include-diary t
-          org-agenda-span 10
-          org-agenda-start-on-weekday nil
-          org-todo-keywords '((sequence "TODO(t!)"
-                                        "WIP(s!)"
-                                        "WAITING(w@)"
-                                        "|"
-                                        "DONE(d!)"
-                                        "NOT TODO(n@)"
-                                        "CANCELED(c@)"))
-          org-todo-keyword-faces '(("WIP" . "orange")
-                                   ("WAITING" . "yellow"))
-          org-refile-targets '((org-agenda-files :maxlevel . 5))
-          org-refile-allow-creating-parent-nodes t
-          orgtbl-mode t)
-
-    :bind
-    ("C-c a"     . org-agenda)
-    ("C-c l"     . org-store-link)
-    ("C-c c"     . org-capture)
-    ("C-c !"     . org-time-stamp-inactive)
-    ("C-c j"     . aadcg/org-checkbox-next)
-    ("<mouse-1>" . aadcg/org-checkbox-next))
+  (setq browse-url-browser-function '((".*youtube.*"
+                                       . browse-url-default-browser)
+                                      (".*cliente*"
+                                       . browse-url-default-browser)
+                                      (".*checkin*"
+                                      . browse-url-default-browser)
+                                      ("." . eww-browse-url)))
+  (add-hook 'eww-mode-hook 'visual-line-mode)
 #+end_src
 
-** Literate Programming
+* My Kitchen Sink
+** Metaconfig
+Visit and reload this config
 #+begin_src emacs-lisp
-  (setq org-src-fontify-natively t
-        org-src-tab-acts-natively t
-        org-src-window-setup 'current-window
-        org-confirm-babel-evaluate nil)
-
-  (use-package ob-ipython
-    :defer t)
-
-  (use-package ob-go)
-
-  (unless (compare-strings org-version nil nil "9.1.9" nil nil)
-    (require 'org-tempo))
-
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((emacs-lisp . t)
-     (python     . t)
-     (ipython    . t)
-     (haskell    . t)
-     (go         . t)
-     (latex      . t)
-     (shell      . t)
-     (ditaa      . t)))
-
-  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-  (add-to-list 'org-structure-template-alist '("py" . "src python"))
-  (add-to-list 'org-structure-template-alist '("hs" . "src haskell"))
-  (add-to-list 'org-structure-template-alist '("go" . "src go"))
-  (add-to-list 'org-structure-template-alist '("sh" . "src sh"))
-  (add-to-list 'org-structure-template-alist '("co" . "comment"))
-#+end_src
-
-** Exports
-#+begin_src emacs-lisp
-  (require 'ox-beamer)
-  (add-to-list 'org-latex-packages-alist '("newfloat" "minted"))
-  (setq org-latex-listings 'minted)
-#+end_src
-
-** Packages and Functions
-#+begin_src emacs-lisp
-  (use-package cdlatex
-    :init
-    (org-cdlatex-mode))
-
-  (when window-system
-    (use-package org-pdfview))
-
-  (defun aadcg/org-checkbox-next ()
-    "Mark checkboxes and sort"
+  (defun config-visit ()
+    "Visits ~/.emacs.d/config.org."
     (interactive)
-    (let ((home (point)))
-      (when (org-at-item-checkbox-p)
-        (org-toggle-checkbox)
-        (org-sort-list nil ?x))
-      (goto-char home)))
+    (find-file "~/.emacs.d/config.org"))
 
-  (defun aadcg/org-replace-link-by-link-description ()
-    "Replace an org link by its description or if empty its
-  address. Credit to
-  [[https://emacs.stackexchange.com/questions/10707/in-org-mode-how-to-remove-a-link][Andrew
-  Swann]]"
+  (global-set-key (kbd "C-c e") 'config-visit)
+
+  (defun config-reload ()
+    "Reloads ~/.emacs.d/config.org at runtime."
     (interactive)
-    (if (org-in-regexp org-bracket-link-regexp 1)
-        (let ((remove (list (match-beginning 0) (match-end 0)))
-          (description (if (match-end 3)
-                   (org-match-string-no-properties 3)
-                   (org-match-string-no-properties 1))))
-      (apply 'delete-region remove)
-      (insert description))))
+    (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
 
-  (defun diary-last-day-of-month (date)
-    "Return `t` if DATE is the last day of the month."
-    (let* ((day (calendar-extract-day date))
-           (month (calendar-extract-month date))
-           (year (calendar-extract-year date))
-           (last-day-of-month
-            (calendar-last-day-of-month month year)))
-      (= day last-day-of-month)))
-
-  ;; org-cycle if tree is all checkboxes are ticked
-  ;; (defun org-at-item-checkbox-p ()
-  ;;   "Is point at a line starting a plain-list item with a checklet?"
-  ;;   (org-list-at-regexp-after-bullet-p "\\(\\[[- X]\\]\\)[ \t]+"))
-  ;; (cookie-re "\\(\\(\\[[0-9]*%\\]\\)\\|\\(\\[[0-9]*/[0-9]*\\]\\)\\)")
-  ;; matches digits / same digits
-  ;; \[\([0-9]*\)/\1\]
+  (global-set-key (kbd "C-c r") 'config-reload)
 #+end_src
 
-** Presenting
+** Personal
 #+begin_src emacs-lisp
-  (use-package org-tree-slide
-    :config
-    (setq org-tree-slide-slide-in-effect nil
-          org-tree-slide-cursor-init nil
-          org-tree-slide-never-touch-face t
-          org-tree-slide-activate-message "Welcome to my presentation!"
-          org-tree-slide-deactivate-message "Hope you have enjoyed!")
-    :hook
-    ((org-tree-slide-play . aadcg/presenting)
-     (org-tree-slide-stop . aadcg/non-presenting))
-    :bind
-    ("<f8>" . org-tree-slide-mode)
-    ("<f7>" . org-tree-slide-play-with-timer)
-    ("C->" . org-tree-slide-move-next-tree)
-    ("C-<" . org-tree-slide-move-previous-tree))
-
-  (defun aadcg/presenting ()
-    "Presenting mode"
-    (interactive)
-    (transparency 100)
-    (column-number-mode 0)
-    (line-number-mode 0)
-    (global-diff-hl-mode 0)
-    (setq global-hl-line-mode nil)
-    (default-text-scale-increase)
-    (default-text-scale-increase)
-    (default-text-scale-increase))
-
-  (defun aadcg/non-presenting ()
-    "Non-presenting mode"
-    (interactive)
-    (transparency 90)
-    (column-number-mode)
-    (line-number-mode)
-    (reset-text-size)
-    (global-diff-hl-mode)
-    (global-hl-line-mode)
-    (delete-other-windows)
-    (default-text-scale-reset))
+  (setq user-full-name "André Alexandre Gomes"
+        user-mail-address "andremegafone@gmail.com"
+        ;; calendar-latitude 41.16
+        ;; calendar-longitude -8.63
+        ;; calendar-location-name "Porto, Portugal"
+        calendar-latitude 59.94
+        calendar-longitude 30.31
+        calendar-location-name "Санкт-Петербург, Россия")
 #+end_src
 
-** Aesthethics
-[[http://nadeausoftware.com/articles/2007/11/latency_friendly_customized_bullets_using_unicode_characters][Ideas for bullets]]
-
-#+begin_src emacs-lisp
-  (setq org-ellipsis " §"
-        org-hide-leading-stars t
-        org-startup-indented t
-        org-startup-with-inline-images t
-        org-image-actual-width 500
-        ;; org-hide-emphasis-markers t
-        org-highlight-latex-and-related (quote (latex script entities))
-        org-format-latex-options
-        (quote (:foreground default :background default :scale 2.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
-                            ("begin" "$1" "$" "$$" "\\(" "\\["))))
-
-  (custom-set-faces '(org-ellipsis ((t (:foreground "gray70" :underline nil)))))
-
-  (use-package org-bullets
-    :config
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-    (setq org-bullets-bullet-list '("▹")))
-#+end_src
-
-* Programming
-** Languages
-*** Python
-#+begin_src emacs-lisp
-  (use-package elpy
-    :init
-    (elpy-enable)
-    :config
-    (setq python-shell-interpreter "ipython"
-          python-shell-interpreter-args "-i --simple-prompt"
-          python-shell-prompt-detect-failure-warning nil
-          elpy-rpc-virtualenv-path 'current)
-    :bind
-    ("C-c p" . elpy-autopep8-fix-code)
-    ("C-c b" . elpy-black-fix-code))
-
-  (use-package company-jedi
-    :config (add-to-list 'company-backends 'company-jedi))
-
-  (use-package ein)
-
-  (add-hook 'python-mode-hook (lambda ()
-                                (require 'sphinx-doc)
-                                (sphinx-doc-mode t)))
-
-  (add-hook 'python-mode-hook
-            (setq-default electric-indent-inhibit t))
-#+end_src
-
-*** Haskell
-#+begin_src emacs-lisp
-  (use-package haskell-mode)
-
-  (add-hook 'haskell-mode-hook
-            (lambda ()
-              (haskell-doc-mode)
-              (turn-on-haskell-indent)))
-#+end_src
-
-*** COMMENT Scala
-#+begin_src emacs-lisp
-  (use-package scala-mode)
-  (use-package ensime)
-  (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
-#+end_src
-
-*** Golang
-Requires gocode for the autocomplete to work.
-
-#+begin_src emacs-lisp
-  (use-package go-mode
-    :bind ("C-c s" . gofmt))
-
-  (use-package company-go
-    :defer t
-    :config (add-to-list 'company-backends 'company-go))
-#+end_src
-
-*** \LaTeX
-#+begin_src emacs-lisp
-  (use-package auctex
-    :defer t
-    :config
-    (setq TeX-auto-save t
-          TeX-parse-self t)
-    (setq-default TeX-master nil))
-#+end_src
-
-*** JS
-#+begin_src emacs-lisp
-  ;; (add-hook 'js-mode-hook 'json-pretty-print-buffer-ordered)
-#+end_src
-
-*** Bash
-**** Shell
-Make M-n and M-p more intelligent in shell.
-
-#+begin_src emacs-lisp
-  (eval-after-load 'comint
-    '(progn
-       ;; originally on C-c M-r and C-c M-s
-       (define-key comint-mode-map (kbd "M-p") #'comint-previous-matching-input-from-input)
-       (define-key comint-mode-map (kbd "M-n") #'comint-next-matching-input-from-input)
-       ;; originally on M-p and M-n
-       (define-key comint-mode-map (kbd "C-c M-r") #'comint-previous-input)
-       (define-key comint-mode-map (kbd "C-c M-s") #'comint-next-input)))
-
-  (define-key shell-mode-map (kbd "SPC") 'comint-magic-space)
-  (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-#+end_src
-
-**** Eshell
-I want eshell to behave like a typical terminal, i.e. I don't want tab to
-cycle through different options.
-
-#+begin_src emacs-lisp
-  (add-hook 'eshell-mode-hook
-   (lambda ()
-     (setq pcomplete-cycle-completions nil)))
-#+end_src
-
-Ivy in Eshell
-#+begin_src emacs-lisp
-  (add-hook 'eshell-mode-hook
-    (lambda ()
-      (define-key eshell-mode-map (kbd "<M-tab>") nil)
-      (define-key eshell-mode-map (kbd "<tab>")
-        (lambda () (interactive) (completion-at-point)))))
-#+end_src
-
-#+begin_src emacs-lisp
-  (setq eshell-history-file-name "~/.bash_history"
-        eshell-history-size 9999)
-#+end_src
-** Version Control
-#+begin_src emacs-lisp
-  (use-package magit
-    :config
-    (setq magit-display-buffer-function
-          (quote magit-display-buffer-same-window-except-diff-v1))
-    :bind
-    ("C-x g" . magit-status))
-
-  (use-package diff-hl
-    :config
-    (global-diff-hl-mode)
-    (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
-
-  (use-package gitignore-mode)
-
-  (setq vc-follow-symlinks t)
-#+end_src
-
-** Files
-*** Yaml
-#+begin_src emacs-lisp
-  (use-package yaml-mode
-    :config
-    (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
-#+end_src
-
-*** CSV
-#+begin_src emacs-lisp
-  (use-package csv-mode)
-#+end_src
-
-*** GitLab CI
-#+begin_src emacs-lisp
-  (use-package gitlab-ci-mode
-    :defer t)
-#+end_src
-
-*** Dockerfiles
-#+begin_src emacs-lisp
-  (use-package dockerfile-mode)
-#+end_src
-
-** Utilities
-*** Projectile
-#+begin_src emacs-lisp
-  (use-package projectile
-    :init
-    (projectile-mode 1)
-    :config
-    (setq projectile-completion-system 'ivy))
-#+end_src
-
-*** TODO Pretty mode
-- State "TODO"       from              [2019-07-18 Thu 13:16]
-
-Global pretty mode breaks html export of org-mode files when there are functions
-in python source code blocks.
-
-#+begin_src emacs-lisp
-  (use-package pretty-mode
-    :config
-    (require 'pretty-mode)
-    ;; (global-pretty-mode t)
-    (pretty-activate-groups
-     '(:sub-and-superscripts :arithmetic-nary :quantifiers :types)))
-#+end_src
-
-*** Docker
-#+begin_src emacs-lisp
-  (use-package docker
-    :bind ("C-c d" . docker))
-
-  (use-package docker-tramp)
-
-  ;; (use-package counsel-docker)
-#+end_src
-
-* Miscellaneous
-** Checking
-*** Flycheck
-#+begin_src emacs-lisp
-  (use-package flycheck
-    :init
-    (global-flycheck-mode t))
-#+end_src
-
-*** Flyspell
-#+begin_src emacs-lisp
-  (when window-system
-    (use-package flyspell
-      :defer t
-      :config
-      (flyspell-prog-mode)))
-      ;; (when org-mode-hook
-      ;;   (flyspell-mode-off))))
-#+end_src
-
-** PDF
-#+begin_src emacs-lisp
-  (when window-system
-    (use-package pdf-tools
-      :config
-      (pdf-tools-install)
-      (setq pdf-view-midnight-colors '("#d2c8c8" . "#3F3F3F"))
-      :hook
-      (pdf-tools-enabled . pdf-view-midnight-minor-mode)
-      (pdf-tools-enabled . pdf-view-auto-slice-minor-mode)
-      (pdf-tools-enabled . pdf-view-fit-height-to-window)))
-#+end_src
-
-** Parenthesis
-#+begin_src emacs-lisp
-  (use-package smartparens
-    :config
-    (require 'smartparens-config)
-    (smartparens-global-strict-mode)
-    (show-smartparens-global-mode)
-    (sp-local-pair 'org-mode "$$" "$$"))
-#+end_src
-
-** Avy
-#+begin_src emacs-lisp
-  (use-package avy
-    :bind ("C-r" . avy-goto-word-1))
-#+end_src
-
-** Expand region
-#+begin_src emacs-lisp
-  (use-package expand-region
-    :bind ("C-=". 'er/expand-region))
-#+end_src
-
-** Emacs completion
-(info "(ivy)API")
-
-#+begin_src emacs-lisp
-  (use-package counsel
-    :init
-    (ivy-mode 1)
-    (counsel-mode)
-
-    :config
-    (setq ivy-count-format "%d/%d "
-          ivy-wrap t
-          ivy-extra-directories nil
-          ivy-initial-inputs-alist nil
-          ivy-height-alist
-          '((t
-             lambda (_caller)
-             (/ (window-height) 2))))
-    (add-to-list 'ivy-format-functions-alist '(t . ivy-format-function-arrow))
-
-    :bind
-    ("C-x B" . ivy-switch-buffer-other-window)
-    ("C-s" . swiper))
-
-  (use-package smex)
-#+end_src
-
-** Auto-complete
-#+begin_src emacs-lisp
-  (use-package company
-    :config
-    (global-company-mode t)
-    (setq company-idle-delay 0.1
-          company-minimum-prefix-length 3)
-    (define-key company-active-map (kbd "C-j") 'company-complete-selection)
-    (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
-    (define-key company-active-map (kbd "C-n") 'company-select-next)
-    (define-key company-active-map (kbd "C-p") 'company-select-previous))
-#+end_src
-
-** Games
-#+begin_src emacs-lisp
-  (use-package typit
-    :defer t)
-#+end_src
-
-** Whichkey
-#+begin_src emacs-lisp
-  (use-package which-key
-    :config (which-key-mode))
-#+end_src
-
-** Default Text Scale
-#+begin_src emacs-lisp
-  (use-package default-text-scale
-    :config (default-text-scale-mode))
-#+end_src
-
-** Google Translate
-#+begin_src emacs-lisp
-  (use-package google-translate
-    :config
-    (require 'google-translate-default-ui)
-    (global-set-key (kbd "C-c t") 'google-translate-at-point)
-    (global-set-key (kbd "C-c T") 'google-translate-query-translate)
-    (setq google-translate-backend-method 'curl))
-
-  ;; (require 'google-translate)
-  ;; (require 'google-translate-default-ui)
-  ;; (global-set-key (kbd "C-c t") 'google-translate-at-point)
-  ;; (global-set-key (kbd "C-c T") 'google-translate-query-translate)
-  ;; (setq google-translate-backend-method 'curl)
-#+end_src
-
-** Media
-#+begin_src emacs-lisp
-  (use-package emms
-    :config
-    (require 'emms-setup)
-    (emms-standard)
-    (emms-default-players)
-    :bind
-    ("<XF86AudioRaiseVolume>" . emms-volume-raise)
-    ("<XF86AudioLowerVolume>" . emms-volume-lower)
-    ("<XF86AudioPlay>"        . emms-pause)
-    ("<XF86AudioNext>"        . emms-next)
-    ("<XF86AudioPrev>"        . emms-previous))
-#+end_src
-
-* Aesthetics
-Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
-** Theme
-#+begin_src emacs-lisp
-  (defun transparency (value)
-    "Sets the transparency of the frame window. 0=transparent/100=opaque."
-    (interactive "nTransparency Value 0 - 100 opaque:")
-    (set-frame-parameter (selected-frame) 'alpha value))
-
-  (global-set-key (kbd "C-x t") 'transparency)
-
-  (use-package zenburn-theme
-    :init
-    (setq zenburn-scale-org-headlines t
-          zenburn-height-plus-2 1.3
-          zenburn-height-plus-3 1.5
-          zenburn-height-plus-4 1.7)
-    (load-theme 'zenburn t)
-    (transparency 90))
-#+end_src
-
-** Modeline
-#+begin_src emacs-lisp
-  (when window-system
-    (use-package moody
-      :config
-      (setq moody-mode-line-height 20
-            x-underline-at-descent-line t)
-      (moody-replace-mode-line-buffer-identification)
-      (moody-replace-vc-mode)))
-
-  (use-package minions
-    :config
-    (minions-mode 1)
-    (setq minions-direct '(org-tree-slide-mode text-scale-mode)
-          minions-mode-line-lighter ""
-          minions-mode-line-delimiters '("" . "")))
-
-  (setq battery-mode-line-format " %p%"
-        battery-mode-line-limit 99)
-
-  (use-package hide-mode-line)
-#+end_src
-
-** Beacon
-#+begin_src emacs-lisp
-  (when window-system
-    (use-package beacon
-    :config
-    (beacon-mode 1)
-    (setq beacon-blink-when-window-scrolls nil)))
-#+end_src
-
-** Htmlize
-#+begin_src emacs-lisp
-  (use-package htmlize)
-#+end_src
-
-** Delimiters
-#+begin_src emacs-lisp
-  (use-package rainbow-delimiters
-    :config
-    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
-#+end_src
-
-* My Utils
 ** Learning Russian
 #+begin_src emacs-lisp
   (defun openru-search (word)
@@ -911,8 +897,19 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
       (forward-line 20)))
 #+end_src
 
+** Termux
+#+begin_src emacs-lisp
+  (defvar in-termux-p
+    (and (equal (system-name) "localhost")
+         (not (equal user-login-name "aadcg")))
+    "t if using GNU Emacs on Termux")
+#+end_src
+
 * Startup
 #+begin_src emacs-lisp
+  (setq inhibit-startup-message t
+        initial-scratch-message nil)
+
   ;; (when window-system
   ;;   (toggle-frame-fullscreen))
 
@@ -921,7 +918,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
   (auto-font)
 #+end_src
 
-* COMMENT
+* TODO COMMENT
 ** TODO Create package with portuguese holidays
 [[https://blog.aaronbieber.com/2015/08/04/authoring-emacs-packages.html][how to]]
 
@@ -931,17 +928,3 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 
 ** Emacs inside a docker container?
 [[https://medium.com/@sserialdev/emacs-in-the-container-age-5c0c222cfee][link]]
-** Termux
-I do. I have the following predicate in my init.el (think it is from Sacha Chua)
-
-    (defvar in-termux-p
-      (and (equal (system-name) "localhost")
-           (not (equal user-login-name "mylaptopusername")))
-      "t if we are in termux emacs.")
-
-Then for any package, that I do not want installed in termux, I start the use-package block with:
-
-    (use-package pkgname
-      :unless in-termux-p
-
-I use straight.el, so getting my config working on termux was pretty much just: git clone dotfiles, cd dotfiles, stow emacs
