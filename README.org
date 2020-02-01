@@ -18,6 +18,11 @@
 | Mail            |                |
 #+TBLFM: @3$2='(org-version)::@2$2='(substring (emacs-version) 10 14)
 
+| System    | Emacs |   Org |
+|-----------+-------+-------|
+| gnu/linux |  26.3 | 9.3.1 |
+#+TBLFM: @>$3='(org-version)::@>$2='(substring (emacs-version) 10 14)::@>$1='(print system-type)
+
 * Motivation
 Free software grants us the 4 freedoms to run, study, redistribute and improve
 programs. As a result, these programs are usually so extensible and flexible
