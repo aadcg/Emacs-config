@@ -845,7 +845,9 @@ disable if I'm using stumpwm!
   (use-package telega
     :config (telega-mode-line-mode 1))
 
-  (use-package emacs-emojify)
+  (use-package emojify
+    :config
+    (global-emojify-mode))
 #+end_src
 
 * My Kitchen Sink
