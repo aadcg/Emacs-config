@@ -25,7 +25,6 @@
       *window-border-style* :thin
       *mode-line-background-color* "#3F3F3F"
       *mode-line-foreground-color* "#DCDCCC"
-      *cpu-modeline-fmt* "%C"
       *window-name-source* :class
       *delim* " ^5|^7 "
       *screen-mode-line-format* (list
