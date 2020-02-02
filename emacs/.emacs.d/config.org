@@ -42,7 +42,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
 #+begin_src emacs-lisp
   (set-frame-font "Fira Code 12" nil t)
 
-  (defun auto-font ()
+  (defun auto-size-font ()
     "idiotic stuff"
     (interactive)
     (let ((size 10))
@@ -51,7 +51,7 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
       (while (> (window-max-chars-per-line) 190)
         (setq size (+ size 1))
         (set-frame-font (concat "Fira Code " (number-to-string size)) nil t)
-        (message "Correct size is %d" size))))
+        (message "The suggested font size is %d" size))))
 #+end_src
 
 #+begin_src emacs-lisp
