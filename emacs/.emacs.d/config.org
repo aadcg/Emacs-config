@@ -31,9 +31,9 @@ Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
   (use-package zenburn-theme
     :init
     (setq zenburn-scale-org-headlines t
-          zenburn-height-plus-2 1.3
-          zenburn-height-plus-3 1.5
-          zenburn-height-plus-4 1.7)
+          zenburn-height-plus-2 1.2
+          zenburn-height-plus-3 1.4
+          zenburn-height-plus-4 1.6)
     (load-theme 'zenburn t)
     (transparency 90))
 #+end_src
@@ -898,21 +898,13 @@ Visit and reload this config
       (forward-line 20)))
 #+end_src
 
-** Termux
-#+begin_src emacs-lisp
-  (defvar in-termux-p
-    (and (equal (system-name) "localhost")
-         (not (equal user-login-name "aadcg")))
-    "t if using GNU Emacs on Termux")
-#+end_src
-
 * Startup
 #+begin_src emacs-lisp
   (setq inhibit-startup-message t
         initial-scratch-message nil)
 
-  ;; (when (getenv "DESKTOP_SESSION")
-  ;;   (toggle-frame-fullscreen))
+  (when (string-match "gnome" (getenv "DESKTOP_SESSION"))
+    (toggle-frame-fullscreen))
 
   (org-agenda-list 1)
   (delete-other-windows)
@@ -929,5 +921,6 @@ Visit and reload this config
 
 ** Emacs inside a docker container?
 [[https://medium.com/@sserialdev/emacs-in-the-container-age-5c0c222cfee][link]]
+
 ** use-package and guix
 if pkgs is available in guix, then use it rather than melpa
