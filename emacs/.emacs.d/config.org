@@ -840,6 +840,14 @@ disable if I'm using stumpwm!
   (add-hook 'eww-mode-hook 'visual-line-mode)
 #+end_src
 
+** Telegram
+#+begin_src emacs-lisp
+  (use-package telega
+    :config (telega-mode-line-mode 1))
+
+  (use-package emacs-emojify)
+#+end_src
+
 * My Kitchen Sink
 ** Metaconfig
 Visit and reload this config
@@ -904,8 +912,8 @@ Visit and reload this config
   ;; (when (getenv "DESKTOP_SESSION")
   ;;   (toggle-frame-fullscreen))
 
-  ;; (org-agenda-list 1)
-  ;; (delete-other-windows)
+  (org-agenda-list 1)
+  (delete-other-windows)
   ;; (auto-font)
 #+end_src
 
