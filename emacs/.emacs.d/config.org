@@ -474,7 +474,7 @@ in python source code blocks.
 ** Packages and Extensions
 #+begin_src emacs-lisp
   (use-package cdlatex
-    :init
+    :config
     (org-cdlatex-mode))
 
   (when window-system
@@ -906,6 +906,8 @@ Visit and reload this config
   (when (string-match "gnome" (getenv "DESKTOP_SESSION"))
     (toggle-frame-fullscreen))
 
+  (telega)
+  (async-shell-command "owncloud")
   (org-agenda-list 1)
   (delete-other-windows)
   ;; (auto-font)
