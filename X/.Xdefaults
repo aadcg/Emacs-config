@@ -1,9 +1,9 @@
 xterm*utf8: always
 xterm*metaSendsEscape: true
 xterm*selectToClipboard: true
-xterm*font: xft:firacode:pixelsize=16:autohint=true
+xterm*font: xft:firacode:pixelsize=18:autohint=true
 xterm*loginShell: true
-xterm*saveLines: 2000
+xterm*saveLines: 10000
 xterm*charClass: 33:48,35:48,37:48,43:48,45-47:48,64:48,95:48,126:48
 xterm*termName: xterm-color
 xterm*eightBitInput: false
@@ -25,6 +25,3 @@ xterm*color12: #8cd0d3
 xterm*color13: #dc8cc3
 xterm*color14: #93e0e3
 xterm*color15: #ffffff
-! xterm*boldMode: false
-! xterm*colorBDMode: true
-! xterm*colorBD: rgb:fc/fc/fc
