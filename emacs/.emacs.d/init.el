@@ -11,6 +11,8 @@
        (not (equal user-login-name "aadcg")))
   "t if using GNU Emacs on Termux")
 
+(setq vc-follow-symlinks t)
+
 (use-package use-package-ensure
   :config
   (setq use-package-always-ensure t))

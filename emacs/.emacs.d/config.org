@@ -320,8 +320,6 @@ Requires gocode for the autocomplete to work.
     (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 
   (use-package gitignore-mode)
-
-  (setq vc-follow-symlinks t)
 #+end_src
 
 ** COMMENT Files
@@ -843,6 +841,7 @@ disable if I'm using stumpwm!
 ** Telegram
 #+begin_src emacs-lisp
   (use-package telega
+    :unless in-termux-p
     :config (telega-mode-line-mode 1))
 
   (use-package emojify
@@ -903,11 +902,13 @@ Visit and reload this config
   (setq inhibit-startup-message t
         initial-scratch-message nil)
 
-  (when (string-match "gnome" (getenv "DESKTOP_SESSION"))
+  (when (and (getenv "DESKTOP_SESSION") (string-match "gnome" (getenv "DESKTOP_SESSION")))
     (toggle-frame-fullscreen))
 
-  (telega)
-  (async-shell-command "owncloud")
+  (unless in-termux-p
+    (telega)
+    (async-shell-command "owncloud"))
+
   (org-agenda-list 1)
   (delete-other-windows)
   ;; (auto-font)
