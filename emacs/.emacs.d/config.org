@@ -836,6 +836,16 @@ disable if I'm using stumpwm!
                                       . browse-url-default-browser)
                                       ("." . eww-browse-url)))
   (add-hook 'eww-mode-hook 'visual-line-mode)
+
+  (use-package shr
+    :commands (eww
+               eww-browse-url)
+    :config
+    (setq browse-url-browser-function 'eww-browse-url)
+    (setq shr-use-fonts nil)
+    (setq shr-use-colors nil)
+    (setq shr-max-image-proportion 0.2)
+    (setq shr-width (current-fill-column)))
 #+end_src
 
 ** Telegram
