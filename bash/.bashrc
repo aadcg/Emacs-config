@@ -52,9 +52,3 @@ shopt -s histappend
 # files and zero or more directories and subdirectories. If the pattern is
 # followed by a /, only directories and subdirectories match.
 shopt -s globstar
-
-bind Space:magic-space
-
-# setxkbmap -layout us,ru -option grp:win_space_toggle,grp_led:caps,compose:lctrl,caps:ctrl_modifier
-
-# xrandr --output eDP-1 --mode 1920x1080 --brightness 1
