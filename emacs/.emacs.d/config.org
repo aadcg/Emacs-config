@@ -410,8 +410,9 @@ in python source code blocks.
           org-todo-keyword-faces '(("WIP" . "orange")
                                    ("WAITING" . "yellow"))
           org-refile-targets '((org-agenda-files :maxlevel . 5))
-          org-refile-allow-creating-parent-nodes t
-          orgtbl-mode t)
+          org-refile-allow-creating-parent-nodes t orgtbl-mode t
+          org-modules '(ol-w3m ol-bbdb ol-bibtex ol-docview ol-gnus
+          ol-info ol-irc ol-mhe ol-rmail ol-eww drill tempo))
 
     :bind
     ("C-c a"     . org-agenda)
@@ -434,7 +435,7 @@ in python source code blocks.
 
   (use-package ob-go)
 
-  (unless (compare-strings org-version nil nil "9.1.9" nil nil)
+  (unless (string-match org-version "9.1.9")
     (require 'org-tempo))
 
   (org-babel-do-load-languages
@@ -453,7 +454,6 @@ in python source code blocks.
   (add-to-list 'org-structure-template-alist '("hs" . "src haskell"))
   (add-to-list 'org-structure-template-alist '("go" . "src go"))
   (add-to-list 'org-structure-template-alist '("sh" . "src sh"))
-  (add-to-list 'org-structure-template-alist '("co" . "comment"))
 #+end_src
 
 ** Exports
@@ -462,6 +462,7 @@ in python source code blocks.
 - Htmlize gives syntax highlighting to html exports
 
 #+begin_src emacs-lisp
+  (require 'ox)
   (require 'ox-beamer)
   (add-to-list 'org-latex-packages-alist '("newfloat" "minted"))
   (setq org-latex-listings 'minted)
@@ -470,13 +471,21 @@ in python source code blocks.
 #+end_src
 
 ** Packages and Extensions
-#+begin_src emacs-lisp
-  (use-package cdlatex
-    :config
-    (org-cdlatex-mode))
+[[https://orgmode.org/worg/org-contrib/org-drill.html#orge367ffb][org-drill tutorial]]
 
-  (when window-system
-    (use-package org-pdfview))
+#+begin_src emacs-lisp
+  (use-package org-drill
+    :config
+    (require 'org-drill)
+    (setq org-drill-save-buffers-after-drill-sessions-p nil
+          org-drill-scope 'tree
+          org-drill-cram-hours 0))
+
+  (use-package cdlatex
+    :hook (org-mode . org-cdlatex-mode))
+
+  (use-package org-pdfview
+    :when window-system)
 
   (defun aadcg/org-checkbox-next ()
     "Mark checkboxes and sort"
@@ -495,11 +504,11 @@ in python source code blocks.
     (interactive)
     (if (org-in-regexp org-bracket-link-regexp 1)
         (let ((remove (list (match-beginning 0) (match-end 0)))
-          (description (if (match-end 3)
-                   (org-match-string-no-properties 3)
-                   (org-match-string-no-properties 1))))
-      (apply 'delete-region remove)
-      (insert description))))
+              (description (if (match-end 3)
+                               (org-match-string-no-properties 3)
+                             (org-match-string-no-properties 1))))
+          (apply 'delete-region remove)
+          (insert description))))
 
   (defun diary-last-day-of-month (date)
     "Return `t` if DATE is the last day of the month."
@@ -517,6 +526,7 @@ in python source code blocks.
   ;; (cookie-re "\\(\\(\\[[0-9]*%\\]\\)\\|\\(\\[[0-9]*/[0-9]*\\]\\)\\)")
   ;; matches digits / same digits
   ;; \[\([0-9]*\)/\1\]
+
 #+end_src
 
 ** Presenting
@@ -571,13 +581,11 @@ in python source code blocks.
         org-startup-indented t
         org-startup-with-inline-images t
         org-image-actual-width 500
-        ;; org-hide-emphasis-markers t
-        org-highlight-latex-and-related (quote (latex script entities))
-        org-format-latex-options
-        (quote (:foreground default :background default :scale 2.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
-                            ("begin" "$1" "$" "$$" "\\(" "\\["))))
+        ;; org-highlight-latex-and-related (quote (latex script entities))
+        org-format-latex-options (plist-put org-format-latex-options :scale 1.5)
+        )
 
-  (custom-set-faces '(org-ellipsis ((t (:foreground "gray70" :underline nil)))))
+  ;; (custom-set-faces '(org-ellipsis ((t (:foreground "gray70" :underline nil)))))
 
   (use-package org-bullets
     :config
@@ -701,9 +709,12 @@ in python source code blocks.
   (use-package google-translate
     :config
     (require 'google-translate-default-ui)
-    (global-set-key (kbd "C-c t") 'google-translate-at-point)
-    (global-set-key (kbd "C-c T") 'google-translate-query-translate)
-    (setq google-translate-backend-method 'curl))
+    ;; (setq google-translate-backend-method 'emacs)
+    (setq google-translate-default-source-language "auto"
+          google-translate-default-target-language "en")
+    :bind
+    ("C-c t" . google-translate-at-point)
+    ("C-c T" . google-translate-query-translate))
 #+end_src
 
 ** Media
@@ -852,12 +863,17 @@ disable if I'm using stumpwm!
 #+begin_src emacs-lisp
   (use-package telega
     :unless in-termux-p
-    :config (telega-mode-line-mode 1))
+    :config
+    (telega-mode-line-mode 1)
+    (smartparens-mode))
 
   (use-package emojify
     :config
-    (global-emojify-mode))
+    (global-emojify-mode)
+    (emojify-mode-line-mode))
 #+end_src
+
+** Email (gnus)
 
 * My Kitchen Sink
 ** Metaconfig
@@ -918,7 +934,8 @@ Visit and reload this config
 
   (unless in-termux-p
     (telega nil)
-    (async-shell-command "owncloud"))
+    ;; (async-shell-command "owncloud")
+    )
 
   (org-agenda-list 1)
   (delete-other-windows)
