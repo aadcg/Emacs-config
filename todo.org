@@ -35,6 +35,9 @@ I shall be using StumpWM since it claims to be "The Emacs of window
 managers". Indeed, the keybindings resemble Emacs and it is implemented in
 Common Lisp.
 
+** TODO stumpwm contrib git submodule
+- State "TODO"       from              [2020-02-05 Wed 13:46]
+
 * Browser
 Eww as a text-based browser.
 Icecat if I need to run JS.
@@ -78,7 +81,7 @@ Check base.lst for documention.
 [[https://github.com/owncloud/client/issues/2002#issuecomment-98747743][cron script for owncloud]]
 
 * Telegram
-telega for emacs?
+telega for emacs? yes!
 
 * ssh keys?
 
@@ -113,3 +116,5 @@ xrandr -s 2560x1440
 xrandr --output <screen> --brightness 0.x / 1
 
 Screen appears to be less bright while using StumpWM.
+
+* Audio is distorted?
