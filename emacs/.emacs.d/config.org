@@ -140,6 +140,7 @@ Backups and auto-save files at ~/.emacs/backups
   (global-set-key (kbd "C-<up>")  'switch-to-presentation)
   (global-set-key (kbd "M-o")     'mode-line-other-buffer)
 #+end_src
+
 ** Modeline
 - Moody is a modern, practical and good-looking modeline
 - Minion hides minor modes
@@ -178,17 +179,18 @@ Backups and auto-save files at ~/.emacs/backups
 - No blinking cursor
 
 #+begin_src emacs-lisp
-  (when window-system
-    (use-package beacon
-    :config
-    (beacon-mode 1)
-    (setq beacon-blink-when-window-scrolls nil)))
+  ;; (when window-system
+  ;;   (use-package beacon
+  ;;   :config
+  ;;   (beacon-mode 1)
+  ;;   (setq beacon-blink-when-window-scrolls nil)))
 
   (setq scroll-preserve-screen-position 'always)
   (save-place-mode 1)
-  (when window-system
-    (setq blink-cursor-mode nil))
+  ;; (when window-system
+  ;;   (setq blink-cursor-mode nil))
 
+  (setq blink-cursor-blinks 4)
 #+end_src
 
 * Programming
@@ -667,10 +669,7 @@ in python source code blocks.
           ivy-wrap t
           ivy-extra-directories nil
           ivy-initial-inputs-alist nil
-          ivy-height-alist
-          '((t
-             lambda (_caller)
-             (/ (window-height) 2))))
+          ivy-height-alist '((t lambda (_caller) (/ (window-height) 2))))
     (add-to-list 'ivy-format-functions-alist '(t . ivy-format-function-arrow))
     :bind
     ("C-x B" . ivy-switch-buffer-other-window)
@@ -874,6 +873,13 @@ disable if I'm using stumpwm!
 #+end_src
 
 ** Email (gnus)
+[[https://protesilaos.com/dotemacs/#h:5ad80664-3163-4d9d-be65-462637d77903][configuring email]]
+[[https://www.emacswiki.org/emacs/GnusTutorial][gnus tutorial]]
+
+#+begin_src emacs-lisp
+  (use-package gnus
+    :config (setq gnus-inhibit-startup-message t))
+#+end_src
 
 * My Kitchen Sink
 ** Metaconfig
