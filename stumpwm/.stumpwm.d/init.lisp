@@ -17,7 +17,6 @@
       *time-modeline-string* "%a %d %b %k:%M"
       *mode-line-background-color* "#3F3F3F"
       *mode-line-foreground-color* "#DCDCCC"
-      *normal-border-width* 0
       *mode-line-border-width* 0
       *window-border-style* :thin
       *mouse-focus-policy* :click
