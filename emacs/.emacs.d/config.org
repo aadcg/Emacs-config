@@ -4,8 +4,6 @@
 #+PROPERTY: header-args :results silent
 
 * Defaults, Preferences and Aesthetics
-Config [[https://www.emacswiki.org/emacs/ModeLineConfiguration][mode line]]
-
 ** Aesthethics
 *** UI
 #+begin_src emacs-lisp
@@ -164,6 +162,7 @@ Backups and auto-save files at ~/.emacs/backups
           minions-mode-line-lighter ""
           minions-mode-line-delimiters '("" . "")))
 
+  ;; more info about the battery /sys/class/power_supply/BAT0
   (setq battery-mode-line-format " %p%"
         battery-mode-line-limit 99)
 
@@ -575,11 +574,9 @@ in python source code blocks.
 #+end_src
 
 ** Look and Feel
-[[http://nadeausoftware.com/articles/2007/11/latency_friendly_customized_bullets_using_unicode_characters][Ideas for bullets]]
-
 #+begin_src emacs-lisp
-  (setq org-ellipsis " ↓"
-        org-hide-leading-stars t
+  (setq org-hide-leading-stars t
+        ;; org-ellipsis " ↓"
         org-startup-indented t
         org-startup-with-inline-images t
         org-image-actual-width 500
@@ -683,12 +680,21 @@ in python source code blocks.
   (use-package company
     :config
     (global-company-mode t)
-    (setq company-idle-delay 0.1
+    (setq company-idle-delay 0.3
           company-minimum-prefix-length 3)
+    ;; :bind
+    ;; ("C-j" . company-complete-selection)
+    ;; ("<tab>" . company-complete-common-or-cycle)
+    ;; ("C-n" . company-select-next)
+    ;; ("C-p" . company-select-previous)
+    ;; ("SPC" . company-abort)
+
     (define-key company-active-map (kbd "C-j") 'company-complete-selection)
     (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
     (define-key company-active-map (kbd "C-n") 'company-select-next)
-    (define-key company-active-map (kbd "C-p") 'company-select-previous))
+    (define-key company-active-map (kbd "C-p") 'company-select-previous)
+    (define-key company-active-map (kbd "SPC" 'company-abort))
+    )
 #+end_src
 
 ** Games
@@ -879,6 +885,15 @@ disable if I'm using stumpwm!
 #+begin_src emacs-lisp
   (use-package gnus
     :config (setq gnus-inhibit-startup-message t))
+#+end_src
+
+** Weather
+#+begin_src emacs-lisp
+  (use-package wttrin
+    :config
+    (setq wttrin-default-cities '("Saint Petersburg"
+                                  "Porto"
+                                  "Oliveira de Azeméis")))
 #+end_src
 
 * My Kitchen Sink
