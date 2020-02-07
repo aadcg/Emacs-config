@@ -472,7 +472,7 @@ in python source code blocks.
 #+end_src
 
 ** Packages and Extensions
-[[https://orgmode.org/worg/org-contrib/org-drill.html#orge367ffb][org-drill tutorial]]
+[[https://orgmode.org/worg/org-contrib/org-drill.html][tutorial]]
 
 #+begin_src emacs-lisp
   (use-package org-drill
@@ -481,6 +481,8 @@ in python source code blocks.
     (setq org-drill-save-buffers-after-drill-sessions-p nil
           org-drill-scope 'tree
           org-drill-cram-hours 0))
+
+  (use-package org-drill-table)
 
   (use-package cdlatex
     :hook (org-mode . org-cdlatex-mode))
@@ -676,12 +678,12 @@ in python source code blocks.
 #+end_src
 
 ** Auto-complete
+[[https://company-mode.github.io/][Documentation]]
+
 #+begin_src emacs-lisp
   (use-package company
     :config
     (global-company-mode t)
-    (setq company-idle-delay 0.3
-          company-minimum-prefix-length 3)
     ;; :bind
     ;; ("C-j" . company-complete-selection)
     ;; ("<tab>" . company-complete-common-or-cycle)
@@ -689,11 +691,11 @@ in python source code blocks.
     ;; ("C-p" . company-select-previous)
     ;; ("SPC" . company-abort)
 
-    (define-key company-active-map (kbd "C-j") 'company-complete-selection)
+    (define-key company-active-map (kbd "C-j")   'company-complete-selection)
     (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
-    (define-key company-active-map (kbd "C-n") 'company-select-next)
-    (define-key company-active-map (kbd "C-p") 'company-select-previous)
-    (define-key company-active-map (kbd "SPC") 'company-abort))
+    (define-key company-active-map (kbd "C-n")   'company-select-next)
+    (define-key company-active-map (kbd "C-p")   'company-select-previous)
+    (define-key company-active-map (kbd "SPC")   'company-abort))
 #+end_src
 
 ** Games
@@ -713,7 +715,6 @@ in python source code blocks.
   (use-package google-translate
     :config
     (require 'google-translate-default-ui)
-    ;; (setq google-translate-backend-method 'emacs)
     (setq google-translate-default-source-language "auto"
           google-translate-default-target-language "en")
     :bind
@@ -869,7 +870,7 @@ disable if I'm using stumpwm!
     :unless in-termux-p
     :config
     (telega-mode-line-mode 1)
-    (smartparens-mode))
+    :bind ("s-t" . telega))
 
   (use-package emojify
     :config
@@ -896,7 +897,7 @@ disable if I'm using stumpwm!
 #+end_src
 
 * My Kitchen Sink
-** Metaconfig
+** Metaconfiguring
 Visit and reload this config
 #+begin_src emacs-lisp
   (defun config-visit ()
@@ -927,6 +928,8 @@ Visit and reload this config
 #+end_src
 
 ** Learning Russian
+- how to open in new eww buffer is one already exists?
+
 #+begin_src emacs-lisp
   (defun openru-search (word)
     "Search using https://en.openrussian.org"
