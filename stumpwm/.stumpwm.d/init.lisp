@@ -13,15 +13,6 @@
              ;; "amixer"
              ))
 
-(setf *colors* (list "#1C2028"      ; 0 black
-                     "#CC9393"      ; 1 red
-                     "#7F9F7F"      ; 2 green
-                     "#F0DFAF"      ; 3 yellow
-                     "#8CD0D3"      ; 4 blue
-                     "#DC8CC3"      ; 5 magenta
-                     "#93E0E3"      ; 6 cyan
-                     "#ECEFF4"))    ; 7 white
-
 (setf *mode-line-timeout* 1
       *time-modeline-string* "%a %d %b %k:%M"
       *mode-line-background-color* "#3F3F3F"
@@ -31,7 +22,7 @@
       *window-border-style* :thin
       *mouse-focus-policy* :click
       *window-name-source* :class
-      *delim* " ^6|^7 "
+      *delim* " | "
       *screen-mode-line-format* (list
                                  ;; Windows
                                  "%W ^>"
@@ -69,6 +60,9 @@
 
 ;; (define-key *root-map* (kbd "t") "telegram")
 
+;; Show / Hide mode-line
+(define-key *root-map* (kbd "M") "mode-line")
+
 ;; Volume Management
 (progn
   (define-key *top-map* (kbd "XF86AudioLowerVolume") "exec amixer -q sset Master 3%-")
@@ -77,6 +71,3 @@
 
 (progn
   (enable-mode-line (current-screen) (current-head) t))
-
-;; Show / Hide mode-line
-(define-key *root-map* (kbd "M") "mode-line")
