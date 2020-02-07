@@ -693,8 +693,7 @@ in python source code blocks.
     (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
     (define-key company-active-map (kbd "C-n") 'company-select-next)
     (define-key company-active-map (kbd "C-p") 'company-select-previous)
-    (define-key company-active-map (kbd "SPC" 'company-abort))
-    )
+    (define-key company-active-map (kbd "SPC") 'company-abort))
 #+end_src
 
 ** Games
@@ -910,7 +909,7 @@ Visit and reload this config
   (defun config-reload ()
     "Reloads ~/.emacs.d/config.org at runtime."
     (interactive)
-    (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+    (org-babel-load-file "~/.emacs.d/config.org"))
 
   (global-set-key (kbd "C-c r") 'config-reload)
 #+end_src

@@ -24,4 +24,4 @@
   (setq auto-package-update-prompt-before-update t
         auto-package-update-interval 14))
 
-(org-babel-load-file "~/.emacs.d/config.org")
+(org-babel-load-file "~/dotfiles/emacs/.emacs.d/config.org")
