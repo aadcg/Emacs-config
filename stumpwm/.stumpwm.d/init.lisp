@@ -13,7 +13,7 @@
              ;; "amixer"
              ))
 
-(setf *mode-line-timeout* 1
+(setf *mode-line-timeout* 2
       *time-modeline-string* "%a %d %b %k:%M"
       *mode-line-background-color* "#3F3F3F"
       *mode-line-foreground-color* "#DCDCCC"
