@@ -672,13 +672,6 @@ in python source code blocks.
   (use-package company
     :config
     (global-company-mode t)
-    ;; :bind
-    ;; ("C-j" . company-complete-selection)
-    ;; ("<tab>" . company-complete-common-or-cycle)
-    ;; ("C-n" . company-select-next)
-    ;; ("C-p" . company-select-previous)
-    ;; ("SPC" . company-abort)
-
     (define-key company-active-map (kbd "C-j")   'company-complete-selection)
     (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
     (define-key company-active-map (kbd "C-n")   'company-select-next)
