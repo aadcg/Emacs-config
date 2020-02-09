@@ -1,12 +1,10 @@
-;; This is an operating system configuration generated
-;; by the graphical installer.
-
 (use-modules (gnu))
 (use-service-modules desktop networking ssh xorg)
 
 (operating-system
   (locale "en_US.utf8")
-  (timezone "Europe/Moscow")
+  ;; (timezone "Europe/Moscow")
+  (timezone "Europe/Lisbon")
   (keyboard-layout
     (keyboard-layout "us" "altgr-intl"))
   (bootloader
@@ -37,26 +35,10 @@
                     '("wheel" "netdev" "audio" "video")))
                 %base-user-accounts))
   (packages
-    (append
-     (map specification->package
-          '(
-            "aspell"
-            "aspell-dict-en"
-            "aspell-dict-pt-pt"
-            "aspell-dict-ru"
-            "emacs"
-            "emacs-pdf-tools"
-            "font-fira-code"
-            "git"
-            "icecat"
-            "nss-certs"
-            "owncloud-client"
-            "setxkbmap"
-            "stow"
-            "stumpwm"
-	    "xrandr"
-            "xterm"
-            ))
+   (append
+    (list (specification->package "nss-certs")
+          (specification->package "stumpwm")
+          (specification->package "openfwwf-firmware"))
       %base-packages))
   (services
     (append
