@@ -9,8 +9,5 @@ setxkbmap -layout us,ru -option grp:win_space_toggle,grp_led:caps,compose:lctrl,
 # Screen settings
 xrandr --output eDP-1 --mode 1920x1080 --brightness 1
 
-emacs &
-owncloud &
-
 # Honor per-interactive-shell startup file
 if [ -f ~/.bashrc ]; then . ~/.bashrc; fi

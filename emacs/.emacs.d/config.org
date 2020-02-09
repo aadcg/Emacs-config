@@ -656,7 +656,7 @@ in python source code blocks.
           ivy-wrap t
           ivy-extra-directories nil
           ivy-initial-inputs-alist nil
-          ivy-height-alist '((t lambda (_caller) (/ (window-height) 2))))
+          ivy-height-alist '((t lambda (_caller) (/ (window-height) 3))))
     (add-to-list 'ivy-format-functions-alist '(t . ivy-format-function-arrow))
     :bind
     ("C-x B" . ivy-switch-buffer-other-window)

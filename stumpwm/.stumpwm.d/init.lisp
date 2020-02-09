@@ -32,9 +32,9 @@
                                  ;; Battery
                                  "%B" *delim*
                                  ;; Date (msk and pt)
-                                 "%d" *delim*
-                                 '(:eval (stumpwm:run-shell-command
-                                          "TZ='Europe/Lisbon' date +%k:%M" t))
+                                 ;; '(:eval (stumpwm:run-shell-command
+                                 ;;          "TZ='Europe/Moscow' date +%k:%M" t))
+                                 "%d"
                                  ))
 
 ;; Keybindings
