@@ -5,3 +5,10 @@
         user = aadcg
 [color]
         ui = auto
+[credential]
+	helper = cache --timeout=28800
+[sendemail]
+	smtpEncryption = tls
+	smtpServer = smtp.gmail.com
+	smtpUser = andremegafone@gmail.com
+	smtpServerPort = 587
