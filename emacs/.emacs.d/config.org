@@ -955,4 +955,4 @@ Visit and reload this config
 [[https://medium.com/@sserialdev/emacs-in-the-container-age-5c0c222cfee][link]]
 
 ** use-package and guix
-if pkgs is available in guix, then use it rather than melpa
+if pkgs is available in guix, then use it rather than melpa.
