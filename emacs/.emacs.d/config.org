@@ -178,17 +178,8 @@ Backups and auto-save files at ~/.emacs/backups
 - No blinking cursor
 
 #+begin_src emacs-lisp
-  ;; (when window-system
-  ;;   (use-package beacon
-  ;;   :config
-  ;;   (beacon-mode 1)
-  ;;   (setq beacon-blink-when-window-scrolls nil)))
-
   (setq scroll-preserve-screen-position 'always)
   (save-place-mode 1)
-  ;; (when window-system
-  ;;   (setq blink-cursor-mode nil))
-
   (setq blink-cursor-blinks 4)
 #+end_src
 
@@ -578,15 +569,12 @@ in python source code blocks.
 ** Look and Feel
 #+begin_src emacs-lisp
   (setq org-hide-leading-stars t
-        ;; org-ellipsis " ↓"
         org-startup-indented t
         org-startup-with-inline-images t
         org-image-actual-width 500
         ;; org-highlight-latex-and-related (quote (latex script entities))
         org-format-latex-options (plist-put org-format-latex-options :scale 1.5)
         )
-
-  ;; (custom-set-faces '(org-ellipsis ((t (:foreground "gray70" :underline nil)))))
 
   (use-package org-bullets
     :config
