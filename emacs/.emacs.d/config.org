@@ -944,9 +944,7 @@ Visit and reload this config
     (toggle-frame-fullscreen))
 
   (unless in-termux-p
-    (telega nil)
-    ;; (async-shell-command "owncloud")
-    )
+    (telega nil))
 
   (org-agenda-list 1)
   (delete-other-windows)
