@@ -297,6 +297,7 @@ Requires gocode for the autocomplete to work.
 #+begin_src emacs-lisp
   (add-hook 'js-mode-hook 'json-pretty-print-buffer-ordered)
 #+end_src
+
 ** Version Control
 #+begin_src emacs-lisp
   (use-package magit
@@ -538,8 +539,8 @@ in python source code blocks.
     :bind
     ("<f8>" . org-tree-slide-mode)
     ("<f7>" . org-tree-slide-play-with-timer)
-    ("C->" . org-tree-slide-move-next-tree)
-    ("C-<" . org-tree-slide-move-previous-tree))
+    ("C->"  . org-tree-slide-move-next-tree)
+    ("C-<"  . org-tree-slide-move-previous-tree))
 
   (defun aadcg/presenting ()
     "Presenting mode"
@@ -660,7 +661,8 @@ in python source code blocks.
     (add-to-list 'ivy-format-functions-alist '(t . ivy-format-function-arrow))
     :bind
     ("C-x B" . ivy-switch-buffer-other-window)
-    ("C-s" . swiper))
+    ("C-s"   . swiper)
+    ("C-x 8" . counsel-unicode-char))
 
   (use-package smex)
 #+end_src
@@ -671,17 +673,20 @@ in python source code blocks.
 #+begin_src emacs-lisp
   (use-package company
     :config
-    (global-company-mode t)
+    ;; (global-company-mode t)
+    (setq company-require-match nil)
     (define-key company-active-map (kbd "C-j")   'company-complete-selection)
+    ;; (define-key company-active-map (kbd "SPC")   'company-complete-selection)
     (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
-    (define-key company-active-map (kbd "C-n")   'company-select-next)
-    (define-key company-active-map (kbd "C-p")   'company-select-previous)
-    (define-key company-active-map (kbd "SPC")   'company-abort))
+    ;; (define-key company-active-map (kbd "C-n")   'company-select-next)
+    ;; (define-key company-active-map (kbd "C-p")   'company-select-previous)
+    ;; (define-key company-active-map (kbd "SPC")   'company-abort)
+    :hook ((prog-mode . company-mode)))
 #+end_src
 
 ** Games
 #+begin_src emacs-lisp
-  (use-package typit
+  (use-package speed-type
     :defer t)
 #+end_src
 
