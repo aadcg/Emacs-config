@@ -38,7 +38,7 @@
 
 *** Text
 #+begin_src emacs-lisp
-  (set-frame-font "Fira Code 12" nil t)
+  (set-frame-font "Fira Code 14" nil t)
 
   (defun auto-size-font ()
     "idiotic stuff"
@@ -46,10 +46,10 @@
     (let ((size 10))
       (set-frame-font (concat "Fira Code " (number-to-string size)) nil t)
       (delete-other-windows)
-      (while (> (window-max-chars-per-line) 190)
-        (setq size (+ size 1))
-        (set-frame-font (concat "Fira Code " (number-to-string size)) nil t)
-        (message "The suggested font size is %d" size))))
+      (while (> (window-max-chars-per-line) 180)
+        (setq size (1+ size))
+        (set-frame-font (concat "Fira Code " (number-to-string size)) nil t))
+      (message "The suggested font size is %d" size)))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -673,15 +673,10 @@ in python source code blocks.
 #+begin_src emacs-lisp
   (use-package company
     :config
-    ;; (global-company-mode t)
+    (global-company-mode t)
     (setq company-require-match nil)
     (define-key company-active-map (kbd "C-j")   'company-complete-selection)
-    ;; (define-key company-active-map (kbd "SPC")   'company-complete-selection)
-    (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
-    ;; (define-key company-active-map (kbd "C-n")   'company-select-next)
-    ;; (define-key company-active-map (kbd "C-p")   'company-select-previous)
-    ;; (define-key company-active-map (kbd "SPC")   'company-abort)
-    :hook ((prog-mode . company-mode)))
+    (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle))
 #+end_src
 
 ** Games
@@ -826,28 +821,14 @@ disable if I'm using stumpwm!
 #+end_src
 
 ** Browser (eww)
-- Eww by default (w/ visual-line-mode)
-- Icecat/Firefox/Next for GUI/JavaScript stuff
-
 #+begin_src emacs-lisp
-  (setq browse-url-browser-function '((".*youtube.*"
-                                       . browse-url-default-browser)
-                                      (".*cliente*"
-                                       . browse-url-default-browser)
-                                      (".*checkin*"
-                                      . browse-url-default-browser)
-                                      ("." . eww-browse-url)))
-  (add-hook 'eww-mode-hook 'visual-line-mode)
-
   (use-package shr
-    :commands (eww
-               eww-browse-url)
     :config
-    (setq browse-url-browser-function 'eww-browse-url)
-    (setq shr-use-fonts nil)
-    (setq shr-use-colors nil)
-    (setq shr-max-image-proportion 0.2)
-    (setq shr-width (current-fill-column)))
+    (setq browse-url-browser-function 'eww-browse-url
+          shr-use-fonts nil
+          shr-use-colors nil
+          shr-max-image-proportion 0.2
+          shr-width (current-fill-column)))
 #+end_src
 
 ** Telegram
@@ -856,6 +837,7 @@ disable if I'm using stumpwm!
     :unless in-termux-p
     :config
     (telega-mode-line-mode 1)
+    (setq telega-chat-fill-column 70)
     :bind ("s-t" . telega))
 
   (use-package emojify
