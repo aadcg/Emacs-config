@@ -122,9 +122,9 @@ Backups and auto-save files at ~/.emacs/backups
     (interactive)
     (switch-to-buffer "slides.org"))
 
-  (global-set-key (kbd "C-0")     'reset-text-size)
-  (global-set-key (kbd "C-+")     'text-scale-increase)
-  (global-set-key (kbd "C--")     'text-scale-decrease)
+  ;; (global-set-key (kbd "C-0")     'reset-text-size)
+  ;; (global-set-key (kbd "C-+")     'text-scale-increase)
+  ;; (global-set-key (kbd "C--")     'text-scale-decrease)
   (global-set-key (kbd "M-g")     'goto-line)
   (global-set-key (kbd "C-x C-b") 'ibuffer)
   (global-set-key (kbd "M-%")     'query-replace-regexp)
@@ -172,7 +172,6 @@ Backups and auto-save files at ~/.emacs/backups
 #+end_src
 
 ** Cursor
-- Beacon let's me find the easily cursor when I change buffers
 - Preserve cursor position after C-v or M-v
 - Preserve cursor position after closing a file
 - No blinking cursor
@@ -180,7 +179,7 @@ Backups and auto-save files at ~/.emacs/backups
 #+begin_src emacs-lisp
   (setq scroll-preserve-screen-position 'always)
   (save-place-mode 1)
-  (setq blink-cursor-blinks 4)
+  (setq blink-cursor-blinks 2)
 #+end_src
 
 * Programming
