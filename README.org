@@ -18,7 +18,7 @@
 | Mail              | Gnus             |
 #+TBLFM: @2$2='(concat "GNU Emacs " (substring (emacs-version) 10 14))
 
-[[file:~/desktop.png]]
+[[file:desktop.png]]
 
 * Motivation
 Free software grants us the 4 freedoms to run, study, redistribute and improve
