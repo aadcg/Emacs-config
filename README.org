@@ -1,6 +1,5 @@
-#+TITLE: dotfiles readme
-#+STARTUP: latexpreview
-#+OPTIONS: toc:nil num:nil email:t
+# #+TITLE: dotfiles readme
+#+OPTIONS: author:t email:t toc:nil num:nil prop:t ^:nil
 
 # [[https://travis-ci.com/aadcg/.emacs.d][https://travis-ci.com/aadcg/.emacs.d.svg?branch=master]]
 
@@ -8,20 +7,18 @@
 # It’s not just us against them. It starts with I against I.
 # "I want to see the world go wild" - This routine is hell / Swain
 
+| OS                | GNU/Linux Guix   |
+| Text Editor       | GNU Emacs 26.3   |
+| Org Version       | 9.3.3            |
+| Web Browser       | eww & GNU icecat |
+| Window manager    | StumpWM          |
+| Terminal Emulator | xterm            |
+| Version Control   | git              |
+| Media Player      | EMMS             |
+| Mail              | Gnus             |
+#+TBLFM: @2$2='(concat "GNU Emacs " (substring (emacs-version) 10 14))
 
-| OS              | GNU/Linux Guix |
-| Emacs version   | 26.3           |
-| Org Version     | 9.1.9          |
-| Window manager  | StumpWM        |
-| Version Control | git            |
-| Media           | EMMS           |
-| Mail            |                |
-#+TBLFM: @3$2='(org-version)::@2$2='(substring (emacs-version) 10 14)
-
-| System    | Emacs |   Org |
-|-----------+-------+-------|
-| gnu/linux |  26.3 | 9.3.1 |
-#+TBLFM: @>$3='(org-version)::@>$2='(substring (emacs-version) 10 14)::@>$1='(print system-type)
+[[file:~/2020-02-02-215436_1920x1080_scrot.png][looks]]
 
 * Motivation
 Free software grants us the 4 freedoms to run, study, redistribute and improve
