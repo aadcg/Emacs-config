@@ -40,13 +40,13 @@
 #+begin_src emacs-lisp
   (set-frame-font "Fira Code 14" nil t)
 
-  (defun auto-size-font ()
+  (defun auto-size-font (n)
     "idiotic stuff"
-    (interactive)
+    (interactive "nHow many chars per line in a single buffer? ")
     (let ((size 10))
       (set-frame-font (concat "Fira Code " (number-to-string size)) nil t)
       (delete-other-windows)
-      (while (> (window-max-chars-per-line) 180)
+      (while (> (window-max-chars-per-line) n)
         (setq size (1+ size))
         (set-frame-font (concat "Fira Code " (number-to-string size)) nil t))
       (message "The suggested font size is %d" size)))
@@ -294,7 +294,7 @@ Requires gocode for the autocomplete to work.
 
 *** COMMENT JS
 #+begin_src emacs-lisp
-  (add-hook 'js-mode-hook 'json-pretty-print-buffer-ordered)
+  ;; (add-hook 'js-mode-hook 'json-pretty-print-buffer-ordered)
 #+end_src
 
 ** Version Control
@@ -666,15 +666,16 @@ in python source code blocks.
   (use-package smex)
 #+end_src
 
-** Auto-complete
+** COMMENT Auto-complete
 [[https://company-mode.github.io/][Documentation]]
 
 #+begin_src emacs-lisp
   (use-package company
     :config
     (global-company-mode t)
-    (setq company-require-match nil)
-    (define-key company-active-map (kbd "C-j")   'company-complete-selection)
+    (setq company-require-match nil
+          company-idle-delay 0.1)
+    (define-key company-active-map (kbd "M-j")   'company-complete-selection)
     (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle))
 #+end_src
 
@@ -851,7 +852,9 @@ disable if I'm using stumpwm!
 
 #+begin_src emacs-lisp
   (use-package gnus
-    :config (setq gnus-inhibit-startup-message t))
+    :config
+    (setq gnus-inhibit-startup-message t)
+    (add-hook 'kill-emacs-hook 'gnus-group-exit))
 #+end_src
 
 ** Weather
