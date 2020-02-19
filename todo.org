@@ -6,6 +6,11 @@
 - add stumpwm contrib as submodule
 - emacsdaemon?
 - change dict according to selected input method
+- [[https://blog.aaronbieber.com/2015/08/04/authoring-emacs-packages.html][Create package with portuguese holidays]]
+- add personal holidays in a private file
+- Syncthing vs Nextcloud vs cron?
+- [[https://medium.com/@sserialdev/emacs-in-the-container-age-5c0c222cfee][Emacs inside a docker container?]]
+- use-package and guix regarding emacs pkgs
 
 * OS
 There's only one operating system worth using - GNU/Linux. It comes in many
