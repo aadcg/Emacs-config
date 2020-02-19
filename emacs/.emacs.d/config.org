@@ -7,14 +7,13 @@
 ** Aesthethics
 *** UI
 #+begin_src emacs-lisp
-  (fset 'yes-or-no-p 'y-or-n-p)
   (menu-bar-mode -1)
-  (when window-system
-    (tool-bar-mode -1)
-    (scroll-bar-mode -1)
-    (horizontal-scroll-bar-mode -1)
-    (global-hl-line-mode)
-    (fringe-mode '(4 . 0)))
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (horizontal-scroll-bar-mode -1)
+  (fringe-mode '(4 . 0))
+  (fset 'yes-or-no-p 'y-or-n-p)
+  (global-hl-line-mode)
 #+end_src
 
 *** Theme
@@ -24,44 +23,26 @@
     (interactive "nTransparency Value 0 - 100 opaque:")
     (set-frame-parameter (selected-frame) 'alpha value))
 
-  (global-set-key (kbd "C-x t") 'transparency)
-
   (use-package zenburn-theme
     :init
-    (setq zenburn-scale-org-headlines t
-          zenburn-height-plus-2 1.2
-          zenburn-height-plus-3 1.4
-          zenburn-height-plus-4 1.6)
-    (load-theme 'zenburn t)
-    (transparency 90))
+    (setq zenburn-scale-org-headlines t)
+    (load-theme 'zenburn t))
 #+end_src
 
-*** Text
+*** Font
 #+begin_src emacs-lisp
   (set-frame-font "Fira Code 14" nil t)
 
   (defun auto-size-font (n)
-    "idiotic stuff"
-    (interactive "nHow many chars per line in a single buffer? ")
+    "Set the font size such that n buffers of 80 chars fit side by side."
+    (interactive "nHow many 80 chars buffers do you want side by side? ")
     (let ((size 10))
       (set-frame-font (concat "Fira Code " (number-to-string size)) nil t)
       (delete-other-windows)
-      (while (> (window-max-chars-per-line) n)
+      (while (> (window-max-chars-per-line) (* n 90))
         (setq size (1+ size))
         (set-frame-font (concat "Fira Code " (number-to-string size)) nil t))
       (message "The suggested font size is %d" size)))
-#+end_src
-
-#+begin_src emacs-lisp
-  (use-package rainbow-delimiters
-    :config
-    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
-#+end_src
-
-** Avy
-#+begin_src emacs-lisp
-  (use-package avy
-    :bind ("C-r" . avy-goto-word-1))
 #+end_src
 
 ** Words, white spaces and text
@@ -100,31 +81,18 @@
 Backups and auto-save files at ~/.emacs/backups
 
 #+begin_src emacs-lisp
-  (unless (file-exists-p (concat user-emacs-directory "backups/"))
-    (mkdir (concat user-emacs-directory "backups/")))
-
-  (setq temporary-file-directory (concat user-emacs-directory "backups/")
-        backup-directory-alist `((".*" . ,temporary-file-directory))
-        auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+  (setq backups-dir (concat user-emacs-directory "backups/"))
+  (unless (file-exists-p backups-dir)
+    (mkdir backups-dir))
+  (setq backup-directory-alist `(("." . ,backups-dir)))
 #+end_src
 
 ** Keybindings
 #+begin_src emacs-lisp
-  (defun reset-text-size ()
-    (interactive)
-    (text-scale-set 0))
-
   (defun switch-to-agenda ()
     (interactive)
     (switch-to-buffer "*Org Agenda*"))
 
-  (defun switch-to-presentation ()
-    (interactive)
-    (switch-to-buffer "slides.org"))
-
-  ;; (global-set-key (kbd "C-0")     'reset-text-size)
-  ;; (global-set-key (kbd "C-+")     'text-scale-increase)
-  ;; (global-set-key (kbd "C--")     'text-scale-decrease)
   (global-set-key (kbd "M-g")     'goto-line)
   (global-set-key (kbd "C-x C-b") 'ibuffer)
   (global-set-key (kbd "M-%")     'query-replace-regexp)
@@ -135,7 +103,6 @@ Backups and auto-save files at ~/.emacs/backups
   (global-set-key (kbd "S-SPC")   'cycle-spacing)
   (global-set-key (kbd "M-SPC")   'other-window)
   (global-set-key (kbd "C-c f")   'switch-to-agenda)
-  (global-set-key (kbd "C-<up>")  'switch-to-presentation)
   (global-set-key (kbd "M-o")     'mode-line-other-buffer)
 #+end_src
 
@@ -175,11 +142,15 @@ Backups and auto-save files at ~/.emacs/backups
 - Preserve cursor position after C-v or M-v
 - Preserve cursor position after closing a file
 - No blinking cursor
+- Avy is the engine that moves my cursor around
 
 #+begin_src emacs-lisp
   (setq scroll-preserve-screen-position 'always)
   (save-place-mode 1)
   (setq blink-cursor-blinks 2)
+
+  (use-package avy
+    :bind ("C-r" . avy-goto-word-1))
 #+end_src
 
 * Programming
@@ -244,18 +215,20 @@ I want eshell to behave like a typical terminal, i.e. I don't want tab to
 cycle through different options.
 
 #+begin_src emacs-lisp
-  (add-hook 'eshell-mode-hook
-   (lambda ()
-     (setq pcomplete-cycle-completions nil)))
+  ;; (add-hook 'eshell-mode-hook
+  ;;  (lambda ()
+  ;;    (setq pcomplete-cycle-completions nil)))
+
+  (setq pcomplete-cycle-completions nil)
 #+end_src
 
 Ivy in Eshell
 #+begin_src emacs-lisp
-  (add-hook 'eshell-mode-hook
-    (lambda ()
-      (define-key eshell-mode-map (kbd "<M-tab>") nil)
-      (define-key eshell-mode-map (kbd "<tab>")
-        (lambda () (interactive) (completion-at-point)))))
+  ;; (add-hook 'eshell-mode-hook
+  ;;   (lambda ()
+  ;;     (define-key eshell-mode-map (kbd "<M-tab>") nil)
+  ;;     (define-key eshell-mode-map (kbd "<tab>")
+  ;;       (lambda () (interactive) (completion-at-point)))))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -346,6 +319,13 @@ Requires gocode for the autocomplete to work.
     (projectile-mode 1)
     :config
     (setq projectile-completion-system 'ivy))
+#+end_src
+
+*** Colorful delimiters
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters
+    :config
+    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 #+end_src
 
 *** TODO COMMENT Pretty mode
@@ -569,7 +549,7 @@ in python source code blocks.
 ** Look and Feel
 #+begin_src emacs-lisp
   (setq org-hide-leading-stars t
-        org-startup-indented t
+        ;; org-startup-indented t
         org-startup-with-inline-images t
         org-image-actual-width 500
         ;; org-highlight-latex-and-related (quote (latex script entities))
@@ -578,8 +558,8 @@ in python source code blocks.
 
   (use-package org-bullets
     :config
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-    (setq org-bullets-bullet-list '("§")))
+    (setq org-bullets-bullet-list '("§"))
+    :hook (org-mode . org-bullets-mode))
 #+end_src
 
 * Emacs OS - The Kitchen Sink
@@ -666,16 +646,16 @@ in python source code blocks.
   (use-package smex)
 #+end_src
 
-** COMMENT Auto-complete
+** Auto-complete
 [[https://company-mode.github.io/][Documentation]]
 
 #+begin_src emacs-lisp
   (use-package company
     :config
-    (global-company-mode t)
+    (global-company-mode 1)
     (setq company-require-match nil
           company-idle-delay 0.1)
-    (define-key company-active-map (kbd "M-j")   'company-complete-selection)
+    (define-key company-active-map (kbd "C-j")   'company-complete-selection)
     (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle))
 #+end_src
 
@@ -694,10 +674,10 @@ in python source code blocks.
 ** Google Translate
 #+begin_src emacs-lisp
   (use-package google-translate
-    :config
-    (require 'google-translate-default-ui)
+    :init
     (setq google-translate-default-source-language "auto"
           google-translate-default-target-language "en")
+    (require 'google-translate-default-ui)
     :bind
     ("C-c t" . google-translate-at-point)
     ("C-c T" . google-translate-query-translate))
@@ -710,12 +690,13 @@ in python source code blocks.
     (require 'emms-setup)
     (emms-standard)
     (emms-default-players)
-    :bind
-    ("<XF86AudioRaiseVolume>" . emms-volume-raise)
-    ("<XF86AudioLowerVolume>" . emms-volume-lower)
-    ("<XF86AudioPlay>"        . emms-pause)
-    ("<XF86AudioNext>"        . emms-next)
-    ("<XF86AudioPrev>"        . emms-previous))
+    ;; :bind
+    ;; ("<XF86AudioRaiseVolume>" . emms-volume-raise)
+    ;; ("<XF86AudioLowerVolume>" . emms-volume-lower)
+    ;; ("<XF86AudioPlay>"        . emms-pause)
+    ;; ("<XF86AudioNext>"        . emms-next)
+    ;; ("<XF86AudioPrev>"        . emms-previous)
+    )
 #+end_src
 
 ** Regional
@@ -731,16 +712,13 @@ in python source code blocks.
   (setq calendar-week-start-day 1)
 #+end_src
 
-*** TODO Clock
-disable if I'm using stumpwm!
-
+*** Clock
 #+begin_src emacs-lisp
   (setq display-time-24hr-format t
         display-time-format "%k:%M %a %d %b"
         display-time-default-load-average nil
         display-time-world-list '(("Europe/Moscow" "Москва")
                                   ("Europe/Lisbon" "Lisboa")))
-  ;; (display-time-mode 1)
 #+end_src
 
 *** Holidays
@@ -853,8 +831,10 @@ disable if I'm using stumpwm!
 #+begin_src emacs-lisp
   (use-package gnus
     :config
-    (setq gnus-inhibit-startup-message t)
-    (add-hook 'kill-emacs-hook 'gnus-group-exit))
+    (setq gnus-inhibit-startup-message t
+          gnus-interactive-exit nil)
+    :hook
+    (kill-emacs . gnus-group-exit))
 #+end_src
 
 ** Weather
@@ -899,6 +879,8 @@ Visit and reload this config
 
 ** Learning Russian
 - how to open in new eww buffer is one already exists?
+- add method to look for the root of the work if verb if conjugated,
+  adjective/noun is declinated ([[https://unix.stackexchange.com/questions/154098/copy-the-last-emacs-message-into-the-current-buffer][see]])
 
 #+begin_src emacs-lisp
   (defun openru-search (word)
@@ -926,7 +908,8 @@ Visit and reload this config
     (toggle-frame-fullscreen))
 
   (unless in-termux-p
-    (telega nil))
+    (telega nil)
+    (gnus))
 
   (org-agenda-list 1)
   (delete-other-windows)
