@@ -9,33 +9,16 @@
 (mapcar #'load-module
            '("battery-portable"
              "cpu"
-             "mem"
-             ;; "amixer"
-             ))
+             "mem"))
 
-(setf *mode-line-timeout* 2
-      *time-modeline-string* "%a %d %b %k:%M"
-      *mode-line-background-color* "#3F3F3F"
+(setf *mode-line-background-color* "#3F3F3F"
       *mode-line-foreground-color* "#DCDCCC"
       *mode-line-border-width* 0
       *window-border-style* :thin
       *mouse-focus-policy* :click
       *window-name-source* :class
-      *delim* " | "
-      *screen-mode-line-format* (list
-                                 ;; Windows
-                                 "%W ^>"
-                                 ;; CPU
-                                 "%C" *delim*
-                                 ;; RAM
-                                 "%M" *delim*
-                                 ;; Battery
-                                 "%B" *delim*
-                                 ;; Date (msk and pt)
-                                 ;; '(:eval (stumpwm:run-shell-command
-                                 ;;          "TZ='Europe/Moscow' date +%k:%M" t))
-                                 "%d"
-                                 ))
+      *time-modeline-string* "%a %d %b %k:%M"
+      *screen-mode-line-format* "%W ^> %C | %M | %B | %d")
 
 ;; Keybindings
 (set-prefix-key (kbd "C-i"))
@@ -62,11 +45,22 @@
 ;; Show / Hide mode-line
 (define-key *root-map* (kbd "M") "mode-line")
 
-;; Volume Management
+;; Volume and Brightness Management
 (progn
-  (define-key *top-map* (kbd "XF86AudioLowerVolume") "exec amixer -q sset Master 3%-")
-  (define-key *top-map* (kbd "XF86AudioRaiseVolume") "exec amixer -q sset Master 3%+")
-  (define-key *top-map* (kbd "XF86AudioMute") "exec amixer -q sset Master toggle"))
+  (define-key *top-map* (kbd "XF86AudioLowerVolume")
+    "exec amixer -q sset Master 3%-")
+  (define-key *top-map* (kbd "XF86AudioRaiseVolume")
+    "exec amixer -q sset Master 3%+")
+  (define-key *top-map* (kbd "XF86AudioMute")
+    "exec amixer -q sset Master toggle")
+  (define-key *top-map* (kbd "XF86MonBrightnessUp")
+    "exec brightnessctl set +100")
+  (define-key *top-map* (kbd "XF86MonBrightnessDown")
+    "exec brightnessctl set 100-"))
 
 (progn
   (enable-mode-line (current-screen) (current-head) t))
+
+(run-shell-command "nitrogen --restore")
+(run-shell-command "emacs")
+(run-shell-command "owncloud")
