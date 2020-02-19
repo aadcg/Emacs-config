@@ -3,10 +3,9 @@
 - State "TODO"       from              [2019-07-22 Mon]
 
 * TODO
-guix package --list-installed
-nix-env -q
-
-[[https://ambrevar.xyz/guix-advance/][more on guix]]
+- add stumpwm contrib as submodule
+- emacsdaemon?
+- change dict according to selected input method
 
 * OS
 There's only one operating system worth using - GNU/Linux. It comes in many
@@ -38,22 +37,6 @@ Common Lisp.
 ** TODO stumpwm contrib git submodule
 - State "TODO"       from              [2020-02-05 Wed 13:46]
 
-* Browser
-Eww as a text-based browser.
-Icecat if I need to run JS.
-
-Extensions:
-- dark reader
-- saka key
-
-The next browser also looks interesting. Worth having a look.
-
-* Programming languages
-- Python
-- Haskell
-- Go
-- \LaTeX
-
 * Appearance
 - transparent Emacs and desktop image
 - top bar with watch
@@ -80,11 +63,6 @@ Check base.lst for documention.
 
 [[https://github.com/owncloud/client/issues/2002#issuecomment-98747743][cron script for owncloud]]
 
-* Telegram
-telega for emacs? yes!
-
-* ssh keys?
-
 * Email
 [[https://www.fsf.org/resources/webmail-systems][fsf advice]]
 
@@ -108,13 +86,5 @@ nmtui
 https://aur.archlinux.org/bcm4350-firmware.git
 nix-env -iA nixos.b43Firmware_6_30_163_46
 
-* Dictionary
-aspell
-
 * Brightness
-xrandr -s 2560x1440
-xrandr --output <screen> --brightness 0.x / 1
-
-Screen appears to be less bright while using StumpWM.
-
-* Audio is distorted?
+how to persistently change permissions of a file.
