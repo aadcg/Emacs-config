@@ -1,6 +1,5 @@
 #+TITLE: GNU Emacs config
 #+OPTIONS: num:nil toc:nil email:t
-#+STARTUP: content
 #+PROPERTY: header-args :results silent
 
 * Defaults, Preferences and Aesthetics
@@ -914,17 +913,3 @@ Visit and reload this config
   (org-agenda-list 1)
   (delete-other-windows)
 #+end_src
-
-* TODO COMMENT
-** TODO Create package with portuguese holidays
-[[https://blog.aaronbieber.com/2015/08/04/authoring-emacs-packages.html][how to]]
-
-** TODO add personal holidays in a private file
-
-** Syncthing vs Nextcloud vs cron?
-
-** Emacs inside a docker container?
-[[https://medium.com/@sserialdev/emacs-in-the-container-age-5c0c222cfee][link]]
-
-** use-package and guix
-if pkgs is available in guix, then use it rather than melpa.
