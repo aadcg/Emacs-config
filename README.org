@@ -14,7 +14,7 @@
 | Mail/News         | Gnus             |
 #+TBLFM: @2$2='(concat "GNU Emacs " (substring (emacs-version) 10 14))
 
-[[https://ambrevar.xyz/guix-matters/index.html][Guix]]
+# [[https://ambrevar.xyz/guix-matters/index.html][Guix]]
 
 * Motivation
 Free software grants us the 4 freedoms to run, study, redistribute and improve
