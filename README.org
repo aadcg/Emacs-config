@@ -1,23 +1,18 @@
-# #+TITLE: dotfiles readme
+#+TITLE: dotfiles readme
 #+OPTIONS: author:t email:t toc:nil num:nil prop:t ^:nil
-
-# [[https://travis-ci.com/aadcg/.emacs.d][https://travis-ci.com/aadcg/.emacs.d.svg?branch=master]]
 
 # Amongst the decay of virtue lies a greater crime.
 # It’s not just us against them. It starts with I against I.
 # "I want to see the world go wild" - This routine is hell / Swain
 
-| OS                | GNU/Linux Guix   |
+| OS                | [[https://guix.gnu.org/][GNU/Linux Guix]]   |
 | Text Editor       | GNU Emacs 26.3   |
-| Org Version       | 9.3.3            |
 | Web Browser       | eww & GNU icecat |
 | Window manager    | StumpWM          |
 | Terminal Emulator | xterm            |
 | Media Player      | EMMS             |
-| Mail              | Gnus             |
+| Mail/News         | Gnus             |
 #+TBLFM: @2$2='(concat "GNU Emacs " (substring (emacs-version) 10 14))
-
-[[file:desktop.png]]
 
 [[https://ambrevar.xyz/guix-matters/index.html][Guix]]
 
@@ -113,9 +108,6 @@ Emacs is the self-documenting text editor, so C-h i has everything you need!
 ** Emacs Lisp
 If you love Emacs, you'll start learning it before you notice.
 
-** CI
-I added CI (continuous integration) in June, 2019.
-
 * Carrying org files
 I have a smartphone, one of those Android. I mitigated the Google influence by
 not adding a Google account or not running Google apps. Anyway, I'm sure I'm
@@ -156,3 +148,6 @@ bad education.
 
 * Footnotes
 [fn:1] Write me if something doesn't work for you.
+
+* Appearance
+[[file:desktop.png]]
