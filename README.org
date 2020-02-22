@@ -95,12 +95,12 @@ your needs require.
 Can't live without it. Words can't express the joy.
 
 ** E-mail
-I still don't e-mail from within Emacs... Damn it! I must fix it!
+Use gnus and you'll get a news reader as a bonus.
 
 ** Eww as a browser
-The built-in Emacs browser, eww, will not replace Firefox. It doesn't run
-Javascript. But you can use it for most of the things you need, with the added
-benefit that you won't leave your text editor.
+The built-in Emacs browser, eww, will not always replace a browser. Mainly,
+because it doesn't run Javascript. But you can use it for most of the things you
+need, with the added benefit that you won't leave your text editor.
 
 ** Studying Emacs
 Emacs is the self-documenting text editor, so C-h i has everything you need!
@@ -109,15 +109,15 @@ Emacs is the self-documenting text editor, so C-h i has everything you need!
 If you love Emacs, you'll start learning it before you notice.
 
 * Carrying org files
-I have a smartphone, one of those Android. I mitigated the Google influence by
-not adding a Google account or not running Google apps. Anyway, I'm sure I'm
-running endless malware in it. I'd like to get one of [[https://puri.sm/products/librem-5/][these]], one day.
+I have a smartphone, one of those Android. I mitigated Google's influence by not
+adding a Google account or by not running Google apps. Anyway, I'm sure I'm
+running endless malware in it anyway.
 
 So, my "App-store" is [[https://f-droid.org/][F-Droid]]. In there you'll find [[https://termux.com/][Termux]]. That coupled with
 [[https://nextcloud.com/][Nextcloud]] makes it possible me to access my org files and agenda anywhere,
 anytime and to sync effortlessly. My life in plain text.
 
-** Tutorial[fn:1]
+** Tutorial
 - [[https://f-droid.org/packages/com.termux/][Install Termux]]
 - Install Nextcloud (available on F-Droid)
 - Download the needed .org files from Nextcloud to your device
@@ -145,9 +145,6 @@ The road to freedom is hard. I'm consciously and proactively fighting years of
 bad education.
 
 *Free thought, free world.*
-
-* Footnotes
-[fn:1] Write me if something doesn't work for you.
 
 * Appearance
 [[file:desktop.png]]
