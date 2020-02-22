@@ -548,7 +548,7 @@ in python source code blocks.
 ** Look and Feel
 #+begin_src emacs-lisp
   (setq org-hide-leading-stars t
-        ;; org-startup-indented t
+        org-startup-indented t
         org-startup-with-inline-images t
         org-image-actual-width 500
         ;; org-highlight-latex-and-related (quote (latex script entities))
@@ -908,7 +908,8 @@ Visit and reload this config
 
   (unless in-termux-p
     (telega nil)
-    (gnus))
+    (gnus)
+    )
 
   (org-agenda-list 1)
   (delete-other-windows)
