@@ -7,6 +7,4 @@ emacs/.emacs.d/*
 cfgs/.config/gtk-3.0/*
 !cfgs/.config/gtk-3.0/settings.ini
 
-stumpwm/.stumpwm.d/stumpwm-contrib
-
 git/.gitconfig
