@@ -11,6 +11,7 @@
 - Syncthing vs Nextcloud vs cron?
 - [[https://medium.com/@sserialdev/emacs-in-the-container-age-5c0c222cfee][Emacs inside a docker container?]]
 - use-package and guix regarding emacs pkgs
+- git config file (~/.gitconfig or ~/.config/git/config file)
 
 * OS
 There's only one operating system worth using - GNU/Linux. It comes in many
