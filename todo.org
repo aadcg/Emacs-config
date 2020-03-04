@@ -3,7 +3,7 @@
 - State "TODO"       from              [2019-07-22 Mon]
 
 * TODO
-- add stumpwm contrib as submodule
+- mv gitconfig to .config
 - emacsdaemon?
 - change dict according to selected input method
 - [[https://blog.aaronbieber.com/2015/08/04/authoring-emacs-packages.html][Create package with portuguese holidays]]
@@ -11,6 +11,9 @@
 - Syncthing vs Nextcloud vs cron?
 - [[https://medium.com/@sserialdev/emacs-in-the-container-age-5c0c222cfee][Emacs inside a docker container?]]
 - use-package and guix regarding emacs pkgs
+- write pkg def for missing emacs pkgs with guix
+- add emacs-counsel
+- update emacs-zenburn-theme
 
 * OS
 There's only one operating system worth using - GNU/Linux. It comes in many
@@ -73,9 +76,6 @@ Check base.lst for documention.
 
 [[https://www.emacswiki.org/emacs/GnusGmail][gnus tutorial]]
 
-i68scb+18z6fep0c@sharklasers.com
-aadcg@sharklasers.com
-
 setup posteo email
 
 webmail fcup?
@@ -84,6 +84,8 @@ aagomes@protonmail.com
 aagomes@pm.com
 
 disroot
+
+[[https://github.com/kensanata/ggg#gmail-gnus-gpg-guide-gggg][how to encrypt]]
 
 * Wifi manager
 nmtui
