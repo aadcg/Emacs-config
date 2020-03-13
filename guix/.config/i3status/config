@@ -1,0 +1,65 @@
+# (man "i3status(1)")
+
+general {
+        colors = true
+        color_good = '#7F9F7F'
+        color_degraded = '#F0DFAF'
+        color_bad = '#CC9393'
+        interval = 5
+        # separator = "  "
+}
+
+# order += "ipv6"
+order += "wireless _first_"
+order += "ethernet _first_"
+order += "battery all"
+# order += "disk /"
+# order += "load"
+order += "memory"
+# order += "tztime msk"
+order += "tztime local"
+
+wireless _first_ {
+        format_up = "%quality %essid %ip"
+        format_down = "W: down"
+}
+
+ethernet _first_ {
+        format_up = "E: %ip (%speed)"
+        format_down = ""
+}
+
+battery all {
+        # format = "%status %percentage %remaining %emptytime"
+        format = "%status %remaining %emptytime"
+        format_down = "No battery"
+        status_chr = "⚡ CHR"
+        status_bat = "🔋 BAT"
+        status_unk = "? UNK"
+        status_full = "☻ FULL"
+        path = "/sys/class/power_supply/BAT%d/uevent"
+        low_threshold = 10
+        integer_battery_capacity = true
+}
+
+disk "/" {
+        format = "%avail"
+}
+
+load {
+        format = "%1min"
+}
+
+memory {
+       format = "%used"
+}
+
+tztime local {
+        format = "%a %d %b %k:%M"
+}
+
+tztime msk {
+        format = "Moscow %k:%M"
+        timezone = "Europe/Moscow"
+        hide_if_equals_localtime = true
+}
