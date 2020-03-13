@@ -1,9 +1,7 @@
 emacs/.emacs.d/*
-!emacs/.emacs.d/.travis.yml
 !emacs/.emacs.d/config.org
 !emacs/.emacs.d/init.el
-!emacs/.emacs.d/test_startup.sh
-!emacs/.emacs.d/eshell/alias
+!emacs/.emacs.d/eshell
 
 cfgs/.config/gtk-3.0/*
 !cfgs/.config/gtk-3.0/settings.ini
