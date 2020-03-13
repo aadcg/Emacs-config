@@ -1,0 +1,16 @@
+[user]
+	email = andremegafone@gmail.com
+	name = André Alexandre Gomes
+[github]
+        user = aadcg
+[color]
+        ui = auto
+[core]
+        editor = emacsclient -c
+[credential]
+	helper = cache --timeout=28800
+[sendemail]
+	smtpEncryption = tls
+	smtpServer = smtp.gmail.com
+	smtpUser = andremegafone@gmail.com
+	smtpServerPort = 587
