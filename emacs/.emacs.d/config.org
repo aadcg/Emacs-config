@@ -10,6 +10,7 @@
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
   (horizontal-scroll-bar-mode -1)
+  (setq use-dialog-box nil)
   (fringe-mode '(4 . 0))
   (fset 'yes-or-no-p 'y-or-n-p)
   (global-hl-line-mode)
@@ -25,12 +26,16 @@
   (use-package zenburn-theme
     :init
     (setq zenburn-scale-org-headlines t)
+    (set-face-attribute 'mode-line          nil :box        nil)
+    (set-face-attribute 'mode-line-inactive nil :box        nil)
     (load-theme 'zenburn t))
 #+end_src
 
 *** Font
 #+begin_src emacs-lisp
-  (set-frame-font "Fira Code 14" nil t)
+  ;; (set-frame-font "Fira Code 23" nil t)
+  ;; (setq default-frame-alist '((font . "Source Code Pro-14")))
+  (add-to-list 'default-frame-alist '(font . "Fira Code 23"))
 
   (defun auto-size-font (n)
     "Set the font size such that n buffers of 80 chars fit side by side."
@@ -53,6 +58,7 @@
 - Spaces over tabs
 - visual-line-mode in Termux
 - kill whole line
+- sentences can be separated by one space
 
 #+begin_src emacs-lisp
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -62,6 +68,7 @@
   (setq-default fill-column 80)
   (add-hook 'text-mode-hook 'turn-on-auto-fill)
   (setq-default indent-tabs-mode nil)
+  (setq sentence-end-double-space nil)
   (when in-termux-p
     (global-visual-line-mode t))
 #+end_src
@@ -106,21 +113,12 @@ Backups and auto-save files at ~/.emacs/backups
 #+end_src
 
 ** Modeline
-- Moody is a modern, practical and good-looking modeline
 - Minion hides minor modes
 - I usually check the battery status from the window manager modeline
 - Tuple (#line, #column) on the modeline
 - Hide-mode-line does the obvious and it's handy for presentations
 
 #+begin_src emacs-lisp
-  (when window-system
-    (use-package moody
-      :config
-      (setq moody-mode-line-height 20
-            x-underline-at-descent-line t)
-      (moody-replace-mode-line-buffer-identification)
-      (moody-replace-vc-mode)))
-
   (use-package minions
     :config
     (minions-mode 1)
@@ -157,13 +155,16 @@ Backups and auto-save files at ~/.emacs/backups
 *** Python
 #+begin_src emacs-lisp
   (use-package elpy
+    :defer t
     :init
-    (elpy-enable)
+    (advice-add 'python-mode :before 'elpy-enable)
     :config
-    (setq python-shell-interpreter "ipython"
-          python-shell-interpreter-args "-i --simple-prompt"
-          python-shell-prompt-detect-failure-warning nil
-          elpy-rpc-virtualenv-path 'current)
+    (setq elpy-rpc-python-command "python3"
+          python-shell-interpreter "python3"
+          ;; python-shell-interpreter "ipython"
+          ;; elpy-rpc-virtualenv-path 'current
+          ;; pyvenv-mode-line-indicator nil
+          )
     :bind
     ("C-c p" . elpy-autopep8-fix-code)
     ("C-c b" . elpy-black-fix-code))
@@ -171,11 +172,11 @@ Backups and auto-save files at ~/.emacs/backups
   (use-package company-jedi
     :config (add-to-list 'company-backends 'company-jedi))
 
-  (use-package ein)
+  ;; (use-package ein)
 
-  (add-hook 'python-mode-hook (lambda ()
-                                (require 'sphinx-doc)
-                                (sphinx-doc-mode t)))
+  ;; (add-hook 'python-mode-hook (lambda ()
+  ;;                               (require 'sphinx-doc)
+  ;;                               (sphinx-doc-mode t)))
 
   (add-hook 'python-mode-hook
             (setq-default electric-indent-inhibit t))
@@ -205,7 +206,7 @@ Make M-n and M-p more intelligent in shell.
        (define-key comint-mode-map (kbd "C-c M-r") #'comint-previous-input)
        (define-key comint-mode-map (kbd "C-c M-s") #'comint-next-input)))
 
-  (define-key shell-mode-map (kbd "SPC") 'comint-magic-space)
+  ;; (define-key shell-mode-map (kbd "SPC") 'comint-magic-space)
   (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 #+end_src
 
@@ -223,11 +224,11 @@ cycle through different options.
 
 Ivy in Eshell
 #+begin_src emacs-lisp
-  ;; (add-hook 'eshell-mode-hook
-  ;;   (lambda ()
-  ;;     (define-key eshell-mode-map (kbd "<M-tab>") nil)
-  ;;     (define-key eshell-mode-map (kbd "<tab>")
-  ;;       (lambda () (interactive) (completion-at-point)))))
+  (add-hook 'eshell-mode-hook
+    (lambda ()
+      (define-key eshell-mode-map (kbd "<M-tab>") nil)
+      (define-key eshell-mode-map (kbd "<tab>")
+        (lambda () (interactive) (completion-at-point)))))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -404,14 +405,13 @@ in python source code blocks.
   (use-package ob-ipython
     :defer t)
 
-  (use-package ob-go)
-
-  (unless (string-match org-version "9.1.9")
-    (require 'org-tempo))
+  (use-package ob-go
+    :defer t)
 
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
+     (scheme     . t)
      (python     . t)
      (ipython    . t)
      (haskell    . t)
@@ -419,12 +419,6 @@ in python source code blocks.
      (latex      . t)
      (shell      . t)
      (ditaa      . t)))
-
-  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-  (add-to-list 'org-structure-template-alist '("py" . "src python"))
-  (add-to-list 'org-structure-template-alist '("hs" . "src haskell"))
-  (add-to-list 'org-structure-template-alist '("go" . "src go"))
-  (add-to-list 'org-structure-template-alist '("sh" . "src sh"))
 #+end_src
 
 ** Exports
@@ -449,8 +443,7 @@ in python source code blocks.
     :config
     (require 'org-drill)
     (setq org-drill-save-buffers-after-drill-sessions-p nil
-          org-drill-scope 'tree
-          org-drill-cram-hours 0))
+          org-drill-scope 'tree))
 
   (use-package org-drill-table)
 
@@ -566,6 +559,8 @@ in python source code blocks.
 #+begin_src emacs-lisp
   (use-package guix
     :bind ("s-g" . guix))
+
+  (use-package pretty-sha-path)
 #+end_src
 
 ** Dired
@@ -654,8 +649,11 @@ in python source code blocks.
     (global-company-mode 1)
     (setq company-require-match nil
           company-idle-delay 0.1)
+    (define-key company-active-map (kbd "RET") nil)
+    (define-key company-active-map (kbd "<return>") nil)
     (define-key company-active-map (kbd "C-j")   'company-complete-selection)
-    (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle))
+    (define-key company-active-map (kbd "<tab>")
+    'company-complete-common-or-cycle))
 #+end_src
 
 ** Games
@@ -714,7 +712,7 @@ in python source code blocks.
 *** Clock
 #+begin_src emacs-lisp
   (setq display-time-24hr-format t
-        display-time-format "%k:%M %a %d %b"
+        display-time-format " %k:%M %a %d %b"
         display-time-default-load-average nil
         display-time-world-list '(("Europe/Moscow" "Москва")
                                   ("Europe/Lisbon" "Lisboa")))
@@ -795,6 +793,11 @@ in python source code blocks.
           holiday-local-holidays
           '(;; Porto, PT
             (holiday-fixed 6 24 "Dia de São João")))
+#+end_src
+
+** Man
+#+begin_src emacs-lisp
+  (setq Man-notify-method 'pushy)
 #+end_src
 
 ** Browser (eww)
@@ -906,10 +909,10 @@ Visit and reload this config
              (string-match "gnome" (getenv "DESKTOP_SESSION")))
     (toggle-frame-fullscreen))
 
-  (unless in-termux-p
-    (telega nil)
-    (gnus)
-    )
+  ;; (unless in-termux-p
+  ;;   (telega nil)
+  ;;   ;; (gnus)
+  ;;   )
 
   (org-agenda-list 1)
   (delete-other-windows)
