@@ -13,9 +13,9 @@
 
 (setq vc-follow-symlinks t)
 
-(use-package use-package-ensure
-  :config
-  (setq use-package-always-ensure t))
+;; (use-package use-package-ensure
+;;   :config
+;;   (setq use-package-always-ensure t))
 
 (use-package auto-package-update
   :ensure t
