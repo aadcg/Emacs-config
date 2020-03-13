@@ -3,8 +3,6 @@
 - State "TODO"       from              [2019-07-22 Mon]
 
 * TODO
-- mv gitconfig to .config
-- emacsdaemon?
 - change dict according to selected input method
 - [[https://blog.aaronbieber.com/2015/08/04/authoring-emacs-packages.html][Create package with portuguese holidays]]
 - add personal holidays in a private file
