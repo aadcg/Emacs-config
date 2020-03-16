@@ -6,14 +6,13 @@
 # Variables
 
 set $mod Mod4
-# Home row direction keys, like vim
-# set $left \[
-# set $down n
-# set $up p
-# set $right \]
 
-# Your preferred terminal emulator
-set $term emacsclient -c -e "(eshell)"
+set $term emacsclient -c -e "(shell)"
+
+set $left j
+set $down k
+set $up i
+set $right l
 
 # Your preferred application launcher
 # Note: it's recommended that you pass the final command to sway
@@ -22,20 +21,16 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec --
 set $background #3f3f3f
 set $foreground #dcdccc
 
-### Output configuration
-#
-# Wallpaper
+# Output
+# (man "sway-output(5)")
+
+# wallpaper
 output * bg ~/dotfiles/wallpaper.jpg fill
 
-#
-# Example configuration:
-#
-#   output HDMI-A-1 resolution 1920x1080 position 1920,0
-#
-# You can get the names of your outputs by running: swaymsg -t get_outputs
+# Monitors
 
-### Idle configuration
-#
+# Idle configuration
+
 # Example configuration:
 #
 # exec swayidle -w \
@@ -48,26 +43,8 @@ output * bg ~/dotfiles/wallpaper.jpg fill
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
 
-### Input configuration
-#
-# Example configuration:
-#
-#   input "2:14:SynPS/2_Synaptics_TouchPad" {
-#       dwt enabled
-#       tap enabled
-#       natural_scroll enabled
-#       middle_emulation enabled
-#   }
-#
-# You can get the names of your inputs by running: swaymsg -t get_inputs
-# Read `man 5 sway-input` for more information about this section.
-
-# keyboard settings (base.lst file has the instructions)
-# us and ru layouts
-# S - <space> to change layout
-# capslock LED shows that ru layout is active
-# compose key on left ctrl
-# capslock as ctrl
+# Input configuration
+# (man "sway-input(5)")
 
 input type:keyboard {
   xkb_layout us,ru
@@ -84,31 +61,29 @@ input type:touchpad {
 # hide cursor after 1000ms
 seat * hide_cursor 1000
 
-### Key bindings
-#
-# Basics:
-#
-    # Start a terminal
-    bindsym $mod+Return exec $term
+# Keybindings
 
-    # Kill focused window
-    bindsym --to-code $mod+k kill
+# Start a terminal
+bindsym $mod+Return exec $term
 
-    # Start your launcher
-    bindsym --to-code $mod+d exec $menu
+# Kill focused window
+bindsym --to-code $mod+Shift+k kill
 
-    # Drag floating windows by holding down $mod and left mouse button.
-    # Resize them with right mouse button + $mod.
-    # Despite the name, also works for non-floating windows.
-    # Change normal to inverse to use left mouse button for resizing and right
-    # mouse button for dragging.
-    floating_modifier $mod normal
+# Start your launcher
+bindsym --to-code $mod+d exec $menu
 
-    # Reload the configuration file
-    bindsym --to-code $mod+Shift+c reload
+# Drag floating windows by holding down $mod and left mouse button.
+# Resize them with right mouse button + $mod.
+# Despite the name, also works for non-floating windows.
+# Change normal to inverse to use left mouse button for resizing and right
+# mouse button for dragging.
+floating_modifier $mod normal
 
-    # Exit sway (logs you out of your Wayland session)
-    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+# Reload the configuration file
+bindsym --to-code $mod+Shift+r reload
+
+# Exit sway (logs you out of your Wayland session)
+# bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
 # Volume
 bindsym XF86AudioRaiseVolume exec amixer -q sset Master 10%+
@@ -120,89 +95,94 @@ bindsym XF86AudioMute exec amixer -q sset Master toggle
 # bindsym XF86MonBrightnessUp exec sudo light set +100
 
 # Lock
-bindsym $mod+l exec swaylock -f -c 000000
+bindsym $mod+Escape exec swaylock -f -c 000000
 
 # Screenshot
 bindsym --to-code $mod+p exec grim "$HOME/Pictures/$(date +%F_%T).png"
 
-#
 # Moving around:
-#
-    # Move your focus around
-    # bindsym $mod+$left focus left
-    # bindsym $mod+$down focus down
-    # bindsym $mod+$up focus up
-    # bindsym $mod+$right focus right
-    # Or use $mod+[up|down|left|right]
-    bindsym $mod+Left focus left
-    bindsym $mod+Down focus down
-    bindsym $mod+Up focus up
-    bindsym $mod+Right focus right
 
-    # Move the focused window with the same, but add Shift
-    # bindsym $mod+Shift+$left move left
-    # bindsym $mod+Shift+$down move down
-    # bindsym $mod+Shift+$up move up
-    # bindsym $mod+Shift+$right move right
-    # Ditto, with arrow keys
-    bindsym $mod+Shift+Left move left
-    bindsym $mod+Shift+Down move down
-    bindsym $mod+Shift+Up move up
-    bindsym $mod+Shift+Right move right
-#
-# Workspaces:
-#
-    # Switch to workspace
-    bindsym $mod+e workspace Emacs
-    bindsym $mod+w workspace Browser
-    bindsym $mod+c workspace Terminal
-    bindsym $mod+4 workspace Misc
-    bindsym $mod+5 workspace 5
-    bindsym $mod+6 workspace 6
-    bindsym $mod+7 workspace 7
-    bindsym $mod+8 workspace 8
-    bindsym $mod+9 workspace 9
-    bindsym $mod+0 workspace 10
-    bindsym $mod+o workspace back_and_forth
-    workspace_auto_back_and_forth yes
-    # Move focused container to workspace
-    bindsym $mod+Shift+1 move container to workspace 1
-    bindsym $mod+Shift+2 move container to workspace 2
-    bindsym $mod+Shift+3 move container to workspace 3
-    bindsym $mod+Shift+4 move container to workspace 4
-    bindsym $mod+Shift+5 move container to workspace 5
-    bindsym $mod+Shift+6 move container to workspace 6
-    bindsym $mod+Shift+7 move container to workspace 7
-    bindsym $mod+Shift+8 move container to workspace 8
-    bindsym $mod+Shift+9 move container to workspace 9
-    bindsym $mod+Shift+0 move container to workspace 10
-    # Note: workspaces can have any name you want, not just numbers.
-    # We just use 1-10 as the default.
-#
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Workspaces
+
+workspace_auto_back_and_forth yes
+bindsym $mod+o workspace back_and_forth
+
+# Switch to workspace
+bindsym --to-code $mod+e workspace Emacs
+bindsym --to-code $mod+w workspace Browser
+bindsym --to-code $mod+c workspace Terminal
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# Move focused container to workspace
+bindsym --to-code $mod+Shift+e move container to workspace Emacs
+bindsym --to-code $mod+Shift+w move container to workspace Browser
+bindsym --to-code $mod+Shift+c move container to workspace Terminal
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
 # Layout stuff:
-#
-    # You can "split" the current object of your focus with
-    # $mod+b or $mod+v, for horizontal and vertical splits
-    # respectively.
-    bindsym --to-code $mod+b splith
-    bindsym --to-code $mod+v splitv
 
-    # Switch the current container between different layout styles
-    # bindsym $mod+s layout stacking
-    # bindsym $mod+w layout tabbed
-    # bindsym $mod+e layout toggle split
+# You can "split" the current object of your focus with
+# $mod+b or $mod+v, for horizontal and vertical splits
+# respectively.
+bindsym --to-code $mod+b splith
+bindsym --to-code $mod+v splitv
 
-    # Make the current focus fullscreen
-    bindsym --to-code $mod+f fullscreen
+# Switch the current container between different layout styles
+# bindsym $mod+s layout stacking
+# bindsym $mod+w layout tabbed
+# bindsym $mod+e layout toggle split
 
-    # Toggle the current focus between tiling and floating mode
-    bindsym $mod+Shift+space floating toggle
+# Make the current focus fullscreen
+bindsym --to-code $mod+f fullscreen
 
-    # Swap focus between the tiling area and the floating area
-    bindsym $mod+space focus mode_toggle
+# Toggle the current focus between tiling and floating mode
+bindsym $mod+Shift+space floating toggle
 
-    # Move focus to the parent container
-    bindsym $mod+a focus parent
+# Swap focus between the tiling area and the floating area
+bindsym $mod+space focus mode_toggle
+
+# Move focus to the parent container
+bindsym $mod+a focus parent
+
 #
 # Scratchpad:
 #
@@ -223,10 +203,10 @@ mode "resize" {
     # right will grow the containers width
     # up will shrink the containers height
     # down will grow the containers height
-    # bindsym $left resize shrink width 10px
-    # bindsym $down resize grow height 10px
-    # bindsym $up resize shrink height 10px
-    # bindsym $right resize grow width 10px
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
 
     # Ditto, with arrow keys
     bindsym Left resize shrink width 10px
@@ -240,27 +220,13 @@ mode "resize" {
 }
 bindsym --to-code $mod+r mode "resize"
 
-# mode "stumpwm" {
-#      bindsym w exec icecat
-#      bindsym c exec xterm
+# Status Bar
+# (man "sway-bar(5)")
 
-#      bindsym Escape mode "default"
-#      }
-
-# bindsym control+i mode "stumpwm"
-
-#
-# Status Bar:
-#
-# Read `man 5 sway-bar` for more information about this section.
 bar {
     position top
-    font Fira Code 20
-    # swaybar_command waybar
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while date +'%a %d %b %k:%M'; do sleep 1; done
-    # emacs -nw -Q --batch --exec '(battery)'
+    font Fira Code 18
+    status_command i3status     # visit ~/.config/i3status/config
     colors {
         statusline $foreground
         background $background
@@ -277,10 +243,9 @@ assign [class="Emacs" instance="emacs" title="eshell"] Terminal
 
 # Startup
 exec emacs --daemon
+exec sleep 10 && emacsclient -c
 exec owncloud
-# exec emacsclient -c
 # exec emacs --exec '(telega nil)'
 
 # Preferences
-# default_border none
-# hide_edge_borders smart
+default_border none
