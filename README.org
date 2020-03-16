@@ -5,13 +5,13 @@
 # It’s not just us against them. It starts with I against I.
 # "I want to see the world go wild" - This routine is hell / Swain
 
-| OS                | [[https://guix.gnu.org/][GNU/Linux Guix]]   |
-| Text Editor       | GNU Emacs 26.3   |
-| Web Browser       | eww & GNU icecat |
-| Window manager    | StumpWM          |
-| Terminal Emulator | xterm            |
-| Media Player      | EMMS             |
-| Mail/News         | Gnus             |
+| OS                | [[https://guix.gnu.org/][GNU/Linux Guix]]            |
+| Text Editor       | GNU Emacs 26.3            |
+| Web Browser       | eww & GNU icecat          |
+| Window manager    | Sway                      |
+| Terminal Emulator | shell/term/eshell (Emacs) |
+| Media Player      | EMMS                      |
+| Mail/News         | Gnus                      |
 #+TBLFM: @2$2='(concat "GNU Emacs " (substring (emacs-version) 10 14))
 
 # [[https://ambrevar.xyz/guix-matters/index.html][Guix]]
