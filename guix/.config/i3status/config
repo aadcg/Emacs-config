@@ -53,8 +53,8 @@ battery all {
         format_down = "No battery"
         status_chr = "⚡ CHR"
         status_bat = "🔋 BAT"
-        status_unk = "? UNK"
-        status_full = "☻ FULL"
+        status_unk = "?"
+        status_full = ""
         path = "/sys/class/power_supply/BAT%d/uevent"
         low_threshold = 10
         integer_battery_capacity = true
