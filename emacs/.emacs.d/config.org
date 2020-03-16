@@ -26,15 +26,11 @@
   (use-package zenburn-theme
     :init
     (setq zenburn-scale-org-headlines t)
-    (set-face-attribute 'mode-line          nil :box        nil)
-    (set-face-attribute 'mode-line-inactive nil :box        nil)
     (load-theme 'zenburn t))
 #+end_src
 
 *** Font
 #+begin_src emacs-lisp
-  ;; (set-frame-font "Fira Code 23" nil t)
-  ;; (setq default-frame-alist '((font . "Source Code Pro-14")))
   (add-to-list 'default-frame-alist '(font . "Fira Code 23"))
 
   (defun auto-size-font (n)
@@ -687,13 +683,10 @@ in python source code blocks.
     (require 'emms-setup)
     (emms-standard)
     (emms-default-players)
-    ;; :bind
-    ;; ("<XF86AudioRaiseVolume>" . emms-volume-raise)
-    ;; ("<XF86AudioLowerVolume>" . emms-volume-lower)
-    ;; ("<XF86AudioPlay>"        . emms-pause)
-    ;; ("<XF86AudioNext>"        . emms-next)
-    ;; ("<XF86AudioPrev>"        . emms-previous)
-    )
+    :bind
+    ("<XF86AudioPlay>" . emms-pause)
+    ("<XF86AudioNext>" . emms-next)
+    ("<XF86AudioPrev>" . emms-previous))
 #+end_src
 
 ** Regional
