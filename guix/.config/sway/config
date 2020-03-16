@@ -126,7 +126,7 @@ bindsym $mod+Shift+Right move right
 # Workspaces
 
 workspace_auto_back_and_forth yes
-bindsym $mod+o workspace back_and_forth
+bindsym --to-code $mod+o workspace back_and_forth
 
 # Switch to workspace
 bindsym --to-code $mod+e workspace Emacs
@@ -234,18 +234,17 @@ bar {
     }
 }
 
-# Rules
+# Windows
 # assign [class="Emacs"] Emacs
 assign [class="IceCat"] Browser
-assign [class="ownCloud"] Misc
+assign [class="ownCloud"] 1
 # assign [class="Telega"] 5
-assign [class="Emacs" instance="emacs" title="eshell"] Terminal
+assign [class="Emacs" title="shell"] Terminal
+default_border none
+for_window [class=".*"] opacity set 0.9
 
 # Startup
 exec emacs --daemon
 exec sleep 10 && emacsclient -c
 exec owncloud
 # exec emacs --exec '(telega nil)'
-
-# Preferences
-default_border none
