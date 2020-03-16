@@ -10,7 +10,9 @@
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
   (horizontal-scroll-bar-mode -1)
-  (setq use-dialog-box nil)
+  (setq use-dialog-box nil
+        inhibit-startup-message t
+        initial-scratch-message nil)
   (fringe-mode '(4 . 0))
   (fset 'yes-or-no-p 'y-or-n-p)
   (global-hl-line-mode)
@@ -18,11 +20,6 @@
 
 *** Theme
 #+begin_src emacs-lisp
-  (defun transparency (value)
-    "Sets the transparency of the frame window. 0=transparent/100=opaque."
-    (interactive "nTransparency Value 0 - 100 opaque:")
-    (set-frame-parameter (selected-frame) 'alpha value))
-
   (use-package zenburn-theme
     :init
     (setq zenburn-scale-org-headlines t)
@@ -512,7 +509,6 @@ in python source code blocks.
   (defun aadcg/presenting ()
     "Presenting mode"
     (interactive)
-    (transparency 100)
     (column-number-mode 0)
     (line-number-mode 0)
     (global-diff-hl-mode 0)
@@ -524,7 +520,6 @@ in python source code blocks.
   (defun aadcg/non-presenting ()
     "Non-presenting mode"
     (interactive)
-    (transparency 90)
     (column-number-mode)
     (line-number-mode)
     (reset-text-size)
@@ -898,9 +893,9 @@ Visit and reload this config
   (setq inhibit-startup-message t
         initial-scratch-message nil)
 
-  (when (and (getenv "DESKTOP_SESSION")
-             (string-match "gnome" (getenv "DESKTOP_SESSION")))
-    (toggle-frame-fullscreen))
+  ;; (when (and (getenv "DESKTOP_SESSION")
+  ;;            (string-match "gnome" (getenv "DESKTOP_SESSION")))
+  ;;   (toggle-frame-fullscreen))
 
   ;; (unless in-termux-p
   ;;   (telega nil)
