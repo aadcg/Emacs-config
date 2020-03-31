@@ -38,25 +38,26 @@ volume mic {
 }
 
 wireless _first_ {
-        format_up = "%quality %essid %ip"
-        format_down = "W: down"
+        format_up = "%quality %ip"
+        format_down = ""
 }
 
 ethernet _first_ {
-        format_up = "E: %ip (%speed)"
+        format_up = "%speed %ip"
         format_down = ""
 }
 
 battery all {
-        # format = "%status %percentage %remaining %emptytime"
-        format = "%status %remaining %emptytime"
+        format = "%status %percentage %remaining"
         format_down = "No battery"
-        status_chr = "⚡ CHR"
-        status_bat = "🔋 BAT"
+        status_chr = "↑"
+        status_bat = "↓"
         status_unk = "?"
         status_full = ""
         path = "/sys/class/power_supply/BAT%d/uevent"
-        low_threshold = 10
+        threshold_type = "percentage"
+        low_threshold = 20
+        last_full_capacity = true
         integer_battery_capacity = true
 }
 
