@@ -92,7 +92,6 @@
     %emacs
     (map specification->package
          '(
-           "adb"
            "alsa-utils"
            "aspell"
            "aspell-dict-en"
@@ -100,8 +99,8 @@
            "aspell-dict-ru"
            "audacity"
            "curl"
-           "fastboot"
            "font-fira-code"
+           "font-hack"
            "git"
            "gnupg"
            "gtypist"
@@ -129,7 +128,6 @@
            "sicp"
            "slock"
            "stow"
-           "stumpwm"
            "sway"
            "swaylock"
            "texlive"
@@ -137,7 +135,6 @@
            "transmission"
            "xmodmap"
            "xrandr"
-           "xterm"
            ))
       %base-packages))
   (services
