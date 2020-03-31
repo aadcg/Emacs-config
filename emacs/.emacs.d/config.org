@@ -1,21 +1,24 @@
 #+TITLE: GNU Emacs config
+#+AUTHOR: André Alexandre Gomes
+#+EMAIL: andremegafone@gmail.com
 #+OPTIONS: num:nil toc:nil email:t
 #+PROPERTY: header-args :results silent
 
 * Defaults, Preferences and Aesthetics
-** Aesthethics
+** Aesthetics
 *** UI
 #+begin_src emacs-lisp
   (menu-bar-mode -1)
   (tool-bar-mode -1)
+  (tooltip-mode -1)
   (scroll-bar-mode -1)
   (horizontal-scroll-bar-mode -1)
-  (setq use-dialog-box nil
-        inhibit-startup-message t
-        initial-scratch-message nil)
-  (fringe-mode '(4 . 0))
+  (fringe-mode '(6 . 0))
   (fset 'yes-or-no-p 'y-or-n-p)
-  (global-hl-line-mode)
+  ;; (global-hl-line-mode)
+  (setq initial-scratch-message ";; Happy Hacking!
+
+  ")
 #+end_src
 
 *** Theme
@@ -27,6 +30,8 @@
 #+end_src
 
 *** Font
+Hack might be a good alternative.
+
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(font . "Fira Code 23"))
 
@@ -50,12 +55,10 @@
 - 80 chars per line
 - Spaces over tabs
 - visual-line-mode in Termux
-- kill whole line
 - sentences can be separated by one space
 
 #+begin_src emacs-lisp
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
-  (global-subword-mode t)
   (delete-selection-mode t)
   (setq require-final-newline t)
   (setq-default fill-column 80)
@@ -64,16 +67,25 @@
   (setq sentence-end-double-space nil)
   (when in-termux-p
     (global-visual-line-mode t))
+
+  (use-package subword
+    :hook (prog-mode . subword-mode))
 #+end_src
 
-** Windows and buffers
-- Automatically revert buffers
+** Windows, buffers and files
+- Remember recent files
+- Automatically revert buffers (perhaps no need to be done at init)
 - Killing a buffer also kills the window
 
 #+begin_src emacs-lisp
-  (global-auto-revert-mode t)
-  (setq auto-revert-remote-files t)
+  (recentf-mode 1)
+  (setq recentf-max-saved-items 50)
   (substitute-key-definition 'kill-buffer 'kill-buffer-and-window global-map)
+
+  (use-package autorevert
+    :config
+    (setq auto-revert-remote-files t)
+    :hook (after-init . global-auto-revert-mode))
 #+end_src
 
 ** Backups
@@ -83,7 +95,8 @@ Backups and auto-save files at ~/.emacs/backups
   (setq backups-dir (concat user-emacs-directory "backups/"))
   (unless (file-exists-p backups-dir)
     (mkdir backups-dir))
-  (setq backup-directory-alist `(("." . ,backups-dir)))
+  (setq backup-directory-alist `(("." . ,backups-dir))
+        tramp-backup-directory-alist backup-directory-alist)
 #+end_src
 
 ** Keybindings
@@ -92,11 +105,11 @@ Backups and auto-save files at ~/.emacs/backups
     (interactive)
     (switch-to-buffer "*Org Agenda*"))
 
-  (global-set-key (kbd "M-g")     'goto-line)
-  (global-set-key (kbd "C-x C-b") 'ibuffer)
-  (global-set-key (kbd "M-%")     'query-replace-regexp)
-  (global-set-key (kbd "<f5>")    'revert-buffer)
-  (global-set-key (kbd "C-M-r")   'eval-buffer)
+  ;; (global-set-key (kbd "M-g")     'goto-line)
+  ;; (global-set-key (kbd "C-x C-b") 'ibuffer)
+  ;; (global-set-key (kbd "M-%")     'query-replace-regexp)
+  ;; (global-set-key (kbd "<f5>")    'revert-buffer)
+  ;; (global-set-key (kbd "C-M-r")   'eval-buffer)
   (global-set-key (kbd "C-x w")   'eww)
   (global-set-key (kbd "C-x f")   'browse-url-firefox)
   (global-set-key (kbd "S-SPC")   'cycle-spacing)
@@ -115,25 +128,28 @@ Backups and auto-save files at ~/.emacs/backups
   (use-package minions
     :config
     (minions-mode 1)
-    (setq minions-direct '(org-tree-slide-mode text-scale-mode)
-          minions-mode-line-lighter ""
+    (setq minions-direct '(org-tree-slide-mode text-scale-mode geiser-mode)
           minions-mode-line-delimiters '("" . "")))
 
   ;; more info about the battery /sys/class/power_supply/BAT0
-  (setq battery-mode-line-format " %p%"
-        battery-mode-line-limit 99)
+  (use-package battery
+    :defer t
+    :config
+    (setq battery-mode-line-format " %p%"
+          battery-mode-line-limit 99))
 
   (column-number-mode)
 
-  (use-package hide-mode-line)
+  (use-package hide-mode-line
+    :defer t)
 #+end_src
 
 ** Cursor
 - Preserve cursor position after C-v or M-v
 - Preserve cursor position after closing a file
-- No blinking cursor
-- Avy is the engine that moves my cursor around
+- Avy moves my cursor around
 
+change this keybinding to C-m, C-i or M-j?
 #+begin_src emacs-lisp
   (setq scroll-preserve-screen-position 'always)
   (save-place-mode 1)
@@ -146,6 +162,8 @@ Backups and auto-save files at ~/.emacs/backups
 * Programming
 ** Languages
 *** Python
+Add binds only to python-mode-map
+
 #+begin_src emacs-lisp
   (use-package elpy
     :defer t
@@ -190,17 +208,23 @@ Backups and auto-save files at ~/.emacs/backups
 Make M-n and M-p more intelligent in shell.
 
 #+begin_src emacs-lisp
-  (eval-after-load 'comint
-    '(progn
-       ;; originally on C-c M-r and C-c M-s
-       (define-key comint-mode-map (kbd "M-p") #'comint-previous-matching-input-from-input)
-       (define-key comint-mode-map (kbd "M-n") #'comint-next-matching-input-from-input)
-       ;; originally on M-p and M-n
-       (define-key comint-mode-map (kbd "C-c M-r") #'comint-previous-input)
-       (define-key comint-mode-map (kbd "C-c M-s") #'comint-next-input)))
+  ;; (eval-after-load 'comint
+  ;;   '(progn
+  ;;      ;; originally on C-c M-r and C-c M-s
+  ;;      (define-key comint-mode-map (kbd "M-p") #'comint-previous-matching-input-from-input)
+  ;;      (define-key comint-mode-map (kbd "M-n") #'comint-next-matching-input-from-input)
+  ;;      ;; originally on M-p and M-n
+  ;;      (define-key comint-mode-map (kbd "C-c M-r") #'comint-previous-input)
+  ;;      (define-key comint-mode-map (kbd "C-c M-s") #'comint-next-input)))
 
   ;; (define-key shell-mode-map (kbd "SPC") 'comint-magic-space)
-  (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+  ;; (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
+  (use-package comint
+    :bind
+    (:map commint-mode-map
+          ("M-p" . comint-previous-matching-input-from-input)
+          ("M-n" . comint-next-matching-input-from-input)))
 #+end_src
 
 **** Eshell
@@ -258,11 +282,6 @@ Requires gocode for the autocomplete to work.
     (setq-default TeX-master nil))
 #+end_src
 
-*** COMMENT JS
-#+begin_src emacs-lisp
-  ;; (add-hook 'js-mode-hook 'json-pretty-print-buffer-ordered)
-#+end_src
-
 ** Version Control
 #+begin_src emacs-lisp
   (use-package magit
@@ -284,8 +303,9 @@ Requires gocode for the autocomplete to work.
 *** Yaml
 #+begin_src emacs-lisp
   (use-package yaml-mode
-    :config
-    (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
+    :ensure t
+    :mode (("\\.yml\\'" . yaml-mode)
+           ("\\.yaml\\'" . yaml-mode)))
 #+end_src
 
 *** CSV
@@ -331,19 +351,29 @@ in python source code blocks.
   (use-package pretty-mode
     :config
     (require 'pretty-mode)
-    ;; (global-pretty-mode t)
+    (global-pretty-mode t)
     (pretty-activate-groups
      '(:sub-and-superscripts :arithmetic-nary :quantifiers :types)))
+
+  (global-prettify-symbols-mode t)
 #+end_src
 
-*** COMMENT Docker
+*** Parenthesis
 #+begin_src emacs-lisp
-  (use-package docker
-    :bind ("C-c d" . docker))
+  ;; (use-package smartparens
+  ;;   :config
+  ;;   (require 'smartparens-config)
+  ;;   (smartparens-global-strict-mode)
+  ;;   (show-smartparens-global-mode)
+  ;;   (sp-local-pair 'org-mode "$$" "$$"))
 
-  (use-package docker-tramp)
-
-  ;; (use-package counsel-docker)
+  (use-package paren
+    :config
+    (show-paren-mode)
+    (setq show-paren-delay 0
+          show-paren-when-point-inside-paren t
+          show-paren-when-point-in-periphery t)
+    :hook (after-init . show-paren-mode))
 #+end_src
 
 * Org
@@ -377,7 +407,7 @@ in python source code blocks.
           org-refile-targets '((org-agenda-files :maxlevel . 5))
           org-refile-allow-creating-parent-nodes t orgtbl-mode t
           org-modules '(ol-w3m ol-bbdb ol-bibtex ol-docview ol-gnus
-          ol-info ol-irc ol-mhe ol-rmail ol-eww drill tempo))
+                               ol-info ol-irc ol-mhe ol-rmail ol-eww drill tempo))
 
     :bind
     ("C-c a"     . org-agenda)
@@ -386,6 +416,8 @@ in python source code blocks.
     ("C-c !"     . org-time-stamp-inactive)
     ("C-c j"     . aadcg/org-checkbox-next)
     ("<mouse-1>" . aadcg/org-checkbox-next))
+
+  (global-set-key (kbd "C-'") nil)
 #+end_src
 
 ** Literate Programming
@@ -509,24 +541,18 @@ in python source code blocks.
   (defun aadcg/presenting ()
     "Presenting mode"
     (interactive)
-    (column-number-mode 0)
-    (line-number-mode 0)
+    (hide-mode-line-mode)
     (global-diff-hl-mode 0)
     (setq global-hl-line-mode nil)
-    (default-text-scale-increase)
-    (default-text-scale-increase)
-    (default-text-scale-increase))
+    (auto-size-font 1))
 
   (defun aadcg/non-presenting ()
     "Non-presenting mode"
     (interactive)
-    (column-number-mode)
-    (line-number-mode)
-    (reset-text-size)
+    (setq hide-mode-line-mode t)
     (global-diff-hl-mode)
     (global-hl-line-mode)
-    (delete-other-windows)
-    (default-text-scale-reset))
+    (auto-size-font 2))
 #+end_src
 
 ** Look and Feel
@@ -553,11 +579,27 @@ in python source code blocks.
 
   (use-package pretty-sha-path)
 #+end_src
+** Ibuffer
+#+begin_src emacs-lisp
+  (use-package ibuffer
+    :config
+    (setq ibuffer-expert t)
+    (setq ibuffer-default-sorting-mode 'major-mode)
+    :hook
+    (ibuffer-mode . hl-line-mode)
+    :bind (("C-x C-b" . ibuffer)))
+#+end_src
 
 ** Dired
 #+begin_src emacs-lisp
-  (setq-default dired-listing-switches "-Atlh")
-  (setq dired-auto-revert-buffer t)
+  (use-package dired
+    :config
+    (setq dired-recursive-copies 'always
+          dired-recursive-deletes 'always
+          delete-by-moving-to-trash t
+          dired-listing-switches "-Atlh --group-directories-first"
+          dired-auto-revert-buffer t)
+    :hook ((dired-mode . hl-line-mode)))
 #+end_src
 
 ** Checking
@@ -593,16 +635,6 @@ in python source code blocks.
       (pdf-tools-enabled . pdf-view-fit-height-to-window)))
 #+end_src
 
-** Parenthesis
-#+begin_src emacs-lisp
-  (use-package smartparens
-    :config
-    (require 'smartparens-config)
-    (smartparens-global-strict-mode)
-    (show-smartparens-global-mode)
-    (sp-local-pair 'org-mode "$$" "$$"))
-#+end_src
-
 ** Expand region
 #+begin_src emacs-lisp
   (use-package expand-region
@@ -610,7 +642,9 @@ in python source code blocks.
 #+end_src
 
 ** Emacs completion
-(info "(ivy)API")
+(info "(ivy)Top")
+why use swiper if there's occur?
+
 #+begin_src emacs-lisp
   (use-package counsel
     :init
@@ -621,12 +655,14 @@ in python source code blocks.
           ivy-wrap t
           ivy-extra-directories nil
           ivy-initial-inputs-alist nil
+          ivy-use-virtual-buffers t
           ivy-height-alist '((t lambda (_caller) (/ (window-height) 3))))
     (add-to-list 'ivy-format-functions-alist '(t . ivy-format-function-arrow))
     :bind
+    ("C-s" . swiper)
     ("C-x B" . ivy-switch-buffer-other-window)
-    ("C-s"   . swiper)
-    ("C-x 8" . counsel-unicode-char))
+    ;; ("C-x 8" . counsel-unicode-char)
+    )
 
   (use-package smex)
 #+end_src
@@ -639,7 +675,8 @@ in python source code blocks.
     :config
     (global-company-mode 1)
     (setq company-require-match nil
-          company-idle-delay 0.1)
+          company-idle-delay 0.1
+          company-selection-wrap-around t)
     (define-key company-active-map (kbd "RET") nil)
     (define-key company-active-map (kbd "<return>") nil)
     (define-key company-active-map (kbd "C-j")   'company-complete-selection)
@@ -651,12 +688,6 @@ in python source code blocks.
 #+begin_src emacs-lisp
   (use-package speed-type
     :defer t)
-#+end_src
-
-** Default Text Scale
-#+begin_src emacs-lisp
-  (use-package default-text-scale
-    :config (default-text-scale-mode))
 #+end_src
 
 ** Google Translate
@@ -689,21 +720,24 @@ in python source code blocks.
 Всё ясно, да?
 
 #+begin_src emacs-lisp
-  (setq default-input-method "russian-computer")
+  ;; (setq default-input-method "russian-computer")
 #+end_src
 
 *** Calendar
 #+begin_src emacs-lisp
-  (setq calendar-week-start-day 1)
+  (use-package calendar
+    :config (setq calendar-week-start-day 1))
 #+end_src
 
 *** Clock
 #+begin_src emacs-lisp
-  (setq display-time-24hr-format t
-        display-time-format " %k:%M %a %d %b"
-        display-time-default-load-average nil
-        display-time-world-list '(("Europe/Moscow" "Москва")
-                                  ("Europe/Lisbon" "Lisboa")))
+  (use-package time
+    :config
+    (setq display-time-24hr-format t
+          display-time-format " %k:%M %a %d %b"
+          display-time-default-load-average nil
+          display-time-world-list '(("Europe/Moscow" "Москва")
+                                    ("Europe/Lisbon" "Lisboa"))))
 #+end_src
 
 *** Holidays
@@ -716,37 +750,38 @@ in python source code blocks.
 
         holiday-general-holidays
         '(;; Portuguese Public Holidays
-          (holiday-fixed 1 1 "Ano Novo")
+          (holiday-fixed 1 1      "Ano Novo")
           (holiday-easter-etc -47 "Carnaval")
-          (holiday-easter-etc -2 "Sexta-feira Santa")
-          (holiday-easter-etc 0 "Domingo de Páscoa")
-          (holiday-fixed 3 19 "Dia do Pai")
-          (holiday-fixed 4 25 "Dia da Liberdade")
-          (holiday-fixed 5 1 "Dia do Trabalhador")
+          (holiday-easter-etc -2  "Sexta-feira Santa")
+          (holiday-easter-etc 0   "Domingo de Páscoa")
+          (holiday-fixed 3 19     "Dia do Pai")
+          (holiday-fixed 4 25     "Dia da Liberdade")
+          (holiday-fixed 5 1      "Dia do Trabalhador")
           (holiday-easter-etc +60 "Corpo de Deus")
-          (holiday-float 5 0 1 "Dia da Mãe")
-          (holiday-fixed 6 10 "Dia de Portugal, de Camões e das Comunidades Portuguesas")
-          (holiday-fixed 8 15 "Assunção de Nossa Senhora")
-          (holiday-fixed 10 5 "Implantação da República")
-          (holiday-fixed 11 1 "Dia de Todos-os-Santos")
-          (holiday-fixed 12 1 "Restauração da Independência")
-          (holiday-fixed 12 8 "Imaculada Conceição")
-          (holiday-fixed 12 45 "Consoada")
-          (holiday-fixed 12 25 "Natal")
+          (holiday-float 5 0 1    "Dia da Mãe")
+          (holiday-fixed 6 10     "Dia de Portugal, de Camões e das
+          Comunidades Portuguesas")
+          (holiday-fixed 8 15     "Assunção de Nossa Senhora")
+          (holiday-fixed 10 5     "Implantação da República")
+          (holiday-fixed 11 1     "Dia de Todos-os-Santos")
+          (holiday-fixed 12 1     "Restauração da Independência")
+          (holiday-fixed 12 8     "Imaculada Conceição")
+          (holiday-fixed 12 45    "Consoada")
+          (holiday-fixed 12 25    "Natal")
 
           ;; Russian Public Holidays
-          (holiday-fixed 1 1 "Новый год")
-          (holiday-fixed 1 2 "Новогодние каникулы")
-          (holiday-fixed 1 3 "Новогодние каникулы")
-          (holiday-fixed 1 4 "Новогодние каникулы")
-          (holiday-fixed 1 5 "Новогодние каникулы")
-          (holiday-fixed 1 6 "Новогодние каникулы")
-          (holiday-fixed 1 7 "Рождество Христово")
-          (holiday-fixed 1 8 "Новогодние каникулы")
+          (holiday-fixed 1 1  "Новый год")
+          (holiday-fixed 1 2  "Новогодние каникулы")
+          (holiday-fixed 1 3  "Новогодние каникулы")
+          (holiday-fixed 1 4  "Новогодние каникулы")
+          (holiday-fixed 1 5  "Новогодние каникулы")
+          (holiday-fixed 1 6  "Новогодние каникулы")
+          (holiday-fixed 1 7  "Рождество Христово")
+          (holiday-fixed 1 8  "Новогодние каникулы")
           (holiday-fixed 2 23 "День защитника Отечества")
-          (holiday-fixed 3 8 "Международный женский день")
-          (holiday-fixed 5 1 "Праздник Весны и Труда")
-          (holiday-fixed 5 9 "День Победы")
+          (holiday-fixed 3 8  "Международный женский день")
+          (holiday-fixed 5 1  "Праздник Весны и Труда")
+          (holiday-fixed 5 9  "День Победы")
           (holiday-fixed 6 12 "День России")
           (holiday-fixed 11 4 "День народного единства")
 
@@ -780,7 +815,10 @@ in python source code blocks.
 
           holiday-local-holidays
           '(;; Porto, PT
-            (holiday-fixed 6 24 "Dia de São João")))
+            (holiday-fixed 6 24 "Dia de São João")
+            ;; Санкт-петербург, Россия
+            (holiday-fixed 1 27 "День снятия блокады")
+            (holiday-fixed 5 27 "День города")))
 #+end_src
 
 ** Man
@@ -885,23 +923,20 @@ Visit and reload this config
     (interactive)
     (let ((url "https://en.openrussian.org/ru/"))
       (eww (concat url (current-word)))
+      (set-buffer "*eww*")
       (forward-line 20)))
 #+end_src
 
 * Startup
 #+begin_src emacs-lisp
-  (setq inhibit-startup-message t
-        initial-scratch-message nil)
-
   ;; (when (and (getenv "DESKTOP_SESSION")
   ;;            (string-match "gnome" (getenv "DESKTOP_SESSION")))
   ;;   (toggle-frame-fullscreen))
 
   ;; (unless in-termux-p
   ;;   (telega nil)
-  ;;   ;; (gnus)
-  ;;   )
+  ;;   (gnus))
 
-  (org-agenda-list 1)
-  (delete-other-windows)
+  ;; (org-agenda-list 1)
+  ;; (delete-other-windows)
 #+end_src
