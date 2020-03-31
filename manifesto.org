@@ -1,0 +1,263 @@
+#+STARTUP: latexpreview
+#+TITLE: Learning in Freedom
+#+OPTIONS: toc:nil
+#+OPTIONS: num:nil
+#+OPTIONS: email:t
+
+# I left the academia in January 2018. Immersed in the beauty of pure maths and
+# theoretical physics, I was quite unaware of what was going on around me.
+
+# I didn't quite understand the information age we're living today. When I started
+# to know it a bit better, I understood the injustices I was put through.
+
+# *No more proprietary bullshit in the academia.*
+
+# *Free thought, free world.*
+
+#+BEGIN_abstract
+Lately I've been thinking about *freedom* and the tools needed for an individual
+to cultivate its own freedom. I shall use the word /free/ constantly - /free/ as
+in /freedom/. I'm not concerned with a financial cost.
+
+Students should be taught to use tools that respect their freedoms and
+privacy. In others words, they shouldn't be taught to use [[https://en.wikipedia.org/wiki/Proprietary_software][proprietary
+software]]. They deserve to be educated in a free community where knowledge is
+shared. Moreover, a scientific community should be making use of tools derived
+from its developments. Sadly, the materialization of an idea often makes it
+rotten. For instance, everyone acknowledges that searching the web is handy, but
+no (concerned) citizen would like to give her/his data to a company like
++Google+. Therefore, sticking to primary sources of good ideas is of utmost
+importance. Citizens want the features themselves (doing a web search), not to
+be trapped in a disrespectful ecosystem (+Google+).
+#+END_abstract
+
+* Zeitgeist
+  Nowadays, students are not being educated according to the above stated
+standards. I can attempt to explain why. The first obvious observation is that
+the digital world evolved quite fast and everyone is still trying to keep up the
+pace. Still, I think that doesn't account for everything. Society lags behind
+because there are two sets of communities that still don't live up to the
+desired interplay.
+
+
++ Scientific communities work together within their own topic of
+  interest. There's little to no cross interaction between research groups with
+  different focus. Driven by curiosity and intellectual arrogance - /you're too
+  dumb to understand me/.
+
++ Profit-oriented engineering communities that take care of 'real life'
+  implementations. Their references are often detached from fundamental
+  scientific works. Driven by money and by influential arrogance - /you're not
+  powerful enough to rule me/.
+
+In other words, we deploy the task of implementing state-of-the-art ideas to
+people driven by questionable moral values and poor knowledge. These
+opportunists become rich, powerful and influential, i.e., they shape
+society. That's the first problem.
+
+The second was already hinted above. Scientific communities operate at the
+limits of knowledge in their own research topics, whereas on the boundary they
+often crystallize. Hence, they start using a new tool or technology when it gets
+to mainstream culture. That's a bit frustrating. They should be ahead of the
+game in as many technical aspects as possible. I mean that, apart from their own
+research topic, they should strive to be updated about the general scientific
+and technological progress.
+
+* Context and Goals
+  I recently started using [[https://www.gnu.org/software/emacs/][GNU Emacs]] and it triggered a personal revolution. It's
+a brilliant piece of software (seriously, the best thing ever). Through it, I
+came across the GNU Project and its founder, Richard Stallman. Do some research
+on it - you could start from [[https://www.youtube.com/watch?v%3Dn9YDz-Iwgyw][here]].
+
+This document is written from the point of view of a citizen who was blind to
+the above zeitgeist and that continuously aims at cultivating its own
+freedom. In the following sections, I shall give an account of my own path
+towards that end. I will try to keep it as straightforward and action-oriented
+as possible.
+
+So, without further euphemisms, stop using +Google+, +Facebook+, +Instagram+,
++What'sApp+, +Dropbox+, +Windows+, +iOS+, or any kind of proprietary
+software. These snappy, crappy, shinning things were designed for those who are
+ready to exchange their freedoms for highly deceptive productivity benefits.
+
+You'll soon realize that you can be /really/ productive and break free from the
+chains of companies who smother you. Along the way, you'll learn fun and
+interesting stuff. I want to stress that this does not only apply to computer
+enthusiasts. We're in 2018! I'm addressing to the academic community since I
+believe it could be the driving force for change. Some content will be perhaps
+too dense. I'm relying on your effort to complete the missing details.
+
+Serious mathematics is hard. Everything that follows is basic. However, it does
+require *willingness* and *time*! Also, one needs to be ready to open hand of
+some comodities for a while in order to change! Feedback and comments are
+welcome.
+
+* Devices and Software
+** Laptop
+For people to stop buying those iCrap or Defeatdows devices, reliable
+alternatives must be given. Freedom concerns apart, those devices run an
+operating system (OS) that sucks. [[https://en.wikipedia.org/wiki/TOP500#Top_500_ranking][The world runs on GNU/Linux]], and that should
+suffice to motivate its study and use. By the way, students should have contact
+with GNU/Linux from an early age. Some associations become so deeply rooted that
+it is sometimes difficult to break free. For instance, to search - to +Google+.
+
+You don't need to learn how to use the terminal. /But when you DO learn, you
+will never go back!!!/ As you should know, GNU/Linux distributions come in
+hundreds of flavours and shapes. Ubuntu should be a good starting point if
+you're in doubt.
+
+The bad news: most hardware companies don't care about freedom since they rarely
+sell machines pre-installed with GNU/Linux. Consider the following companies for
+your future laptop acquisition with GNU/Linux pre-installed:
+
++ [[https://system76.com][System76]]
++ [[https://puri.sm/][Purism]]
+
+If you own or will buy a computer without GNU/Linux pre-installed, you can
+install it yourself. However, take into account that the hardware was not
+intended to work flawlessly out of the box. You might have a hard time
+configuring the wireless connection, for example. If you plan to run Ubuntu,
+consider this [[https://certification.ubuntu.com/desktop/][list]] of hardware not prone to complications.
+
+For those /really/ concerned with privacy/freedom, take into account that not
+only the OS matters but also the BIOS ([[https://libreboot.org/][Libreboot]] is the free software
+alternative). The FSF (Free Software Foundation) approves only a handful of
+laptops. Most of them are refurbished ThinkPads X200 - for instance, [[https://store.vikings.net/libre-friendly-hardware/x200-ryf-certfied][Vikings]]
+(pre-installed with Trisquel and Libreboot).
+** Smartphone
+   This is a tricky section. Phones specially suck at respecting users. When you
+buy a phone you don't even have root access! No (concerned) citizen should be
+using an Android or +iPhone+. Sadly, there are no alternatives. There's
+[[https://puri.sm/shop/librem-5/][this]], but it is still work in progress.
+
+One should also take a moment to think if a smartphone is necessary. They're
+handy, but not for the often stated reasons. A smartphone should be a portable
+computer with a small screen, I guess. At the moment, it's mostly a spying
+device with flashing things that people go crazy about.
+
+Below, I will give my very personal view on how to operate a smartphone.
+
+Firstly, I'd choose an Android over an iCrap anyday. It much easier to own an
+Android and evade +Google+ than evading +Apple+ using an +iPhone+.
+
+Best practices for Android users:
+- Never add a +Google+ account;
+- Erase +Google+ apps (use [[https://developer.android.com/studio/command-line/adb][adb shell]] if you don't want to root your phone);
+- Download apps through [[https://f-droid.org/][F-Droid]];
+- [[https://www.youtube.com/watch?v%3DkVZN9QbtFgs][WhatsApp sucks, use Telegram]];
+- Turn off bluetooth by default (it's used to track your location);
+- Have a deep look at all the settings of your device (including app
+  permissions). You'll find that, by default, you're agreeing with nonsense that
+  a (concerned) citizen wouldn't.
+- Find in the table below the software I'm currently using.
+- Notice that you can install any app on your device using a .apk file. Find them [[https://apkpure.com/][here]].
+
+| Functionality    | App                 |
+|------------------+---------------------|
+| 'App Store'      | F-Droid             |
+| Browser          | Duckduckgo          |
+| Calendar         | Simple Calendar     |
+| Camera           | Open Camera         |
+| Chat             | Telegram            |
+| Cleaner          | Cache Cleaner       |
+| E-mail           | K-9 Mail            |
+| File Manager     | Simple File Manager |
+| Weather Forecast | Forecastie          |
+| Gallery          | Simple Gallery      |
+| GPS              | OsmAnd~             |
+| Keyboard         | AnySoftKey          |
+| Music Player     | Odyssey             |
+| PDF              | MuPDF Viewer        |
+| Terminal         | Termux              |
+| Youtube          | NewPipe             |
+
+** Software
+As soon as you start using a GNU/Linux distro and a proper text editor you will
+understand that most of the software you were using before becomes redundant.
+
+| Functionality  | Program                             |
+|----------------+-------------------------------------|
+| Browser        | Mozilla Firefox (GNU Icecat, Brave) |
+| Search Engine  | Duckduckgo                          |
+| Chat (& Cloud) | Telegram                            |
+| Cloud          | NextCloud (or OwnCloud)             |
+| E-mail         | Mozilla Thundebird                  |
+| Text Editor    | GNU Emacs, vim, nano                |
+
+The first piece of software you should start to learn is a text editor. Most of
+the things one does in a computer comes down to reading and writing. Doing this
+effectively does make a difference. The 2 most well-known are Vim and GNU
+Emacs. I went for the second. The sooner you learn bash the better. I recommend
+[[https://ryanstutorials.net/linuxtutorial/][this]] basic tutorial.  GNU Emacs is much more than a text editor. I'm writing
+this document using it but you can do everything you can imagine here: write
+e-mails, surf the internet, write \LaTeX papers, code in any programming
+language, open, mark and annotate pdf files, etc. It's an ecosystem.  One of the
+important things when evaluating software is the licence. I'm not expert but
+when I see that the licence is either [[https://en.wikipedia.org/wiki/GNU_General_Public_License][GPL]] or [[https://en.wikipedia.org/wiki/BSD_licenses][BSD]] I'm happy.
+
+* TODO Classroom
+  The future of education in this digitalized world is still quite
+uncertain. Uncertain in the sense that it's not clear what path things will
+take since the tools are here for a long time.
+
+** Paper
+   I never understood why do people still rely so heavily on paper? In a lecture
+ it's much easier and faster to take notes in a laptop. laptop I think papel is
+ pointless. I think students should never copy what a professor shows on the
+ board. Maybe he should only take notes! And they shouldn't takes notes on a
+ piece of paper. Use your computer! It is way faster and much more
+ flexible. Even better, use org-mode - a major Emacs mode.
+
+  Students should learn about reproducible research and softwares licenses.
+
+lectures - board books (free, digital, being able to search) no paper (take
+notes - org mode)
+
+*** Writing
+Taking lecture notes in a computer is faster! Yes, I've tried it. And I mean
+producing a \LaTeX document. Besides, your neck will not go up an down
+constantly.
+
+*** Reading
++ Isn't that reading-from-paper-argument bullshit?
++ You can search in (most) digital documents. Say goodbye to that extensive
+  remissive index at the end of a book.
+*Tip:* As a FCUP student you have access to some Springer books. And all of them
+ are nice pdf that allow you to search.
+
+** Advices for professors
+*** Software
+If you teach a subject that requires software, please make use of free
+software. The table below gives some examples.
+   | Sofware        | Alternative       |
+   |----------------+-------------------|
+   | +Matlab+       | GNU Octave        |
+   | +Adobe Reader+ | Evince            |
+   | +Mathematica+  | SymPy or SageMath |
+   | +Office+       | LibreOffice       |
+
+No one should be teaching any course using Matlab. Please use GNU Octave.  Don't
+teach Mathematica, teach SymPy (a Python's library) and SageMath.
+
+*** Books
+If the course requires reading please avoid greedy publishers. There are so
+many amazing alternatives out there. For instance, this [[http://abstract.ups.edu/][book]].
+
+* TODO Productivity
++ Be organized (use org mode!)
++ It's all about using the keyboard. If you can use a computer without using a
+  mouse, then you're being productive!
++ Master your text editor
+
+* TODO Forever becoming
+  If you're student, you're making tremouds effort to complete all your
+assignments to the best of your abilities. That's hard. Everything I mentioned
+above is a piece of cake. Again, I stress the fact that I am also in this road
+to change myself. And, unfortunately I feel that there's so lack of guidance
+regarding when it comes to using digital tools. Sometimes I talk to computer
+science graduates and they don't know what free software is or who Richard
+Stallman is. That's sad isn't it? Engineering should be concerned with open
+source, but scientists should be keen on free software.
+* Alternatives
+invidio.us
+bibliogram
