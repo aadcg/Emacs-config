@@ -31,7 +31,6 @@
 
 *** Font
 Hack might be a good alternative.
-
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(font . "Fira Code 23"))
 
@@ -59,7 +58,10 @@ Hack might be a good alternative.
 
 #+begin_src emacs-lisp
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
-  (delete-selection-mode t)
+
+  (use-package delsel
+    :hook (after-init . delete-selection-mode))
+
   (setq require-final-newline t)
   (setq-default fill-column 80)
   (add-hook 'text-mode-hook 'turn-on-auto-fill)
@@ -78,14 +80,17 @@ Hack might be a good alternative.
 - Killing a buffer also kills the window
 
 #+begin_src emacs-lisp
-  (recentf-mode 1)
-  (setq recentf-max-saved-items 50)
-  (substitute-key-definition 'kill-buffer 'kill-buffer-and-window global-map)
+  (use-package recentf
+    :config
+    (setq recentf-max-saved-items 100)
+    :hook (after-init . recentf-mode))
 
   (use-package autorevert
     :config
     (setq auto-revert-remote-files t)
     :hook (after-init . global-auto-revert-mode))
+
+  (substitute-key-definition 'kill-buffer 'kill-buffer-and-window global-map)
 #+end_src
 
 ** Backups
@@ -205,26 +210,12 @@ Add binds only to python-mode-map
 
 *** Bash
 **** Shell
-Make M-n and M-p more intelligent in shell.
-
 #+begin_src emacs-lisp
-  ;; (eval-after-load 'comint
-  ;;   '(progn
-  ;;      ;; originally on C-c M-r and C-c M-s
-  ;;      (define-key comint-mode-map (kbd "M-p") #'comint-previous-matching-input-from-input)
-  ;;      (define-key comint-mode-map (kbd "M-n") #'comint-next-matching-input-from-input)
-  ;;      ;; originally on M-p and M-n
-  ;;      (define-key comint-mode-map (kbd "C-c M-r") #'comint-previous-input)
-  ;;      (define-key comint-mode-map (kbd "C-c M-s") #'comint-next-input)))
-
-  ;; (define-key shell-mode-map (kbd "SPC") 'comint-magic-space)
-  ;; (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-
-  (use-package comint
-    :bind
-    (:map commint-mode-map
+  (use-package shell
+    :bind (:map shell-mode-map
           ("M-p" . comint-previous-matching-input-from-input)
-          ("M-n" . comint-next-matching-input-from-input)))
+          ("M-n" . comint-next-matching-input-from-input)
+          ("SPC" . comint-magic-space)))
 #+end_src
 
 **** Eshell
@@ -371,8 +362,9 @@ in python source code blocks.
     :config
     (show-paren-mode)
     (setq show-paren-delay 0
-          show-paren-when-point-inside-paren t
-          show-paren-when-point-in-periphery t)
+          ;; show-paren-when-point-inside-paren t
+          show-paren-when-point-in-periphery t
+          )
     :hook (after-init . show-paren-mode))
 #+end_src
 
@@ -380,40 +372,37 @@ in python source code blocks.
 ** Basics
 #+begin_src emacs-lisp
   (use-package org
-    :config
-    (setq org-special-ctrl-a/e t
-          org-special-ctrl-k t
-          org-cycle-global-at-bob t
-          org-goto-auto-isearch nil
-          org-M-RET-may-split-line '((default . nil))
-          org-list-demote-modify-bullet '(("-" . "+") ("+" . "-"))
-          org-list-indent-offset 1
-          org-return-follows-link t
-          org-directory "~/NextCloud/org/"
-          org-agenda-files '("~/NextCloud/org")
-          org-agenda-skip-deadline-prewarning-if-scheduled t
-          org-agenda-include-diary t
-          org-agenda-span 10
-          org-agenda-start-on-weekday nil
-          org-todo-keywords '((sequence "TODO(t!)"
-                                        "WIP(s!)"
-                                        "WAITING(w@)"
-                                        "|"
-                                        "DONE(d!)"
-                                        "NOT TODO(n@)"
-                                        "CANCELED(c@)"))
-          org-todo-keyword-faces '(("WIP" . "orange")
-                                   ("WAITING" . "yellow"))
-          org-refile-targets '((org-agenda-files :maxlevel . 5))
-          org-refile-allow-creating-parent-nodes t orgtbl-mode t
-          org-modules '(ol-w3m ol-bbdb ol-bibtex ol-docview ol-gnus
-                               ol-info ol-irc ol-mhe ol-rmail ol-eww drill tempo))
-
+    :custom
+    (org-special-ctrl-a/e t)
+    (org-special-ctrl-k t)
+    ;; (org-cycle-global-at-bob t)
+    (org-list-demote-modify-bullet '(("-" . "+") ("+" . "-")))
+    (org-list-indent-offset 1)
+    (org-return-follows-link t)
+    (org-agenda-skip-deadline-prewarning-if-scheduled t)
+    (org-agenda-include-diary t)
+    (org-agenda-start-on-weekday nil)
+    (org-agenda-files '("~/NextCloud/org"))
+    (org-directory "~/NextCloud/org/")
+    (org-todo-keywords '((sequence "TODO(t!)"
+                                   "WIP(s!)"
+                                   "WAITING(w@)"
+                                   "|"
+                                   "DONE(d!)"
+                                   "NOT TODO(n@)"
+                                   "CANCELED(c@)")))
+    (org-todo-keyword-faces '(("WIP" . "orange")
+                              ("WAITING" . "yellow")))
+    ;; (orgtbl-mode t)
+    ;; (org-hide-leading-stars t)
+    ;; (org-startup-indented t)
+    (org-startup-with-inline-images t)
+    (org-image-actual-width 500)
+    (org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
     :bind
     ("C-c a"     . org-agenda)
     ("C-c l"     . org-store-link)
     ("C-c c"     . org-capture)
-    ("C-c !"     . org-time-stamp-inactive)
     ("C-c j"     . aadcg/org-checkbox-next)
     ("<mouse-1>" . aadcg/org-checkbox-next))
 
@@ -473,25 +462,23 @@ in python source code blocks.
   (use-package org-drill-table)
 
   (use-package cdlatex
+    :defer t
     :hook (org-mode . org-cdlatex-mode))
 
   (use-package org-pdfview
-    :when window-system)
+    :when window-system
+    :defer t)
 
   (defun aadcg/org-checkbox-next ()
-    "Mark checkboxes and sort"
+    "Mark checkboxes and sort."
     (interactive)
-    (let ((home (point)))
+    (save-excursion
       (when (org-at-item-checkbox-p)
         (org-toggle-checkbox)
-        (org-sort-list nil ?x))
-      (goto-char home)))
+        (org-sort-list nil ?x))))
 
   (defun aadcg/org-replace-link-by-link-description ()
-    "Replace an org link by its description or if empty its
-  address. Credit to
-  [[https://emacs.stackexchange.com/questions/10707/in-org-mode-how-to-remove-a-link][Andrew
-  Swann]]"
+    "Replace org link by its description or url."
     (interactive)
     (if (org-in-regexp org-bracket-link-regexp 1)
         (let ((remove (list (match-beginning 0) (match-end 0)))
@@ -529,45 +516,39 @@ in python source code blocks.
           org-tree-slide-never-touch-face t
           org-tree-slide-activate-message "Welcome to my presentation!"
           org-tree-slide-deactivate-message "Hope you have enjoyed!")
+
+    (defun aadcg/presenting ()
+      "Presenting mode"
+      (interactive)
+      (hide-mode-line-mode)
+      (global-diff-hl-mode 0)
+      (setq global-hl-line-mode nil)
+      (auto-size-font 1))
+
+    (defun aadcg/non-presenting ()
+      "Non-presenting mode"
+      (interactive)
+      (setq hide-mode-line-mode t)
+      (global-diff-hl-mode)
+      (global-hl-line-mode)
+      (auto-size-font 2))
+
     :hook
     ((org-tree-slide-play . aadcg/presenting)
      (org-tree-slide-stop . aadcg/non-presenting))
+
     :bind
     ("<f8>" . org-tree-slide-mode)
     ("<f7>" . org-tree-slide-play-with-timer)
     ("C->"  . org-tree-slide-move-next-tree)
     ("C-<"  . org-tree-slide-move-previous-tree))
-
-  (defun aadcg/presenting ()
-    "Presenting mode"
-    (interactive)
-    (hide-mode-line-mode)
-    (global-diff-hl-mode 0)
-    (setq global-hl-line-mode nil)
-    (auto-size-font 1))
-
-  (defun aadcg/non-presenting ()
-    "Non-presenting mode"
-    (interactive)
-    (setq hide-mode-line-mode t)
-    (global-diff-hl-mode)
-    (global-hl-line-mode)
-    (auto-size-font 2))
 #+end_src
 
 ** Look and Feel
 #+begin_src emacs-lisp
-  (setq org-hide-leading-stars t
-        org-startup-indented t
-        org-startup-with-inline-images t
-        org-image-actual-width 500
-        ;; org-highlight-latex-and-related (quote (latex script entities))
-        org-format-latex-options (plist-put org-format-latex-options :scale 1.5)
-        )
-
   (use-package org-bullets
-    :config
-    (setq org-bullets-bullet-list '("§"))
+    :custom
+    (org-bullets-bullet-list '("§"))
     :hook (org-mode . org-bullets-mode))
 #+end_src
 
