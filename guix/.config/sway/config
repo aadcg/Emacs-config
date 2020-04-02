@@ -1,4 +1,5 @@
 # (man "sway(5)")
+# https://github.com/swaywm/sway/wiki
 
 # cool config
 # https://github.com/Difrex/sway
@@ -7,7 +8,7 @@
 
 set $mod Mod4
 
-set $term emacsclient -c -e "(shell)"
+set $term emacsclient -c -e "(progn (shell) (delete-other-windows))"
 
 set $left j
 set $down k
@@ -26,6 +27,14 @@ set $foreground #dcdccc
 
 # wallpaper
 output * bg ~/dotfiles/wallpaper.jpg fill
+
+# output DP-1 pos 0 0
+# output eDP-1 pos 0 0
+
+# output eDP-1 disable
+# set $laptop eDP-1
+# bindswitch --reload lid:on output $laptop disable
+# bindswitch --reload lid:off output $laptop enable
 
 # Monitors
 
@@ -67,7 +76,7 @@ seat * hide_cursor 1000
 bindsym $mod+Return exec $term
 
 # Kill focused window
-bindsym --to-code $mod+Shift+k kill
+bindsym --to-code $mod+0 kill
 
 # Start your launcher
 bindsym --to-code $mod+d exec $menu
@@ -80,7 +89,7 @@ bindsym --to-code $mod+d exec $menu
 floating_modifier $mod normal
 
 # Reload the configuration file
-bindsym --to-code $mod+Shift+r reload
+bindsym --to-code $mod+r reload
 
 # Exit sway (logs you out of your Wayland session)
 # bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
@@ -129,9 +138,9 @@ workspace_auto_back_and_forth yes
 bindsym --to-code $mod+o workspace back_and_forth
 
 # Switch to workspace
-bindsym --to-code $mod+e workspace Emacs
+bindsym --to-code Control+i workspace GNU Emacs
 bindsym --to-code $mod+w workspace Browser
-bindsym --to-code $mod+c workspace Terminal
+# bindsym --to-code $mod+c workspace Terminal
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
 bindsym $mod+3 workspace 3
@@ -141,12 +150,11 @@ bindsym $mod+6 workspace 6
 bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
 
 # Move focused container to workspace
-bindsym --to-code $mod+Shift+e move container to workspace Emacs
+bindsym --to-code Control+Shift+i move container to workspace GNU Emacs
 bindsym --to-code $mod+Shift+w move container to workspace Browser
-bindsym --to-code $mod+Shift+c move container to workspace Terminal
+# bindsym --to-code $mod+Shift+c move container to workspace Terminal
 bindsym $mod+Shift+1 move container to workspace 1
 bindsym $mod+Shift+2 move container to workspace 2
 bindsym $mod+Shift+3 move container to workspace 3
@@ -156,7 +164,6 @@ bindsym $mod+Shift+6 move container to workspace 6
 bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
 
 # Layout stuff:
 
@@ -218,14 +225,15 @@ mode "resize" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-bindsym --to-code $mod+r mode "resize"
+# bindsym --to-code $mod+r mode "resize"
 
 # Status Bar
 # (man "sway-bar(5)")
 
 bar {
     position top
-    font Fira Code 18
+    # font Fira Code 18
+    font Hack 18
     status_command i3status     # visit ~/.config/i3status/config
     colors {
         statusline $foreground
@@ -235,13 +243,12 @@ bar {
 }
 
 # Windows
-# assign [class="Emacs"] Emacs
+# assign [class="Emacs"] GNU Emacs
 assign [class="IceCat"] Browser
 assign [class="ownCloud"] 1
 # assign [class="Telega"] 5
-assign [class="Emacs" title="shell"] Terminal
 default_border none
-for_window [class=".*"] opacity set 0.9
+for_window [class=".*"] opacity set 0.92
 
 # Startup
 exec emacs --daemon

@@ -7,14 +7,12 @@
 
 | OS                | [[https://guix.gnu.org/][GNU/Linux Guix]]            |
 | Text Editor       | GNU Emacs 26.3            |
-| Web Browser       | eww & GNU icecat          |
 | Window manager    | Sway                      |
+| Web Browser       | eww & GNU icecat          |
 | Terminal Emulator | shell/term/eshell (Emacs) |
 | Media Player      | EMMS                      |
 | Mail/News         | Gnus                      |
 #+TBLFM: @2$2='(concat "GNU Emacs " (substring (emacs-version) 10 14))
-
-# [[https://ambrevar.xyz/guix-matters/index.html][Guix]]
 
 * Motivation
 Free software grants us the 4 freedoms to run, study, redistribute and improve
@@ -117,6 +115,8 @@ So, my "App-store" is [[https://f-droid.org/][F-Droid]]. In there you'll find [[
 [[https://nextcloud.com/][Nextcloud]] makes it possible me to access my org files and agenda anywhere,
 anytime and to sync effortlessly. My life in plain text.
 
+I started using LineageOS on [2020-02-25].
+
 ** Tutorial
 - [[https://f-droid.org/packages/com.termux/][Install Termux]]
 - Install Nextcloud (available on F-Droid)
@@ -126,6 +126,32 @@ anytime and to sync effortlessly. My life in plain text.
   - [[https://wiki.termux.com/wiki/Sharing_Data][termux-setup-storage]] (to create symlinks)
 - A symlink might be needed depending on the way you set org-agenda-files and on
   where the Nextcloud files are located
+
+* OS
+There's only one operating system worth using - GNU/Linux. It comes in many
+shapes and flavours, people call them distributions (distros). [[https://www.gnu.org/distros/free-distros.en.html][Only a small
+minority is endorsed by the FSF]]. Beginners should consider using PureOS. On the
+non-free side, consider Ubuntu. More advanced users might be interested in GNU
+Guix (or NixOS, the non-free counterpart). Guix and Nix can also be used as
+package managers.
+
+GNU Guix supports a declarative system configuration, which suits the aim of
+this project.
+
+Packages from Nix might be used if the package isn't available in Guix. Users
+should consider defining their our packages if they're missing.
+
+* Window Managers and Desktop Environments
+After some considerations regarding package managers of distros, one of the things
+that distinctively changes the user's productivity is the way he manages
+windows.
+
+There are full-blown desktop environments like GNOME that take lots of
+resources. Although they're user-friendly, tilling window managers (think how
+Emacs handles windows) are more interesting options.
+
+# I shall be using StumpWM since it claims to be "The Emacs of window managers".
+# Indeed, the keybindings resemble Emacs and it is implemented in Common Lisp.
 
 * Sidenote on GNU
 GNU Emacs is all about freedom. When you work in it, you feel it was designed by
