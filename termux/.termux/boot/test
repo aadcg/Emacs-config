@@ -1,5 +1,5 @@
 #!/data/data/com.termux/files/usr/bin/sh
-
+termux-wake-lock
 emacs -daemon
 sleep 10
 emacsclient -nw
