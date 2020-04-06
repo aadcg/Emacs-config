@@ -1,7 +1,6 @@
 #+TITLE: GNU Emacs config
 #+AUTHOR: André Alexandre Gomes
 #+EMAIL: andremegafone@gmail.com
-#+OPTIONS: num:nil toc:nil email:t
 #+PROPERTY: header-args :results silent
 
 * Defaults, Preferences and Aesthetics
@@ -15,7 +14,10 @@
   (horizontal-scroll-bar-mode -1)
   (fringe-mode '(6 . 0))
   (fset 'yes-or-no-p 'y-or-n-p)
-  ;; (global-hl-line-mode)
+
+  (use-package hl-line
+    :hook (after-init . global-hl-line-mode))
+
   (setq initial-scratch-message ";; Happy Hacking!
 
   ")
@@ -24,9 +26,8 @@
 *** Theme
 #+begin_src emacs-lisp
   (use-package zenburn-theme
-    :init
-    (setq zenburn-scale-org-headlines t)
-    (load-theme 'zenburn t))
+    :config (load-theme 'zenburn t)
+    :custom (zenburn-scale-org-headlines t))
 #+end_src
 
 *** Font
@@ -90,7 +91,10 @@ Hack might be a good alternative.
     (setq auto-revert-remote-files t)
     :hook (after-init . global-auto-revert-mode))
 
-  (substitute-key-definition 'kill-buffer 'kill-buffer-and-window global-map)
+  (use-package window
+    :bind ([remap kill-buffer] . kill-buffer-and-window))
+
+  ;; (substitute-key-definition 'kill-buffer 'kill-buffer-and-window global-map)
 #+end_src
 
 ** Backups
@@ -141,7 +145,7 @@ Backups and auto-save files at ~/.emacs/backups
     :defer t
     :config
     (setq battery-mode-line-format " %p%"
-          battery-mode-line-limit 99))
+          battery-mode-line-limit 30))
 
   (column-number-mode)
 
@@ -181,12 +185,13 @@ Add binds only to python-mode-map
           ;; elpy-rpc-virtualenv-path 'current
           ;; pyvenv-mode-line-indicator nil
           )
-    :bind
-    ("C-c p" . elpy-autopep8-fix-code)
-    ("C-c b" . elpy-black-fix-code))
+    ;; :bind
+    ;; ("C-c p" . elpy-autopep8-fix-code)
+    ;; ("C-c b" . elpy-black-fix-code)
+    )
 
-  (use-package company-jedi
-    :config (add-to-list 'company-backends 'company-jedi))
+  ;; (use-package company-jedi
+  ;;   :config (add-to-list 'company-backends 'company-jedi))
 
   ;; (use-package ein)
 
@@ -200,12 +205,12 @@ Add binds only to python-mode-map
 
 *** Haskell
 #+begin_src emacs-lisp
-  (use-package haskell-mode)
+  ;; (use-package haskell-mode)
 
-  (add-hook 'haskell-mode-hook
-            (lambda ()
-              (haskell-doc-mode)
-              (turn-on-haskell-indent)))
+  ;; (add-hook 'haskell-mode-hook
+  ;;           (lambda ()
+  ;;             (haskell-doc-mode)
+  ;;             (turn-on-haskell-indent)))
 #+end_src
 
 *** Bash
@@ -244,10 +249,25 @@ Ivy in Eshell
         eshell-history-size 9999)
 #+end_src
 
+**** Term
+#+begin_src emacs-lisp
+  ;; (use-package term
+  ;;   :bind (("C-c t" . term)
+  ;;          :map term-mode-map
+  ;;          ("M-p" . term-send-up)
+  ;;          ("M-n" . term-send-down)
+  ;;          :map term-raw-map
+  ;;          ("M-o" . other-window)
+  ;;          ("M-p" . term-send-up)
+  ;;          ("M-n" . term-send-down)))
+#+end_src
+
 *** COMMENT Scala
 #+begin_src emacs-lisp
-  (use-package scala-mode)
-  (use-package ensime)
+  (use-package scala-mode
+    :disabled)
+  (use-package ensime
+    :disabled)
   (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 #+end_src
 
@@ -256,9 +276,11 @@ Requires gocode for the autocomplete to work.
 
 #+begin_src emacs-lisp
   (use-package go-mode
-    :bind ("C-c s" . gofmt))
+    :disabled
+    :defer t)
 
   (use-package company-go
+    :disabled
     :defer t
     :config (add-to-list 'company-backends 'company-go))
 #+end_src
@@ -266,6 +288,7 @@ Requires gocode for the autocomplete to work.
 *** COMMENT \LaTeX
 #+begin_src emacs-lisp
   (use-package auctex
+    :disabled
     :defer t
     :config
     (setq TeX-auto-save t
@@ -279,21 +302,21 @@ Requires gocode for the autocomplete to work.
     :config
     (setq magit-display-buffer-function
           (quote magit-display-buffer-same-window-except-diff-v1))
-    :bind
-    ("C-x g" . magit-status))
+    :bind ("C-x g" . magit-status))
 
   (use-package diff-hl
     :config
     (global-diff-hl-mode)
     (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 
-  (use-package gitignore-mode)
+  ;; (use-package gitignore-mode)
 #+end_src
 
-** COMMENT Files
+** Files
 *** Yaml
 #+begin_src emacs-lisp
   (use-package yaml-mode
+    :disabled
     :ensure t
     :mode (("\\.yml\\'" . yaml-mode)
            ("\\.yaml\\'" . yaml-mode)))
@@ -301,28 +324,20 @@ Requires gocode for the autocomplete to work.
 
 *** CSV
 #+begin_src emacs-lisp
-  (use-package csv-mode)
-#+end_src
-
-*** GitLab CI
-#+begin_src emacs-lisp
-  (use-package gitlab-ci-mode
+  (use-package csv-mode
     :defer t)
-#+end_src
-
-*** Dockerfiles
-#+begin_src emacs-lisp
-  (use-package dockerfile-mode)
 #+end_src
 
 ** Misc
 *** Projectile
 #+begin_src emacs-lisp
-  (use-package projectile
-    :init
-    (projectile-mode 1)
-    :config
-    (setq projectile-completion-system 'ivy))
+  ;; (use-package projectile
+  ;;   :init
+  ;;   (projectile-mode 1)
+  ;;   :config
+  ;;   (setq projectile-completion-system 'ivy)
+  ;;   :bind-keymap
+  ;;   ("C-c p" . projectile-command-map))
 #+end_src
 
 *** Colorful delimiters
@@ -340,6 +355,7 @@ in python source code blocks.
 
 #+begin_src emacs-lisp
   (use-package pretty-mode
+    :disabled
     :config
     (require 'pretty-mode)
     (global-pretty-mode t)
@@ -351,21 +367,24 @@ in python source code blocks.
 
 *** Parenthesis
 #+begin_src emacs-lisp
-  ;; (use-package smartparens
-  ;;   :config
-  ;;   (require 'smartparens-config)
-  ;;   (smartparens-global-strict-mode)
-  ;;   (show-smartparens-global-mode)
-  ;;   (sp-local-pair 'org-mode "$$" "$$"))
-
-  (use-package paren
+  (use-package smartparens
     :config
-    (show-paren-mode)
-    (setq show-paren-delay 0
-          ;; show-paren-when-point-inside-paren t
-          show-paren-when-point-in-periphery t
-          )
-    :hook (after-init . show-paren-mode))
+    (require 'smartparens-config)
+    (sp-local-pair 'org-mode "$$" "$$")
+    (smartparens-global-strict-mode)
+    (show-smartparens-global-mode)
+    ;; :hook
+    ;; (after-init . (smartparens-global-strict-mode show-smartparens-global-mode))
+    )
+
+  ;; (use-package paren
+  ;;   :config
+  ;;   (show-paren-mode)
+  ;;   (setq show-paren-delay 0
+  ;;         ;; show-paren-when-point-inside-paren t
+  ;;         show-paren-when-point-in-periphery t
+  ;;         )
+  ;;   :hook (after-init . show-paren-mode))
 #+end_src
 
 * Org
@@ -416,20 +435,20 @@ in python source code blocks.
         org-src-window-setup 'current-window
         org-confirm-babel-evaluate nil)
 
-  (use-package ob-ipython
-    :defer t)
+  ;; (use-package ob-ipython
+  ;;   :defer t)
 
-  (use-package ob-go
-    :defer t)
+  ;; (use-package ob-go
+  ;;   :defer t)
 
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
      (scheme     . t)
      (python     . t)
-     (ipython    . t)
+     ;; (ipython    . t)
      (haskell    . t)
-     (go         . t)
+     ;; (go         . t)
      (latex      . t)
      (shell      . t)
      (ditaa      . t)))
@@ -454,16 +473,18 @@ in python source code blocks.
 
 #+begin_src emacs-lisp
   (use-package org-drill
+    :ensure t
     :config
     (require 'org-drill)
     (setq org-drill-save-buffers-after-drill-sessions-p nil
           org-drill-scope 'tree))
 
-  (use-package org-drill-table)
+  (use-package org-drill-table
+    :ensure t)
 
-  (use-package cdlatex
-    :defer t
-    :hook (org-mode . org-cdlatex-mode))
+  ;; (use-package cdlatex
+  ;;   :defer t
+  ;;   :hook (org-mode . org-cdlatex-mode))
 
   (use-package org-pdfview
     :when window-system
@@ -547,8 +568,8 @@ in python source code blocks.
 ** Look and Feel
 #+begin_src emacs-lisp
   (use-package org-bullets
-    :custom
-    (org-bullets-bullet-list '("§"))
+    :after org
+    :custom (org-bullets-bullet-list '("§"))
     :hook (org-mode . org-bullets-mode))
 #+end_src
 
@@ -558,14 +579,21 @@ in python source code blocks.
   (use-package guix
     :bind ("s-g" . guix))
 
-  (use-package pretty-sha-path)
+  (use-package pretty-sha-path
+    :ensure t)
 #+end_src
+** Password
+#+begin_src emacs-lisp
+  (use-package password-cache
+    :custom (password-cache-expiry nil))
+#+end_src
+
 ** Ibuffer
 #+begin_src emacs-lisp
   (use-package ibuffer
-    :config
-    (setq ibuffer-expert t)
-    (setq ibuffer-default-sorting-mode 'major-mode)
+    :custom
+    (ibuffer-expert t)
+    (ibuffer-default-sorting-mode 'major-mode)
     :hook
     (ibuffer-mode . hl-line-mode)
     :bind (("C-x C-b" . ibuffer)))
@@ -586,9 +614,9 @@ in python source code blocks.
 ** Checking
 *** Flycheck
 #+begin_src emacs-lisp
-  (use-package flycheck
-    :init
-    (global-flycheck-mode t))
+  ;; (use-package flycheck
+  ;;   :init
+  ;;   (global-flycheck-mode t))
 #+end_src
 
 *** Flyspell
@@ -604,16 +632,18 @@ in python source code blocks.
 
 ** PDF
 #+begin_src emacs-lisp
-  (when window-system
-    (use-package pdf-tools
-      :unless in-termux-p
-      :config
-      (pdf-tools-install)
-      (setq pdf-view-midnight-colors '("#d2c8c8" . "#3F3F3F"))
-      :hook
-      (pdf-tools-enabled . pdf-view-midnight-minor-mode)
-      (pdf-tools-enabled . pdf-view-auto-slice-minor-mode)
-      (pdf-tools-enabled . pdf-view-fit-height-to-window)))
+  (use-package pdf-tools
+    :when window-system
+    :custom (pdf-view-midnight-colors '("#d2c8c8" . "#3F3F3F"))
+    :config (pdf-tools-install)
+    :hook
+    (pdf-tools-enabled . pdf-view-midnight-minor-mode)
+    (pdf-tools-enabled . pdf-view-auto-slice-minor-mode)
+    (pdf-tools-enabled . pdf-view-fit-height-to-window)
+    ;; (pdf-tools-enable . (pdf-view-midnight-minor-mode
+    ;;                      pdf-view-auto-slice-minor-mode
+    ;;                      pdf-view-fit-height-to-window)
+    )
 #+end_src
 
 ** Expand region
@@ -843,6 +873,7 @@ why use swiper if there's occur?
     (setq gnus-inhibit-startup-message t
           gnus-interactive-exit nil)
     :hook
+    (after-init . gnus)
     (kill-emacs . gnus-group-exit))
 #+end_src
 
