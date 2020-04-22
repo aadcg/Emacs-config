@@ -61,6 +61,7 @@ input type:keyboard {
   xkb_layout us,ru
   xkb_variant altgr-intl,
   xkb_options caps:ctrl_modifier,grp:win_space_toggle,grp_led:caps
+  # xkb_options compose:lctrl,caps:ctrl_modifier,grp:win_space_toggle,grp_led:caps
 }
 
 input type:touchpad {
@@ -248,6 +249,7 @@ bar {
 # Windows
 # assign [class="Emacs"] GNU Emacs
 assign [class="IceCat"] Browser
+assign [class="Firefox"] Browser
 assign [class="ownCloud"] 1
 # assign [class="Telega"] 5
 default_border none
