@@ -31,9 +31,12 @@
 #+end_src
 
 *** Font
-Hack might be a good alternative.
+I love Fira Code but it lacks italics. Hack might be a good alternative.
+
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(font . "Fira Code 23"))
+  (add-to-list 'default-frame-alist '(alpha 95))
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
   (defun auto-size-font (n)
     "Set the font size such that n buffers of 80 chars fit side by side."
@@ -60,8 +63,11 @@ Hack might be a good alternative.
 #+begin_src emacs-lisp
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
+  ;; the init-hook isn't working...?
   (use-package delsel
-    :hook (after-init . delete-selection-mode))
+    :config (delete-selection-mode)
+    ;; :hook (after-init . delete-selection-mode)
+    )
 
   (setq require-final-newline t)
   (setq-default fill-column 80)
@@ -83,7 +89,7 @@ Hack might be a good alternative.
 #+begin_src emacs-lisp
   (use-package recentf
     :config
-    (setq recentf-max-saved-items 100)
+    (setq recentf-max-saved-items 1000)
     :hook (after-init . recentf-mode))
 
   (use-package autorevert
@@ -114,17 +120,12 @@ Backups and auto-save files at ~/.emacs/backups
     (interactive)
     (switch-to-buffer "*Org Agenda*"))
 
-  ;; (global-set-key (kbd "M-g")     'goto-line)
-  ;; (global-set-key (kbd "C-x C-b") 'ibuffer)
-  ;; (global-set-key (kbd "M-%")     'query-replace-regexp)
-  ;; (global-set-key (kbd "<f5>")    'revert-buffer)
-  ;; (global-set-key (kbd "C-M-r")   'eval-buffer)
-  (global-set-key (kbd "C-x w")   'eww)
-  (global-set-key (kbd "C-x f")   'browse-url-firefox)
-  (global-set-key (kbd "S-SPC")   'cycle-spacing)
-  (global-set-key (kbd "M-SPC")   'other-window)
-  (global-set-key (kbd "C-c f")   'switch-to-agenda)
-  (global-set-key (kbd "M-o")     'mode-line-other-buffer)
+  (global-set-key (kbd "C-x w") 'eww)
+  (global-set-key (kbd "C-x f") 'browse-url-firefox)
+  (global-set-key (kbd "S-SPC") 'cycle-spacing)
+  (global-set-key (kbd "M-SPC") 'other-window)
+  (global-set-key (kbd "C-c f") 'switch-to-agenda)
+  (global-set-key (kbd "M-o")   'mode-line-other-buffer)
 #+end_src
 
 ** Modeline
@@ -137,7 +138,10 @@ Backups and auto-save files at ~/.emacs/backups
   (use-package minions
     :config
     (minions-mode 1)
-    (setq minions-direct '(org-tree-slide-mode text-scale-mode geiser-mode)
+    (setq minions-direct '(org-tree-slide-mode
+                           text-scale-mode
+                           geiser-mode
+                           yeis-mode)
           minions-mode-line-delimiters '("" . "")))
 
   ;; more info about the battery /sys/class/power_supply/BAT0
@@ -347,20 +351,20 @@ Requires gocode for the autocomplete to work.
     (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 #+end_src
 
-*** TODO COMMENT Pretty mode
+*** TODO Pretty mode
 - State "TODO"       from              [2019-07-18 Thu 13:16]
 
 Global pretty mode breaks html export of org-mode files when there are functions
 in python source code blocks.
 
 #+begin_src emacs-lisp
-  (use-package pretty-mode
-    :disabled
-    :config
-    (require 'pretty-mode)
-    (global-pretty-mode t)
-    (pretty-activate-groups
-     '(:sub-and-superscripts :arithmetic-nary :quantifiers :types)))
+  ;; (use-package pretty-mode
+  ;;   :disabled
+  ;;   :config
+  ;;   (require 'pretty-mode)
+  ;;   (global-pretty-mode t)
+  ;;   (pretty-activate-groups
+  ;;    '(:sub-and-superscripts :arithmetic-nary :quantifiers :types)))
 
   (global-prettify-symbols-mode t)
 #+end_src
@@ -371,8 +375,9 @@ in python source code blocks.
     :config
     (require 'smartparens-config)
     (sp-local-pair 'org-mode "$$" "$$")
-    (smartparens-global-strict-mode)
     (show-smartparens-global-mode)
+    (smartparens-global-mode)
+    :hook (prog-mode . smartparens-strict-mode)
     ;; :hook
     ;; (after-init . (smartparens-global-strict-mode show-smartparens-global-mode))
     )
@@ -493,10 +498,11 @@ in python source code blocks.
   (defun aadcg/org-checkbox-next ()
     "Mark checkboxes and sort."
     (interactive)
-    (save-excursion
+    (let ((home (point)))
       (when (org-at-item-checkbox-p)
         (org-toggle-checkbox)
-        (org-sort-list nil ?x))))
+        (org-sort-list nil ?x)
+        (goto-char home))))
 
   (defun aadcg/org-replace-link-by-link-description ()
     "Replace org link by its description or url."
@@ -582,6 +588,7 @@ in python source code blocks.
   (use-package pretty-sha-path
     :ensure t)
 #+end_src
+
 ** Password
 #+begin_src emacs-lisp
   (use-package password-cache
@@ -667,7 +674,8 @@ why use swiper if there's occur?
           ivy-extra-directories nil
           ivy-initial-inputs-alist nil
           ivy-use-virtual-buffers t
-          ivy-height-alist '((t lambda (_caller) (/ (window-height) 3))))
+          ;; ivy-height-alist '((t lambda (_caller) (/ (window-height) 3)))
+          )
     (add-to-list 'ivy-format-functions-alist '(t . ivy-format-function-arrow))
     :bind
     ("C-s" . swiper)
@@ -690,9 +698,13 @@ why use swiper if there's occur?
           company-selection-wrap-around t)
     (define-key company-active-map (kbd "RET") nil)
     (define-key company-active-map (kbd "<return>") nil)
-    (define-key company-active-map (kbd "C-j")   'company-complete-selection)
+    (define-key company-active-map (kbd "C-j") 'company-complete-selection)
     (define-key company-active-map (kbd "<tab>")
-    'company-complete-common-or-cycle))
+    'company-complete-common-or-cycle)
+    (define-key company-active-map (kbd "C-n") 'company-select-next)
+    (define-key company-active-map (kbd "C-p") 'company-select-previous)
+    ;; :hook (eshell-mode . (company-mode 0)) TODO
+    )
 #+end_src
 
 ** Games
@@ -714,6 +726,8 @@ why use swiper if there's occur?
 #+end_src
 
 ** Media
+Requires mpv.
+
 #+begin_src emacs-lisp
   (use-package emms
     :config
@@ -731,7 +745,10 @@ why use swiper if there's occur?
 Всё ясно, да?
 
 #+begin_src emacs-lisp
-  ;; (setq default-input-method "russian-computer")
+  (load-file "/home/aadcg/repos/yeis/yeis.el")
+  (setq default-input-method "robin/russian")
+  (setq-default robin-current-package-name "robin/russian")
+  (global-set-key (kbd "C-|") 'translate-last-word)
 #+end_src
 
 *** Calendar
@@ -844,8 +861,10 @@ why use swiper if there's occur?
     (setq browse-url-browser-function 'eww-browse-url
           shr-use-fonts nil
           shr-use-colors nil
-          shr-max-image-proportion 0.2
-          shr-width (current-fill-column)))
+          shr-max-image-proportion 0.4
+          shr-width (current-fill-column))
+    (add-to-list 'eww-suggest-uris 'word-at-point t) ; remove eww-current-url
+    )
 #+end_src
 
 ** Telegram
@@ -858,9 +877,10 @@ why use swiper if there's occur?
     :bind ("s-t" . telega))
 
   (use-package emojify
-    :config
-    (global-emojify-mode)
-    (emojify-mode-line-mode))
+    :hook
+    (telega-load-hook . emojify-mode)
+    ;; (emojify-mode-line-mode)
+    )
 #+end_src
 
 ** Email (gnus)
@@ -873,8 +893,11 @@ why use swiper if there's occur?
     (setq gnus-inhibit-startup-message t
           gnus-interactive-exit nil)
     :hook
-    (after-init . gnus)
-    (kill-emacs . gnus-group-exit))
+    (message-send . ispell-message)
+    ;; :hook
+    ;; (after-init . gnus)
+    ;; (kill-emacs . gnus-group-exit)
+    )
 #+end_src
 
 ** Weather
@@ -884,6 +907,15 @@ why use swiper if there's occur?
     (setq wttrin-default-cities '("Saint Petersburg"
                                   "Porto"
                                   "Oliveira de Azeméis")))
+#+end_src
+
+** Screenshots
+#+begin_src emacs-lisp
+  (use-package gif-screencast
+    :config (setq gif-screencast-program "grim"
+                  gif-screencast-args '("-quality" "40")
+                  ;; gif-screencast-want-optimized nil
+                  ))
 #+end_src
 
 * My Kitchen Sink
