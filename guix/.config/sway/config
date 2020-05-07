@@ -8,7 +8,8 @@
 
 set $mod Mod4
 
-set $term emacsclient -c -e "(progn (shell) (delete-other-windows))"
+# set $term emacsclient -c -e "(progn (shell) (delete-other-windows))"
+set $term emacsclient -c -e "(eshell)"
 
 set $left j
 set $down k
@@ -18,6 +19,7 @@ set $right l
 # Your preferred application launcher
 # Note: it's recommended that you pass the final command to sway
 set $menu dmenu_path | dmenu | xargs swaymsg exec --
+# TODO replace dmenu with (async-shell-command)
 
 set $background #3f3f3f
 set $foreground #dcdccc
@@ -57,7 +59,9 @@ output * bg ~/dotfiles/wallpaper.jpg fill
 
 input type:keyboard {
   xkb_layout us,ru
-  xkb_options compose:lctrl,caps:ctrl_modifier,grp:win_space_toggle,grp_led:caps
+  xkb_variant altgr-intl,
+  xkb_options caps:ctrl_modifier,grp:win_space_toggle,grp_led:caps
+  # xkb_options compose:lctrl,caps:ctrl_modifier,grp:win_space_toggle,grp_led:caps
 }
 
 input type:touchpad {
@@ -232,8 +236,8 @@ mode "resize" {
 
 bar {
     position top
-    # font Fira Code 18
-    font Hack 18
+    font Fira Code 18
+    # font Hack 18
     status_command i3status     # visit ~/.config/i3status/config
     colors {
         statusline $foreground
@@ -245,13 +249,13 @@ bar {
 # Windows
 # assign [class="Emacs"] GNU Emacs
 assign [class="IceCat"] Browser
+assign [class="Firefox"] Browser
 assign [class="ownCloud"] 1
 # assign [class="Telega"] 5
 default_border none
-for_window [class=".*"] opacity set 0.92
+for_window [class=".*"] opacity set 0.95
 
 # Startup
-exec emacs --daemon
-exec sleep 10 && emacsclient -c
+exec emacs --daemon && emacsclient -c
 exec owncloud
 # exec emacs --exec '(telega nil)'
