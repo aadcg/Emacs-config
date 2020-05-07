@@ -26,8 +26,40 @@
 *** Theme
 #+begin_src emacs-lisp
   (use-package zenburn-theme
+    :disabled t
     :config (load-theme 'zenburn t)
     :custom (zenburn-scale-org-headlines t))
+
+  (use-package modus-vivendi-theme
+    :defer t
+    :custom
+    (modus-operandi-theme-distinct-org-blocks t)
+    (modus-operandi-theme-scale-headings t)
+    (modus-operandi-theme-section-headings t)
+    (modus-operandi-theme-slanted-constructs nil)
+    (modus-operandi-theme-bold-constructs t)
+    (modus-operandi-theme-subtle-diffs t)
+    (modus-operandi-theme-3d-modeline t))
+
+  (use-package modus-operandi-theme
+    :custom
+    (modus-operandi-theme-distinct-org-blocks t)
+    (modus-operandi-theme-rainbow-headings t)
+    (modus-operandi-theme-scale-headings t)
+    (modus-operandi-theme-section-headings t)
+    (modus-operandi-theme-slanted-constructs nil)
+    (modus-operandi-theme-bold-constructs t)
+    (modus-operandi-theme-subtle-diffs t)
+    (modus-operandi-theme-3d-modeline t)
+    :config
+    (load-theme 'modus-operandi t)
+
+    (defun toggle-modus-theme ()
+    "Toggle between `modus-operandi' and `modus-vivendi' themes."
+    (interactive)
+    (if (eq (car custom-enabled-themes) 'modus-operandi)
+        (counsel-load-theme-action "modus-vivendi")
+      (counsel-load-theme-action "modus-operandi"))))
 #+end_src
 
 *** Font
@@ -231,16 +263,20 @@ Add binds only to python-mode-map
 #+begin_src emacs-lisp
   (use-package eshell
     :custom
-    (pcomplete-cycle-completions nil)
+    ;; (pcomplete-cycle-completions nil)
     (eshell-history-file-name (expand-file-name "~/.bash_history"))
     (eshell-history-size 9999)
-    :hook (eshell-mode . (lambda () (company-mode -1))))
+    :hook
+    (eshell-mode . (lambda () (company-mode -1)))
+    ;; :bind (:map eshell-mode-map
+    ;;             ("<M-tab>" . completion-at-point))
+    )
 
-  ;; (add-hook 'eshell-mode-hook
-  ;;   (lambda ()
-  ;;     (define-key eshell-mode-map (kbd "<M-tab>") nil)
-  ;;     (define-key eshell-mode-map (kbd "<tab>")
-  ;;       (lambda () (interactive) (completion-at-point)))))
+  (add-hook 'eshell-mode-hook
+    (lambda ()
+      (define-key eshell-mode-map (kbd "<M-tab>") nil)
+      (define-key eshell-mode-map (kbd "<M-tab>")
+        (lambda () (interactive) (completion-at-point)))))
 #+end_src
 
 **** Term
@@ -254,6 +290,19 @@ Add binds only to python-mode-map
   ;;          ("M-o" . other-window)
   ;;          ("M-p" . term-send-up)
   ;;          ("M-n" . term-send-down)))
+#+end_src
+
+*** Elisp
+#+begin_src emacs-lisp
+  (use-package flycheck-package
+    :after flycheck
+    :config
+    (flycheck-package-setup))
+
+  (use-package package-lint-flymake
+    :after flymake
+    :config
+    (package-lint-flymake-setup))
 #+end_src
 
 *** COMMENT Scala
@@ -632,11 +681,13 @@ in python source code blocks.
   (use-package pdf-tools
     :when window-system
     :custom (pdf-view-midnight-colors '("#d2c8c8" . "#3F3F3F"))
-    :config (pdf-tools-install)
+    ;; :config (pdf-tools-install)
+    :mode ("\\.pdf\\'" . pdf-view-mode)
     :hook
     (pdf-tools-enabled . pdf-view-midnight-minor-mode)
-    (pdf-tools-enabled . pdf-view-auto-slice-minor-mode)
     (pdf-tools-enabled . pdf-view-fit-height-to-window)
+    ;; (pdf-tools-enabled . pdf-view-auto-slice-minor-mode)
+
     ;; (pdf-tools-enable . (pdf-view-midnight-minor-mode
     ;;                      pdf-view-auto-slice-minor-mode
     ;;                      pdf-view-fit-height-to-window)
@@ -748,7 +799,7 @@ Requires mpv.
   (setq default-input-method "robin-russian"
         yeis-path-plain-word-list "/home/aadcg/repos/yeis/wordlist")
   (setq-default robin-current-package-name "robin-russian")
-  (global-set-key (kbd "C-|") 'yeis-translate-current-word)
+  (global-set-key (kbd "C-|") 'yeis-transform-previous-word)
 #+end_src
 
 *** Calendar
@@ -931,7 +982,7 @@ Visit and reload this config
   (defun config-reload ()
     "Reloads ~/.emacs.d/config.org at runtime."
     (interactive)
-    (org-babel-load-file "~/.emacs.d/config.org"))
+    (load user-init-file))
 
   (global-set-key (kbd "C-c r") 'config-reload)
 #+end_src
@@ -972,13 +1023,8 @@ Visit and reload this config
 
 * Startup
 #+begin_src emacs-lisp
-  ;; (when (and (getenv "DESKTOP_SESSION")
-  ;;            (string-match "gnome" (getenv "DESKTOP_SESSION")))
-  ;;   (toggle-frame-fullscreen))
-
-  ;; (unless in-termux-p
-  ;;   (telega nil)
-  ;;   (gnus))
+  (use-package server
+    :hook (after-init . server-start))
 
   ;; (org-agenda-list 1)
   ;; (delete-other-windows)
