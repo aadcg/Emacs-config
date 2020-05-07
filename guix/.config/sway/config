@@ -229,14 +229,15 @@ mode "resize" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-# bindsym --to-code $mod+r mode "resize"
+
+bindsym --to-code $mod+Shift+r mode "resize"
 
 # Status Bar
 # (man "sway-bar(5)")
 
 bar {
     position top
-    font Fira Code 18
+    font Fira Code 20
     # font Hack 18
     status_command i3status     # visit ~/.config/i3status/config
     colors {
@@ -247,15 +248,13 @@ bar {
 }
 
 # Windows
-# assign [class="Emacs"] GNU Emacs
 assign [class="IceCat"] Browser
 assign [class="Firefox"] Browser
 assign [class="ownCloud"] 1
-# assign [class="Telega"] 5
+
 default_border none
-for_window [class=".*"] opacity set 0.95
+for_window [class=".*"] opacity set 0.85
 
 # Startup
-exec emacs --daemon && emacsclient -c
 exec owncloud
-# exec emacs --exec '(telega nil)'
+# exec emacs --daemon && emacsclient -c
