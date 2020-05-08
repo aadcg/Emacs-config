@@ -18,7 +18,8 @@
     (package-refresh-contents)
     (package-install 'use-package)))
 
-(setq use-package-verbose t)
+(setq use-package-verbose t
+      use-package-hook-name-suffix nil)
 
 ;; auto-update for the package.el package manager
 ;; (use-package auto-package-update
