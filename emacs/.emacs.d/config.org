@@ -687,7 +687,8 @@ in python source code blocks.
     :hook
     (pdf-tools-enabled-hook . pdf-view-midnight-minor-mode)
     (pdf-tools-enabled-hook . pdf-view-fit-height-to-window)
-    ;; (pdf-tools-enabled-hook . pdf-view-auto-slice-minor-mode))
+    ;; (pdf-tools-enabled-hook . pdf-view-auto-slice-minor-mode)
+    )
 #+end_src
 
 ** Expand region
