@@ -253,8 +253,8 @@ assign [class="Firefox"] Browser
 assign [class="ownCloud"] 1
 
 default_border none
-for_window [class=".*"] opacity set 0.85
+for_window [class="Emacs"] opacity set 0.8
 
 # Startup
+exec emacs
 exec owncloud
-# exec emacs --daemon && emacsclient -c
