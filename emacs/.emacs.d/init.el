@@ -19,6 +19,7 @@
     (package-install 'use-package)))
 
 (setq use-package-verbose t
+      use-package-compute-statistics t
       use-package-hook-name-suffix nil)
 
 ;; auto-update for the package.el package manager
