@@ -30,35 +30,32 @@
     :custom (zenburn-scale-org-headlines t))
 
   (use-package modus-vivendi-theme
-    ;; :disabled
-    :defer t
     :custom
-    (modus-operandi-theme-distinct-org-blocks t)
-    (modus-operandi-theme-scale-headings t)
-    (modus-operandi-theme-section-headings t)
-    (modus-operandi-theme-slanted-constructs nil)
-    (modus-operandi-theme-bold-constructs t)
-    (modus-operandi-theme-subtle-diffs t)
-    (modus-operandi-theme-3d-modeline t))
+    (modus-vivendi-theme-distinct-org-blocks t)
+    ;; (modus-vivendi-theme-scale-headings t)
+    (modus-vivendi-theme-section-headings t)
+    (modus-vivendi-theme-slanted-constructs nil)
+    (modus-vivendi-theme-bold-constructs t)
+    (modus-vivendi-theme-subtle-diffs t)
+    (modus-vivendi-theme-3d-modeline t))
 
   (use-package modus-operandi-theme
-    ;; :disabled
     :custom
     (modus-operandi-theme-distinct-org-blocks t)
-    (modus-operandi-theme-rainbow-headings t)
-    (modusr-operandi-theme-scale-headings t)
-    (modus-operandi-theme-section-headings nil)
-    (modus-operandi-theme-slanted-constructs nil)
+    ;; (modus-operandi-theme-rainbow-headings t)
+    (modus-operandi-theme-scale-headings t)
+    (modus-operandi-theme-section-headings t)
     (modus-operandi-theme-bold-constructs t)
     (modus-operandi-theme-subtle-diffs t)
     (modus-operandi-theme-3d-modeline t)
     :config
+    ;; (setq custom-theme-load-path "/home/aadcg/repos/modus-themes")
     (load-theme 'modus-operandi t)
 
     (defun toggle-modus-theme ()
     "Toggle between `modus-operandi' and `modus-vivendi' themes."
     (interactive)
-    (if (eq (car custom-enabled-themes) 'modus-operandi)
+    (if (eq (frame-parameter nil 'background-mode) 'light)
         (counsel-load-theme-action "modus-vivendi")
       (counsel-load-theme-action "modus-operandi"))))
 #+end_src
@@ -75,12 +72,14 @@ I love Fira Code but it lacks italics. Hack might be a good alternative.
     "Set the font size such that n buffers of 80 chars fit side by side."
     (interactive "nHow many 80 chars buffers do you want side by side? ")
     (let ((size 10))
-      (set-frame-font (concat "Fira Code " (number-to-string size)) nil t)
+      (set-frame-font (concat "Fira Code-" (number-to-string size)) nil t)
       (delete-other-windows)
-      (while (> (window-max-chars-per-line) (* n 90))
+      (while (> (window-max-chars-per-line) (* n 82))
         (setq size (1+ size))
         (set-frame-font (concat "Fira Code " (number-to-string size)) nil t))
       (message "The suggested font size is %d" size)))
+
+  ;; (set-frame-font "Fira Code-10:antialias=true")
 #+end_src
 
 ** Words, white spaces and text
@@ -106,7 +105,7 @@ I love Fira Code but it lacks italics. Hack might be a good alternative.
   (setq-default fill-column 80)
   (add-hook 'text-mode-hook 'turn-on-auto-fill)
   (setq-default indent-tabs-mode nil)
-  (setq sentence-end-double-space nil)
+  ;; (setq sentence-end-double-space nil)
   (when in-termux-p
     (global-visual-line-mode t))
 
@@ -159,6 +158,10 @@ Backups and auto-save files at ~/.emacs/backups
   (global-set-key (kbd "M-SPC") 'other-window)
   (global-set-key (kbd "C-c f") 'switch-to-agenda)
   (global-set-key (kbd "M-o")   'mode-line-other-buffer)
+  ;; (global-unset-key (kbd "C-x C-m"))
+
+  (global-unset-key (kbd "C-x C-z"))
+  (global-unset-key (kbd "C-z"))
 #+end_src
 
 ** Modeline
@@ -267,17 +270,23 @@ Add binds only to python-mode-map
     ;; (pcomplete-cycle-completions nil)
     (eshell-history-file-name (expand-file-name "~/.bash_history"))
     (eshell-history-size 9999)
+    ;; :commands eshell-visual-commands
     :hook
     (eshell-mode-hook . (lambda () (company-mode -1)))
     ;; :bind (:map eshell-mode-map
     ;;             ("<M-tab>" . completion-at-point))
-    )
+    :bind ([remap shell-command] . eshell-command))
 
   (add-hook 'eshell-mode-hook
     (lambda ()
       (define-key eshell-mode-map (kbd "<M-tab>") nil)
       (define-key eshell-mode-map (kbd "<M-tab>")
         (lambda () (interactive) (completion-at-point)))))
+
+  (use-package em-term
+    :config
+    (add-to-list 'eshell-visual-commands "nmtui")
+    (add-to-list 'eshell-visual-commands "alsamixer"))
 #+end_src
 
 **** Term
@@ -304,6 +313,20 @@ Add binds only to python-mode-map
     :after flymake
     :config
     (package-lint-flymake-setup))
+
+  (define-key lisp-mode-shared-map (kbd "RET")
+    'reindent-then-newline-and-indent)
+
+  (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+  (add-hook 'emacs-lisp-mode-hook 'starter-kit-remove-elc-on-save)
+
+  (defun starter-kit-remove-elc-on-save ()
+    "If you're saving an elisp file, likely the .elc is no longer valid."
+    (make-local-variable 'after-save-hook)
+    (add-hook 'after-save-hook
+              (lambda ()
+                (if (file-exists-p (concat buffer-file-name "c"))
+                    (delete-file (concat buffer-file-name "c"))))))
 #+end_src
 
 *** COMMENT Scala
@@ -360,8 +383,6 @@ Requires gocode for the autocomplete to work.
 *** Yaml
 #+begin_src emacs-lisp
   (use-package yaml-mode
-    :disabled
-    :ensure t
     :mode (("\\.yml\\'" . yaml-mode)
            ("\\.yaml\\'" . yaml-mode)))
 #+end_src
@@ -417,11 +438,9 @@ in python source code blocks.
     (sp-local-pair 'org-mode "$$" "$$")
     (show-smartparens-global-mode)
     (smartparens-global-mode)
-    :hook (prog-mode-hook . smartparens-strict-mode)
-    ;; :hook
-    ;; (after-init-hook . (smartparens-global-strict-mode show-smartparens-global-mode))
-    )
+    :hook (prog-mode-hook . smartparens-strict-mode))
 
+  ;; built-in package
   ;; (use-package paren
   ;;   :config
   ;;   (show-paren-mode)
@@ -437,6 +456,7 @@ in python source code blocks.
 #+begin_src emacs-lisp
   (use-package org
     :custom
+    (org-use-speed-commands t)
     (org-special-ctrl-a/e t)
     (org-special-ctrl-k t)
     ;; (org-cycle-global-at-bob t)
@@ -518,22 +538,21 @@ in python source code blocks.
 
 #+begin_src emacs-lisp
   (use-package org-drill
-    :ensure t
     :config
     (require 'org-drill)
     (setq org-drill-save-buffers-after-drill-sessions-p nil
           org-drill-scope 'tree))
 
-  (use-package org-drill-table
-    :ensure t)
+  (use-package org-drill-table)
 
   ;; (use-package cdlatex
   ;;   :defer t
   ;;   :hook (org-mode-hook . org-cdlatex-mode))
 
-  (use-package org-pdfview
+  (use-package org-pdftools
     :when window-system
-    :defer t)
+    :defer t
+    :hook (org-load-hook . org-pdftools-setup-link))
 
   (defun aadcg/org-checkbox-next ()
     "Mark checkboxes and sort."
@@ -625,8 +644,7 @@ in python source code blocks.
   (use-package guix
     :bind ("s-g" . guix))
 
-  (use-package pretty-sha-path
-    :ensure t)
+  (use-package pretty-sha-path)
 #+end_src
 
 ** Password
@@ -699,14 +717,6 @@ in python source code blocks.
     :bind ("C-=". 'er/expand-region))
 #+end_src
 
-** Keycast
-#+begin_src emacs-lisp
-  (use-package keycast
-    :config
-    (add-to-list 'keycast-substitute-alist '(self-insert-command nil nil))
-    (setq keycast-separator-width 1))
-#+end_src
-
 ** Emacs completion
 (info "(ivy)Top")
 why use swiper if there's occur?
@@ -770,6 +780,7 @@ why use swiper if there's occur?
 ** Google Translate
 #+begin_src emacs-lisp
   (use-package google-translate
+    :defer t
     :init
     (setq google-translate-default-source-language "auto"
           google-translate-default-target-language "en")
@@ -807,6 +818,17 @@ Requires mpv.
         yeis-path-plain-word-list "/home/aadcg/repos/yeis/wordlist")
   (setq-default robin-current-package-name "robin-russian")
   (global-set-key (kbd "C-|") 'yeis-transform-previous-word)
+
+  (defun change-to-dict (dict)
+    "Change to the dictionary given by string DICT."
+    (let ((inhibit-message t))
+      (ispell-change-dictionary dict)))
+
+  (add-hook 'input-method-activate-hook
+            (lambda () (change-to-dict "ru")))
+
+  (add-hook 'input-method-deactivate-hook
+            (lambda () (change-to-dict "en")))
 #+end_src
 
 *** Calendar
@@ -922,8 +944,9 @@ Requires mpv.
           shr-use-colors nil
           shr-max-image-proportion 0.4
           shr-width (current-fill-column))
-    (add-to-list 'eww-suggest-uris 'word-at-point t) ; remove eww-current-url
-    )
+    (setq eww-suggest-uris '(eww-links-at-point
+                             thing-at-point-url-at-point
+                             word-at-point))) ; removed eww-current-url
 #+end_src
 
 ** Telegram
@@ -945,6 +968,8 @@ Requires mpv.
 ** Email (gnus)
 [[https://protesilaos.com/dotemacs/#h:5ad80664-3163-4d9d-be65-462637d77903][configuring email]]
 [[https://www.emacswiki.org/emacs/GnusTutorial][gnus tutorial]]
+
+[[https://github.com/redguardtoo/mastering-emacs-in-one-year-guide/blob/master/gnus-guide-en.org#my-gnusel][another gnus tutorial]]
 
 #+begin_src emacs-lisp
   (use-package gnus
@@ -975,13 +1000,23 @@ Requires mpv.
                                   "Oliveira de Azeméis")))
 #+end_src
 
-** Screenshots
-#+begin_src emacs-lisp
-  (use-package gif-screencast
-    :config (setq gif-screencast-program "grim"
-                  gif-screencast-args nil)
-    :bind ("<f9>" . gif-screencast-start-or-stop))
-#+end_src
+** Screencast utilities
+ #+begin_src emacs-lisp
+   (use-package gif-screencast
+     :config (setq gif-screencast-program "grim"
+                   gif-screencast-args nil
+                   )
+     :bind ("<f9>" . gif-screencast-start-or-stop))
+
+   (use-package keycast
+     :config
+     (add-to-list 'keycast-substitute-alist '(self-insert-command nil nil))
+     (setq keycast-separator-width 2))
+
+   ;; this is useless, kind of similar to my auto-size-font
+   ;; (use-package default-text-scale
+   ;;   :defer t)
+ #+end_src
 
 * My Kitchen Sink
 ** Metaconfiguring
@@ -994,12 +1029,13 @@ Visit and reload this config
 
   (global-set-key (kbd "C-c e") 'config-visit)
 
-  (defun config-reload ()
-    "Eval `init.el' at runtime."
-    (interactive)
-    (load user-init-file))
+  ;; useful?
+  ;; (defun config-reload ()
+  ;;   "Eval `init.el' at runtime."
+  ;;   (interactive)
+  ;;   (load user-init-file))
 
-  (global-set-key (kbd "C-c r") 'config-reload)
+  ;; (global-set-key (kbd "C-c r") 'config-reload)
 #+end_src
 
 ** Personal
