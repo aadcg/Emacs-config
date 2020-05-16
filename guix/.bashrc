@@ -25,9 +25,9 @@ fi
 # Adjust the prompt depending on whether we're in 'guix environment'.
 if [ -n "$GUIX_ENVIRONMENT" ]
 then
-    PS1='\[\033[1;32m\]\u@\h \[\033[1;34m\]\w \[\033[1;31m\][env] \[\033[0;37m\]\$ '
+    PS1='\u@\h \w [env] \$ '
 else
-    PS1='\[\033[1;32m\]\u@\h \[\033[1;34m\]\w \[\033[0;37m\]\$ '
+    PS1='\u@\h \w \$ '
 fi
 
 # Alias
