@@ -12,7 +12,7 @@
   (tooltip-mode -1)
   (scroll-bar-mode -1)
   (horizontal-scroll-bar-mode -1)
-  (fringe-mode '(6 . 0))
+  (fringe-mode '(8 . 0))
   (fset 'yes-or-no-p 'y-or-n-p)
 
   (use-package hl-line
@@ -34,19 +34,16 @@
     (modus-vivendi-theme-distinct-org-blocks t)
     ;; (modus-vivendi-theme-scale-headings t)
     (modus-vivendi-theme-section-headings t)
-    (modus-vivendi-theme-slanted-constructs nil)
     (modus-vivendi-theme-bold-constructs t)
-    (modus-vivendi-theme-subtle-diffs t)
     (modus-vivendi-theme-3d-modeline t))
 
   (use-package modus-operandi-theme
     :custom
     (modus-operandi-theme-distinct-org-blocks t)
     ;; (modus-operandi-theme-rainbow-headings t)
-    (modus-operandi-theme-scale-headings t)
+    ;; (modus-operandi-theme-scale-headings t)
     (modus-operandi-theme-section-headings t)
     (modus-operandi-theme-bold-constructs t)
-    (modus-operandi-theme-subtle-diffs t)
     (modus-operandi-theme-3d-modeline t)
     :config
     ;; (setq custom-theme-load-path "/home/aadcg/repos/modus-themes")
@@ -64,22 +61,22 @@
 I love Fira Code but it lacks italics. Hack might be a good alternative.
 
 #+begin_src emacs-lisp
-  (add-to-list 'default-frame-alist '(font . "Fira Code 23"))
-  (add-to-list 'default-frame-alist '(alpha 95))
+  (add-to-list 'default-frame-alist '(font . "Fira Code-23"))
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
+  ;; (add-to-list 'default-frame-alist '(alpha 95))
 
   (defun auto-size-font (n)
     "Set the font size such that n buffers of 80 chars fit side by side."
-    (interactive "nHow many 80 chars buffers do you want side by side? ")
-    (let ((size 10))
+    (interactive "nHow many 80 chars buffers should fit side by side? ")
+    (let ((size 8.0))
       (set-frame-font (concat "Fira Code-" (number-to-string size)) nil t)
-      (delete-other-windows)
-      (while (> (window-max-chars-per-line) (* n 82))
-        (setq size (1+ size))
-        (set-frame-font (concat "Fira Code " (number-to-string size)) nil t))
-      (message "The suggested font size is %d" size)))
-
-  ;; (set-frame-font "Fira Code-10:antialias=true")
+      (while (> (save-window-excursion
+                  (delete-other-windows)
+                  (window-max-chars-per-line))
+                (* n 85))
+        (setq size (+ size 0.2))
+        (set-frame-font (concat "Fira Code-" (number-to-string size)) nil t))
+      (message "The suggested font size is %f" size)))
 #+end_src
 
 ** Words, white spaces and text
@@ -102,7 +99,7 @@ I love Fira Code but it lacks italics. Hack might be a good alternative.
     )
 
   (setq require-final-newline t)
-  (setq-default fill-column 80)
+  (setq-default fill-column 72)
   (add-hook 'text-mode-hook 'turn-on-auto-fill)
   (setq-default indent-tabs-mode nil)
   ;; (setq sentence-end-double-space nil)
@@ -269,8 +266,12 @@ Add binds only to python-mode-map
     :custom
     ;; (pcomplete-cycle-completions nil)
     (eshell-history-file-name (expand-file-name "~/.bash_history"))
-    (eshell-history-size 9999)
-    ;; :commands eshell-visual-commands
+    (eshell-history-size nil)
+    :init (require 'esh-module)
+    :config
+    (setq eshell-prefer-lisp-functions t
+          password-cache-expiry nil)
+    (add-to-list 'eshell-modules-list 'eshell-tramp)
     :hook
     (eshell-mode-hook . (lambda () (company-mode -1)))
     ;; :bind (:map eshell-mode-map
@@ -287,6 +288,16 @@ Add binds only to python-mode-map
     :config
     (add-to-list 'eshell-visual-commands "nmtui")
     (add-to-list 'eshell-visual-commands "alsamixer"))
+
+  ;; (use-package em-tramp
+  ;;   :config
+  ;;   (setq eshell-prefer-lisp-functions t
+  ;;         eshell-prefer-lisp-variables t))
+
+  ;; (use-package password-cache
+  ;;   :custom
+  ;;   (password-cache t)
+  ;;   (password-cache-expiry 3600))
 #+end_src
 
 **** Term
@@ -549,10 +560,10 @@ in python source code blocks.
   ;;   :defer t
   ;;   :hook (org-mode-hook . org-cdlatex-mode))
 
-  (use-package org-pdftools
-    :when window-system
-    :defer t
-    :hook (org-load-hook . org-pdftools-setup-link))
+  ;; (use-package org-pdftools
+  ;;   :when window-system
+  ;;   :defer t
+  ;;   :hook (org-load-hook . org-pdftools-setup-link))
 
   (defun aadcg/org-checkbox-next ()
     "Mark checkboxes and sort."
@@ -647,12 +658,6 @@ in python source code blocks.
   (use-package pretty-sha-path)
 #+end_src
 
-** Password
-#+begin_src emacs-lisp
-  (use-package password-cache
-    :custom (password-cache-expiry 3600))
-#+end_src
-
 ** Ibuffer
 #+begin_src emacs-lisp
   (use-package ibuffer
@@ -699,16 +704,17 @@ in python source code blocks.
 #+begin_src emacs-lisp
   (use-package pdf-tools
     :when window-system
-    :custom (pdf-view-midnight-colors '("#d2c8c8" . "#3F3F3F"))
+    ;; :custom (pdf-view-midnight-colors '("#d2c8c8" . "#3F3F3F"))
     ;; :config (pdf-tools-install)
+    :config (setq image-scaling-factor 1)
+    :mode ("\\.pdf\\'" . pdf-view-mode)
     :hook
     (
      (pdf-view-mode-hook . pdf-view-fit-height-to-window)
-     (pdf-view-mode-hook . pdf-link-minor-mode)
+     (pdf-view-mode-hook . pdf-links-minor-mode)
      ;; (pdf-view-mode-hook . pdf-view-midnight-minor-mode)
      ;; (pdf-view-mode-hook . pdf-view-auto-slice-minor-mode)
-     )
-    :mode ("\\.pdf\\'" . pdf-view-mode))
+     ))
 #+end_src
 
 ** Expand region
@@ -732,6 +738,7 @@ why use swiper if there's occur?
           ivy-extra-directories nil
           ivy-initial-inputs-alist nil
           ivy-use-virtual-buffers t
+          ivy-read-action-function 'ivy-read-action-ivy
           ;; ivy-height-alist '((t lambda (_caller) (/ (window-height) 3)))
           )
     (add-to-list 'ivy-format-functions-alist '(t . ivy-format-function-arrow))
@@ -810,14 +817,17 @@ Requires mpv.
 Всё ясно, да?
 
 #+begin_src emacs-lisp
-  (load-file "/home/aadcg/repos/yeis/yeis.el")
-  (load-file "/home/aadcg/repos/yeis/x-leim/robin-packages.el")
-  (load-file "/home/aadcg/repos/yeis/x-leim/x-leim-list.el")
+  (setq yeis-dir "/home/aadcg/repos/emacs-yeis/")
+
+  (load-file (concat yeis-dir "yeis.el"))
+  (load-file (concat yeis-dir "x-leim/robin-packages.el"))
+  (load-file (concat yeis-dir "x-leim/x-leim-list.el"))
 
   (setq default-input-method "robin-russian"
-        yeis-path-plain-word-list "/home/aadcg/repos/yeis/wordlist")
+        yeis-path-plain-word-list (concat yeis-dir "wordlist"))
   (setq-default robin-current-package-name "robin-russian")
   (global-set-key (kbd "C-|") 'yeis-transform-previous-word)
+  ;; (global-set-key (kbd "C-x C-\\") 'yeis-transform-previous-word)
 
   (defun change-to-dict (dict)
     "Change to the dictionary given by string DICT."
@@ -954,8 +964,8 @@ Requires mpv.
   (use-package telega
     :unless in-termux-p
     :config
-    (telega-mode-line-mode 1)
     (setq telega-chat-fill-column 70)
+    ;; (telega-mode-line-mode 1)
     :bind ("s-t" . telega))
 
   (use-package emojify
@@ -978,10 +988,9 @@ Requires mpv.
           gnus-interactive-exit nil)
     :hook
     (message-send-hook . ispell-message)
-    ;; :hook
+    :hook
     ;; (after-init-hook . gnus)
-    ;; (kill-emacs-hook . gnus-group-exit)
-    )
+    (kill-emacs-hook . gnus-group-exit))
 
   (use-package sendmail
     :custom
