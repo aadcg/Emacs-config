@@ -30,10 +30,6 @@ set $foreground #dcdccc
 # wallpaper
 output * bg ~/dotfiles/wallpaper.jpg fill
 
-# output DP-1 pos 0 0
-# output eDP-1 pos 0 0
-
-# output eDP-1 disable
 # set $laptop eDP-1
 # bindswitch --reload lid:on output $laptop disable
 # bindswitch --reload lid:off output $laptop enable
@@ -106,6 +102,9 @@ bindsym XF86AudioMute exec amixer -q sset Master toggle
 # Brightness
 # bindsym XF86MonBrightnessDown exec sudo light set 100-
 # bindsym XF86MonBrightnessUp exec sudo light set +100
+
+bindsym XF86MonBrightnessDown exec emacsclient -e '(eshell-command "sudo light -U 10")'
+bindsym XF86MonBrightnessUp exec emacsclient -e '(eshell-command "sudo light -A 10")'
 
 # Lock
 bindsym $mod+Escape exec swaylock -f -c 000000
@@ -253,7 +252,7 @@ assign [class="Firefox"] Browser
 assign [class="ownCloud"] 1
 
 default_border none
-for_window [class="Emacs"] opacity set 0.8
+# for_window [class="Emacs"] opacity set 0.8
 
 # Startup
 exec emacs
