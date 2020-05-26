@@ -266,7 +266,7 @@ Add binds only to python-mode-map
     :custom
     ;; (pcomplete-cycle-completions nil)
     (eshell-history-file-name (expand-file-name "~/.bash_history"))
-    (eshell-history-size nil)
+    ;; (eshell-history-size nil)
     :init (require 'esh-module)
     :config
     (setq eshell-prefer-lisp-functions t
@@ -288,16 +288,6 @@ Add binds only to python-mode-map
     :config
     (add-to-list 'eshell-visual-commands "nmtui")
     (add-to-list 'eshell-visual-commands "alsamixer"))
-
-  ;; (use-package em-tramp
-  ;;   :config
-  ;;   (setq eshell-prefer-lisp-functions t
-  ;;         eshell-prefer-lisp-variables t))
-
-  ;; (use-package password-cache
-  ;;   :custom
-  ;;   (password-cache t)
-  ;;   (password-cache-expiry 3600))
 #+end_src
 
 **** Term
