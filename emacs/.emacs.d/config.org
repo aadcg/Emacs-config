@@ -15,8 +15,8 @@
   (fringe-mode '(8 . 0))
   (fset 'yes-or-no-p 'y-or-n-p)
 
-  (use-package hl-line
-    :hook (after-init-hook . global-hl-line-mode))
+  ;; (use-package hl-line
+  ;;   :hook (after-init-hook . global-hl-line-mode))
 
   (setq initial-scratch-message ";; Happy Hacking!\n\n"
         inhibit-splash-screen t)
@@ -778,6 +778,20 @@ why use swiper if there's occur?
     :defer t)
 #+end_src
 
+** IRC (freenode)
+#+begin_src emacs-lisp
+  (use-package erc
+    :config
+    (defun freenode ()
+      (interactive)
+      (let ((erc-plist (car (auth-source-search :host "irc.freenode.net")))
+            (erc-prompt-for-password nil))
+        (setq erc-server "irc.freenode.net")
+        (setq erc-nick (plist-get erc-plist :user))
+        (setq erc-password (funcall (plist-get erc-plist :secret)))
+        (erc))))
+#+end_src
+
 ** Games
 #+begin_src emacs-lisp
   (use-package speed-type
@@ -952,7 +966,7 @@ Requires mpv.
     (setq browse-url-browser-function 'eww-browse-url
           shr-use-fonts nil
           shr-use-colors nil
-          shr-max-image-proportion 0.4
+          shr-max-image-proportion 0.7
           shr-width (current-fill-column))
     (setq eww-suggest-uris '(eww-links-at-point
                              thing-at-point-url-at-point
