@@ -21,8 +21,8 @@ set $right l
 set $menu dmenu_path | dmenu | xargs swaymsg exec --
 # TODO replace dmenu with (async-shell-command)
 
-set $background #3f3f3f
-set $foreground #dcdccc
+set $background #e0e0e0
+set $foreground #000000
 
 # Output
 # (man "sway-output(5)")
@@ -30,6 +30,7 @@ set $foreground #dcdccc
 # wallpaper
 output * bg ~/dotfiles/wallpaper.jpg fill
 
+output eDP-1 scale 1
 # set $laptop eDP-1
 # bindswitch --reload lid:on output $laptop disable
 # bindswitch --reload lid:off output $laptop enable
