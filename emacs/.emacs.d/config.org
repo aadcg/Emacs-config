@@ -128,8 +128,6 @@ I love Fira Code but it lacks italics. Hack might be a good alternative.
 
   (use-package window
     :bind ([remap kill-buffer] . kill-buffer-and-window))
-
-  ;; (substitute-key-definition 'kill-buffer 'kill-buffer-and-window global-map)
 #+end_src
 
 ** Backups
@@ -155,9 +153,7 @@ Backups and auto-save files at ~/.emacs/backups
   (global-set-key (kbd "M-SPC") 'other-window)
   (global-set-key (kbd "C-c f") 'switch-to-agenda)
   (global-set-key (kbd "M-o")   'mode-line-other-buffer)
-  ;; (global-unset-key (kbd "C-x C-m"))
 
-  (global-unset-key (kbd "C-x C-z"))
   (global-unset-key (kbd "C-z"))
 #+end_src
 
@@ -668,7 +664,8 @@ in python source code blocks.
           delete-by-moving-to-trash t
           dired-listing-switches "-Atlh --group-directories-first"
           dired-auto-revert-buffer t)
-    :hook ((dired-mode-hook . hl-line-mode)))
+    :hook ((dired-mode-hook . hl-line-mode))
+    :bind ("C-x C-j" . dired-jump))
 #+end_src
 
 ** Checking
