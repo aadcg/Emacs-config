@@ -24,29 +24,15 @@
 
 *** Theme
 #+begin_src emacs-lisp
-  (use-package zenburn-theme
-    :disabled
-    :config (load-theme 'zenburn t)
-    :custom (zenburn-scale-org-headlines t))
-
-  (use-package modus-vivendi-theme
-    :custom
-    (modus-vivendi-theme-distinct-org-blocks t)
-    ;; (modus-vivendi-theme-scale-headings t)
-    (modus-vivendi-theme-section-headings t)
-    (modus-vivendi-theme-bold-constructs t)
-    (modus-vivendi-theme-3d-modeline t))
-
   (use-package modus-operandi-theme
     :custom
-    (modus-operandi-theme-distinct-org-blocks t)
-    ;; (modus-operandi-theme-rainbow-headings t)
-    ;; (modus-operandi-theme-scale-headings t)
-    (modus-operandi-theme-section-headings t)
-    (modus-operandi-theme-bold-constructs t)
+    (modus-operandi-theme-slanted-constructs t)
     (modus-operandi-theme-3d-modeline t)
+    (modus-operandi-theme-intense-standard-completions t)
+    (modus-operandi-theme-distinct-org-blocks t)
+    (modus-operandi-theme-rainbow-headings t)
+    (modus-operandi-theme-scale-headings t)
     :config
-    ;; (setq custom-theme-load-path "/home/aadcg/repos/modus-themes")
     (load-theme 'modus-operandi t)
 
     (defun toggle-modus-theme ()
@@ -55,6 +41,15 @@
     (if (eq (frame-parameter nil 'background-mode) 'light)
         (counsel-load-theme-action "modus-vivendi")
       (counsel-load-theme-action "modus-operandi"))))
+
+  (use-package modus-vivendi-theme
+    :custom
+    (modus-operandi-theme-slanted-constructs t)
+    (modus-operandi-theme-3d-modeline t)
+    (modus-operandi-theme-intense-standard-completions t)
+    (modus-operandi-theme-distinct-org-blocks t)
+    (modus-operandi-theme-rainbow-headings t)
+    (modus-operandi-theme-scale-headings t))
 #+end_src
 
 *** Font
@@ -74,7 +69,7 @@ I love Fira Code but it lacks italics. Hack might be a good alternative.
                   (delete-other-windows)
                   (window-max-chars-per-line))
                 (* n 85))
-        (setq size (+ size 0.2))
+        (setq size (+ size 0.5))
         (set-frame-font (concat "Fira Code-" (number-to-string size)) nil t))
       (message "The suggested font size is %f" size)))
 #+end_src
@@ -693,7 +688,9 @@ in python source code blocks.
     :when window-system
     ;; :custom (pdf-view-midnight-colors '("#d2c8c8" . "#3F3F3F"))
     ;; :config (pdf-tools-install)
-    :config (setq image-scaling-factor 1)
+    :config (setq image-scaling-factor 1) ; Emacs 27 needs this
+    ;; TODO midnight mode if theme is dark
+    ;; (frame-parameter nil 'background-mode)
     :mode ("\\.pdf\\'" . pdf-view-mode)
     :hook
     (
@@ -836,10 +833,10 @@ Requires mpv.
       (ispell-change-dictionary dict)))
 
   (add-hook 'input-method-activate-hook
-            (lambda () (change-to-dict "ru")))
+            (lambda () (change-to-dict "russian")))
 
   (add-hook 'input-method-deactivate-hook
-            (lambda () (change-to-dict "en")))
+            (lambda () (change-to-dict "english")))
 #+end_src
 
 *** Calendar
@@ -999,6 +996,15 @@ Requires mpv.
      "\n\n-- \nAndré Alexandre Gomes\n\"Free Thought, Free World\"")
     (message-signature
      "\n\n-- \nAndré Alexandre Gomes\n\"Free Thought, Free World\""))
+
+  ;; WIP
+  (defun mail-missing-attachment-p ()
+    "Return t if an attachment is missing."
+    (interactive)
+    (save-excursion
+      (goto-char (message-goto-body))
+      (when (re-search-forward "attach")
+          (message "Did you forgot to attach something?"))))
 #+end_src
 
 ** Weather
