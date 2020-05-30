@@ -818,7 +818,7 @@ Requires mpv.
 Всё ясно, да?
 
 #+begin_src emacs-lisp
-  (setq yeis-dir "/home/aadcg/repos/emacs-yeis/")
+  (setq yeis-dir (expand-file-name "repos/emacs-yeis/" "~"))
 
   (load-file (concat yeis-dir "yeis.el"))
   (load-file (concat yeis-dir "x-leim/robin-packages.el"))
