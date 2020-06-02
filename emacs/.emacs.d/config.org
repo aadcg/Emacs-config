@@ -26,12 +26,22 @@
 #+begin_src emacs-lisp
   (use-package modus-operandi-theme
     :custom
-    (modus-operandi-theme-slanted-constructs t)
+    (modus-operandi-theme-slanted-constructs nil)
+    (modus-operandi-theme-bold-constructs nil)
+    (modus-operandi-theme-visible-fringes nil)
     (modus-operandi-theme-3d-modeline t)
-    (modus-operandi-theme-intense-standard-completions t)
+    (modus-operandi-theme-subtle-diffs nil)
+    (modus-operandi-theme-intense-standard-completions nil)
     (modus-operandi-theme-distinct-org-blocks t)
+    (modus-operandi-theme-proportional-fonts nil)
     (modus-operandi-theme-rainbow-headings t)
+    (modus-operandi-theme-section-headings nil)
     (modus-operandi-theme-scale-headings t)
+    (modus-operandi-theme-scale-1 1.1)
+    (modus-operandi-theme-scale-2 1.15)
+    (modus-operandi-theme-scale-3 1.2)
+    (modus-operandi-theme-scale-4 1.25)
+    (modus-operandi-theme-scale-5 1.3))
     :config
     (load-theme 'modus-operandi t)
 
@@ -44,12 +54,38 @@
 
   (use-package modus-vivendi-theme
     :custom
-    (modus-operandi-theme-slanted-constructs t)
-    (modus-operandi-theme-3d-modeline t)
-    (modus-operandi-theme-intense-standard-completions t)
-    (modus-operandi-theme-distinct-org-blocks t)
-    (modus-operandi-theme-rainbow-headings t)
-    (modus-operandi-theme-scale-headings t))
+    (modus-operandi-theme-slanted-constructs
+     modus-vivendi-theme-slanted-constructs)
+    (modus-operandi-theme-bold-constructs
+     modus-vivendi-theme-bold-constructs)
+    (modus-operandi-theme-visible-fringes
+     modus-vivendi-theme-visible-fringes)
+    (modus-operandi-theme-3d-modeline
+     modus-vivendi-theme-3d-modeline)
+    (modus-operandi-theme-subtle-diffs
+     modus-vivendi-theme-subtle-diffs)
+    (modus-operandi-theme-intense-standard-completions
+     modus-vivendi-theme-intense-standard-completions)
+    (modus-operandi-theme-distinct-org-blocks
+     modus-vivendi-theme-distinct-org-blocks)
+    (modus-operandi-theme-proportional-fonts
+     modus-vivendi-theme-proportional-fonts)
+    (modus-operandi-theme-rainbow-headings
+     modus-vivendi-theme-rainbow-headings)
+    (modus-operandi-theme-section-headings
+     modus-vivendi-theme-section-headings)
+    (modus-operandi-theme-scale-headings
+     modus-vivendi-theme-scale-headings)
+    (modus-operandi-theme-scale-1
+     modus-vivendi-theme-scale-1 1)
+    (modus-operandi-theme-scale-2
+     modus-vivendi-theme-scale-2 1)
+    (modus-operandi-theme-scale-3
+     modus-vivendi-theme-scale-3 1)
+    (modus-operandi-theme-scale-4
+     modus-vivendi-theme-scale-4 1)
+    (modus-operandi-theme-scale-5
+     modus-vivendi-theme-scale-5 1))
 #+end_src
 
 *** Font
