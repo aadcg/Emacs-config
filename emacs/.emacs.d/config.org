@@ -133,7 +133,7 @@ I love Fira Code but it lacks italics. Hack might be a good alternative.
   (setq-default fill-column 72)
   (add-hook 'text-mode-hook 'turn-on-auto-fill)
   (setq-default indent-tabs-mode nil)
-  ;; (setq sentence-end-double-space nil)
+  (setq sentence-end-double-space nil)
   (when in-termux-p
     (global-visual-line-mode t))
 
