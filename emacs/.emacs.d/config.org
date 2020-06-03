@@ -1129,6 +1129,8 @@ Visit and reload this config
   (use-package server
     :hook (after-init-hook . server-start))
 
+  ;; (server-running-p)
+
   ;; (org-agenda-list 1)
   ;; (delete-other-windows)
 #+end_src
