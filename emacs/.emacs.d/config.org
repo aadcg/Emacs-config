@@ -432,6 +432,9 @@ Requires gocode for the autocomplete to work.
           (quote magit-display-buffer-same-window-except-diff-v1))
     :bind ("C-x g" . magit-status))
 
+  ;; to avoid passphrase prompts
+  (use-package ssh-agency)
+
   (use-package diff-hl
     :config
     (global-diff-hl-mode)
