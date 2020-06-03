@@ -186,6 +186,39 @@ Backups and auto-save files at ~/.emacs/backups
   (global-set-key (kbd "M-o")   'mode-line-other-buffer)
 
   (global-unset-key (kbd "C-z"))
+
+  ;; (bind-keys
+  ;;  ("C-:" . eval-print-last-sexp)
+  ;;  ("C-d" . delete-forward-char)
+  ;;  ("M-K" . kill-paragraph)
+  ;;  ("M-Z" . zap-to-char)
+  ;;  ("M-o" . other-window)
+  ;;  ("C-x C-p" . proced)
+  ;;  ("C-x c" . set-goal-column)
+  ;;  ("C-x k" . kill-current-buffer)
+  ;;  ("C-x K" . kill-buffer)
+  ;;  ("C-x C-d" . dired)
+  ;;  ("C-x d" . list-directory)
+  ;;  ([remap list-buffers] . electric-buffer-list)
+  ;;  ([remap upcase-word] . upcase-dwim)
+  ;;  ([remap downcase-word] . downcase-dwim)
+  ;;  ([remap capitalize-word] . capitalize-dwim)
+  ;;  ([remap just-one-space] . cycle-spacing)
+  ;;  ([remap count-words-region] . count-words)
+  ;;  ("C-M-o" . up-list)
+  ;;  ((if (string= (system-name) "penguin") "<C-delete>" "<C-M-backspace>") .
+  ;;   ;; Alt+backspace sends <delete> on the Chromebook...
+  ;;   kill-backward-up-list)
+  ;;  ("M-R" . raise-sexp)
+  ;;  ("M-E" . mark-end-of-sentence)
+  ;;  ("M-T" . transpose-sentences)
+  ;;  ("C-x M-t" . transpose-paragraphs)
+  ;;  ("C-S-s" . forward-same-syntax)
+  ;;  ("M-p" . previous-error)
+  ;;  ("M-n" . next-error)
+  ;;  ([remap apropos-command] . apropos)
+  ;;  ;; The Chromebook has a pretty reload key!
+  ;;  ("<XF86Reload>" . revert-buffer))
 #+end_src
 
 ** Modeline
