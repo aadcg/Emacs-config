@@ -77,15 +77,15 @@
     (modus-vivendi-theme-scale-headings
      modus-operandi-theme-scale-headings)
     (modus-vivendi-theme-scale-1
-     modus-operandi-theme-scale-1 1)
+     modus-operandi-theme-scale-1)
     (modus-vivendi-theme-scale-2
-     modus-operandi-theme-scale-2 1)
+     modus-operandi-theme-scale-2)
     (modus-vivendi-theme-scale-3
-     modus-operandi-theme-scale-3 1)
+     modus-operandi-theme-scale-3)
     (modus-vivendi-theme-scale-4
-     modus-operandi-theme-scale-4 1)
+     modus-operandi-theme-scale-4)
     (modus-vivendi-theme-scale-5
-     modus-operandi-theme-scale-5 1))
+     modus-operandi-theme-scale-5))
 #+end_src
 
 *** Font
