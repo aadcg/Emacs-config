@@ -19,7 +19,7 @@
   ;;   :hook (after-init-hook . global-hl-line-mode))
 
   (setq initial-scratch-message ";; Happy Hacking!\n\n"
-        inhibit-splash-screen t)
+        inhibit-startup-screen t)
 #+end_src
 
 *** Theme
