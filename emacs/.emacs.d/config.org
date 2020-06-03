@@ -50,42 +50,42 @@
     (interactive)
     (if (eq (frame-parameter nil 'background-mode) 'light)
         (counsel-load-theme-action "modus-vivendi")
-      (counsel-load-theme-action "modus-operandi"))))
+      (counsel-load-theme-action "modus-operandi")))
 
   (use-package modus-vivendi-theme
     :custom
-    (modus-operandi-theme-slanted-constructs
-     modus-vivendi-theme-slanted-constructs)
-    (modus-operandi-theme-bold-constructs
-     modus-vivendi-theme-bold-constructs)
-    (modus-operandi-theme-visible-fringes
-     modus-vivendi-theme-visible-fringes)
-    (modus-operandi-theme-3d-modeline
-     modus-vivendi-theme-3d-modeline)
-    (modus-operandi-theme-subtle-diffs
-     modus-vivendi-theme-subtle-diffs)
-    (modus-operandi-theme-intense-standard-completions
-     modus-vivendi-theme-intense-standard-completions)
-    (modus-operandi-theme-distinct-org-blocks
-     modus-vivendi-theme-distinct-org-blocks)
-    (modus-operandi-theme-proportional-fonts
-     modus-vivendi-theme-proportional-fonts)
-    (modus-operandi-theme-rainbow-headings
-     modus-vivendi-theme-rainbow-headings)
-    (modus-operandi-theme-section-headings
-     modus-vivendi-theme-section-headings)
-    (modus-operandi-theme-scale-headings
-     modus-vivendi-theme-scale-headings)
-    (modus-operandi-theme-scale-1
-     modus-vivendi-theme-scale-1 1)
-    (modus-operandi-theme-scale-2
-     modus-vivendi-theme-scale-2 1)
-    (modus-operandi-theme-scale-3
-     modus-vivendi-theme-scale-3 1)
-    (modus-operandi-theme-scale-4
-     modus-vivendi-theme-scale-4 1)
-    (modus-operandi-theme-scale-5
-     modus-vivendi-theme-scale-5 1))
+    (modus-vivendi-theme-slanted-constructs
+     modus-operandi-theme-slanted-constructs)
+    (modus-vivendi-theme-bold-constructs
+     modus-operandi-theme-bold-constructs)
+    (modus-vivendi-theme-visible-fringes
+     modus-operandi-theme-visible-fringes)
+    (modus-vivendi-theme-3d-modeline
+     modus-operandi-theme-3d-modeline)
+    (modus-vivendi-theme-subtle-diffs
+     modus-operandi-theme-subtle-diffs)
+    (modus-vivendi-theme-intense-standard-completions
+     modus-operandi-theme-intense-standard-completions)
+    (modus-vivendi-theme-distinct-org-blocks
+     modus-operandi-theme-distinct-org-blocks)
+    (modus-vivendi-theme-proportional-fonts
+     modus-operandi-theme-proportional-fonts)
+    (modus-vivendi-theme-rainbow-headings
+     modus-operandi-theme-rainbow-headings)
+    (modus-vivendi-theme-section-headings
+     modus-operandi-theme-section-headings)
+    (modus-vivendi-theme-scale-headings
+     modus-operandi-theme-scale-headings)
+    (modus-vivendi-theme-scale-1
+     modus-operandi-theme-scale-1 1)
+    (modus-vivendi-theme-scale-2
+     modus-operandi-theme-scale-2 1)
+    (modus-vivendi-theme-scale-3
+     modus-operandi-theme-scale-3 1)
+    (modus-vivendi-theme-scale-4
+     modus-operandi-theme-scale-4 1)
+    (modus-vivendi-theme-scale-5
+     modus-operandi-theme-scale-5 1))
 #+end_src
 
 *** Font
@@ -1164,6 +1164,8 @@ Visit and reload this config
 #+begin_src emacs-lisp
   (use-package server
     :hook (after-init-hook . server-start))
+
+  ;; (server-running-p)
 
   ;; (org-agenda-list 1)
   ;; (delete-other-windows)
