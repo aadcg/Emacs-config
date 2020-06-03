@@ -5,14 +5,15 @@
 # It’s not just us against them. It starts with I against I.
 # "I want to see the world go wild" - This routine is hell / Swain
 
-| OS                | [[https://guix.gnu.org/][GNU/Linux Guix]]            |
-| Text Editor       | GNU Emacs 26.3            |
-| Window manager    | Sway                      |
-| Web Browser       | eww & GNU icecat          |
-| Terminal Emulator | shell/term/eshell (Emacs) |
-| Media Player      | EMMS                      |
-| Mail/News         | Gnus                      |
+| OS             | [[https://guix.gnu.org/][GNU/Linux Guix]]   |
+| Text Editor    | GNU Emacs 27.0   |
+| Window manager | sway/GNOME       |
+| Web Browser    | eww & GNU icecat |
+| Shell          | eshell           |
+| Media Player   | EMMS             |
+| Mail/News      | Gnus             |
 #+TBLFM: @2$2='(concat "GNU Emacs " (substring (emacs-version) 10 14))
+# (org-table-recalculate-buffer-tables)
 
 * Motivation
 Free software grants us the 4 freedoms to run, study, redistribute and improve
@@ -80,7 +81,7 @@ read it more than once).
 
 * Evolution
 ** Customization
-I started working on my own init.el on December, 2018.
+I started working on my own init.el on [2018-12-10].
 
 Following the trend, I went for literate programming coupled with
 [[https://duckduckgo.com/l/?kh=-1&uddg=https%253A%252F%252Fgithub.com%252Fjwiegley%252Fuse%252Dpackage][use-package]].
