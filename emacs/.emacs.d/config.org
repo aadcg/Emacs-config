@@ -133,7 +133,7 @@ I love Fira Code but it lacks italics. Hack might be a good alternative.
   (setq-default fill-column 72)
   (add-hook 'text-mode-hook 'turn-on-auto-fill)
   (setq-default indent-tabs-mode nil)
-  (setq sentence-end-double-space nil)
+  ;; (setq sentence-end-double-space nil)
   (when in-termux-p
     (global-visual-line-mode t))
 
@@ -719,6 +719,21 @@ in python source code blocks.
     :hook
     (ibuffer-mode-hook . hl-line-mode)
     :bind (("C-x C-b" . ibuffer)))
+#+end_src
+
+** Desktop
+#+begin_src emacs-lisp
+  (use-package desktop
+    ;; :custom
+    ;; (desktop-auto-save-timeout 300)
+    ;; (desktop-dirname "~/.emacs.d/")
+    ;; (desktop-base-file-name "desktop")
+    ;; (desktop-files-not-to-save nil)
+    ;; (desktop-globals-to-clear nil)
+    ;; (desktop-restore-eager 3)
+    ;; (desktop-restore-frames nil)
+    :config
+    (desktop-save-mode 1))
 #+end_src
 
 ** Dired
