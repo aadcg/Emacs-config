@@ -64,7 +64,7 @@ input type:keyboard {
 input type:touchpad {
   dwt enabled
   tap enabled
-  tap_button_map lmr
+  tap_button_map lrm            # left, right, middle; 1, 2, 3 fingers
   pointer_accel 0.7
 }
 
