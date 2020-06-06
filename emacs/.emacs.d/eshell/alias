@@ -1,2 +1,1 @@
-alias tree find . -type d -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'
-alias ll ls -Atrhl
+alias ll ls -Atrhlb --group-directories-first
