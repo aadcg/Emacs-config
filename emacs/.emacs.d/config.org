@@ -44,17 +44,10 @@
     (modus-operandi-theme-scale-5 1.3)
 
     :config
-    ;; Light for the day
     (load-theme 'modus-operandi t t)
-    (run-at-time (nth 1 (s-split " " (sunrise-sunset)))
+    (run-at-time (nth 1 (split-string (sunrise-sunset)))
                  (* 60 60 24)
                  (lambda () (enable-theme 'modus-operandi)))
-
-    ;; Dark for the night
-    (load-theme 'modus-vivendi t t)
-    (run-at-time (nth 4 (s-split " " (sunrise-sunset)))
-                 (* 60 60 24)
-                 (lambda () (enable-theme 'modus-vivendi)))
 
     (defun toggle-modus-theme ()
       "Toggle between `modus-operandi' and `modus-vivendi' themes."
@@ -96,7 +89,13 @@
     (modus-vivendi-theme-scale-4
      modus-operandi-theme-scale-4)
     (modus-vivendi-theme-scale-5
-     modus-operandi-theme-scale-5))
+     modus-operandi-theme-scale-5)
+
+    :config
+    (load-theme 'modus-vivendi t t)
+    (run-at-time (nth 4 (split-string (sunrise-sunset)))
+                 (* 60 60 24)
+                 (lambda () (enable-theme 'modus-vivendi))))
 #+end_src
 
 *** Font
