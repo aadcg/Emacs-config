@@ -783,17 +783,18 @@ in python source code blocks.
 #+begin_src emacs-lisp
   (use-package pdf-tools
     :when window-system
-    ;; :custom (pdf-view-midnight-colors '("#d2c8c8" . "#3F3F3F"))
-    ;; :config (pdf-tools-install)
+    :custom (pdf-view-midnight-colors '("#ffffff" . "#000000"))
     :config (setq image-scaling-factor 1) ; Emacs 27 needs this
-    ;; TODO midnight mode if theme is dark
-    ;; (frame-parameter nil 'background-mode)
     :mode ("\\.pdf\\'" . pdf-view-mode)
     :hook
     (
      (pdf-view-mode-hook . pdf-view-fit-height-to-window)
      (pdf-view-mode-hook . pdf-links-minor-mode)
-     ;; (pdf-view-mode-hook . pdf-view-midnight-minor-mode)
+     (pdf-view-mode-hook . (lambda ()
+                             (when (eq
+                                    (frame-parameter nil 'background-mode)
+                                    'dark)
+                               (pdf-view-midnight-minor-mode))))
      ;; (pdf-view-mode-hook . pdf-view-auto-slice-minor-mode)
      ))
 #+end_src
