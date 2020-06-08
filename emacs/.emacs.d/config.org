@@ -4,6 +4,19 @@
 #+PROPERTY: header-args :results silent
 
 * Defaults, Preferences and Aesthetics
+** Personal
+#+begin_src emacs-lisp
+  (setq user-full-name "André Alexandre Gomes"
+        user-mail-address "andremegafone@gmail.com"
+        calendar-latitude 41.16
+        calendar-longitude -8.63
+        calendar-location-name "Porto, Portugal"
+        ;; calendar-latitude 59.94
+        ;; calendar-longitude 30.31
+        ;; calendar-location-name "Санкт-Петербург, Россия"
+        )
+#+end_src
+
 ** Aesthetics
 *** UI
 #+begin_src emacs-lisp
@@ -734,9 +747,9 @@ in python source code blocks.
 ** Desktop
 #+begin_src emacs-lisp
   (use-package desktop
-    ;; :custom
+    :custom
     ;; (desktop-auto-save-timeout 300)
-    ;; (desktop-dirname "~/.emacs.d/")
+    (desktop-dirname "~/.emacs.d/")
     ;; (desktop-base-file-name "desktop")
     ;; (desktop-files-not-to-save nil)
     ;; (desktop-globals-to-clear nil)
@@ -1149,19 +1162,6 @@ Visit and reload this config
   ;;   (load user-init-file))
 
   ;; (global-set-key (kbd "C-c r") 'config-reload)
-#+end_src
-
-** Personal
-#+begin_src emacs-lisp
-  (setq user-full-name "André Alexandre Gomes"
-        user-mail-address "andremegafone@gmail.com"
-        calendar-latitude 41.16
-        calendar-longitude -8.63
-        calendar-location-name "Porto, Portugal"
-        ;; calendar-latitude 59.94
-        ;; calendar-longitude 30.31
-        ;; calendar-location-name "Санкт-Петербург, Россия"
-        )
 #+end_src
 
 ** Learning Russian
