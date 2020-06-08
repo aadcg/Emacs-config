@@ -54,15 +54,17 @@ output eDP-1 scale 1
 # Input configuration
 # (man "sway-input(5)")
 
+# visit base.lst file for more info
+# sudo find / | grep base.lst
+
 input type:keyboard {
   xkb_layout us,ru
   xkb_variant altgr-intl,
-  xkb_options caps:ctrl_modifier,grp:win_space_toggle,grp_led:caps
-  # xkb_options compose:lctrl,caps:ctrl_modifier,grp:win_space_toggle,grp_led:caps
+  xkb_options ctrl:swapcaps_hyper,grp:win_space_toggle,grp_led:caps,lv3:ralt_switch_multikey
 }
 
 input type:touchpad {
-  dwt enabled
+  dwt enabled                   # disable-while-typing
   tap enabled
   tap_button_map lrm            # left, right, middle; 1, 2, 3 fingers
   pointer_accel 0.7
