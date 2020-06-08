@@ -44,10 +44,10 @@
     (modus-operandi-theme-scale-5 1.3)
 
     :config
-    (load-theme 'modus-operandi t t)
+    ;; (load-theme 'modus-operandi t t)
     (run-at-time (nth 1 (split-string (sunrise-sunset)))
                  (* 60 60 24)
-                 (lambda () (enable-theme 'modus-operandi)))
+                 (lambda () (counsel-load-theme-action "modus-operandi")))
 
     (defun toggle-modus-theme ()
       "Toggle between `modus-operandi' and `modus-vivendi' themes."
@@ -92,10 +92,10 @@
      modus-operandi-theme-scale-5)
 
     :config
-    (load-theme 'modus-vivendi t t)
+    ;; (load-theme 'modus-vivendi t t)
     (run-at-time (nth 4 (split-string (sunrise-sunset)))
                  (* 60 60 24)
-                 (lambda () (enable-theme 'modus-vivendi))))
+                 (lambda () (counsel-load-theme-action "modus-vivendi"))))
 #+end_src
 
 *** Font
