@@ -124,6 +124,7 @@ only the OS matters but also the BIOS ([[https://libreboot.org/][Libreboot]] is 
 alternative). The FSF (Free Software Foundation) approves only a handful of
 laptops. Most of them are refurbished ThinkPads X200 - for instance, [[https://store.vikings.net/libre-friendly-hardware/x200-ryf-certfied][Vikings]]
 (pre-installed with Trisquel and Libreboot).
+
 ** Smartphone
    This is a tricky section. Phones specially suck at respecting users. When you
 buy a phone you don't even have root access! No (concerned) citizen should be
@@ -258,6 +259,7 @@ regarding when it comes to using digital tools. Sometimes I talk to computer
 science graduates and they don't know what free software is or who Richard
 Stallman is. That's sad isn't it? Engineering should be concerned with open
 source, but scientists should be keen on free software.
+
 * Alternatives
 invidio.us
 bibliogram
