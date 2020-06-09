@@ -28,9 +28,6 @@
   (fringe-mode '(8 . 0))
   (fset 'yes-or-no-p 'y-or-n-p)
 
-  ;; (use-package hl-line
-  ;;   :hook (after-init-hook . global-hl-line-mode))
-
   (setq initial-scratch-message ";; Happy Hacking!\n\n"
         inhibit-startup-screen t)
 #+end_src
@@ -146,11 +143,8 @@ I love Fira Code but it lacks italics. Hack might be a good alternative.
 #+begin_src emacs-lisp
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-  ;; the init-hook isn't working...?
   (use-package delsel
-    :config (delete-selection-mode)
-    ;; :hook (after-init-hook . delete-selection-mode)
-    )
+    :config (delete-selection-mode))
 
   (setq require-final-newline t)
   (setq-default fill-column 72)
@@ -170,11 +164,6 @@ I love Fira Code but it lacks italics. Hack might be a good alternative.
 - Killing a buffer also kills the window
 
 #+begin_src emacs-lisp
-  (use-package recentf
-    :config
-    (setq recentf-max-saved-items 1000)
-    :hook (after-init-hook . recentf-mode))
-
   (use-package autorevert
     :config
     (setq auto-revert-remote-files t)
@@ -193,6 +182,23 @@ Backups and auto-save files at ~/.emacs/backups
     (mkdir backups-dir))
   (setq backup-directory-alist `(("." . ,backups-dir))
         tramp-backup-directory-alist backup-directory-alist)
+#+end_src
+
+** Hist
+#+begin_src emacs-lisp
+  (use-package savehist
+    :custom
+    (history-length 30000)
+    :config
+    (savehist-mode 1))
+
+  (use-package recentf
+    :config
+    (setq recentf-max-saved-items 1000)
+    :hook (after-init-hook . recentf-mode))
+
+  (use-package saveplace
+    :config (save-place-mode 1))
 #+end_src
 
 ** Keybindings
@@ -281,7 +287,6 @@ Backups and auto-save files at ~/.emacs/backups
 change this keybinding to C-m, C-i or M-j?
 #+begin_src emacs-lisp
   (setq scroll-preserve-screen-position 'always)
-  (save-place-mode 1)
   (setq blink-cursor-blinks 2)
 
   (use-package avy
@@ -745,6 +750,8 @@ in python source code blocks.
 #+end_src
 
 ** Desktop
+(info "(emacs) Saving Emacs Sessions")
+
 #+begin_src emacs-lisp
   (use-package desktop
     :custom
@@ -861,9 +868,7 @@ why use swiper if there's occur?
     (define-key company-active-map (kbd "<tab>")
     'company-complete-common-or-cycle)
     (define-key company-active-map (kbd "C-n") 'company-select-next)
-    (define-key company-active-map (kbd "C-p") 'company-select-previous)
-    ;; :hook (eshell-mode-hook . (company-mode 0)) TODO
-    )
+    (define-key company-active-map (kbd "C-p") 'company-select-previous))
 #+end_src
 
 ** Elmacro
@@ -896,9 +901,10 @@ why use swiper if there's occur?
 #+begin_src emacs-lisp
   (use-package google-translate
     :defer t
-    :init
+    :config
     (setq google-translate-default-source-language "auto"
-          google-translate-default-target-language "en")
+          google-translate-default-target-language "en"
+          google-translate-backend-method 'emacs)
     (require 'google-translate-default-ui)
     :bind
     ("C-c t" . google-translate-at-point)
@@ -1189,10 +1195,6 @@ Visit and reload this config
 * Startup
 #+begin_src emacs-lisp
   (use-package server
-    :hook (after-init-hook . server-start))
-
-  ;; (server-running-p)
-
-  ;; (org-agenda-list 1)
-  ;; (delete-other-windows)
+    :hook (after-init-hook . (lambda () (unless (server-running-p)
+                                     (server-start)))))
 #+end_src
