@@ -57,10 +57,18 @@ output eDP-1 scale 1
 # visit base.lst file for more info
 # sudo find / | grep base.lst
 
+# general settings for a random laptop keyboard
 input type:keyboard {
   xkb_layout us,ru
   xkb_variant altgr-intl,
-  xkb_options ctrl:swapcaps_hyper,grp:win_space_toggle,grp_led:caps,lv3:ralt_switch_multikey
+  xkb_options ctrl:swapcaps,grp:win_space_toggle,grp_led:caps,lv3:ralt_switch_multikey
+}
+
+# Niz atom66
+input 1155:20778:CATEX_TECH._66EC-S {
+  xkb_layout us,ru
+  xkb_variant altgr-intl,
+  xkb_options grp:win_space_toggle,grp_led:caps,lv3:ralt_switch_multikey
 }
 
 input type:touchpad {
