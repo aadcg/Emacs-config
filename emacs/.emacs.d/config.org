@@ -1,7 +1,9 @@
+:HEADER:
 #+TITLE: GNU Emacs config
 #+AUTHOR: André Alexandre Gomes
 #+EMAIL: andremegafone@gmail.com
 #+PROPERTY: header-args :results silent
+:END:
 
 * Defaults, Preferences and Aesthetics
 ** Personal
@@ -36,25 +38,12 @@
 #+begin_src emacs-lisp
   (use-package modus-operandi-theme
     :custom
-    (modus-operandi-theme-slanted-constructs nil)
-    (modus-operandi-theme-bold-constructs nil)
-    (modus-operandi-theme-visible-fringes nil)
     (modus-operandi-theme-3d-modeline t)
-    (modus-operandi-theme-subtle-diffs nil)
-    (modus-operandi-theme-intense-standard-completions t)
     (modus-operandi-theme-distinct-org-blocks t)
-    (modus-operandi-theme-proportional-fonts nil)
-    (modus-operandi-theme-rainbow-headings t)
     (modus-operandi-theme-section-headings nil)
     (modus-operandi-theme-scale-headings t)
-    (modus-operandi-theme-scale-1 1.1)
-    (modus-operandi-theme-scale-2 1.15)
-    (modus-operandi-theme-scale-3 1.2)
-    (modus-operandi-theme-scale-4 1.25)
-    (modus-operandi-theme-scale-5 1.3)
 
     :config
-    ;; (load-theme 'modus-operandi t t)
     (run-at-time (nth 1 (split-string (sunrise-sunset)))
                  (* 60 60 24)
                  (lambda () (counsel-load-theme-action "modus-operandi")))
@@ -102,7 +91,6 @@
      modus-operandi-theme-scale-5)
 
     :config
-    ;; (load-theme 'modus-vivendi t t)
     (run-at-time (nth 4 (split-string (sunrise-sunset)))
                  (* 60 60 24)
                  (lambda () (counsel-load-theme-action "modus-vivendi"))))
@@ -114,18 +102,18 @@ I love Fira Code but it lacks italics. Hack might be a good alternative.
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(font . "Fira Code-23"))
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
-  ;; (add-to-list 'default-frame-alist '(alpha 95))
+  ;; (add-to-list 'default-frame-alist '(alpha 90))
 
   (defun auto-size-font (n)
     "Set the font size such that n buffers of 80 chars fit side by side."
     (interactive "nHow many 80 chars buffers should fit side by side? ")
     (let ((size 8.0))
       (set-frame-font (concat "Fira Code-" (number-to-string size)) nil t)
-      (while (> (save-window-excursion
+      (while (>= (save-window-excursion
                   (delete-other-windows)
                   (window-max-chars-per-line))
-                (* n 85))
-        (setq size (+ size 0.5))
+                (* n 90))
+        (setq size (+ size 0.2))
         (set-frame-font (concat "Fira Code-" (number-to-string size)) nil t))
       (message "The suggested font size is %f" size)))
 #+end_src
@@ -202,6 +190,16 @@ Backups and auto-save files at ~/.emacs/backups
 #+end_src
 
 ** Keybindings
+check M-x describe-personal-keybindings
+
+Super key - window manager
+C-c <letter> - free emacs keybindings
+F5-F12 - free emacs keybindings
+C-i - useless emacs binding
+M-r - useless (?)
+C-z - useless in emacs
+C-x C-z - same as above
+
 #+begin_src emacs-lisp
   (defun switch-to-agenda ()
     (interactive)
@@ -440,10 +438,9 @@ Requires gocode for the autocomplete to work.
     :config (add-to-list 'company-backends 'company-go))
 #+end_src
 
-*** COMMENT \LaTeX
+*** \LaTeX
 #+begin_src emacs-lisp
   (use-package auctex
-    :disabled
     :defer t
     :config
     (setq TeX-auto-save t
@@ -503,20 +500,18 @@ Requires gocode for the autocomplete to work.
     (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 #+end_src
 
-*** TODO Pretty mode
-- State "TODO"       from              [2019-07-18 Thu 13:16]
-
+*** Pretty mode
 Global pretty mode breaks html export of org-mode files when there are functions
 in python source code blocks.
 
 #+begin_src emacs-lisp
-  ;; (use-package pretty-mode
-  ;;   :disabled
-  ;;   :config
-  ;;   (require 'pretty-mode)
-  ;;   (global-pretty-mode t)
-  ;;   (pretty-activate-groups
-  ;;    '(:sub-and-superscripts :arithmetic-nary :quantifiers :types)))
+  (use-package pretty-mode
+    :disabled
+    :config
+    (require 'pretty-mode)
+    (global-pretty-mode t)
+    (pretty-activate-groups
+     '(:sub-and-superscripts :arithmetic-nary :quantifiers :types)))
 
   (global-prettify-symbols-mode t)
 #+end_src
@@ -543,6 +538,12 @@ in python source code blocks.
 #+end_src
 
 * Org
+#+begin_src bash
+  owncloudcmd -s -u user -p pw $HOME/NextCloud/ https://cloud.owncube.com/remote.php/webdav/
+#+end_src
+
+- Syncthing vs Nextcloud vs cron/rsync?
+
 ** Basics
 #+begin_src emacs-lisp
   (use-package org
@@ -568,12 +569,29 @@ in python source code blocks.
                                    "CANCELED(c@)")))
     (org-todo-keyword-faces '(("WIP" . "orange")
                               ("WAITING" . "yellow")))
+    ;; (org-fontify-done-headline t)
     ;; (orgtbl-mode t)
     ;; (org-hide-leading-stars t)
     ;; (org-startup-indented t)
     (org-startup-with-inline-images t)
     (org-image-actual-width 500)
     (org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
+    (org-preview-latex-image-directory "ltximg/")
+
+    :config
+    (customize-set-variable
+     'org-structure-template-alist
+     (append org-structure-template-alist
+             '(("thm"  . "theorem")
+               ("pf"   . "proof")
+               ("lem"  . "lemma")
+               ("cor"  . "corollary")
+               ("def"  . "definition")
+               ("rem"  . "remark")
+               ("exer" . "exercise")
+               ("prop" . "proposition")
+               ("el"   . "src emacs-lisp"))))
+
     :bind
     ("C-c a"     . org-agenda)
     ("C-c l"     . org-store-link)
@@ -581,7 +599,7 @@ in python source code blocks.
     ("C-c j"     . aadcg/org-checkbox-next)
     ("<mouse-1>" . aadcg/org-checkbox-next))
 
-  (global-set-key (kbd "C-'") nil)
+  ;; (global-set-key (kbd "C-'") nil)
 #+end_src
 
 ** Literate Programming
@@ -615,11 +633,50 @@ in python source code blocks.
 - Minted gives syntax highlighting to latex exports
 - Htmlize gives syntax highlighting to html exports
 
+[[http://mirrors.ibiblio.org/CTAN/macros/latex/required/amscls/doc/amsthdoc.pdf][amsthm package documentation]]
+
 #+begin_src emacs-lisp
-  (require 'ox)
   (require 'ox-beamer)
-  (add-to-list 'org-latex-packages-alist '("newfloat" "minted"))
-  (setq org-latex-listings 'minted)
+  ;; (setq org-latex-listings 'minted)
+  ;; (add-to-list 'org-latex-packages-alist '("newfloat" "minted"))
+
+  ;; for exporting in foreing languages
+  (add-to-list 'org-latex-packages-alist
+               '("AUTO" "babel" t ("pdflatex")))
+  (add-to-list 'org-latex-packages-alist
+                         '("AUTO" "polyglossia" t ("xelatex" "lualatex")))
+
+  ;; this should be added at the end of the list rather
+  ;; (add-to-list 'org-latex-default-packages-alist '("" "amsthm" t))
+  (add-to-list 'org-latex-packages-alist '("" "listings"))
+  (setq org-latex-listings t)
+
+  (add-to-list 'org-latex-classes
+               '("aadcg-article"
+  "\\documentclass[11pt]{amsart}
+  [DEFAULT-PACKAGES]
+  [PACKAGES]
+  \\usepackage{amsthm}
+  \\newtheorem{theorem}{Theorem}[section]
+  \\newtheorem{lemmma}[theorem]{Lemma}
+  \\newtheorem{proposition}[theorem]{Proposition}
+  \\newtheorem{corollary}[theorem]{Corollary}
+
+  \\theoremstyle{definition}
+  \\newtheorem{definition}{Definition}[section]
+  \\newtheorem{example}{Example}[section]
+  \\newtheorem{exercise}[exa]{Exercise}
+
+  \\theoremstyle{remark}
+  \\newtheorem{remark}{Remark}
+  \\newtheorem{note}{Note}
+  \\newtheorem{case}{case}
+  [EXTRA]"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
   (use-package htmlize)
 #+end_src
@@ -636,9 +693,9 @@ in python source code blocks.
 
   (use-package org-drill-table)
 
-  ;; (use-package cdlatex
-  ;;   :defer t
-  ;;   :hook (org-mode-hook . org-cdlatex-mode))
+  (use-package cdlatex
+    :defer t
+    :hook (org-mode-hook . org-cdlatex-mode))
 
   ;; (use-package org-pdftools
   ;;   :when window-system
@@ -750,23 +807,26 @@ in python source code blocks.
 #+end_src
 
 ** Desktop
-(info "(emacs) Saving Emacs Sessions")
+[[info:emacs#Saving Emacs Sessions][Documentation]]
 
 #+begin_src emacs-lisp
   (use-package desktop
     :custom
-    ;; (desktop-auto-save-timeout 300)
+    (desktop-auto-save-timeout 300)
     (desktop-dirname "~/.emacs.d/")
-    ;; (desktop-base-file-name "desktop")
-    ;; (desktop-files-not-to-save nil)
-    ;; (desktop-globals-to-clear nil)
-    ;; (desktop-restore-eager 3)
-    ;; (desktop-restore-frames nil)
+    (desktop-files-not-to-save nil)
+    (desktop-globals-to-clear nil)
+    (desktop-restore-eager 3)
+    (desktop-restore-frames nil)
     :config
-    (desktop-save-mode 1))
+    (desktop-save-mode 1)
+    ;; :hook (server-after-make-frame-hook . desktop-read)
+    )
 #+end_src
 
 ** Dired
+[[info:emacs#Dired][Documentation]]
+
 #+begin_src emacs-lisp
   (use-package dired
     :config
@@ -825,8 +885,7 @@ in python source code blocks.
 #+end_src
 
 ** Emacs completion
-(info "(ivy)Top")
-why use swiper if there's occur?
+[[info:ivy#Top][Documentation]]
 
 #+begin_src emacs-lisp
   (use-package counsel
@@ -850,6 +909,26 @@ why use swiper if there's occur?
     )
 
   (use-package smex)
+
+  (use-package ivy-posframe
+    :after ivy
+    :config
+    (setq ivy-posframe-parameters
+          '((left-fringe . 2)
+            (right-fringe . 2)
+            (internal-border-width . 8)
+            (alpha . 10)))
+    (setq ivy-posframe-height-alist
+          '((swiper . 15)
+            (swiper-isearch . 15)
+            (t . 10)))
+    (setq ivy-posframe-display-functions-alist
+          '((complete-symbol . ivy-posframe-display-at-point)
+            (swiper . nil)
+            (swiper-isearch . nil)
+            (t . ivy-posframe-display-at-frame-center)))
+    (setq ivy-posframe-width nil)
+    (ivy-posframe-mode 1))
 #+end_src
 
 ** Auto-complete
@@ -949,10 +1028,10 @@ Requires mpv.
       (ispell-change-dictionary dict)))
 
   (add-hook 'input-method-activate-hook
-            (lambda () (change-to-dict "russian")))
+            (lambda () (change-to-dict "ru")))
 
   (add-hook 'input-method-deactivate-hook
-            (lambda () (change-to-dict "english")))
+            (lambda () (change-to-dict "en")))
 #+end_src
 
 *** Calendar
@@ -1095,16 +1174,19 @@ Requires mpv.
 
 [[https://github.com/redguardtoo/mastering-emacs-in-one-year-guide/blob/master/gnus-guide-en.org#my-gnusel][another gnus tutorial]]
 
+[[https://www.fsf.org/resources/webmail-systems][fsf advice]]
+[[https://github.com/kensanata/ggg#gmail-gnus-gpg-guide-gggg][how to encrypt]]
+
 #+begin_src emacs-lisp
   (use-package gnus
     :config
     (setq gnus-inhibit-startup-message t
-          gnus-interactive-exit nil)
+          gnus-interactive-exit 'quiet)
     :hook
     (message-send-hook . ispell-message)
-    :hook
     ;; (after-init-hook . gnus)
-    (kill-emacs-hook . gnus-group-exit))
+    ;; (kill-emacs-hook . gnus-group-exit)
+    )
 
   (use-package sendmail
     :custom
@@ -1161,13 +1243,7 @@ Visit and reload this config
 
   (global-set-key (kbd "C-c e") 'config-visit)
 
-  ;; useful?
-  ;; (defun config-reload ()
-  ;;   "Eval `init.el' at runtime."
-  ;;   (interactive)
-  ;;   (load user-init-file))
-
-  ;; (global-set-key (kbd "C-c r") 'config-reload)
+  ;; (load user-init-file)
 #+end_src
 
 ** Learning Russian
