@@ -262,14 +262,14 @@ C-x C-z - same as above
                            text-scale-mode
                            geiser-mode
                            yeis-mode)
-          minions-mode-line-delimiters '("" . "")))
+          minions-mode-line-delimiters '("" . "")
+          minions-mode-line-lighter nil))
 
   ;; more info about the battery /sys/class/power_supply/BAT0
   (use-package battery
-    :defer t
     :config
     (setq battery-mode-line-format " %p%"
-          battery-mode-line-limit 30))
+          battery-mode-line-limit 25))
 
   (column-number-mode)
 
@@ -806,24 +806,6 @@ in python source code blocks.
     :bind (("C-x C-b" . ibuffer)))
 #+end_src
 
-** Desktop
-[[info:emacs#Saving Emacs Sessions][Documentation]]
-
-#+begin_src emacs-lisp
-  (use-package desktop
-    :custom
-    (desktop-auto-save-timeout 300)
-    (desktop-dirname "~/.emacs.d/")
-    (desktop-files-not-to-save nil)
-    (desktop-globals-to-clear nil)
-    (desktop-restore-eager 3)
-    (desktop-restore-frames nil)
-    :config
-    (desktop-save-mode 1)
-    ;; :hook (server-after-make-frame-hook . desktop-read)
-    )
-#+end_src
-
 ** Dired
 [[info:emacs#Dired][Documentation]]
 
@@ -1045,8 +1027,7 @@ Requires mpv.
 #+begin_src emacs-lisp
   (use-package time
     :config
-    (setq display-time-24hr-format t
-          display-time-format " %k:%M %a %d %b"
+    (setq display-time-format " %k:%M %a %d %b"
           display-time-default-load-average nil
           display-time-world-list '(("Europe/Moscow" "Москва")
                                     ("Europe/Lisbon" "Lisboa"))))
@@ -1269,8 +1250,27 @@ Visit and reload this config
 #+end_src
 
 * Startup
+** Server
 #+begin_src emacs-lisp
   (use-package server
-    :hook (after-init-hook . (lambda () (unless (server-running-p)
-                                     (server-start)))))
+    :hook
+    (after-init-hook . (lambda () (unless (server-running-p) (server-start)))))
+#+end_src
+
+** Desktop
+[[info:emacs#Saving Emacs Sessions][Documentation]]
+
+#+begin_src emacs-lisp
+  (use-package desktop
+    :custom
+    (desktop-auto-save-timeout 300)
+    (desktop-dirname "~/.emacs.d/")
+    (desktop-files-not-to-save nil)
+    (desktop-globals-to-clear nil)
+    (desktop-restore-eager 3)
+    (desktop-restore-frames nil)
+    :config
+    (desktop-save-mode 1)
+    ;; :hook (server-after-make-frame-hook . desktop-read)
+    )
 #+end_src
