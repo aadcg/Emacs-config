@@ -18,7 +18,7 @@ order += "battery all"
 # order += "disk /"
 # order += "load"
 order += "memory"
-# order += "tztime msk"
+order += "tztime msk"
 order += "tztime local"
 
 volume master {
@@ -74,11 +74,11 @@ memory {
 }
 
 tztime local {
-        format = "%a %d %b %k:%M"
+        format = "%a %d %b %R"
 }
 
 tztime msk {
-        format = "Moscow %k:%M"
+        format = "MSK %R"
         timezone = "Europe/Moscow"
         hide_if_equals_localtime = true
 }
