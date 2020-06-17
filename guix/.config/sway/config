@@ -1,41 +1,42 @@
 # (man "sway(5)")
 # https://github.com/swaywm/sway/wiki
 
-# cool config
-# https://github.com/Difrex/sway
-
 # Variables
 
 set $mod Mod4
 
-# set $term emacsclient -c -e "(progn (shell) (delete-other-windows))"
 set $term emacsclient -c -e "(eshell)"
-
-set $left j
-set $down k
-set $up i
-set $right l
+# set $term emacsclient -c -e "(progn (shell) (delete-other-windows))"
 
 # Your preferred application launcher
 # Note: it's recommended that you pass the final command to sway
 set $menu dmenu_path | dmenu | xargs swaymsg exec --
 # TODO replace dmenu with (async-shell-command)
 
-set $background #e0e0e0
+set $background #ffffff
 set $foreground #000000
+
+# <kennylevinsen> `set` just stores strings. In your example, you set
+# $foreground to the string "exec emacsclient..." - that's only useful
+# if you're using $foreground somewhere that expects a sway command,
+# e.g. bindsym.  If you want to change something dynamically, you can
+# use swaymsg to command sway around (e.g. `exec emacs-styling.sh`,
+# where emacs-styling.sh uses swaymsg to set various settings)
+
+# set $background exec emacsclient -e "(intern (format (face-attribute 'default :background)))"
+# set $foreground exec emacsclient -e "(face-attribute 'default :foreground)"
 
 # Output
 # (man "sway-output(5)")
 
-# wallpaper
+# Wallpaper
 output * bg ~/dotfiles/wallpaper.jpg fill
 
-output eDP-1 scale 1
-# set $laptop eDP-1
-# bindswitch --reload lid:on output $laptop disable
-# bindswitch --reload lid:off output $laptop enable
-
 # Monitors
+output eDP-1 scale 1
+set $laptop eDP-1
+bindswitch --reload lid:on output $laptop disable
+bindswitch --reload lid:off output $laptop enable
 
 # Idle configuration
 
@@ -125,26 +126,8 @@ bindsym --to-code $mod+p exec grim "$HOME/Pictures/$(date +%F_%T).png"
 
 # Moving around:
 
-bindsym $mod+$left focus left
-bindsym $mod+$down focus down
-bindsym $mod+$up focus up
-bindsym $mod+$right focus right
-
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
-
-
-bindsym $mod+Shift+$left move left
-bindsym $mod+Shift+$down move down
-bindsym $mod+Shift+$up move up
-bindsym $mod+Shift+$right move right
-
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
+bindsym $mod+TAB focus next
+bindsym $mod+Shift+TAB focus prev
 
 # Workspaces
 
@@ -220,16 +203,7 @@ bindsym $mod+a focus parent
 # Resizing containers:
 #
 mode "resize" {
-    # left will shrink the containers width
-    # right will grow the containers width
-    # up will shrink the containers height
-    # down will grow the containers height
-    bindsym $left resize shrink width 10px
-    bindsym $down resize grow height 10px
-    bindsym $up resize shrink height 10px
-    bindsym $right resize grow width 10px
-
-    # Ditto, with arrow keys
+    # with arrow keys
     bindsym Left resize shrink width 10px
     bindsym Down resize grow height 10px
     bindsym Up resize shrink height 10px
@@ -247,7 +221,7 @@ bindsym --to-code $mod+Shift+r mode "resize"
 
 bar {
     position top
-    font Fira Code 20
+    font Fira Code 18
     # font Hack 18
     status_command i3status     # visit ~/.config/i3status/config
     colors {
@@ -263,7 +237,7 @@ assign [class="Firefox"] Browser
 assign [class="ownCloud"] 1
 
 default_border none
-# for_window [class="Emacs"] opacity set 0.8
+# for_window [class="Emacs"] opacity set 0.85
 
 # Startup
 exec emacs
