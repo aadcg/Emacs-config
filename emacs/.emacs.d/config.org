@@ -113,7 +113,7 @@ I love Fira Code but it lacks italics. Hack might be a good alternative.
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
   ;; (add-to-list 'default-frame-alist '(alpha 90))
 
-  (defun auto-size-font (n)
+  (defun my-auto-size-font (n)
     "Set the font size such that n buffers of 80 chars fit side by side."
     (interactive "nHow many 80 chars buffers should fit side by side? ")
     (let ((size 8.0))
@@ -210,7 +210,7 @@ C-z - useless in emacs
 C-x C-z - same as above
 
 #+begin_src emacs-lisp
-  (defun switch-to-agenda ()
+  (defun my-switch-to-agenda ()
     (interactive)
     (switch-to-buffer "*Org Agenda*"))
 
@@ -415,7 +415,7 @@ Add binds only to python-mode-map
   (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
   (add-hook 'emacs-lisp-mode-hook 'starter-kit-remove-elc-on-save)
 
-  (defun starter-kit-remove-elc-on-save ()
+  (defun my-starter-kit-remove-elc-on-save ()
     "If you're saving an elisp file, likely the .elc is no longer valid."
     (make-local-variable 'after-save-hook)
     (add-hook 'after-save-hook
@@ -605,8 +605,8 @@ in python source code blocks.
     ("C-c a"     . org-agenda)
     ("C-c l"     . org-store-link)
     ("C-c c"     . org-capture)
-    ("C-c j"     . aadcg/org-checkbox-next)
-    ("<mouse-1>" . aadcg/org-checkbox-next))
+    ("C-c j"     . my-org-checkbox-next)
+    ("<mouse-1>" . my-org-checkbox-next))
 
   ;; (global-set-key (kbd "C-'") nil)
 #+end_src
@@ -643,6 +643,7 @@ in python source code blocks.
 - Htmlize gives syntax highlighting to html exports
 
 [[http://mirrors.ibiblio.org/CTAN/macros/latex/required/amscls/doc/amsthdoc.pdf][amsthm package documentation]]
+[[https://github.com/dangom/org-thesis][org/tex tips]]
 
 #+begin_src emacs-lisp
   (require 'ox-beamer)
@@ -711,7 +712,7 @@ in python source code blocks.
   ;;   :defer t
   ;;   :hook (org-load-hook . org-pdftools-setup-link))
 
-  (defun aadcg/org-checkbox-next ()
+  (defun my-org-checkbox-next ()
     "Mark checkboxes and sort."
     (interactive)
     (let ((home (point)))
@@ -720,7 +721,7 @@ in python source code blocks.
         (org-sort-list nil ?x)
         (goto-char home))))
 
-  (defun aadcg/org-replace-link-by-link-description ()
+  (defun my-org-replace-link-by-link-description ()
     "Replace org link by its description or url."
     (interactive)
     (if (org-in-regexp org-bracket-link-regexp 1)
@@ -731,7 +732,7 @@ in python source code blocks.
           (apply 'delete-region remove)
           (insert description))))
 
-  (defun diary-last-day-of-month (date)
+  (defun my-diary-last-day-of-month (date)
     "Return `t` if DATE is the last day of the month."
     (let* ((day (calendar-extract-day date))
            (month (calendar-extract-month date))
@@ -741,7 +742,7 @@ in python source code blocks.
       (= day last-day-of-month)))
 
   ;; org-cycle if tree is all checkboxes are ticked
-  ;; (defun org-at-item-checkbox-p ()
+  ;; (defun my-org-at-item-checkbox-p ()
   ;;   "Is point at a line starting a plain-list item with a checklet?"
   ;;   (org-list-at-regexp-after-bullet-p "\\(\\[[- X]\\]\\)[ \t]+"))
   ;; (cookie-re "\\(\\(\\[[0-9]*%\\]\\)\\|\\(\\[[0-9]*/[0-9]*\\]\\)\\)")
@@ -760,7 +761,7 @@ in python source code blocks.
           org-tree-slide-activate-message "Welcome to my presentation!"
           org-tree-slide-deactivate-message "Hope you have enjoyed!")
 
-    (defun aadcg/presenting ()
+    (defun my-presenting ()
       "Presenting mode"
       (interactive)
       (hide-mode-line-mode)
@@ -768,7 +769,7 @@ in python source code blocks.
       (setq global-hl-line-mode nil)
       (auto-size-font 1))
 
-    (defun aadcg/non-presenting ()
+    (defun my-non-presenting ()
       "Non-presenting mode"
       (interactive)
       (setq hide-mode-line-mode t)
@@ -777,8 +778,8 @@ in python source code blocks.
       (auto-size-font 2))
 
     :hook
-    ((org-tree-slide-play-hook . aadcg/presenting)
-     (org-tree-slide-stop-hook . aadcg/non-presenting))
+    ((org-tree-slide-play-hook . my-presenting)
+     (org-tree-slide-stop-hook . my-non-presenting))
 
     :bind
     ("<f8>" . org-tree-slide-mode)
@@ -951,7 +952,7 @@ in python source code blocks.
 #+begin_src emacs-lisp
   (use-package erc
     :config
-    (defun freenode ()
+    (defun my-freenode ()
       (interactive)
       (let ((erc-plist (car (auth-source-search :host "irc.freenode.net")))
             (erc-prompt-for-password nil))
@@ -1013,7 +1014,7 @@ Requires mpv.
   (global-set-key (kbd "C-|") 'yeis-transform-previous-word)
   ;; (global-set-key (kbd "C-x C-\\") 'yeis-transform-previous-word)
 
-  (defun change-to-dict (dict)
+  (defun my-change-to-dict (dict)
     "Change to the dictionary given by string DICT."
     (let ((inhibit-message t))
       (ispell-change-dictionary dict)))
@@ -1186,7 +1187,7 @@ Requires mpv.
      "\n\n-- \nAndré Alexandre Gomes\n\"Free Thought, Free World\""))
 
   ;; WIP
-  (defun mail-missing-attachment-p ()
+  (defun my-mail-missing-attachment-p ()
     "Return t if an attachment is missing."
     (interactive)
     (save-excursion
@@ -1226,7 +1227,7 @@ Requires mpv.
 ** Metaconfiguring
 Visit and reload this config
 #+begin_src emacs-lisp
-  (defun config-visit ()
+  (defun my-config-visit ()
     "Visit ~/.emacs.d/config.org."
     (interactive)
     (find-file "~/.emacs.d/config.org"))
@@ -1242,14 +1243,14 @@ Visit and reload this config
   adjective/noun is declinated ([[https://unix.stackexchange.com/questions/154098/copy-the-last-emacs-message-into-the-current-buffer][see]])
 
 #+begin_src emacs-lisp
-  (defun openru-search (word)
+  (defun my-openru-search (word)
     "Search using https://en.openrussian.org"
     (interactive "MЧто для Вас сударь? ")
     (let ((url "https://en.openrussian.org/ru/"))
       (eww (concat url word))
       (forward-line 27)))
 
-  (defun openru-search-at-point ()
+  (defun my-openru-search-at-point ()
     "Search using https://en.openrussian.org at point"
     (interactive)
     (let ((url "https://en.openrussian.org/ru/"))
