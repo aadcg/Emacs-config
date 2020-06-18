@@ -56,7 +56,7 @@
       (counsel-load-theme-action "modus-operandi")))
 
     (defun my-match-sway-bar-with-theme ()
-    "Change swaybar colors according to theme."
+      "Change swaybar colors according to Emacs theme."
     (let ((inhibit-message t)
           (bg (face-attribute 'default :background))
           (fg (face-attribute 'default :foreground))
@@ -109,10 +109,6 @@
 I love Fira Code but it lacks italics. Hack might be a good alternative.
 
 #+begin_src emacs-lisp
-  (add-to-list 'default-frame-alist '(font . "Fira Code-23"))
-  (add-to-list 'default-frame-alist '(fullscreen . maximized))
-  ;; (add-to-list 'default-frame-alist '(alpha 90))
-
   (defun my-auto-size-font (n)
     "Set the font size such that n buffers of 80 chars fit side by side."
     (interactive "nHow many 80 chars buffers should fit side by side? ")
@@ -122,9 +118,15 @@ I love Fira Code but it lacks italics. Hack might be a good alternative.
                   (delete-other-windows)
                   (window-max-chars-per-line))
                 (* n 90))
-        (setq size (+ size 0.2))
+        (setq size (+ size 0.5))
         (set-frame-font (concat "Fira Code-" (number-to-string size)) nil t))
-      (message "The suggested font size is %f" size)))
+      (message "The suggested font size is %f" size)
+      (number-to-string size)))
+
+  (add-to-list 'default-frame-alist '(font . "Fira Code-22.5"))
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+  ;; transparent frame
+  ;; (add-to-list 'default-frame-alist '(alpha 90))
 #+end_src
 
 ** Words, white spaces and text
@@ -218,7 +220,7 @@ C-x C-z - same as above
   (global-set-key (kbd "C-x f") 'browse-url-firefox)
   (global-set-key (kbd "S-SPC") 'cycle-spacing)
   (global-set-key (kbd "M-SPC") 'other-window)
-  (global-set-key (kbd "C-c f") 'switch-to-agenda)
+  (global-set-key (kbd "C-c f") 'my-switch-to-agenda)
   (global-set-key (kbd "M-o")   'mode-line-other-buffer)
 
   (global-unset-key (kbd "C-z"))
@@ -413,7 +415,7 @@ Add binds only to python-mode-map
     'reindent-then-newline-and-indent)
 
   (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
-  (add-hook 'emacs-lisp-mode-hook 'starter-kit-remove-elc-on-save)
+  (add-hook 'emacs-lisp-mode-hook 'my-starter-kit-remove-elc-on-save)
 
   (defun my-starter-kit-remove-elc-on-save ()
     "If you're saving an elisp file, likely the .elc is no longer valid."
@@ -428,6 +430,7 @@ Add binds only to python-mode-map
 #+begin_src emacs-lisp
   (use-package scala-mode
     :disabled)
+
   (use-package ensime
     :disabled)
   (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
@@ -1218,7 +1221,7 @@ Requires mpv.
      (add-to-list 'keycast-substitute-alist '(self-insert-command nil nil))
      (setq keycast-separator-width 2))
 
-   ;; this is useless, kind of similar to my auto-size-font
+   ;; this is useless, kind of similar to my-auto-size-font
    ;; (use-package default-text-scale
    ;;   :defer t)
  #+end_src
@@ -1232,7 +1235,7 @@ Visit and reload this config
     (interactive)
     (find-file "~/.emacs.d/config.org"))
 
-  (global-set-key (kbd "C-c e") 'config-visit)
+  (global-set-key (kbd "C-c e") 'my-config-visit)
 
   ;; (load user-init-file)
 #+end_src
