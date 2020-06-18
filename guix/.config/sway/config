@@ -6,12 +6,6 @@
 set $mod Mod4
 
 set $term emacsclient -c -e '(eshell)'
-# set $term emacsclient -c -e "(progn (shell) (delete-other-windows))"
-
-# Your preferred application launcher
-# Note: it's recommended that you pass the final command to sway
-set $menu dmenu_path | dmenu | xargs swaymsg exec --
-# TODO replace dmenu with (async-shell-command)
 
 set $background #ffffff
 set $foreground #000000
@@ -19,6 +13,10 @@ set $foreground #000000
 # https://github.com/swaywm/sway/pull/2084
 
 # set $background "(face-attribute 'default :background)"
+
+# Your preferred application launcher
+# Note: it's recommended that you pass the final command to sway
+set $menu dmenu_path | dmenu -l 5 -p "$" -fn "Fira Code-18" -nb "$background" -nf "$foreground" | xargs swaymsg exec --
 
 # Output
 # (man "sway-output(5)")
@@ -85,7 +83,7 @@ bindsym $mod+Return exec $$term
 bindsym --to-code $mod+0 kill
 
 # Start your launcher
-bindsym --to-code $mod+d exec $menu
+bindsym --to-code $mod+x exec $menu
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
