@@ -48,12 +48,21 @@
                  (* 60 60 24)
                  (lambda () (counsel-load-theme-action "modus-operandi")))
 
-    (defun toggle-modus-theme ()
+    (defun my-toggle-modus-theme ()
       "Toggle between `modus-operandi' and `modus-vivendi' themes."
     (interactive)
     (if (eq (frame-parameter nil 'background-mode) 'light)
         (counsel-load-theme-action "modus-vivendi")
-      (counsel-load-theme-action "modus-operandi"))))
+      (counsel-load-theme-action "modus-operandi")))
+
+    (defun my-match-sway-bar-with-theme ()
+    "Change swaybar colors according to theme."
+    (let ((inhibit-message t)
+          (bg (face-attribute 'default :background))
+          (fg (face-attribute 'default :foreground))
+          (swaycmd "swaymsg bar bar-0 colors "))
+      (eshell-command (concat swaycmd "statusline '" fg "'"))
+      (eshell-command (concat swaycmd "background '" bg "'")))))
 
   (use-package modus-vivendi-theme
     :custom
