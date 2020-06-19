@@ -46,16 +46,22 @@
     :config
     (run-at-time (nth 1 (split-string (sunrise-sunset)))
                  (* 60 60 24)
-                 (lambda () (counsel-load-theme-action "modus-operandi")))
+                 (lambda () (progn
+                         (counsel-load-theme-action "modus-operandi")
+                         (my-swaybar-theme-match))))
 
     (defun my-toggle-modus-theme ()
       "Toggle between `modus-operandi' and `modus-vivendi' themes."
     (interactive)
     (if (eq (frame-parameter nil 'background-mode) 'light)
-        (counsel-load-theme-action "modus-vivendi")
-      (counsel-load-theme-action "modus-operandi")))
+        (progn
+          (counsel-load-theme-action "modus-vivendi")
+          (my-swaybar-theme-match))
+      (progn
+        (counsel-load-theme-action "modus-operandi")
+        (my-swaybar-theme-match))))
 
-    (defun my-match-sway-bar-with-theme ()
+    (defun my-swaybar-theme-match ()
       "Change swaybar colors according to Emacs theme."
     (let ((inhibit-message t)
           (bg (face-attribute 'default :background))
@@ -102,7 +108,9 @@
     :config
     (run-at-time (nth 4 (split-string (sunrise-sunset)))
                  (* 60 60 24)
-                 (lambda () (counsel-load-theme-action "modus-vivendi"))))
+                 (lambda () (progn
+                         (counsel-load-theme-action "modus-vivendi")
+                         (my-swaybar-theme-match)))))
 #+end_src
 
 *** Font
@@ -125,8 +133,7 @@ I love Fira Code but it lacks italics. Hack might be a good alternative.
 
   (add-to-list 'default-frame-alist '(font . "Fira Code-22.5"))
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
-  ;; transparent frame
-  ;; (add-to-list 'default-frame-alist '(alpha 90))
+  ;; (add-to-list 'default-frame-alist '(alpha 90)) ;; transparent frame
 #+end_src
 
 ** Words, white spaces and text
@@ -193,7 +200,7 @@ Backups and auto-save files at ~/.emacs/backups
 
   (use-package recentf
     :config
-    (setq recentf-max-saved-items 1000)
+    (setq recentf-max-saved-items 250)
     :hook (after-init-hook . recentf-mode))
 
   (use-package saveplace
@@ -274,7 +281,7 @@ C-x C-z - same as above
                            geiser-mode
                            yeis-mode)
           minions-mode-line-delimiters '("" . "")
-          minions-mode-line-lighter nil))
+          minions-mode-line-lighter "."))
 
   ;; more info about the battery /sys/class/power_supply/BAT0
   (use-package battery
@@ -736,7 +743,9 @@ in python source code blocks.
           (insert description))))
 
   (defun my-diary-last-day-of-month (date)
-    "Return `t` if DATE is the last day of the month."
+    "Return `t` if DATE is the last day of the month.
+
+  Credit to https://emacs.stackexchange.com/a/31708/19054."
     (let* ((day (calendar-extract-day date))
            (month (calendar-extract-month date))
            (year (calendar-extract-year date))
@@ -827,8 +836,8 @@ in python source code blocks.
     :config
     (setq dired-recursive-copies 'always
           dired-recursive-deletes 'always
-          delete-by-moving-to-trash t
-          dired-listing-switches "-Atrhlb --group-directories-first"
+          ;; delete-by-moving-to-trash t
+          dired-listing-switches "-Atrhl --group-directories-first"
           dired-auto-revert-buffer t)
     :hook ((dired-mode-hook . hl-line-mode))
     :bind ("C-x C-j" . dired-jump))
@@ -861,8 +870,7 @@ in python source code blocks.
     :config (setq image-scaling-factor 1) ; Emacs 27 needs this
     :mode ("\\.pdf\\'" . pdf-view-mode)
     :hook
-    (
-     (pdf-view-mode-hook . pdf-view-fit-height-to-window)
+    ((pdf-view-mode-hook . pdf-view-fit-height-to-window)
      (pdf-view-mode-hook . pdf-links-minor-mode)
      (pdf-view-mode-hook . (lambda ()
                              (when (eq
@@ -1155,6 +1163,9 @@ Requires mpv.
     ;; (telega-mode-line-mode 1)
     :bind ("s-t" . telega))
 
+  ;; number of unread messages
+  ;; (plist-get telega--unread-message-count :unread_unmuted_count)
+
   (use-package emojify
     :hook
     (telega-load-hook . emojify-mode)
@@ -1282,8 +1293,12 @@ Visit and reload this config
     (desktop-globals-to-clear nil)
     (desktop-restore-eager 3)
     (desktop-restore-frames nil)
+    (desktop-load-locked-desktop t)
     :config
     (desktop-save-mode 1)
     ;; :hook (server-after-make-frame-hook . desktop-read)
     )
 #+end_src
+
+* Ideas
+- write use-package extension that ensures guix emacs packages
