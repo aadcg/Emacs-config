@@ -36,81 +36,127 @@
 
 *** Theme
 #+begin_src emacs-lisp
-  (use-package modus-operandi-theme
-    :custom
-    (modus-operandi-theme-3d-modeline t)
-    (modus-operandi-theme-distinct-org-blocks t)
-    (modus-operandi-theme-section-headings nil)
-    (modus-operandi-theme-scale-headings t)
+  (defun my-load-theme (theme)
+    "Loads theme and changes swaybar if needed."
+    (progn
+      (mapc #'disable-theme custom-enabled-themes)
+      (load-theme theme t)
+      (when (getenv "WAYLAND_DISPLAY")
+        (my-load-swaybar-theme))))
 
-    :config
-    (run-at-time (nth 1 (split-string (sunrise-sunset)))
-                 (* 60 60 24)
-                 (lambda () (progn
-                         (counsel-load-theme-action "modus-operandi")
-                         (my-swaybar-theme-match))))
-
-    (defun my-toggle-modus-theme ()
-      "Toggle between `modus-operandi' and `modus-vivendi' themes."
+  (defun my-toggle-modus-theme ()
+    "Toggle between `modus-operandi' and `modus-vivendi' themes."
     (interactive)
     (if (eq (frame-parameter nil 'background-mode) 'light)
-        (progn
-          (counsel-load-theme-action "modus-vivendi")
-          (my-swaybar-theme-match))
-      (progn
-        (counsel-load-theme-action "modus-operandi")
-        (my-swaybar-theme-match))))
+        (my-load-theme 'modus-vivendi)
+      (my-load-theme 'modus-operandi)))
 
-    (defun my-swaybar-theme-match ()
-      "Change swaybar colors according to Emacs theme."
+  (defun my-load-swaybar-theme ()
+    "Change swaybar colors according to Emacs theme."
     (let ((inhibit-message t)
           (bg (face-attribute 'default :background))
           (fg (face-attribute 'default :foreground))
           (swaycmd "swaymsg bar bar-0 colors "))
       (eshell-command (concat swaycmd "statusline '" fg "'"))
-      (eshell-command (concat swaycmd "background '" bg "'")))))
+      (eshell-command (concat swaycmd "background '" bg "'"))))
 
-  (use-package modus-vivendi-theme
-    :custom
-    (modus-vivendi-theme-slanted-constructs
-     modus-operandi-theme-slanted-constructs)
-    (modus-vivendi-theme-bold-constructs
-     modus-operandi-theme-bold-constructs)
-    (modus-vivendi-theme-visible-fringes
-     modus-operandi-theme-visible-fringes)
-    (modus-vivendi-theme-3d-modeline
-     modus-operandi-theme-3d-modeline)
-    (modus-vivendi-theme-subtle-diffs
-     modus-operandi-theme-subtle-diffs)
-    (modus-vivendi-theme-intense-standard-completions
-     modus-operandi-theme-intense-standard-completions)
-    (modus-vivendi-theme-distinct-org-blocks
-     modus-operandi-theme-distinct-org-blocks)
-    (modus-vivendi-theme-proportional-fonts
-     modus-operandi-theme-proportional-fonts)
-    (modus-vivendi-theme-rainbow-headings
-     modus-operandi-theme-rainbow-headings)
-    (modus-vivendi-theme-section-headings
-     modus-operandi-theme-section-headings)
-    (modus-vivendi-theme-scale-headings
-     modus-operandi-theme-scale-headings)
-    (modus-vivendi-theme-scale-1
-     modus-operandi-theme-scale-1)
-    (modus-vivendi-theme-scale-2
-     modus-operandi-theme-scale-2)
-    (modus-vivendi-theme-scale-3
-     modus-operandi-theme-scale-3)
-    (modus-vivendi-theme-scale-4
-     modus-operandi-theme-scale-4)
-    (modus-vivendi-theme-scale-5
-     modus-operandi-theme-scale-5)
+  (defmacro my-format-sexp (sexp &rest objects)
+    "All credit to user b3n on Reddit."
+    `(eval (read (format ,(format "%S" sexp) ,@objects))))
 
-    :config
-    (run-at-time (nth 4 (split-string (sunrise-sunset)))
-                 (* 60 60 24)
-                 (lambda () (progn
-                         (counsel-load-theme-action "modus-vivendi")
-                         (my-swaybar-theme-match)))))
+  (dolist (theme '("operandi" "vivendi"))
+    (my-format-sexp
+     (use-package modus-%1$s-theme
+       :custom
+       (modus-%1$s-theme-3d-modeline t)
+       (modus-%1$s-theme-distinct-org-blocks t)
+       (modus-%1$s-theme-section-headings nil)
+       (modus-%1$s-theme-scale-headings t)
+
+       :config
+       (run-at-time (nth (if (string= theme "operandi") 1 4)
+                         (split-string (sunrise-sunset)))
+                    nil
+                    (lambda () (my-load-theme 'modus-%1$s))))
+     theme))
+
+  ;; (use-package modus-operandi-theme
+  ;;   :custom
+  ;;   (modus-operandi-theme-3d-modeline t)
+  ;;   (modus-operandi-theme-distinct-org-blocks t)
+  ;;   (modus-operandi-theme-section-headings nil)
+  ;;   (modus-operandi-theme-scale-headings t)
+
+  ;;   :config
+  ;;   (run-at-time (nth 1 (split-string (sunrise-sunset)))
+  ;;                (* 60 60 24)
+  ;;                (lambda () (progn
+  ;;                        (counsel-load-theme-action "modus-operandi")
+  ;;                        (my-load-swaybar-theme))))
+
+  ;;   (defun my-toggle-modus-theme ()
+  ;;     "Toggle between `modus-operandi' and `modus-vivendi' themes."
+  ;;     (interactive)
+  ;;     (if (eq (frame-parameter nil 'background-mode) 'light)
+  ;;         (progn
+  ;;           (counsel-load-theme-action "modus-vivendi")
+  ;;           (my-load-swaybar-theme))
+  ;;       (progn
+  ;;         (counsel-load-theme-action "modus-operandi")
+  ;;         (my-load-swaybar-theme))))
+
+  ;;   (defun my-load-swaybar-theme ()
+  ;;     "Change swaybar colors according to Emacs theme."
+  ;;     (interactive)
+  ;;     (when (getenv "WAYLAND_DISPLAY")
+  ;;       (let ((inhibit-message t)
+  ;;             (bg (face-attribute 'default :background))
+  ;;             (fg (face-attribute 'default :foreground))
+  ;;             (swaycmd "swaymsg bar bar-0 colors "))
+  ;;         (eshell-command (concat swaycmd "statusline '" fg "'"))
+  ;;         (eshell-command (concat swaycmd "background '" bg "'"))))))
+
+  ;; (use-package modus-vivendi-theme
+  ;;   :custom
+  ;;   (modus-vivendi-theme-slanted-constructs
+  ;;    modus-operandi-theme-slanted-constructs)
+  ;;   (modus-vivendi-theme-bold-constructs
+  ;;    modus-operandi-theme-bold-constructs)
+  ;;   (modus-vivendi-theme-visible-fringes
+  ;;    modus-operandi-theme-visible-fringes)
+  ;;   (modus-vivendi-theme-3d-modeline
+  ;;    modus-operandi-theme-3d-modeline)
+  ;;   (modus-vivendi-theme-subtle-diffs
+  ;;    modus-operandi-theme-subtle-diffs)
+  ;;   (modus-vivendi-theme-intense-standard-completions
+  ;;    modus-operandi-theme-intense-standard-completions)
+  ;;   (modus-vivendi-theme-distinct-org-blocks
+  ;;    modus-operandi-theme-distinct-org-blocks)
+  ;;   (modus-vivendi-theme-proportional-fonts
+  ;;    modus-operandi-theme-proportional-fonts)
+  ;;   (modus-vivendi-theme-rainbow-headings
+  ;;    modus-operandi-theme-rainbow-headings)
+  ;;   (modus-vivendi-theme-section-headings
+  ;;    modus-operandi-theme-section-headings)
+  ;;   (modus-vivendi-theme-scale-headings
+  ;;    modus-operandi-theme-scale-headings)
+  ;;   (modus-vivendi-theme-scale-1
+  ;;    modus-operandi-theme-scale-1)
+  ;;   (modus-vivendi-theme-scale-2
+  ;;    modus-operandi-theme-scale-2)
+  ;;   (modus-vivendi-theme-scale-3
+  ;;    modus-operandi-theme-scale-3)
+  ;;   (modus-vivendi-theme-scale-4
+  ;;    modus-operandi-theme-scale-4)
+  ;;   (modus-vivendi-theme-scale-5
+  ;;    modus-operandi-theme-scale-5)
+
+  ;;   :config
+  ;;   (run-at-time (nth 4 (split-string (sunrise-sunset)))
+  ;;                (* 60 60 24)
+  ;;                (lambda () (progn
+  ;;                        (counsel-load-theme-action "modus-vivendi")
+  ;;                        (my-load-swaybar-theme)))))
 #+end_src
 
 *** Font
@@ -1293,6 +1339,7 @@ Visit and reload this config
     (desktop-globals-to-clear nil)
     (desktop-restore-eager 3)
     (desktop-restore-frames nil)
+    (desktop-lazy-verbose nil)
     (desktop-load-locked-desktop t)
     :config
     (desktop-save-mode 1)
