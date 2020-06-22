@@ -1,5 +1,7 @@
 (use-modules (gnu))
-(use-service-modules desktop networking ssh xorg pm)
+(use-service-modules desktop networking ssh xorg pm nix)
+
+;; (info "(guix) Miscellaneous Services")
 
 (operating-system
   (locale "en_US.utf8")
@@ -52,7 +54,7 @@
     (list
      (service gnome-desktop-service-type)
      (service openssh-service-type)
-     (service tor-service-type)
+     ;; (service tor-service-type)
      (service tlp-service-type)
      (set-xorg-configuration
       (xorg-configuration
