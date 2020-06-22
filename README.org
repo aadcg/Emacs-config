@@ -1,29 +1,32 @@
-#+TITLE: dotfiles readme
-#+OPTIONS: author:t email:t toc:nil num:nil prop:t ^:nil
+#+TITLE: Overview
+#+AUTHOR: André Alexandre Gomes
+#+EMAIL: andremegafone@gmail.com
 
 # Amongst the decay of virtue lies a greater crime.
 # It’s not just us against them. It starts with I against I.
 # "I want to see the world go wild" - This routine is hell / Swain
 
-| OS             | [[https://guix.gnu.org/][GNU/Linux Guix]]   |
-| Text Editor    | GNU Emacs 27.0   |
-| Window manager | sway/GNOME       |
-| Web Browser    | eww & GNU icecat |
-| Shell          | eshell           |
-| Media Player   | EMMS             |
-| Mail/News      | Gnus             |
-#+TBLFM: @2$2='(concat "GNU Emacs " (substring (emacs-version) 10 14))
+| OS             | [[https://guix.gnu.org/][GNU/Linux Guix]]    |
+| Text Editor    | [[https://www.gnu.org/software/emacs/][GNU Emacs 27.0.91]] |
+| Window manager | [[https://swaywm.org/][sway]]/[[https://www.gnome.org/][GNOME]]        |
+| Web Browser    | [[https://www.gnu.org/software/emacs/manual/html_node/eww/][eww]]/[[https://www.gnu.org/software/gnuzilla/][GNU icecat]]    |
+| Shell          | [[https://www.gnu.org/software/emacs/manual/html_mono/eshell.html][eshell]]            |
+| Media Player   | [[https://www.gnu.org/software/emms/][emms]]              |
+| Mail/News      | [[http://www.gnus.org/][gnus]]              |
+#+TBLFM: @2$2='(concat "GNU Emacs " (substring (emacs-version) 10 17))
 # (org-table-recalculate-buffer-tables)
 
 * Motivation
-Free software grants us the 4 freedoms to run, study, redistribute and improve
-programs. As a result, these programs are usually so extensible and flexible
-that the configuration can be saved as text files. The user wants to keep all
-these files so that his environment, i.e. the behaviour of his operating system,
-is easily reproducible. That's what the scope of this project.
+Free software grants its users the 4 freedoms to run, study,
+redistribute and improve programs.  As a result, these programs are
+usually extensible and flexible and those configurations can be saved as
+text files.  The user wants to keep all these files so that his
+environment, i.e. the behaviour of his operating system, is easily
+reproducible.  That's what the scope of this project.
 
 * How did I get here?
-I assume you're motivated to use Emacs. If you're not, [[https://www.youtube.com/watch?v=EsAkPl3On3E][convince yourself]].
+I assume you're motivated to use Emacs.  If you're not, let [[https://www.youtube.com/watch?v=EsAkPl3On3E][Protesilaos
+Stravrou convince you]].
 
 ** Who am I?
 An idiot who:
@@ -32,45 +35,45 @@ An idiot who:
 - started a master's on Pure Maths (2017), but quitted after the first semester;
 - started to work for [[https://en.wikipedia.org/wiki/Vestas][Vestas]] and using Emacs in August 2018.
 
-Back then, I barely knew what GNU/Linux was at all. My background was
+Back then, I barely knew what GNU/Linux was at all.  My background was
 theoretical so a piece a paper and a pen were my tools.
 
-The point is: if Emacs is your cup of tea, you shall not struggle at all. I
-still don't get those who tell that the learning curve is steep. Isn't the
-profit curve even steeper? It's a matter of attitude and self motivation. I have
+The point is: if Emacs is your cup of tea, you shall not struggle at all.  I
+still don't get those who tell that the learning curve is steep.  Isn't the
+profit curve even steeper?  It's a matter of attitude and self motivation.  I have
 fun with Emacs everyday.
 
 If you have never suffered while learning, I wonder if you have ever learnt
-anything. The process starts with the traumatic experience of helplessness
+anything.  The process starts with the traumatic experience of helplessness
 towards new faculties that are yet to be acquired.
 
 ** The transition
 I knew Ubuntu existed from a friend, but he was being driven by the convenience
-of it. At that time, I didn't know free software, Richard Stallman or
-GNU/Linux. It was when I stepped closer to these ethical issues that it
+of it.  At that time, I didn't know free software, Richard Stallman or
+GNU/Linux.  It was when I stepped closer to these ethical issues that it
 triggered my curiosity.
 
-Once, while meeting a [[https://cmup.fc.up.pt/cmup/jalmeida/][professor]] in his office, I saw It for the first time. I
+Once, while meeting a [[https://cmup.fc.up.pt/cmup/jalmeida/][professor]] in his office, I saw It for the first time.  I
 asked about It.
 
-"It's Emacs! I write my \LaTeX papers, answer e-mails and write my programs
+"It's Emacs!  I write my \LaTeX papers, answer e-mails and write my programs
 without ever leaving it!".
 
-That seemed quite impressive, and I kept it in the back of my head. I was also
-shifting from paper to computers. For instance, I took lecture notes using
-[[https://en.wikipedia.org/wiki/Lyx][Lyx]] to generate \LaTeX docs. That was already quite impressive, since I
+That seemed quite impressive, and I kept it in the back of my head.  I was also
+shifting from paper to computers.  For instance, I took lecture notes using
+[[https://en.wikipedia.org/wiki/Lyx][Lyx]] to generate \LaTeX docs.  That was already quite impressive, since I
 was making use of keybindings and other "wizardry" to suppress the repetitiveness
 of certain things.
 
 I scratched the surface of: "Being able to type accurately and fast on a
-computer is convenient". What I didn't know is that my life would soon be so
+computer is convenient".  What I didn't know is that my life would soon be so
 deeply based on text, and the way [[https://www.youtube.com/watch?v=SzA2YODtgK4][org mode]] changes life.
 
 * Where to start?
-I recommend running Emacs on a GUI. He agrees and [[https://blog.aaronbieber.com/2016/12/29/don-t-use-terminal-emacs.html][expands]] on that.
+I recommend running Emacs on a GUI.  He agrees and [[https://blog.aaronbieber.com/2016/12/29/don-t-use-terminal-emacs.html][expands]] on that.
 
-Run it on GNU/Linux for obvious reasons. If circumstances make it impossible,
-then run it on a virtual machine. He [[https://youtu.be/RDrG-_kapaQ][expands]] on that.
+Run it on GNU/Linux for obvious reasons.  If circumstances make it impossible,
+then run it on a virtual machine.  He [[https://youtu.be/RDrG-_kapaQ][expands]] on that.
 
 Emacs greets you!
 
@@ -87,18 +90,18 @@ Following the trend, I went for literate programming coupled with
 [[https://duckduckgo.com/l/?kh=-1&uddg=https%253A%252F%252Fgithub.com%252Fjwiegley%252Fuse%252Dpackage][use-package]].
 
 Vanilla Emacs (not customized) doesn't suck and you should learn it
-well. The community is amazing and provides amazing packages. Try them out if
+well.  The community is amazing and provides amazing packages.  Try them out if
 your needs require.
 
 ** Org agenda
-Can't live without it. Words can't express the joy.
+Can't live without it.  Words can't express the joy.
 
 ** E-mail
 Use gnus and you'll get a news reader as a bonus.
 
 ** Eww as a browser
-The built-in Emacs browser, eww, will not always replace a browser. Mainly,
-because it doesn't run Javascript. But you can use it for most of the things you
+The built-in Emacs browser, eww, will not always replace a browser.  Mainly,
+because it doesn't run Javascript.  But you can use it for most of the things you
 need, with the added benefit that you won't leave your text editor.
 
 ** Studying Emacs
@@ -108,13 +111,13 @@ Emacs is the self-documenting text editor, so C-h i has everything you need!
 If you love Emacs, you'll start learning it before you notice.
 
 * Carrying org files
-I have a smartphone, one of those Android. I mitigated Google's influence by not
-adding a Google account or by not running Google apps. Anyway, I'm sure I'm
+I have a smartphone, one of those Android.  I mitigated Google's influence by not
+adding a Google account or by not running Google apps.  Anyway, I'm sure I'm
 running endless malware in it anyway.
 
-So, my "App-store" is [[https://f-droid.org/][F-Droid]]. In there you'll find [[https://termux.com/][Termux]]. That coupled with
+So, my "App-store" is [[https://f-droid.org/][F-Droid]].  In there you'll find [[https://termux.com/][Termux]].  That coupled with
 [[https://nextcloud.com/][Nextcloud]] makes it possible me to access my org files and agenda anywhere,
-anytime and to sync effortlessly. My life in plain text.
+anytime and to sync effortlessly.  My life in plain text.
 
 I started using LineageOS on [2020-02-25].
 
@@ -128,18 +131,20 @@ I started using LineageOS on [2020-02-25].
 - A symlink might be needed depending on the way you set org-agenda-files and on
   where the Nextcloud files are located
 
+[[https://linuxconfig.org/ssh-into-linux-your-computer-from-android-with-termux][ssh]]
+
 * OS
-There's only one operating system worth using - GNU/Linux. It comes in many
-shapes and flavours, people call them distributions (distros). [[https://www.gnu.org/distros/free-distros.en.html][Only a small
-minority is endorsed by the FSF]]. Beginners should consider using PureOS. On the
-non-free side, consider Ubuntu. More advanced users might be interested in GNU
-Guix (or NixOS, the non-free counterpart). Guix and Nix can also be used as
+There's only one operating system worth using - GNU/Linux.  It comes in many
+shapes and flavours, people call them distributions (distros).  [[https://www.gnu.org/distros/free-distros.en.html][Only a small
+minority is endorsed by the FSF]].  Beginners should consider using PureOS.  On the
+non-free side, consider Ubuntu.  More advanced users might be interested in GNU
+Guix (or NixOS, the non-free counterpart).  Guix and Nix can also be used as
 package managers.
 
 GNU Guix supports a declarative system configuration, which suits the aim of
 this project.
 
-Packages from Nix might be used if the package isn't available in Guix. Users
+Packages from Nix might be used if the package isn't available in Guix.  Users
 should consider defining their our packages if they're missing.
 
 * Window Managers and Desktop Environments
@@ -148,14 +153,14 @@ that distinctively changes the user's productivity is the way he manages
 windows.
 
 There are full-blown desktop environments like GNOME that take lots of
-resources. Although they're user-friendly, tilling window managers (think how
+resources.  Although they're user-friendly, tilling window managers (think how
 Emacs handles windows) are more interesting options.
 
 # I shall be using StumpWM since it claims to be "The Emacs of window managers".
 # Indeed, the keybindings resemble Emacs and it is implemented in Common Lisp.
 
 * Sidenote on GNU
-GNU Emacs is all about freedom. When you work in it, you feel it was designed by
+GNU Emacs is all about freedom.  When you work in it, you feel it was designed by
 people who want the same you want - reliable tools, no bullshit added.
 
 It is quite helpful if you get acquainted with [[https://en.wikipedia.org/wiki/GNU_Project][GNU]], [[https://en.wikipedia.org/wiki/Free_Software_Foundation][Free Software Foundation
@@ -168,15 +173,18 @@ I wish students weren't being taught proprietary software.
 
 I wish companies and their engineers to have ethics.
 
-The road to freedom is hard. I'm consciously and proactively fighting years of
+The road to freedom is hard.  I'm consciously and proactively fighting years of
 bad education.
 
-*Free thought, free world.*
+*Free Thought, Free World.*
 
-Arguing that you don't care about the right to privacy because you have nothing
+/Arguing that you don't care about the right to privacy because you have nothing
 to hide is no different from saying you don't care about free speech because you
-have nothing to say.
-- Edward Snowden
+have nothing to say./ (*Edward Snowden*)
 
-* Appearance
-[[file:desktop.png]]
+* Dotfiles I follow
+https://github.com/daviwil/dotfiles
+https://gitlab.com/protesilaos/dotfiles
+https://gitlab.com/ambrevar/dotfiles
+https://git.sr.ht/~w96k/dotfiles
+https://github.com/oantolin/emacs-config
