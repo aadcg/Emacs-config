@@ -75,7 +75,7 @@
        :config
        (run-at-time (nth (if (string= theme "operandi") 1 4)
                          (split-string (sunrise-sunset)))
-                    nil
+                    (* 60 60 24)
                     (lambda () (my-load-theme 'modus-%1$s))))
      theme))
 #+end_src
@@ -286,13 +286,9 @@ Add binds only to python-mode-map
     :defer t
     :init
     (advice-add 'python-mode :before 'elpy-enable)
-    :config
-    (setq elpy-rpc-python-command "python3"
-          python-shell-interpreter "python3"
-          ;; python-shell-interpreter "ipython"
-          ;; elpy-rpc-virtualenv-path 'current
-          ;; pyvenv-mode-line-indicator nil
-          )
+    :custom
+    (python-shell-interpreter "ipython")
+    (python-shell-interpreter-args "-i --simple-prompt")
     ;; :bind
     ;; ("C-c p" . elpy-autopep8-fix-code)
     ;; ("C-c b" . elpy-black-fix-code)
@@ -606,7 +602,7 @@ in python source code blocks.
    '((emacs-lisp . t)
      (scheme     . t)
      (python     . t)
-     ;; (ipython    . t)
+     (ipython    . t)
      (haskell    . t)
      ;; (go         . t)
      (latex      . t)
@@ -970,6 +966,11 @@ Requires mpv.
     (require 'emms-setup)
     (emms-standard)
     (emms-default-players)
+
+    (defun my-emms-play-url-at-point ()
+      "Same as `emms-play-url' but with url at point."
+      (interactive)
+      (emms-play-url (url-get-url-at-point)))
     :bind
     ("<XF86AudioPlay>" . emms-pause)
     ("<XF86AudioNext>" . emms-next)
@@ -999,10 +1000,10 @@ Requires mpv.
       (ispell-change-dictionary dict)))
 
   (add-hook 'input-method-activate-hook
-            (lambda () (change-to-dict "ru")))
+            (lambda () (my-change-to-dict "ru")))
 
   (add-hook 'input-method-deactivate-hook
-            (lambda () (change-to-dict "en")))
+            (lambda () (my-change-to-dict "en")))
 #+end_src
 
 *** Calendar
@@ -1098,9 +1099,9 @@ Requires mpv.
           holiday-local-holidays
           '(;; Porto, PT
             (holiday-fixed 6 24 "Dia de São João")
-            ;; Санкт-петербург, Россия
-            (holiday-fixed 1 27 "День снятия блокады")
-            (holiday-fixed 5 27 "День города")))
+            ;; Санкт-Петербург, Россия
+            (holiday-fixed 1 27 "День Снятия Блокады")
+            (holiday-fixed 5 27 "День Города")))
 #+end_src
 
 ** Man
@@ -1111,15 +1112,26 @@ Requires mpv.
 ** Browser (eww)
 #+begin_src emacs-lisp
   (use-package shr
-    :config
-    (setq browse-url-browser-function 'eww-browse-url
-          shr-use-fonts nil
-          shr-use-colors nil
-          shr-max-image-proportion 0.7
-          shr-width (current-fill-column))
-    (setq eww-suggest-uris '(eww-links-at-point
-                             thing-at-point-url-at-point
-                             word-at-point))) ; removed eww-current-url
+    :custom
+    (shr-use-fonts nil)
+    (shr-use-colors nil)
+    (shr-max-image-proportion 0.7)
+    (shr-width (current-fill-column)))
+
+  (use-package eww
+    ;; :config
+    ;; (setq eww-suggest-uris '(eww-links-at-point
+    ;;                          thing-at-point-url-at-point
+    ;;                          word-at-point)) ; removed eww-current-url
+    :custom
+    (eww-suggest-uris '(eww-links-at-point
+                        thing-at-point-url-at-point
+                        word-at-point)))
+
+  (use-package browse-url
+    :custom
+    (browse-url-browser-function '(("youtube" . browse-url-firefox)
+                                   (".*" . eww-browse-url))))
 #+end_src
 
 ** Telegram
