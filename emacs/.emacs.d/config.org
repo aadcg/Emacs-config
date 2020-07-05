@@ -1289,3 +1289,4 @@ Visit and reload this config
 
 * Ideas
 - write use-package extension that ensures guix emacs packages
+- [[https://guix.gnu.org/blog/2018/guix-on-android/][try guix on android]]
