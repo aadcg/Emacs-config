@@ -1218,9 +1218,10 @@ Requires mpv.
 ** Screencast utilities
  #+begin_src emacs-lisp
    (use-package gif-screencast
-     :config (setq gif-screencast-program "grim"
-                   gif-screencast-args nil
-                   )
+     :config
+     (when (getenv "WAYLAND_DISPLAY")
+       (setq gif-screencast-program "grim"
+             gif-screencast-args nil))
      :bind ("<f9>" . gif-screencast-start-or-stop))
 
    (use-package keycast
