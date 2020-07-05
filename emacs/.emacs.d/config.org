@@ -594,6 +594,7 @@ in python source code blocks.
 #+begin_src emacs-lisp
   (setq org-src-fontify-natively t
         org-src-tab-acts-natively t
+        org-edit-src-persistent-message nil
         org-src-window-setup 'current-window
         org-confirm-babel-evaluate nil)
 
