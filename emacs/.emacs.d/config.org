@@ -837,20 +837,20 @@ in python source code blocks.
     :when window-system
     :custom (pdf-view-midnight-colors '("#ffffff" . "#000000"))
     :config
-    (setq image-scaling-factor 1) ; Emacs 27 needs this
+    ;; (setq image-scaling-factor 1) ; Emacs 27 needs this
     ;; this is a hack so that I can use docview links in org-mode
     (defalias 'doc-view-goto-page 'pdf-view-goto-page)
     :mode ("\\.pdf\\'" . pdf-view-mode)
     :hook
     ((pdf-view-mode-hook . pdf-view-fit-height-to-window)
      (pdf-view-mode-hook . pdf-links-minor-mode)
+     (pdf-view-mode-hook . pdf-annot-minor-mode)
+     (pdf-view-mode-hook . pdf-view-auto-slice-minor-mode)
      (pdf-view-mode-hook . (lambda ()
                              (when (eq
                                     (frame-parameter nil 'background-mode)
                                     'dark)
-                               (pdf-view-midnight-minor-mode))))
-     ;; (pdf-view-mode-hook . pdf-view-auto-slice-minor-mode)
-     ))
+                               (pdf-view-midnight-minor-mode))))))
 #+end_src
 
 ** Expand region
