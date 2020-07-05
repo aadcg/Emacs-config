@@ -384,8 +384,9 @@ Add binds only to python-mode-map
 
   (use-package package-lint-flymake
     :after flymake
+    :hook (emacs-lisp-mode-hook . package-lint-flymake-setup)
     :config
-    (package-lint-flymake-setup))
+    (remove-hook 'flymake-diagnostic-functions 'flymake-proc-legacy-flymake))
 
   (define-key lisp-mode-shared-map (kbd "RET")
     'reindent-then-newline-and-indent)
