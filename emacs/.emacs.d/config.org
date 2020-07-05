@@ -334,6 +334,7 @@ Add binds only to python-mode-map
 #+end_src
 
 **** Eshell
+[[https://emacs.stackexchange.com/questions/27849/how-can-i-setup-eshell-to-use-ivy-for-tab-completion][ivy in eshell]]
 #+begin_src emacs-lisp
   (use-package eshell
     :custom
@@ -346,15 +347,14 @@ Add binds only to python-mode-map
     (add-to-list 'eshell-modules-list 'eshell-tramp)
     :hook
     (eshell-mode-hook . (lambda () (company-mode -1)))
-    ;; :bind (:map eshell-mode-map
-    ;;             ("<M-tab>" . completion-at-point))
-    :bind ([remap shell-command] . eshell-command))
+    (eshell-mode-hook . (lambda ()
+                          (define-key eshell-mode-map (kbd "<tab>")
+        (lambda () (interactive) (completion-at-point))))))
 
-  (add-hook 'eshell-mode-hook
-    (lambda ()
-      (define-key eshell-mode-map (kbd "<M-tab>") nil)
-      (define-key eshell-mode-map (kbd "<M-tab>")
-        (lambda () (interactive) (completion-at-point)))))
+  ;; (add-hook 'eshell-mode-hook
+  ;; (lambda ()
+  ;;   (define-key eshell-mode-map (kbd "<tab>")
+  ;;     (lambda () (interactive) (completion-at-point)))))
 
   (use-package em-term
     :config
