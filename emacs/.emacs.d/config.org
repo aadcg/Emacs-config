@@ -69,6 +69,7 @@
      (use-package modus-%1$s-theme
        :custom
        (modus-%1$s-theme-3d-modeline t)
+       (modus-%1$s-theme-faint-syntax nil)
        (modus-%1$s-theme-distinct-org-blocks t)
        (modus-%1$s-theme-section-headings nil)
        (modus-%1$s-theme-scale-headings t)
