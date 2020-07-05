@@ -772,14 +772,17 @@ in python source code blocks.
 
 ** Look and Feel
 #+begin_src emacs-lisp
-  (use-package org-bullets
+  (use-package org-superstar
     :after org
-    :custom (org-bullets-bullet-list '("§"))
-    :hook (org-mode-hook . org-bullets-mode))
+    :custom
+    (org-superstar-headline-bullets-list '("§"))
+    :hook (org-mode-hook . org-superstar-mode))
 #+end_src
 
 * Emacs OS - The Kitchen Sink
 ** Guix
+[[https://hpc.guix.info/browse][searching for Guix packages on the web]]
+
 #+begin_src emacs-lisp
   (use-package guix
     :bind ("s-g" . guix))
