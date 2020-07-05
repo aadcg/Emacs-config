@@ -1193,7 +1193,7 @@ Requires mpv.
     (save-excursion
       (goto-char (message-goto-body))
       (when (re-search-forward "attach")
-          (message "Did you forgot to attach something?"))))
+        (message "Did you forget to attach something?"))))
 #+end_src
 
 ** Weather
