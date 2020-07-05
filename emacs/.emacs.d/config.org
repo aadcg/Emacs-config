@@ -88,7 +88,7 @@ I love Fira Code but it lacks italics. Hack might be a good alternative.
   (defun my-auto-size-font (n)
     "Set the font size such that n buffers of 80 chars fit side by side."
     (interactive "nHow many 80 chars buffers should fit side by side? ")
-    (let ((size 8.0))
+    (let ((size 1.0))
       (set-frame-font (concat "Fira Code-" (number-to-string size)) nil t)
       (while (>= (save-window-excursion
                   (delete-other-windows)
