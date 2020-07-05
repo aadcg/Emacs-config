@@ -1199,10 +1199,10 @@ Requires mpv.
 ** Weather
 #+begin_src emacs-lisp
   (use-package wttrin
-    :config
-    (setq wttrin-default-cities '("Saint Petersburg"
-                                  "Porto"
-                                  "Oliveira de Azeméis")))
+    :custom
+    (wttrin-default-cities '("Saint Petersburg"
+                             "Porto"
+                             "Oliveira de Azeméis")))
 #+end_src
 
 ** Screencast utilities
