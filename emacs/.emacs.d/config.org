@@ -749,7 +749,7 @@ in python source code blocks.
       (hide-mode-line-mode)
       (global-diff-hl-mode 0)
       (setq global-hl-line-mode nil)
-      (auto-size-font 1))
+      (my-auto-size-font 1))
 
     (defun my-non-presenting ()
       "Non-presenting mode"
@@ -757,7 +757,7 @@ in python source code blocks.
       (setq hide-mode-line-mode t)
       (global-diff-hl-mode)
       (global-hl-line-mode)
-      (auto-size-font 2))
+      (my-auto-size-font 2))
 
     :hook
     ((org-tree-slide-play-hook . my-presenting)
