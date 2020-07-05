@@ -863,27 +863,33 @@ in python source code blocks.
 [[info:ivy#Top][Documentation]]
 
 #+begin_src emacs-lisp
-  (use-package counsel
-    :init
-    (ivy-mode 1)
-    (counsel-mode)
+  (use-package ivy
     :config
+    (ivy-mode 1)
     (setq ivy-count-format "%d/%d "
-          ivy-wrap t
+          ;; ivy-wrap t
           ivy-extra-directories nil
-          ivy-initial-inputs-alist nil
+          ;; ivy-initial-inputs-alist nil
           ivy-use-virtual-buffers t
-          ivy-read-action-function 'ivy-read-action-ivy
+          ;; ivy-read-action-function 'ivy-read-action-ivy
           ;; ivy-height-alist '((t lambda (_caller) (/ (window-height) 3)))
           )
     (add-to-list 'ivy-format-functions-alist '(t . ivy-format-function-arrow))
     :bind
-    ("C-s" . swiper)
-    ("C-x B" . ivy-switch-buffer-other-window)
-    ;; ("C-x 8" . counsel-unicode-char)
-    )
+    ("C-x B" . ivy-switch-buffer-other-window))
 
-  (use-package smex)
+  (use-package counsel
+    :config
+    (counsel-mode)
+    :bind
+    ("C-x 8" . counsel-unicode-char))
+
+  (use-package swiper
+    :bind
+    ("C-s" . swiper))
+
+  (use-package smex
+    :custom (smex-save-file (concat user-emacs-directory ".smex")))
 
   (use-package ivy-posframe
     :after ivy
