@@ -306,6 +306,11 @@ Add binds only to python-mode-map
 
   (add-hook 'python-mode-hook
             (setq-default electric-indent-inhibit t))
+
+  (use-package python
+    :bind (:map inferior-python-mode-map
+            ("M-p" . comint-previous-matching-input-from-input)
+            ("M-n" . comint-next-matching-input-from-input)))
 #+end_src
 
 *** Haskell
