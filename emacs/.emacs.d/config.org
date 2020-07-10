@@ -879,9 +879,8 @@ in python source code blocks.
     :config
     (ivy-mode 1)
     (setq ivy-count-format "%d/%d "
-          ;; ivy-wrap t
           ivy-extra-directories nil
-          ;; ivy-initial-inputs-alist nil
+          ivy-initial-inputs-alist nil
           ivy-use-virtual-buffers t
           ;; ivy-read-action-function 'ivy-read-action-ivy
           ;; ivy-height-alist '((t lambda (_caller) (/ (window-height) 3)))
