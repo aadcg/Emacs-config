@@ -1154,19 +1154,22 @@ Requires mpv.
 #+begin_src emacs-lisp
   (use-package telega
     :unless in-termux-p
-    :config
-    (setq telega-chat-fill-column 70)
-    ;; (telega-mode-line-mode 1)
+    :custom (telega-chat-fill-column 70)
     :bind ("s-t" . telega))
 
   ;; number of unread messages
   ;; (plist-get telega--unread-message-count :unread_unmuted_count)
 
   (use-package emojify
+    :custom (emojify-company-tooltips-p t)
     :hook
-    (telega-load-hook . emojify-mode)
+    (telega-chat-mode-hook . emojify-mode)
     ;; (emojify-mode-line-mode)
     )
+
+  (use-package company-emoji
+    :config
+    (add-to-list 'company-backends 'company-emoji))
 #+end_src
 
 ** Email (gnus)
