@@ -1255,19 +1255,27 @@ Visit and reload this config
 
 #+begin_src emacs-lisp
   (defun my-openru-search (word)
-    "Search using https://en.openrussian.org"
+    "Search for WORD using https://en.openrussian.org."
     (interactive "MЧто для Вас сударь? ")
     (let ((url "https://en.openrussian.org/ru/"))
       (eww (concat url word))
-      (forward-line 27)))
+      (sleep-for 1)
+      (my-openru-focus)))
 
   (defun my-openru-search-at-point ()
-    "Search using https://en.openrussian.org at point"
+    "Search using https://en.openrussian.org at point."
     (interactive)
     (let ((url "https://en.openrussian.org/ru/"))
       (eww (concat url (current-word)))
-      (set-buffer "*eww*")
-      (forward-line 20)))
+      (sleep-for 1)
+      (my-openru-focus)))
+
+  (defun my-openru-focus ()
+    "Move the cursor to the relevant content of https://en.openrussian.org."
+    (progn
+      (forward-paragraph 5)
+      (forward-line 1)
+      (recenter-top-bottom 2)))
 #+end_src
 
 * Startup
