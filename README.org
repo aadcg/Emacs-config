@@ -2,29 +2,26 @@
 #+AUTHOR: André Alexandre Gomes
 #+EMAIL: andremegafone@gmail.com
 
-# Amongst the decay of virtue lies a greater crime.
-# It’s not just us against them. It starts with I against I.
-# "I want to see the world go wild" - This routine is hell / Swain
-
-| OS             | [[https://guix.gnu.org/][GNU/Linux Guix]]    |
-| Text Editor    | [[https://www.gnu.org/software/emacs/][GNU Emacs 27.0.91]] |
-| Window manager | [[https://swaywm.org/][sway]]/[[https://www.gnome.org/][GNOME]]        |
-| Web Browser    | [[https://www.gnu.org/software/emacs/manual/html_node/eww/][eww]]/[[https://www.gnu.org/software/gnuzilla/][GNU icecat]]    |
-| Shell          | [[https://www.gnu.org/software/emacs/manual/html_mono/eshell.html][eshell]]            |
-| Media Player   | [[https://www.gnu.org/software/emms/][emms]]              |
-| Mail/News      | [[http://www.gnus.org/][gnus]]              |
-#+TBLFM: @2$2='(concat "GNU Emacs " (substring (emacs-version) 10 17))
+| OS             | [[https://guix.gnu.org/][GNU/Linux Guix]]   |
+| Text Editor    | [[https://www.gnu.org/software/emacs/][GNU Emacs 26.3]]   |
+| Window manager | [[https://swaywm.org/][sway ]]& [[https://www.gnome.org/][GNOME]]     |
+| Web Browser    | [[https://www.gnu.org/software/emacs/manual/html_node/eww/][eww]] & [[https://www.gnu.org/software/gnuzilla/][GNU icecat]] |
+| Shell          | [[https://www.gnu.org/software/emacs/manual/html_mono/eshell.html][eshell]]           |
+| Media Player   | [[https://www.gnu.org/software/emms/][emms]]             |
+| Mail/News      | [[http://www.gnus.org/][gnus]]             |
+#+TBLFM: @2$2='(substring (emacs-version) 0 15)
 # (org-table-recalculate-buffer-tables)
 
 * Motivation
-Free software grants its users the 4 freedoms to run, study,
-redistribute and improve programs.  As a result, these programs are
-usually extensible and flexible and those configurations can be saved as
-text files.  The user wants to keep all these files so that his
-environment, i.e. the behaviour of his operating system, is easily
-reproducible.  That's what the scope of this project.
+Free software grants users the 4 freedoms to run, study, redistribute
+and improve programs.  As a result, these programs are usually
+extensible and flexible and those configurations can be saved as text
+files.  They're usually hidden files, thus prepended by a dot, hence the
+set of these files is usually called *dotfiles*.  Users want to keep
+them so that their computing environment is easily reproducible on a new
+machine.  That's the scope of this project.
 
-* How did I get here?
+* My personal revolution
 I assume you're motivated to use Emacs.  If you're not, let [[https://www.youtube.com/watch?v=EsAkPl3On3E][Protesilaos
 Stravrou convince you]].
 
@@ -171,7 +168,7 @@ proportion.
 
 I wish students weren't being taught proprietary software.
 
-I wish companies and their engineers to have ethics.
+I wish companies had ethics.
 
 The road to freedom is hard.  I'm consciously and proactively fighting years of
 bad education.
@@ -184,9 +181,12 @@ to hide is no different from saying you don't care about free speech because you
 have nothing to say. (Edward Snowden)
 #+end_quote
 
-* Dotfiles I follow
+* Hardware
+- [[https://www.waveshare.com/eink-disp-103.htm?sku=17660][eink]]
+
+* dotfiles I follow
 - [[https://github.com/daviwil/dotfiles][David Wilson]]
-- [[https://gitlab.com/protesilaos/dotfiles][Protesilaos Stravrou]]
-- [[https://gitlab.com/ambrevar/dotfiles][Pierre Neidhardt]]
 - [[https://git.sr.ht/~w96k/dotfiles][Mikhail Kirillov]]
 - [[https://github.com/oantolin/emacs-config][Omar Antolín Camarena]]
+- [[https://gitlab.com/ambrevar/dotfiles][Pierre Neidhardt]]
+- [[https://gitlab.com/protesilaos/dotfiles][Protesilaos Stravrou]]
