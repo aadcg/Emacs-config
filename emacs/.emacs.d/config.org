@@ -687,11 +687,6 @@ in python source code blocks.
     :defer t
     :hook (org-mode-hook . org-cdlatex-mode))
 
-  ;; (use-package org-pdftools
-  ;;   :when window-system
-  ;;   :defer t
-  ;;   :hook (org-load-hook . org-pdftools-setup-link))
-
   (defun my-org-checkbox-next ()
     "Mark checkboxes and sort."
     (interactive)
@@ -994,6 +989,7 @@ Requires mpv.
       "Same as `emms-play-url' but with url at point."
       (interactive)
       (emms-play-url (url-get-url-at-point)))
+
     :bind
     ("<XF86AudioPlay>" . emms-pause)
     ("<XF86AudioNext>" . emms-next)
