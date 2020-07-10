@@ -857,6 +857,14 @@ in python source code blocks.
                                (pdf-view-midnight-minor-mode))))))
 #+end_src
 
+** epub
+#+begin_src emacs-lisp
+  (use-package nov
+    :custom
+    (nov-text-width 80)
+    :mode ("\\.epub\\'" . nov-mode))
+#+end_src
+
 ** Expand region
 #+begin_src emacs-lisp
   (use-package expand-region
