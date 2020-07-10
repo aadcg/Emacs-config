@@ -473,13 +473,13 @@ Requires gocode for the autocomplete to work.
 ** Misc
 *** Projectile
 #+begin_src emacs-lisp
-  ;; (use-package projectile
-  ;;   :init
-  ;;   (projectile-mode 1)
-  ;;   :config
-  ;;   (setq projectile-completion-system 'ivy)
-  ;;   :bind-keymap
-  ;;   ("C-c p" . projectile-command-map))
+  (use-package projectile
+    :init
+    (projectile-mode 1)
+    :config
+    (setq projectile-completion-system 'ivy)
+    :bind-keymap
+    ("C-c p" . projectile-command-map))
 #+end_src
 
 *** Colorful delimiters
