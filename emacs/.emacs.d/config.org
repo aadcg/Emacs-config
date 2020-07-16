@@ -977,11 +977,10 @@ in python source code blocks.
 ** Google Translate
 #+begin_src emacs-lisp
   (use-package google-translate
-    :defer t
-    :config
-    (setq google-translate-default-source-language "auto"
-          google-translate-default-target-language "en"
-          google-translate-backend-method 'emacs)
+    :custom
+    (google-translate-default-source-language "auto")
+    (google-translate-default-target-language "en")
+    (google-translate-backend-method 'emacs)
     (require 'google-translate-default-ui)
     :bind
     ("C-c t" . google-translate-at-point)
