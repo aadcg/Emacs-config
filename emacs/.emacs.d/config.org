@@ -783,6 +783,17 @@ in python source code blocks.
     :bind ("s-g" . guix))
 
   (use-package pretty-sha-path)
+
+  (defun guix-or-nix-p ()
+    "Return t if the nix package manager is available."
+    (or (not (null (shell-command-to-string "which guix")))
+        (not (null (shell-command-to-string "which nix")))))
+
+#+end_src
+
+** COMMENT Nix
+#+begin_src emacs-lisp
+
 #+end_src
 
 ** Ibuffer
