@@ -882,26 +882,28 @@ in python source code blocks.
 
 #+begin_src emacs-lisp
   (use-package ivy
+    :custom
+    (ivy-count-format "%d/%d ")
+    (ivy-extra-directories nil)
+    (ivy-initial-inputs-alist nil)
+    (ivy-use-virtual-buffers t)
+    ;; (ivy-read-action-function 'ivy-read-action-ivy)
+    ;; (ivy-height-alist '((t lambda (_caller) (/ (window-height) 3))))
     :config
     (ivy-mode 1)
-    (setq ivy-count-format "%d/%d "
-          ivy-extra-directories nil
-          ivy-initial-inputs-alist nil
-          ivy-use-virtual-buffers t
-          ;; ivy-read-action-function 'ivy-read-action-ivy
-          ;; ivy-height-alist '((t lambda (_caller) (/ (window-height) 3)))
-          )
     (add-to-list 'ivy-format-functions-alist '(t . ivy-format-function-arrow))
     :bind
     ("C-x B" . ivy-switch-buffer-other-window))
 
   (use-package counsel
+    :after ivy
     :config
     (counsel-mode)
     :bind
     ("C-x 8" . counsel-unicode-char))
 
   (use-package swiper
+    :after ivy
     :bind
     ("C-s" . swiper))
 
