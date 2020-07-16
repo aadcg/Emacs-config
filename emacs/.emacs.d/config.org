@@ -1284,8 +1284,8 @@ Visit and reload this config
     "Search using https://en.openrussian.org at point."
     (interactive)
     (let ((url "https://en.openrussian.org/ru/"))
-      (eww (concat url (current-word)))
-      (sleep-for 1)
+      (eww (concat url (or (my-get-root-ru-word) (current-word))))
+      (sleep-for 2)
       (my-openru-focus)))
 
   (defun my-openru-focus ()
@@ -1294,6 +1294,28 @@ Visit and reload this config
       (forward-paragraph 5)
       (forward-line 1)
       (recenter-top-bottom 2)))
+
+  (defun my-ispell-output ()
+    "Output as string the evaluation of ispell."
+    (let ((ispell-check-only t)
+          (inhibit-message t))
+      (my-change-to-dict "ru")
+      (ispell-word)
+      ;; hacky and prone to error. ideas?
+      (save-excursion
+        (set-buffer "*Messages*")
+        (goto-char (- (point-max) 1))
+        (buffer-substring-no-properties
+         (point)
+         (move-beginning-of-line 1)))))
+
+  (defun my-get-root-ru-word ()
+    "Return russian word at point or its root."
+    (let* ((spelling-sentence (s-split-words (my-ispell-output)))
+           (len (length spelling-sentence)))
+      (if (> len 3)
+          (nth (1- len) spelling-sentence)
+        (nth 0 spelling-sentence))))
 #+end_src
 
 * Startup
