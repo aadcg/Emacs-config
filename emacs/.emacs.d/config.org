@@ -230,8 +230,6 @@ C-x C-z - same as above
   ;;  ("M-p" . previous-error)
   ;;  ("M-n" . next-error)
   ;;  ([remap apropos-command] . apropos)
-  ;;  ;; The Chromebook has a pretty reload key!
-  ;;  ("<XF86Reload>" . revert-buffer))
 #+end_src
 
 ** Modeline
