@@ -313,7 +313,7 @@ Add binds only to python-mode-map
 
 *** Haskell
 #+begin_src emacs-lisp
-  ;; (use-package haskell-mode)
+  (use-package haskell-mode)
 
   ;; (add-hook 'haskell-mode-hook
   ;;           (lambda ()
