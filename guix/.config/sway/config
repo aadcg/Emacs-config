@@ -21,9 +21,9 @@ output * bg ~/dotfiles/wallpaper.jpg fill
 
 # Monitors
 output eDP-1 scale 1
-set $laptop eDP-1
-bindswitch --reload lid:on output $laptop disable
-bindswitch --reload lid:off output $laptop enable
+# set $laptop eDP-1
+# bindswitch --reload lid:on output $laptop disable
+# bindswitch --reload lid:off output $laptop enable
 
 # Idle configuration
 
@@ -124,7 +124,6 @@ bindsym --to-code $mod+o workspace back_and_forth
 # Switch to workspace
 bindsym --to-code Control+i workspace GNU Emacs
 bindsym --to-code $mod+w workspace Browser
-# bindsym --to-code $mod+c workspace Terminal
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
 bindsym $mod+3 workspace 3
@@ -138,7 +137,6 @@ bindsym $mod+9 workspace 9
 # Move focused container to workspace
 bindsym --to-code Control+Shift+i move container to workspace GNU Emacs
 bindsym --to-code $mod+Shift+w move container to workspace Browser
-# bindsym --to-code $mod+Shift+c move container to workspace Terminal
 bindsym $mod+Shift+1 move container to workspace 1
 bindsym $mod+Shift+2 move container to workspace 2
 bindsym $mod+Shift+3 move container to workspace 3
