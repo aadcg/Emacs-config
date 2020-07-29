@@ -302,13 +302,6 @@ Add binds only to python-mode-map
   ;;                               (require 'sphinx-doc)
   ;;                               (sphinx-doc-mode t)))
 
-  (add-hook 'python-mode-hook
-            (setq-default electric-indent-inhibit t))
-
-  (use-package python
-    :bind (:map inferior-python-mode-map
-            ("M-p" . comint-previous-matching-input-from-input)
-            ("M-n" . comint-next-matching-input-from-input)))
 #+end_src
 
 *** Haskell
@@ -324,11 +317,7 @@ Add binds only to python-mode-map
 *** Bash
 **** Shell
 #+begin_src emacs-lisp
-  (use-package shell
-    :bind (:map shell-mode-map
-          ("M-p" . comint-previous-matching-input-from-input)
-          ("M-n" . comint-next-matching-input-from-input)
-          ("SPC" . comint-magic-space)))
+  (use-package shell)
 #+end_src
 
 **** Eshell
@@ -521,6 +510,15 @@ in python source code blocks.
   ;;         show-paren-when-point-in-periphery t
   ;;         )
   ;;   :hook (after-init-hook . show-paren-mode))
+#+end_src
+
+*** Comint
+#+begin_src emacs-lisp
+  (use-package comint
+      :bind (:map comint-mode-map
+                  ("M-p" . comint-previous-matching-input-from-input)
+                  ("M-n" . comint-next-matching-input-from-input)
+                  ("SPC" . comint-magic-space)))
 #+end_src
 
 * Org
