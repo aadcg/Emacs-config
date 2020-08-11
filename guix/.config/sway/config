@@ -1,5 +1,4 @@
 # (man "sway(5)")
-# https://github.com/swaywm/sway/wiki
 
 # Variables
 
@@ -11,7 +10,7 @@ set $background #ffffff
 set $foreground #000000
 
 # (man "dmenu(1)")
-set $menu dmenu_path | dmenu -l 5 -p "$" -fn "Fira Code-18" -nb "$background" -nf "$foreground" | xargs swaymsg exec --
+set $menu dmenu_path | dmenu -fn "Hack-18" -nb "$background" -nf "$foreground" -sb "$foreground" -sf "$background"| xargs swaymsg exec --
 
 # Output
 # (man "sway-output(5)")
@@ -206,13 +205,13 @@ bindsym --to-code $mod+Shift+r mode "resize"
 
 bar {
     position top
-    font Fira Code 18
-    # font Hack 18
+    font Hack 18
     status_command i3status     # visit ~/.config/i3status/config
     colors {
         statusline $foreground
         background $background
-        inactive_workspace #32323200 #32323200 #5c5c5c
+        inactive_workspace $foreground $background $foreground
+        focused_workspace $foreground $foreground $background
     }
 }
 
@@ -222,6 +221,7 @@ assign [class="Firefox"] Browser
 assign [class="ownCloud"] 1
 
 default_border none
+default_floating_border none
 # for_window [class="Emacs"] opacity set 0.85
 
 # Startup
