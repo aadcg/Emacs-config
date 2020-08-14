@@ -683,6 +683,9 @@ in python source code blocks.
     :defer t
     :hook (org-mode-hook . org-cdlatex-mode))
 
+  (use-package org-fragtog
+    :hook (org-mode-hook . org-fragtog-mode))
+
   (defun my-org-checkbox-next ()
     "Mark checkboxes and sort."
     (interactive)
