@@ -1273,16 +1273,8 @@ Visit and reload this config
   adjective/noun is declinated ([[https://unix.stackexchange.com/questions/154098/copy-the-last-emacs-message-into-the-current-buffer][see]])
 
 #+begin_src emacs-lisp
-  (defun my-openru-search (word)
-    "Search for WORD using https://en.openrussian.org."
-    (interactive "MЧто для Вас сударь? ")
-    (let ((url "https://en.openrussian.org/ru/"))
-      (eww (concat url word))
-      (sleep-for 1)
-      (my-openru-focus)))
-
   (defun my-openru-search-at-point ()
-    "Search using https://en.openrussian.org at point."
+    "Search for WORD or root of word at point at https://en.openrussian.org."
     (interactive)
     (let ((url "https://en.openrussian.org/ru/"))
       (eww (concat url (or (my-get-root-ru-word) (current-word))))
@@ -1290,7 +1282,10 @@ Visit and reload this config
       (my-openru-focus)))
 
   (defun my-openru-focus ()
-    "Move the cursor to the relevant content of https://en.openrussian.org."
+    "Move the cursor to the relevant content of https://en.openrussian.org.
+
+  This avoids displaying unnecessary content that comes before the
+  word being searched for."
     (progn
       (forward-paragraph 5)
       (forward-line 1)
@@ -1312,11 +1307,11 @@ Visit and reload this config
 
   (defun my-get-root-ru-word ()
     "Return russian word at point or its root."
-    (let* ((spelling-sentence (s-split-words (my-ispell-output)))
-           (len (length spelling-sentence)))
+    (let* ((ispell-message (s-split-words (my-ispell-output)))
+           (len (length ispell-message)))
       (if (> len 3)
-          (nth (1- len) spelling-sentence)
-        (nth 0 spelling-sentence))))
+          (nth (1- len) ispell-message)
+        (nth 0 ispell-message))))
 #+end_src
 
 * Startup
