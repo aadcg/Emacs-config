@@ -1320,6 +1320,16 @@ Visit and reload this config
   (use-package server
     :hook
     (after-init-hook . (lambda () (unless (server-running-p) (server-start)))))
+
+  (defun my-turn-off-wifi-light ()
+    "Turn off annoying TP Link light"
+    (let ((led
+           (shell-command-to-string
+            "light -L | grep ath | tr -d [:space:]")))
+      (eshell-command (concat "sudo light -s " cmd " -S 0"))))
+
+  (my-turn-off-wifi-light)
+  ;; (org-agenda-list 1)
 #+end_src
 
 ** Desktop
