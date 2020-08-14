@@ -3,7 +3,7 @@
 #+EMAIL: andremegafone@gmail.com
 
 | OS             | [[https://guix.gnu.org/][GNU/Linux Guix]]   |
-| Text Editor    | [[https://www.gnu.org/software/emacs/][GNU Emacs 26.3]]   |
+| Text Editor    | [[https://www.gnu.org/software/emacs/][GNU Emacs 27.1]]   |
 | Window manager | [[https://swaywm.org/][sway ]]& [[https://www.gnome.org/][GNOME]]     |
 | Web Browser    | [[https://www.gnu.org/software/emacs/manual/html_node/eww/][eww]] & [[https://www.gnu.org/software/gnuzilla/][GNU icecat]] |
 | Shell          | [[https://www.gnu.org/software/emacs/manual/html_mono/eshell.html][eshell]]           |
