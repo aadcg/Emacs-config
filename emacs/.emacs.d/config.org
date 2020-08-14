@@ -1016,9 +1016,10 @@ Requires mpv.
   (load-file (concat yeis-dir "x-leim/robin-packages.el"))
   (load-file (concat yeis-dir "x-leim/x-leim-list.el"))
 
-  (setq default-input-method "robin-russian"
-        yeis-path-plain-word-list (concat yeis-dir "wordlist"))
-  (setq-default robin-current-package-name "robin-russian")
+  (setq-default default-input-method "robin-russian"
+                yeis-path-plain-word-list (concat yeis-dir "wordlist")
+                robin-current-package-name "robin-russian")
+
   (global-set-key (kbd "C-|") 'yeis-transform-previous-word)
   ;; (global-set-key (kbd "C-x C-\\") 'yeis-transform-previous-word)
 
