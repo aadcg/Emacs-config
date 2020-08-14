@@ -843,7 +843,8 @@ in python source code blocks.
     :when window-system
     :custom (pdf-view-midnight-colors '("#ffffff" . "#000000"))
     :config
-    ;; (setq image-scaling-factor 1) ; Emacs 27 needs this
+    (when (>= emacs-major-version 27)
+      (setq image-scaling-factor 1))
     ;; this is a hack so that I can use docview links in org-mode
     (defalias 'doc-view-goto-page 'pdf-view-goto-page)
     :mode ("\\.pdf\\'" . pdf-view-mode)
