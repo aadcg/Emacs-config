@@ -1169,6 +1169,7 @@ Requires mpv.
   (use-package telega
     :unless in-termux-p
     :custom (telega-chat-fill-column 70)
+    :config (telega-mode-line-mode)
     :bind ("s-t" . telega))
 
   ;; number of unread messages
@@ -1177,7 +1178,8 @@ Requires mpv.
   (use-package emojify
     :custom (emojify-company-tooltips-p t)
     :hook
-    (telega-chat-mode-hook . emojify-mode)
+    ((telega-chat-mode-hook . emojify-mode)
+     (telega-root-mode-hook . emojify-mode))
     ;; (emojify-mode-line-mode)
     )
 
