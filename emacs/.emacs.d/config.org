@@ -37,7 +37,7 @@
 *** Theme
 #+begin_src emacs-lisp
   (defun my-load-theme (theme)
-    "Loads theme and changes swaybar if needed."
+    "Loads THEME and changes swaybar if needed."
     (progn
       (mapc #'disable-theme custom-enabled-themes)
       (load-theme theme t)
@@ -82,7 +82,7 @@
 #+end_src
 
 *** Font
-I love Fira Code but it lacks italics. Hack might be a good alternative.
+I love Fira Code but it lacks italics.
 
 #+begin_src emacs-lisp
   (defun my-auto-size-font (n)
@@ -158,7 +158,7 @@ Backups and auto-save files at ~/.emacs/backups
         tramp-backup-directory-alist backup-directory-alist)
 #+end_src
 
-** Hist
+** History
 #+begin_src emacs-lisp
   (use-package savehist
     :custom
@@ -668,7 +668,7 @@ in python source code blocks.
 #+end_src
 
 ** Packages and Extensions
-[[https://orgmode.org/worg/org-contrib/org-drill.html][tutorial]]
+[[https://orgmode.org/worg/org-contrib/org-drill.html][org-drill documentation]]
 
 #+begin_src emacs-lisp
   (use-package org-drill
@@ -780,7 +780,7 @@ in python source code blocks.
 
   (use-package pretty-sha-path)
 
-  (defun guix-or-nix-p ()
+  (defun my-guix-or-nix-p ()
     "Return t if the nix package manager is available."
     (or (not (null (shell-command-to-string "which guix")))
         (not (null (shell-command-to-string "which nix")))))
@@ -893,6 +893,7 @@ in python source code blocks.
 
   (use-package counsel
     :after ivy
+    :custom (ivy-initial-inputs-alist nil)
     :config
     (counsel-mode)
     :bind
@@ -1036,7 +1037,9 @@ Requires mpv.
 *** Calendar
 #+begin_src emacs-lisp
   (use-package calendar
-    :config (setq calendar-week-start-day 1)
+    :custom
+    (calendar-week-start-day 1)
+    (calendar-date-string 'european)
     :hook (calendar-today-visible-hook . calendar-mark-today))
 #+end_src
 
@@ -1192,6 +1195,8 @@ Requires mpv.
 [[https://www.fsf.org/resources/webmail-systems][fsf advice]]
 [[https://github.com/kensanata/ggg#gmail-gnus-gpg-guide-gggg][how to encrypt]]
 
+TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
+
 #+begin_src emacs-lisp
   (use-package gnus
     :config
@@ -1206,9 +1211,9 @@ Requires mpv.
   (use-package sendmail
     :custom
     (mail-signature
-     "\n\n-- \nAndré Alexandre Gomes\n\"Free Thought, Free World\"")
+     "André Alexandre Gomes\n\"Free Thought, Free World\"")
     (message-signature
-     "\n\n-- \nAndré Alexandre Gomes\n\"Free Thought, Free World\""))
+     "André Alexandre Gomes\n\"Free Thought, Free World\""))
 
   ;; WIP
   (defun my-mail-missing-attachment-p ()
