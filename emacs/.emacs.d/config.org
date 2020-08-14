@@ -442,6 +442,8 @@ Requires gocode for the autocomplete to work.
     (global-diff-hl-mode)
     (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 
+  (use-package gitpatch)
+
   ;; (use-package gitignore-mode)
 #+end_src
 
