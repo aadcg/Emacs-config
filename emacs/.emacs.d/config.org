@@ -54,11 +54,13 @@
   (defun my-load-swaybar-theme ()
     "Change swaybar colors according to Emacs theme."
     (let ((inhibit-message t)
-          (bg (face-attribute 'default :background))
-          (fg (face-attribute 'default :foreground))
+          (bg (concat (face-attribute 'default :background) " "))
+          (fg (concat (face-attribute 'default :foreground) " "))
           (swaycmd "swaymsg bar bar-0 colors "))
       (eshell-command (concat swaycmd "statusline '" fg "'"))
-      (eshell-command (concat swaycmd "background '" bg "'"))))
+      (eshell-command (concat swaycmd "background '" bg "'"))
+      (eshell-command (concat swaycmd "inactive_workspace '" fg bg fg "'"))
+      (eshell-command (concat swaycmd "focused_workspace '" fg fg bg "'"))))
 
   (defmacro my-format-sexp (sexp &rest objects)
     "All credit to user b3n on Reddit."
