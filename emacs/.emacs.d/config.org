@@ -277,6 +277,15 @@ change this keybinding to C-m, C-i or M-j?
     :bind ("C-r" . avy-goto-word-1))
 #+end_src
 
+** Custom
+#+begin_src emacs-lisp
+  (use-package cus-edit
+    :config
+    (setq custom-file (concat user-emacs-directory ".emacs-custom.el"))
+    :hook
+    (after-init-hook . (lambda () (load-file custom-file))))
+#+end_src
+
 * Programming
 ** Languages
 *** Python
@@ -579,6 +588,9 @@ in python source code blocks.
                ("exer" . "exercise")
                ("prop" . "proposition")
                ("el"   . "src emacs-lisp"))))
+
+    (when in-termux-p
+      (setq org-file-apps (("\\.pdf\\'" . (lambda () (shell-command "termux-open"))))))
 
     :bind
     ("C-c a"     . org-agenda)
@@ -903,7 +915,7 @@ in python source code blocks.
     :after ivy
     :custom (ivy-initial-inputs-alist nil)
     :config
-    (counsel-mode)
+    (counsel-mode 1)
     :bind
     ("C-x 8" . counsel-unicode-char))
 
@@ -913,24 +925,26 @@ in python source code blocks.
     ("C-s" . swiper))
 
   (use-package smex
+    :after ivy
     :custom (smex-save-file (concat user-emacs-directory ".smex")))
 
   (use-package ivy-posframe
     :after ivy
+    :custom
+    (ivy-posframe-parameters
+     '((internal-border-width . 4)
+       (alpha . 10)))
+    (ivy-posframe-height-alist
+     '((swiper . 15)
+       (swiper-isearch . 15)
+       (t . 10)))
+    (ivy-posframe-display-functions-alist
+     '((complete-symbol . ivy-posframe-display-at-point)
+       (swiper . nil)
+       (swiper-isearch . nil)
+       (t . ivy-posframe-display-at-frame-center)))
+    (ivy-posframe-width nil)
     :config
-    (setq ivy-posframe-parameters
-          '((internal-border-width . 4)
-            (alpha . 10)))
-    (setq ivy-posframe-height-alist
-          '((swiper . 15)
-            (swiper-isearch . 15)
-            (t . 10)))
-    (setq ivy-posframe-display-functions-alist
-          '((complete-symbol . ivy-posframe-display-at-point)
-            (swiper . nil)
-            (swiper-isearch . nil)
-            (t . ivy-posframe-display-at-frame-center)))
-    (setq ivy-posframe-width nil)
     (ivy-posframe-mode 1))
 #+end_src
 
@@ -939,18 +953,27 @@ in python source code blocks.
 
 #+begin_src emacs-lisp
   (use-package company
+    :custom
+    (company-require-match nil)
+    (company-idle-delay 0.1)
+    (company-selection-wrap-around t)
     :config
     (global-company-mode 1)
-    (setq company-require-match nil
-          company-idle-delay 0.1
-          company-selection-wrap-around t)
-    (define-key company-active-map (kbd "RET") nil)
-    (define-key company-active-map (kbd "<return>") nil)
-    (define-key company-active-map (kbd "C-j") 'company-complete-selection)
-    (define-key company-active-map (kbd "<tab>")
-    'company-complete-common-or-cycle)
-    (define-key company-active-map (kbd "C-n") 'company-select-next)
-    (define-key company-active-map (kbd "C-p") 'company-select-previous))
+    :bind (:map company-active-map
+                ("C-j"      . company-complete-selection)
+                ("C-n"      . company-select-next)
+                ("C-p"      . company-select-previous)
+                ("<tab>"    . company-complete-common-or-cycle)
+                ("RET"      . nil)
+                ("<return>" . nil)))
+
+  ;; (define-key company-active-map (kbd "RET") nil)
+  ;; (define-key company-active-map (kbd "<return>") nil)
+  ;; (define-key company-active-map (kbd "C-j") 'company-complete-selection)
+  ;; (define-key company-active-map (kbd "<tab>")
+  ;; 'company-complete-common-or-cycle)
+  ;; (define-key company-active-map (kbd "C-n") 'company-select-next)
+  ;; (define-key company-active-map (kbd "C-p") 'company-select-previous)
 #+end_src
 
 ** Elmacro
@@ -1155,7 +1178,11 @@ Requires mpv.
     (shr-use-fonts nil)
     (shr-use-colors nil)
     (shr-max-image-proportion 0.7)
-    (shr-width (current-fill-column)))
+    (shr-width (current-fill-column))
+    :config
+    (when in-termux-p
+      (setq shr-external-browser
+            (lambda (url) (shell-command (concat "termux-open-url " url))))))
 
   (use-package eww
     ;; :config
@@ -1193,6 +1220,7 @@ Requires mpv.
     )
 
   (use-package company-emoji
+    :defer t
     :config
     (add-to-list 'company-backends 'company-emoji))
 #+end_src
@@ -1255,13 +1283,10 @@ TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
      :bind ("<f9>" . gif-screencast-start-or-stop))
 
    (use-package keycast
+     :custom
+     (keycast-separator-width 2)
      :config
-     (add-to-list 'keycast-substitute-alist '(self-insert-command nil nil))
-     (setq keycast-separator-width 2))
-
-   ;; this is useless, kind of similar to my-auto-size-font
-   ;; (use-package default-text-scale
-   ;;   :defer t)
+     (add-to-list 'keycast-substitute-alist '(self-insert-command nil nil)))
  #+end_src
 
 * My Kitchen Sink
@@ -1329,17 +1354,18 @@ Visit and reload this config
 ** Server
 #+begin_src emacs-lisp
   (use-package server
+    :config
+    (defun my-turn-off-wifi-light ()
+      "Turn off annoying TP Link light"
+      (interactive)
+      (let ((led (shell-command-to-string
+                  "light -L | grep ath | tr -d [:space:]")))
+        (eshell-command (concat "sudo light -s " led " -S 0"))))
     :hook
-    (after-init-hook . (lambda () (unless (server-running-p) (server-start)))))
+    ((after-init-hook . (lambda () (unless (server-running-p) (server-start))))
+     ;; (after-init-hook . my-turn-off-wifi-light)
+     ))
 
-  (defun my-turn-off-wifi-light ()
-    "Turn off annoying TP Link light"
-    (let ((led
-           (shell-command-to-string
-            "light -L | grep ath | tr -d [:space:]")))
-      (eshell-command (concat "sudo light -s " cmd " -S 0"))))
-
-  (my-turn-off-wifi-light)
   ;; (org-agenda-list 1)
 #+end_src
 
@@ -1350,7 +1376,7 @@ Visit and reload this config
   (use-package desktop
     :custom
     (desktop-auto-save-timeout 300)
-    (desktop-dirname "~/.emacs.d/")
+    (desktop-dirname user-emacs-directory)
     (desktop-files-not-to-save nil)
     (desktop-globals-to-clear nil)
     (desktop-restore-eager 3)
