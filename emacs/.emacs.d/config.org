@@ -590,7 +590,7 @@ in python source code blocks.
                ("el"   . "src emacs-lisp"))))
 
     (when in-termux-p
-      (setq org-file-apps (("\\.pdf\\'" . (lambda () (shell-command "termux-open"))))))
+      (add-to-list 'org-file-apps '("\\.pdf\\'" . "termux-open %s")))
 
     :bind
     ("C-c a"     . org-agenda)
