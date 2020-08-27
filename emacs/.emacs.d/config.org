@@ -1058,7 +1058,10 @@ Requires mpv.
   (defun my-change-to-dict (dict)
     "Change to the dictionary given by string DICT."
     (let ((inhibit-message t))
-      (ispell-change-dictionary dict)))
+      (ispell-change-dictionary
+       (cl-find (concat "^" dict)
+                (ispell-valid-dictionary-list)
+                :test #'string-match-p))))
 
   (add-hook 'input-method-activate-hook
             (lambda () (my-change-to-dict "ru")))
