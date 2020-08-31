@@ -10,12 +10,12 @@
 #+begin_src emacs-lisp
   (setq user-full-name "André Alexandre Gomes"
         user-mail-address "andremegafone@gmail.com"
-        calendar-latitude 41.16
-        calendar-longitude -8.63
-        calendar-location-name "Porto, Portugal"
-        ;; calendar-latitude 59.94
-        ;; calendar-longitude 30.31
-        ;; calendar-location-name "Санкт-Петербург, Россия"
+        ;; calendar-latitude 41.16
+        ;; calendar-longitude -8.63
+        ;; calendar-location-name "Porto, Portugal"
+        calendar-latitude 59.94
+        calendar-longitude 30.31
+        calendar-location-name "Санкт-Петербург, Россия"
         )
 #+end_src
 
