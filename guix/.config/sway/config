@@ -10,7 +10,7 @@ set $background #ffffff
 set $foreground #000000
 
 # (man "dmenu(1)")
-set $menu dmenu_path | dmenu -fn "Hack-18" -nb "$background" -nf "$foreground" -sb "$foreground" -sf "$background"| xargs swaymsg exec --
+set $menu dmenu_path | dmenu -fn "Hack-20" -nb "$background" -nf "$foreground" -sb "$foreground" -sf "$background"| xargs swaymsg exec --
 
 # Output
 # (man "sway-output(5)")
@@ -65,6 +65,12 @@ input type:touchpad {
   pointer_accel 0.7
 }
 
+# Habu mouse
+input 5426:9:Tempest_Habu_Mouse {
+  accel_profile adaptive
+  pointer_accel 0
+}
+
 # hide cursor after 1000ms
 seat * hide_cursor 1000
 
@@ -101,8 +107,8 @@ bindsym XF86AudioMute exec amixer -q sset Master toggle
 # bindsym XF86MonBrightnessDown exec sudo light set 100-
 # bindsym XF86MonBrightnessUp exec sudo light set +100
 
-bindsym XF86MonBrightnessDown exec emacsclient -e '(eshell-command "sudo light -U 10")'
-bindsym XF86MonBrightnessUp exec emacsclient -e '(eshell-command "sudo light -A 10")'
+bindsym XF86MonBrightnessDown exec emacsclient -e '(eshell-command "sudo light -U 5")'
+bindsym XF86MonBrightnessUp exec emacsclient -e '(eshell-command "sudo light -A 5")'
 
 # Lock
 bindsym $mod+Escape exec swaylock -f -c 000000
@@ -118,7 +124,7 @@ bindsym $mod+Shift+TAB focus prev
 # Workspaces
 
 workspace_auto_back_and_forth yes
-bindsym --to-code $mod+o workspace back_and_forth
+bindsym --to-code $mod+j workspace back_and_forth
 
 # Switch to workspace
 bindsym --to-code Control+i workspace GNU Emacs
@@ -157,7 +163,7 @@ bindsym --to-code $mod+v splitv
 # Switch the current container between different layout styles
 # bindsym $mod+s layout stacking
 # bindsym $mod+w layout tabbed
-# bindsym $mod+e layout toggle split
+bindsym --to-code $mod+e layout toggle split
 
 # Make the current focus fullscreen
 bindsym --to-code $mod+f fullscreen
@@ -205,7 +211,7 @@ bindsym --to-code $mod+Shift+r mode "resize"
 
 bar {
     position top
-    font Hack 18
+    font Hack 20
     status_command i3status     # visit ~/.config/i3status/config
     colors {
         statusline $foreground
@@ -220,9 +226,11 @@ assign [class="IceCat"] Browser
 assign [class="Firefox"] Browser
 assign [class="ownCloud"] 1
 
+# default_border pixel 1
 default_border none
-default_floating_border none
-# for_window [class="Emacs"] opacity set 0.85
+# for_window [class="Emacs"] border none
+# client.focused $foreground $background $foreground
+# client.unfocused $foreground $background $foreground
 
 # Startup
 exec emacs
