@@ -5,46 +5,48 @@ general {
         color_good = '#005e00'
         color_degraded = '#813e00'
         color_bad = '#a60000'
-        interval = 1
-        # separator = "  "
+        interval = 60
 }
 
-order += "volume mic"
+# order += "volume mic"
 order += "volume master"
 # order += "ipv6"
 order += "wireless _first_"
 order += "ethernet _first_"
 order += "battery all"
 # order += "disk /"
-# order += "load"
+order += "load"
 order += "memory"
 order += "tztime msk"
 order += "tztime local"
 
 volume master {
-        format = "♪: %volume"
-        format_muted = "♪: muted"
+        format = "♪ %volume"
+        format_muted = "♪ MUTE"
         device = "default"
         mixer = "Master"
         mixer_idx = 0
+        separator_block_width = 40
 }
 
-volume mic {
-        format = "MIC ♪: %volume"
-        format_muted = "MIC ♪: muted"
-        device = "default"
-        mixer = "Capture"
-        mixer_idx = 0
-}
+# volume mic {
+#         format = "MIC ♪: %volume"
+#         format_muted = "MIC ♪: muted"
+#         device = "default"
+#         mixer = "Capture"
+#         mixer_idx = 0
+# }
 
 wireless _first_ {
         format_up = "%quality %ip"
         format_down = ""
+        separator_block_width = 40
 }
 
 ethernet _first_ {
         format_up = "%speed %ip"
         format_down = ""
+        separator_block_width = 40
 }
 
 battery all {
@@ -59,26 +61,32 @@ battery all {
         low_threshold = 20
         last_full_capacity = true
         integer_battery_capacity = true
+        separator_block_width = 40
 }
 
 disk "/" {
         format = "%avail"
+        separator_block_width = 40
 }
 
 load {
         format = "%1min"
+        separator_block_width = 40
 }
 
 memory {
        format = "%used"
+       separator_block_width = 40
 }
 
 tztime local {
         format = "%a %d %b %R"
+        separator_block_width = 40
 }
 
 tztime msk {
         format = "MSK %R"
         timezone = "Europe/Moscow"
         hide_if_equals_localtime = true
+        separator_block_width = 40
 }
