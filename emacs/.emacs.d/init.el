@@ -31,7 +31,5 @@
 ;;   (setq auto-package-update-prompt-before-update t
 ;;         auto-package-update-interval 14))
 
-(setq custom-file (concat user-emacs-directory ".emacs-custom.el"))
-
 (setq vc-follow-symlinks t)
 (org-babel-load-file "~/dotfiles/emacs/.emacs.d/config.org")
