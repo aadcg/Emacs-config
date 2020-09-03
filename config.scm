@@ -1,10 +1,10 @@
 (use-modules (gnu))
-(use-service-modules desktop networking ssh xorg pm nix)
+(use-service-modules desktop networking ssh xorg pm nix docker)
 
 (operating-system
   (locale "en_US.utf8")
-  ;; (timezone "Europe/Moscow")
-  (timezone "Europe/Lisbon")
+  (timezone "Europe/Moscow")
+  ;; (timezone "Europe/Lisbon")
   (keyboard-layout
    (keyboard-layout
     "us,ru" "altgr-intl"
@@ -52,6 +52,7 @@
    (append
     (list
      (service gnome-desktop-service-type)
+     (service docker-service-type)
      (service openssh-service-type)
      (service tor-service-type)
      (service tlp-service-type)
