@@ -37,7 +37,7 @@
 *** Theme
 #+begin_src emacs-lisp
   (defun my-load-theme (theme)
-    "Loads THEME and changes swaybar if needed."
+    "Load THEME and change swaybar if needed."
     (progn
       (mapc #'disable-theme custom-enabled-themes)
       (load-theme theme t)
@@ -196,6 +196,7 @@ C-x C-z - same as above
   (global-set-key (kbd "C-x w") 'eww)
   (global-set-key (kbd "C-x f") 'browse-url-firefox)
   (global-set-key (kbd "S-SPC") 'cycle-spacing)
+  (global-set-key (kbd "s-o") 'other-window)
   (global-set-key (kbd "M-SPC") 'other-window)
   (global-set-key (kbd "C-c f") 'my-switch-to-agenda)
   (global-set-key (kbd "M-o")   'mode-line-other-buffer)
@@ -314,16 +315,23 @@ Add binds only to python-mode-map
   ;;                               (require 'sphinx-doc)
   ;;                               (sphinx-doc-mode t)))
 
+  ;; (add-hook 'python-mode-hook
+  ;;           (setq-default electric-indent-inhibit t))
 #+end_src
 
 *** Haskell
 #+begin_src emacs-lisp
-  (use-package haskell-mode)
+  (use-package haskell-mode
+    :hook
+    ((haskell-mode-hook . haskell-doc-mode)
+     (haskell-mode-hook . (lambda () turn-on-haskell-indent))
+     (haskell-mode-hook . interactive-haskell-mode))
+    :bind ("C-c C-c" . haskell-interactive-bring))
+#+end_src
 
-  ;; (add-hook 'haskell-mode-hook
-  ;;           (lambda ()
-  ;;             (haskell-doc-mode)
-  ;;             (turn-on-haskell-indent)))
+*** PARI/GP
+#+begin_src emacs-lisp
+  ;; (load-file "~/repos/pariemacs/pari.el")
 #+end_src
 
 *** Bash
@@ -337,9 +345,10 @@ Add binds only to python-mode-map
 #+begin_src emacs-lisp
   (use-package eshell
     :custom
-    ;; (pcomplete-cycle-completions nil)
-    ;; (eshell-history-file-name (expand-file-name "~/.bash_history"))
-    (eshell-history-size 1000)
+    ;; (eshell-history-file-name (or (expand-file-name "~/.bash_eternal_history")
+    ;;                               (expand-file-name "~/.bash_history")))
+    ;; is it possible to make it infinite?
+    (eshell-history-size 10000)
     (eshell-prefer-list-functions t)
     :init (require 'esh-module)
     :config
@@ -433,7 +442,8 @@ Requires gocode for the autocomplete to work.
     :config
     (setq TeX-auto-save t
           TeX-parse-self t)
-    (setq-default TeX-master nil))
+    (setq-default TeX-master nil)
+    :hook (latex-mode-hook . cdlatex-mode))
 #+end_src
 
 ** Version Control
@@ -461,6 +471,7 @@ Requires gocode for the autocomplete to work.
 *** Yaml
 #+begin_src emacs-lisp
   (use-package yaml-mode
+    :defer t
     :mode (("\\.yml\\'" . yaml-mode)
            ("\\.yaml\\'" . yaml-mode)))
 #+end_src
@@ -475,9 +486,9 @@ Requires gocode for the autocomplete to work.
 *** Projectile
 #+begin_src emacs-lisp
   (use-package projectile
-    :init
-    (projectile-mode 1)
+    :defer t
     :config
+    (projectile-mode 1)
     (setq projectile-completion-system 'ivy)
     :bind-keymap
     ("C-c p" . projectile-command-map))
@@ -511,6 +522,7 @@ in python source code blocks.
     :config
     (require 'smartparens-config)
     (sp-local-pair 'org-mode "$$" "$$")
+    (sp-local-pair 'org-mode "$" "$")
     (show-smartparens-global-mode)
     (smartparens-global-mode)
     :hook (prog-mode-hook . smartparens-strict-mode))
@@ -573,7 +585,7 @@ in python source code blocks.
     ;; (org-startup-indented t)
     (org-startup-with-inline-images t)
     (org-image-actual-width 500)
-    (org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
+    (org-format-latex-options (plist-put org-format-latex-options :scale 3))
     (org-preview-latex-image-directory "ltximg/")
 
     :config
@@ -804,7 +816,6 @@ in python source code blocks.
     "Return t if the nix package manager is available."
     (or (not (null (shell-command-to-string "which guix")))
         (not (null (shell-command-to-string "which nix")))))
-
 #+end_src
 
 ** COMMENT Nix
@@ -891,11 +902,14 @@ in python source code blocks.
 ** Expand region
 #+begin_src emacs-lisp
   (use-package expand-region
+    :defer t
     :bind ("C-=". 'er/expand-region))
 #+end_src
 
 ** Emacs completion
 [[info:ivy#Top][Documentation]]
+
+Amx is an alternative to smex.
 
 #+begin_src emacs-lisp
   (use-package ivy
@@ -986,6 +1000,7 @@ in python source code blocks.
 ** IRC (freenode)
 #+begin_src emacs-lisp
   (use-package erc
+    :defer t
     :config
     (defun my-freenode ()
       (interactive)
@@ -1009,7 +1024,7 @@ in python source code blocks.
     :custom
     (google-translate-default-source-language "auto")
     (google-translate-default-target-language "en")
-    (google-translate-backend-method 'emacs)
+    (google-translate-backend-method 'curl)
     (require 'google-translate-default-ui)
     :bind
     ("C-c t" . google-translate-at-point)
@@ -1072,7 +1087,7 @@ Requires mpv.
   (use-package calendar
     :custom
     (calendar-week-start-day 1)
-    (calendar-date-string 'european)
+    (calendar-date-style 'iso)
     :hook (calendar-today-visible-hook . calendar-mark-today))
 #+end_src
 
@@ -1186,10 +1201,6 @@ Requires mpv.
             (lambda (url) (shell-command (concat "termux-open-url " url))))))
 
   (use-package eww
-    ;; :config
-    ;; (setq eww-suggest-uris '(eww-links-at-point
-    ;;                          thing-at-point-url-at-point
-    ;;                          word-at-point)) ; removed eww-current-url
     :custom
     (eww-suggest-uris '(eww-links-at-point
                         thing-at-point-url-at-point
