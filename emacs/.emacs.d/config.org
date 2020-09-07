@@ -129,7 +129,7 @@ I love Fira Code but it lacks italics.
 
   (setq-default fill-column 72)
   (setq-default indent-tabs-mode nil)
-  (setq sentence-end-double-space nil)
+  ;; (setq sentence-end-double-space t)
   (when in-termux-p
     (global-visual-line-mode t))
 
@@ -1045,10 +1045,15 @@ Requires mpv.
 
 #+begin_src emacs-lisp
   (use-package emms
+    ;; :custom
+    ;; (emms-mode-line-format " %s ")
+    ;; (emms-mode-line-mode-line-function nil)
     :config
     (require 'emms-setup)
-    (emms-standard)
+    (emms-all)
     (emms-default-players)
+    (emms-mode-line 0)
+    (emms-playing-time-disable-display)
 
     (defun my-emms-play-url-at-point ()
       "Same as `emms-play-url' but with url at point."
@@ -1083,7 +1088,7 @@ Requires mpv.
     "Change to the dictionary given by string DICT."
     (let ((inhibit-message t))
       (ispell-change-dictionary
-       (cl-find (concat "^" dict)
+       (cl-find (or (concat "^" dict "$") (concat "^" dict))
                 (ispell-valid-dictionary-list)
                 :test #'string-match-p))))
 
@@ -1265,11 +1270,10 @@ TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
     :custom
     (gnus-inhibit-startup-message t)
     (gnus-interactive-exit 'quiet)
+    (gnus-always-read-dribble-file t)
     :hook
     (message-send-hook . ispell-message)
-    ;; (after-init-hook . gnus)
-    ;; (kill-emacs-hook . gnus-group-exit)
-    )
+    :bind ("C-c m" . gnus))
 
   (use-package sendmail
     :custom
@@ -1277,6 +1281,15 @@ TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
      "André Alexandre Gomes\n\"Free Thought, Free World\"")
     (message-signature
      "André Alexandre Gomes\n\"Free Thought, Free World\""))
+
+  (use-package smtpmail
+    :init
+    (setq smtpmail-default-smtp-server "smtp.gmail.com")
+    :custom
+    (smtpmail-smtp-server "smtp.gmail.com")
+    (smtpmail-smtp-service 587)
+    ;; (smtpmail-stream-type 'ssl)
+    (send-mail-function 'smtpmail-send-it))
 
   ;; WIP
   (defun my-mail-missing-attachment-p ()
