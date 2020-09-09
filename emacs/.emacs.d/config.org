@@ -70,11 +70,21 @@
     (my-format-sexp
      (use-package modus-%1$s-theme
        :custom
-       (modus-%1$s-theme-3d-modeline t)
+       (modus-%1$s-theme-slanted-constructs t)
+       (modus-%1$s-theme-bold-constructs t)
+       (modus-%1$s-theme-fringes 'subtle) ; {nil,'subtle,'intense}
        (modus-%1$s-theme-faint-syntax nil)
-       (modus-%1$s-theme-distinct-org-blocks t)
-       (modus-%1$s-theme-section-headings nil)
+       (modus-%1$s-theme-intense-hl-line t)
+       (modus-%1$s-theme-intense-paren-match t)
+       (modus-%1$s-theme-prompts nil) ; {nil,'subtle,'intense}
+       (modus-%1$s-theme-completions nil) ; {nil,'moderate,'opinionated}
+       (modus-%1$s-theme-diffs 'desaturated) ; {nil,'desaturated,'fg-only}
+       (modus-%1$s-theme-mode-line nil) ; {nil,'3d,'moody}
+       (modus-%1$s-theme-org-blocks 'greyscale) ; {nil,'greyscale,'rainbow}
        (modus-%1$s-theme-scale-headings t)
+       (modus-%1$s-theme-rainbow-headings nil)
+       (modus-%1$s-theme-section-headings nil)
+       (modus-%1$s-theme-variable-pitch-headings nil)
        :config
        (run-at-time (nth (if (string= theme "operandi") 1 4)
                          (split-string (sunrise-sunset)))
@@ -639,8 +649,8 @@ in python source code blocks.
    '((emacs-lisp . t)
      (scheme     . t)
      (python     . t)
-     (ipython    . t)
      (haskell    . t)
+     ;; (ipython    . t)
      ;; (go         . t)
      (latex      . t)
      (shell      . t)
