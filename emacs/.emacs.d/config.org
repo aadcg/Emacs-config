@@ -78,7 +78,7 @@
        (modus-%1$s-theme-intense-paren-match t)
        (modus-%1$s-theme-prompts nil) ; {nil,'subtle,'intense}
        (modus-%1$s-theme-completions nil) ; {nil,'moderate,'opinionated}
-       (modus-%1$s-theme-diffs 'desaturated) ; {nil,'desaturated,'fg-only}
+       (modus-%1$s-theme-diffs nil) ; {nil,'desaturated,'fg-only}
        (modus-%1$s-theme-mode-line nil) ; {nil,'3d,'moody}
        (modus-%1$s-theme-org-blocks 'greyscale) ; {nil,'greyscale,'rainbow}
        (modus-%1$s-theme-scale-headings t)
