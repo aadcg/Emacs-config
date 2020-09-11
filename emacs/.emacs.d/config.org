@@ -72,14 +72,14 @@
        :custom
        (modus-%1$s-theme-slanted-constructs t)
        (modus-%1$s-theme-bold-constructs t)
-       (modus-%1$s-theme-fringes 'subtle) ; {nil,'subtle,'intense}
+       (modus-%1$s-theme-fringes nil) ; {nil,'subtle,'intense}
        (modus-%1$s-theme-faint-syntax nil)
        (modus-%1$s-theme-intense-hl-line t)
        (modus-%1$s-theme-intense-paren-match t)
        (modus-%1$s-theme-prompts nil) ; {nil,'subtle,'intense}
        (modus-%1$s-theme-completions nil) ; {nil,'moderate,'opinionated}
        (modus-%1$s-theme-diffs nil) ; {nil,'desaturated,'fg-only}
-       (modus-%1$s-theme-mode-line nil) ; {nil,'3d,'moody}
+       (modus-%1$s-theme-mode-line '3d) ; {nil,'3d,'moody}
        (modus-%1$s-theme-org-blocks 'greyscale) ; {nil,'greyscale,'rainbow}
        (modus-%1$s-theme-scale-headings t)
        (modus-%1$s-theme-rainbow-headings nil)
@@ -839,6 +839,12 @@ in python source code blocks.
 #+begin_src emacs-lisp
   (use-package auth-source
     :custom (auth-sources '("~/.authinfo.gpg")))
+
+  (use-package epg-config
+    :custom (epa-pinentry-mode 'loopback))
+
+  (use-package epa
+    :custom (epa-replace-original-text t))
 #+end_src
 
 ** COMMENT Nix
@@ -1250,7 +1256,9 @@ Requires mpv.
   (use-package telega
     :unless in-termux-p
     :custom (telega-chat-fill-column 70)
-    :config (telega-mode-line-mode)
+    :config
+    (telega-mode-line-mode)
+    (global-telega-squash-message-mode 1)
     :bind ("s-t" . telega))
 
   ;; number of unread messages
@@ -1324,17 +1332,17 @@ TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
     ;; (smtpmail-stream-type 'ssl)
     (send-mail-function 'smtpmail-send-it))
 
-  (use-package mm-encode
-    :custom
-    (mm-encrypt-option 'guided)
-    (mm-sign-option 'guided))
+  ;; (use-package mm-encode
+  ;;   :custom
+  ;;   (mm-encrypt-option 'guided)
+  ;;   (mm-sign-option 'guided))
 
-  (use-package mml-sec
-    :custom
-    (mml-secure-openpgp-encrypt-to-self t)
-    (mml-secure-openpgp-sign-with-sender t)
-    (mml-secure-smime-encrypt-to-self t)
-    (mml-secure-smime-sign-with-sender t))
+  ;; (use-package mml-sec
+  ;;   :custom
+  ;;   (mml-secure-openpgp-encrypt-to-self t)
+  ;;   (mml-secure-openpgp-sign-with-sender t)
+  ;;   (mml-secure-smime-encrypt-to-self t)
+  ;;   (mml-secure-smime-sign-with-sender t))
 
   ;; WIP
   (defun my-mail-missing-attachment-p ()
