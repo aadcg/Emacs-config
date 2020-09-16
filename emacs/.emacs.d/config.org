@@ -838,7 +838,7 @@ in python source code blocks.
 ** Authentication sources
 #+begin_src emacs-lisp
   (use-package auth-source
-    :custom (auth-sources '("~/.authinfo.gpg")))
+    :custom (auth-sources '("~/.authinfo.gpg" "~/.authinfo")))
 
   (use-package epg-config
     :custom (epa-pinentry-mode 'loopback))
@@ -846,6 +846,19 @@ in python source code blocks.
   (use-package epa
     :custom (epa-replace-original-text t))
 #+end_src
+
+This is how ~/.authinfo.gpg looks like:
+
+#+begin_example
+  machine smtp.gmail.com login andremegafone port 587 password pw
+  machine imap.gmail.com login andremegafone port imaps password pw
+  machine localhost port sudo login root password pw
+  machine irc.freenode.net login aadcg password pw
+
+  ;; Local Variables:
+  ;; epa-file-encrypt-to: andremegafone@gmail.com
+  ;; End:
+#+end_example
 
 ** COMMENT Nix
 #+begin_src emacs-lisp
