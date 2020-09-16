@@ -10,7 +10,9 @@
     "us,ru" "altgr-intl"
     #:options
     '("grp:win_space_toggle"
-      "caps:ctrl_modifier")))
+      "caps:ctrl_modifier"
+      "grp_led:caps"
+      "lv3:ralt_switch_multikey")))
   (host-name "guix-xps13")
   (users (cons* (user-account
                  (name "aadcg")
