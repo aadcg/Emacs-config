@@ -1,8 +1,7 @@
 (defvar *my-keymap* (make-keymap "my-map"))
 (define-key *my-keymap*
   "C-j" 'nyxt/web-mode:follow-hint
-  ;; "" 'nyxt/web-mode:unzoom-page
-  )
+  "C-x C-b" 'nyxt:list-buffers)
 
 (define-mode my-mode ()
   "Dummy mode for the custom key bindings in `*my-keymap*'."
