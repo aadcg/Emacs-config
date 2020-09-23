@@ -1472,6 +1472,8 @@ Visit and reload this config
         (eshell-command (concat "sudo light -s " led " -S 0"))))
     :hook
     ((after-init-hook . (lambda () (unless (server-running-p) (server-start))))
+     (after-init-hook . (lambda () (when (getenv "DESKTOP_SESSION")
+                                (toggle-frame-fullscreen))))
      ;; (after-init-hook . my-turn-off-wifi-light)
      ))
 
