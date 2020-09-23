@@ -562,6 +562,12 @@ in python source code blocks.
                   ("SPC" . comint-magic-space)))
 #+end_src
 
+*** Diff
+#+begin_src emacs-lisp
+  (use-package ediff-wind
+    :custom (ediff-window-setup-function 'ediff-setup-windows-plain))
+#+end_src
+
 * Org
 #+begin_src bash
   owncloudcmd -s -u user -p pw $HOME/NextCloud/ https://cloud.owncube.com/remote.php/webdav/
