@@ -54,8 +54,8 @@
   (defun my-load-swaybar-theme ()
     "Change swaybar colors according to Emacs theme."
     (let ((inhibit-message t)
-          (bg (concat (face-attribute 'default :background) " "))
-          (fg (concat (face-attribute 'default :foreground) " "))
+          (bg (concat (face-attribute 'mode-line-inactive :background) " "))
+          (fg (concat (face-attribute 'mode-line-inactive :foreground) " "))
           (swaycmd "swaymsg bar bar-0 colors "))
       (eshell-command (concat swaycmd "statusline '" fg "'"))
       (eshell-command (concat swaycmd "background '" bg "'"))
@@ -79,7 +79,7 @@
        (modus-%1$s-theme-prompts nil) ; {nil,'subtle,'intense}
        (modus-%1$s-theme-completions nil) ; {nil,'moderate,'opinionated}
        (modus-%1$s-theme-diffs nil) ; {nil,'desaturated,'fg-only}
-       (modus-%1$s-theme-mode-line '3d) ; {nil,'3d,'moody}
+       (modus-%1$s-theme-mode-line nil) ; {nil,'3d,'moody}
        (modus-%1$s-theme-org-blocks 'greyscale) ; {nil,'greyscale,'rainbow}
        (modus-%1$s-theme-scale-headings t)
        (modus-%1$s-theme-rainbow-headings nil)
