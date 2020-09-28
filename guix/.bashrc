@@ -36,12 +36,12 @@ alias ll='ls -Atrhlb --group-directories-first'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
-alias tree="find . -type d -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
+# alias tree="find . -type d -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 
 # Infinite history, ignore duplicates and lines starting with a space
 export HISTSIZE=
 export HISTFILESIZE=
-export HISTFILE=~/.bash_eternal_history
+export HISTFILE=~/.bash_history
 export HISTCONTROL=ignoreboth
 
 # If set, the pattern ** used in a path name expansion context will
