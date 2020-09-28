@@ -222,7 +222,7 @@ bindsym $mod+a focus parent
 #
 # Resizing containers:
 #
-mode "Resize" {
+mode "resize" {
     # with arrow keys
     bindsym Left resize shrink width 10px
     bindsym Down resize grow height 10px
