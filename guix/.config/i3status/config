@@ -5,19 +5,22 @@ general {
         color_good = '#005e00'
         color_degraded = '#813e00'
         color_bad = '#a60000'
-        interval = 60
+        interval = 1
 }
 
-# order += "volume mic"
+# order += "read_file uptime"
 order += "volume master"
+# order += "volume mic"
 # order += "ipv6"
 order += "wireless _first_"
 order += "ethernet _first_"
 order += "battery all"
-# order += "disk /"
+order += "cpu_temperature 0"
+order += "disk /"
 order += "load"
 order += "memory"
 order += "tztime msk"
+order += "tztime lisboa"
 order += "tztime local"
 
 volume master {
@@ -29,28 +32,33 @@ volume master {
         separator_block_width = 40
 }
 
-# volume mic {
-#         format = "MIC ♪: %volume"
-#         format_muted = "MIC ♪: muted"
-#         device = "default"
-#         mixer = "Capture"
-#         mixer_idx = 0
-# }
+volume mic {
+        format = "MIC ♪: %volume"
+        format_muted = "MIC ♪: muted"
+        device = "default"
+        mixer = "Capture"
+        mixer_idx = 0
+}
 
 wireless _first_ {
-        format_up = "%quality %ip"
+        format_up = "%quality"
         format_down = ""
         separator_block_width = 40
 }
 
+ipv6 {
+        format_up = "%ip"
+        separator_block_width = 40
+}
+
 ethernet _first_ {
-        format_up = "%speed %ip"
+        format_up = "%speed"
         format_down = ""
         separator_block_width = 40
 }
 
 battery all {
-        format = "%status %percentage %remaining"
+        format = "⌁ %status %percentage %remaining"
         format_down = "No battery"
         status_chr = "↑"
         status_bat = "↓"
@@ -75,9 +83,14 @@ load {
 }
 
 memory {
-       format = "%used"
+       format = "RAM %used"
        separator_block_width = 40
 }
+
+# cpu_temperature 0 {
+#         format = "T: %degrees °C"
+#         path = "/sys/devices/platform/coretemp.0/temp1_input"
+# }
 
 tztime local {
         format = "%a %d %b %R"
@@ -85,8 +98,19 @@ tztime local {
 }
 
 tztime msk {
-        format = "MSK %R"
+        format = "Москва %R"
         timezone = "Europe/Moscow"
         hide_if_equals_localtime = true
         separator_block_width = 40
 }
+
+tztime lisboa {
+        format = "Lisboa %R"
+        timezone = "Europe/Lisbon"
+        hide_if_equals_localtime = true
+        separator_block_width = 40
+}
+
+# read_file uptime {
+#         path = "/home/aadcg/.emacs.d/init.el"
+# }
