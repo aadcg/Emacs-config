@@ -222,7 +222,7 @@ bindsym $mod+a focus parent
 #
 # Resizing containers:
 #
-mode "resize" {
+mode "Resize" {
     # with arrow keys
     bindsym Left resize shrink width 10px
     bindsym Down resize grow height 10px
@@ -232,6 +232,7 @@ mode "resize" {
     # Return to default mode
     bindsym Return mode "default"
     bindsym Escape mode "default"
+    bindsym Control+g mode "default"
 }
 
 bindsym --to-code $mod+Shift+r mode "resize"
@@ -241,7 +242,7 @@ bindsym --to-code $mod+Shift+r mode "resize"
 
 bar {
     position top
-    font Hack 20
+    font Hack 16
     status_command i3status     # visit ~/.config/i3status/config
     colors {
         statusline $foreground
@@ -251,17 +252,17 @@ bar {
     }
 }
 
-# Windows
+# Rules
 assign [class="IceCat"] Browser
 assign [class="Firefox"] Browser
 assign [class="ownCloud"] 1
 
-# default_border pixel 1
-default_border none
+# default_border pixel 2
 # for_window [class="Emacs"] border none
 # client.focused $foreground $background $foreground
 # client.unfocused $foreground $background $foreground
 
 # Startup
-exec emacs
 exec owncloud
+workspace GNU Emacs output DP-1 eDP-1
+exec emacs
