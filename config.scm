@@ -1,5 +1,5 @@
 (use-modules (gnu))
-(use-service-modules desktop networking ssh xorg pm nix docker)
+(use-service-modules desktop networking ssh xorg pm nix)
 
 (operating-system
   (locale "en_US.utf8")
@@ -25,8 +25,12 @@
   (bootloader
    (bootloader-configuration
     (bootloader grub-efi-bootloader)
+    (timeout 2)
     (target "/boot/efi")
-    (keyboard-layout keyboard-layout)))
+    (keyboard-layout keyboard-layout)
+    (theme (grub-theme
+            (inherit (grub-theme))
+            (gfxmode '("1920x1080x32" "auto"))))))
   (file-systems
    (cons* (file-system
            (mount-point "/boot/efi")
@@ -54,7 +58,7 @@
    (append
     (list
      (service gnome-desktop-service-type)
-     (service docker-service-type)
+     ;; (service docker-service-type)
      (service openssh-service-type)
      (service tor-service-type)
      (service tlp-service-type)
