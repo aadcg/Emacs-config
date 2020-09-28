@@ -105,6 +105,22 @@ bindsym XF86AudioRaiseVolume exec amixer -q sset Master 10%+
 bindsym XF86AudioLowerVolume exec amixer -q sset Master 10%-
 bindsym XF86AudioMute exec amixer -q sset Master toggle
 
+mode "media" {
+    # with arrow keys
+    bindsym Up exec amixer -q sset Master 10%+
+    bindsym Down exec amixer -q sset Master 10%-
+    bindsym Shift+Up exec amixer -q sset Master 1%+
+    bindsym Shift+Down exec amixer -q sset Master 1%-
+    bindsym m exec amixer -q sset Master toggle
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym Control+g mode "default"
+}
+
+bindsym --to-code $mod+m mode "media"
+
 # Brightness
 # bindsym XF86MonBrightnessDown exec sudo light set 100-
 # bindsym XF86MonBrightnessUp exec sudo light set +100
