@@ -131,6 +131,18 @@ bindsym XF86MonBrightnessUp exec emacsclient -e '(let ((inhibit-message t)) (esh
 # Lock
 bindsym $mod+Escape exec swaylock -f -c 000000
 
+mode "power" {
+    bindsym p exec loginctl poweroff
+    bindsym r exec loginctl reboot
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym Control+g mode "default"
+}
+
+bindsym --to-code $mod+Shift+p mode "power"
+
 # Screenshot
 bindsym --to-code $mod+p exec grim "$HOME/Pictures/$(date +%F_%T).png"
 
