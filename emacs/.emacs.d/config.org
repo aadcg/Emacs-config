@@ -952,6 +952,7 @@ This is how ~/.authinfo.gpg looks like:
   (use-package nov
     :custom
     (nov-text-width 80)
+    (nov-variable-pitch nil)
     :mode ("\\.epub\\'" . nov-mode))
 #+end_src
 
