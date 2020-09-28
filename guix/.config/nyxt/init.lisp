@@ -11,7 +11,8 @@
                              scheme:emacs *my-keymap*))))
 
 (define-configuration (buffer web-buffer)
-  ((default-modes (append '(emacs-mode my-mode) %slot-default))
+  ((default-modes (append '(emacs-mode my-mode blocker-mode)
+                            %slot-default))
    (current-zoom-ratio 1.75)
    (zoom-ratio-default 1.75)
    ))
