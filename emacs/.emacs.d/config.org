@@ -1108,6 +1108,21 @@ Requires mpv.
       (interactive)
       (emms-play-url (url-get-url-at-point)))
 
+    ;; patch
+    (defun my-emms-volume-amixer-change (amount)
+      "Change amixer master volume by AMOUNT."
+      (message "Playback channels: %s"
+               (with-temp-buffer
+                 (when (zerop
+                        (call-process "amixer" nil (current-buffer) nil
+                                      "sset" emms-volume-amixer-control
+                                      (format "%d%%%s" (abs amount)
+                                              (if (< amount 0) "-" "+"))))
+                   (if (re-search-backward "\\[\\([0-9]+%\\)\\]" nil t)
+                       (match-string 1))))))
+
+    (defalias 'emms-volume-amixer-change 'my-emms-volume-amixer-change)
+
     :bind
     ("<XF86AudioPlay>" . emms-pause)
     ("<XF86AudioNext>" . emms-next)
