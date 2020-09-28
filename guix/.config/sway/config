@@ -6,11 +6,11 @@ set $mod Mod4
 
 set $term emacsclient -c -e '(eshell)'
 
-set $background #ffffff
-set $foreground #000000
+set $background #efedef
+set $foreground #424242
 
 # (man "dmenu(1)")
-set $menu dmenu_path | dmenu -fn "Hack-20" -nb "$background" -nf "$foreground" -sb "$foreground" -sf "$background"| xargs swaymsg exec --
+set $menu dmenu_path | dmenu -fn "Hack-16" -nb "$background" -nf "$foreground" -sb "$foreground" -sf "$background"| xargs swaymsg exec --
 
 # Output
 # (man "sway-output(5)")
@@ -19,10 +19,12 @@ set $menu dmenu_path | dmenu -fn "Hack-20" -nb "$background" -nf "$foreground" -
 output * bg ~/dotfiles/wallpaper.jpg fill
 
 # Monitors
-output eDP-1 scale 1
-# set $laptop eDP-1
-# bindswitch --reload lid:on output $laptop disable
-# bindswitch --reload lid:off output $laptop enable
+set $laptop eDP-1
+bindswitch --reload lid:on output $laptop disable
+bindswitch --reload lid:off output $laptop enable
+
+output $laptop scale 1
+output $laptop mode --custom 2560x1440
 
 # Idle configuration
 
