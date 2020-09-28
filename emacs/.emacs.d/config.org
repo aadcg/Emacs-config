@@ -86,10 +86,16 @@
        (modus-%1$s-theme-section-headings nil)
        (modus-%1$s-theme-variable-pitch-headings nil)
        :config
-       (run-at-time (nth (if (string= theme "operandi") 1 4)
-                         (split-string (sunrise-sunset)))
-                    (* 60 60 24)
-                    (lambda () (my-load-theme 'modus-%1$s))))
+       ;; alternate between light and dark theme only on my phone
+
+       ;; as soon as nyxt will support a dark theme I can consider
+       ;; otherwise
+       (if in-termux-p
+         (run-at-time (nth (if (string= theme "operandi") 1 4)
+                           (split-string (sunrise-sunset)))
+                      (* 60 60 24)
+                      (lambda () (my-load-theme 'modus-%1$s)))
+         (my-load-theme 'modus-operandi)))
      theme))
 #+end_src
 
