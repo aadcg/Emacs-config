@@ -9,7 +9,7 @@
 (defvar in-termux-p
   (and (equal (system-name) "localhost")
        (not (equal user-login-name "aadcg")))
-  "t if using GNU Emacs on Termux")
+  "If non-nil, GNU Emacs is running on Termux.")
 
 ;; Make sure `use-package' is available.
 ;; Useless if I use guix
