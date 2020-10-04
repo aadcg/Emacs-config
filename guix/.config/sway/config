@@ -266,3 +266,6 @@ for_window [class="Emacs"] border none
 exec owncloud
 workspace GNU Emacs output DP-1 eDP-1
 exec emacs
+
+# (man "redshift(1)")
+exec redshift
