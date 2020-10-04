@@ -134,6 +134,7 @@ bindsym $mod+Escape exec swaylock -f -c 000000
 mode "power" {
     bindsym p exec loginctl poweroff
     bindsym r exec loginctl reboot
+    bindsym s exec loginctl suspend
 
     # Return to default mode
     bindsym Return mode "default"
@@ -256,6 +257,7 @@ bar {
 assign [class="IceCat"] Browser
 assign [class="Firefox"] Browser
 assign [class="ownCloud"] 1
+assign [class="vlc"] 2
 
 # default_border pixel 2
 for_window [class="Emacs"] border none
