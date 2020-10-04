@@ -15,7 +15,7 @@ order += "volume master"
 order += "wireless _first_"
 order += "ethernet _first_"
 order += "battery all"
-order += "cpu_temperature 0"
+# order += "cpu_temperature 0"
 order += "disk /"
 order += "load"
 order += "memory"
@@ -87,10 +87,10 @@ memory {
        separator_block_width = 40
 }
 
-# cpu_temperature 0 {
-#         format = "T: %degrees °C"
-#         path = "/sys/devices/platform/coretemp.0/temp1_input"
-# }
+cpu_temperature 0 {
+        format = "T: %degrees °C"
+        path = "/sys/devices/platform/coretemp.0/temp1_input"
+}
 
 tztime local {
         format = "%a %d %b %R"
