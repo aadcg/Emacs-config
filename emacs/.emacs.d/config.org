@@ -823,7 +823,10 @@ in python source code blocks.
   (use-package guix
     :bind ("s-g" . guix))
 
-  (use-package pretty-sha-path)
+  (use-package pretty-sha-path
+    :config (global-pretty-sha-path-mode))
+
+  (use-package debbugs)
 
   (defun my-guix-or-nix-p ()
     "Return t if the nix package manager is available."
