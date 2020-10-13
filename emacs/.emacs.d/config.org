@@ -354,29 +354,24 @@ Add binds only to python-mode-map
 #+begin_src emacs-lisp
   (use-package eshell
     :custom
-    ;; (eshell-history-file-name (or (expand-file-name "~/.bash_eternal_history")
-    ;;                               (expand-file-name "~/.bash_history")))
+    (eshell-history-file-name nil)
     ;; is it possible to make it infinite?
-    (eshell-history-size 10000)
+    ;; (eshell-history-size 10000)
     (eshell-prefer-list-functions t)
     :init (require 'esh-module)
     :config
     (add-to-list 'eshell-modules-list 'eshell-tramp)
     :hook
+    ;; (eshell-mode-hook . pretty-sha-path-mode)
     (eshell-mode-hook . (lambda () (company-mode -1)))
     (eshell-mode-hook . (lambda ()
                           (define-key eshell-mode-map (kbd "<tab>")
         (lambda () (interactive) (completion-at-point))))))
 
-  ;; (add-hook 'eshell-mode-hook
-  ;; (lambda ()
-  ;;   (define-key eshell-mode-map (kbd "<tab>")
-  ;;     (lambda () (interactive) (completion-at-point)))))
-
-  (use-package em-term
-    :config
-    (add-to-list 'eshell-visual-commands "nmtui")
-    (add-to-list 'eshell-visual-commands "alsamixer"))
+  ;; (use-package em-term
+  ;;   :config
+  ;;   (add-to-list 'eshell-visual-commands "nmtui")
+  ;;   (add-to-list 'eshell-visual-commands "alsamixer"))
 #+end_src
 
 **** Term
