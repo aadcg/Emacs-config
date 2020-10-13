@@ -953,6 +953,13 @@ This is how ~/.authinfo.gpg looks like:
     :bind ("C-=". 'er/expand-region))
 #+end_src
 
+** Transmission
+#+begin_src emacs-lisp
+  (use-package transmission
+    :hook
+    (transmission-mode-hook . hl-line-mode))
+#+end_src
+
 ** Emacs completion
 [[info:ivy#Top][Documentation]]
 
