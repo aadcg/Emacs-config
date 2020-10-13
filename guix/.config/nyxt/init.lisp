@@ -3,7 +3,11 @@
   "C-j" 'nyxt/web-mode:follow-hint
   "C-J" 'nyxt/web-mode:follow-hint-new-buffer
   "C-u C-J" 'nyxt/web-mode:follow-hint-new-buffer-focus
-  "C-x C-b" 'nyxt:list-buffers)
+  "C-x C-b" 'nyxt:list-buffers
+  "menu" 'nyxt:execute-command)
+
+;; TODO
+;; set cursor movements
 
 (define-mode my-mode ()
   "Dummy mode for the custom key bindings in `*my-keymap*'."
@@ -11,11 +15,20 @@
                              scheme:emacs *my-keymap*))))
 
 (define-configuration (buffer web-buffer)
-  ((default-modes (append '(emacs-mode my-mode blocker-mode)
+  ((default-modes (append '(emacs-mode my-mode)
                             %slot-default))
    (current-zoom-ratio 1.75)
    (zoom-ratio-default 1.75)
    ))
+
+(define-configuration web-buffer
+  ((default-modes (append
+                   '(blocker-mode
+                     force-https-mode
+                     ;; noimage-mode
+                     ;; noscript-mode
+                     proxy-mode)
+                   %slot-default))))
 
 ;; (fullscreen-current-window)
 
