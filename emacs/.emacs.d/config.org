@@ -53,37 +53,39 @@
     "All credit to user b3n on Reddit."
     `(eval (read (format ,(format "%S" sexp) ,@objects))))
 
-  (dolist (theme '("operandi" "vivendi"))
-    (my-format-sexp
-     (use-package modus-%1$s-theme
-       :custom
-       (modus-%1$s-theme-slanted-constructs t)
-       (modus-%1$s-theme-bold-constructs t)
-       (modus-%1$s-theme-fringes nil) ; {nil,'subtle,'intense}
-       (modus-%1$s-theme-faint-syntax nil)
-       (modus-%1$s-theme-intense-hl-line t)
-       (modus-%1$s-theme-intense-paren-match t)
-       (modus-%1$s-theme-prompts nil) ; {nil,'subtle,'intense}
-       (modus-%1$s-theme-completions nil) ; {nil,'moderate,'opinionated}
-       (modus-%1$s-theme-diffs nil) ; {nil,'desaturated,'fg-only}
-       (modus-%1$s-theme-mode-line nil) ; {nil,'3d,'moody}
-       (modus-%1$s-theme-org-blocks 'greyscale) ; {nil,'greyscale,'rainbow}
-       (modus-%1$s-theme-scale-headings t)
-       (modus-%1$s-theme-rainbow-headings nil)
-       (modus-%1$s-theme-section-headings nil)
-       (modus-%1$s-theme-variable-pitch-headings nil)
-       :config
-       ;; alternate between light and dark theme only on my phone
+  (if (version<= "28" emacs-version)
+      (load-theme 'modus-operandi)
+    (dolist (theme '("operandi" "vivendi"))
+      (my-format-sexp
+       (use-package modus-%1$s-theme
+         :custom
+         (modus-%1$s-theme-slanted-constructs t)
+         (modus-%1$s-theme-bold-constructs t)
+         (modus-%1$s-theme-fringes nil) ; {nil,'subtle,'intense}
+         (modus-%1$s-theme-faint-syntax nil)
+         (modus-%1$s-theme-intense-hl-line t)
+         (modus-%1$s-theme-intense-paren-match t)
+         (modus-%1$s-theme-prompts nil) ; {nil,'subtle,'intense}
+         (modus-%1$s-theme-completions nil) ; {nil,'moderate,'opinionated}
+         (modus-%1$s-theme-diffs nil) ; {nil,'desaturated,'fg-only}
+         (modus-%1$s-theme-mode-line nil) ; {nil,'3d,'moody}
+         (modus-%1$s-theme-org-blocks 'greyscale) ; {nil,'greyscale,'rainbow}
+         (modus-%1$s-theme-scale-headings t)
+         (modus-%1$s-theme-rainbow-headings nil)
+         (modus-%1$s-theme-section-headings nil)
+         (modus-%1$s-theme-variable-pitch-headings nil)
+         :config
+         ;; alternate between light and dark theme only on my phone
 
-       ;; as soon as nyxt will support a dark theme I can consider
-       ;; otherwise
-       (if in-termux-p
-         (run-at-time (nth (if (string= theme "operandi") 1 4)
-                           (split-string (sunrise-sunset)))
-                      (* 60 60 24)
-                      (lambda () (my-load-theme 'modus-%1$s)))
-         (my-load-theme 'modus-operandi)))
-     theme))
+         ;; as soon as nyxt will support a dark theme I can consider
+         ;; otherwise
+         (if in-termux-p
+             (run-at-time (nth (if (string= theme "operandi") 1 4)
+                               (split-string (sunrise-sunset)))
+                          (* 60 60 24)
+                          (lambda () (my-load-theme 'modus-%1$s)))
+           (my-load-theme 'modus-operandi)))
+       theme)))
 #+end_src
 
 *** Font
