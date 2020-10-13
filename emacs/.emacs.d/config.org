@@ -927,18 +927,18 @@ This is how ~/.authinfo.gpg looks like:
     :mode ("\\.pdf\\'" . pdf-view-mode)
     :hook
     ((pdf-view-mode-hook . pdf-view-fit-height-to-window)
-     (pdf-view-mode-hook . pdf-links-minor-mode)
-     (pdf-view-mode-hook . pdf-annot-minor-mode)
+     ;; (pdf-view-mode-hook . pdf-links-minor-mode)
+     ;; (pdf-view-mode-hook . pdf-annot-minor-mode)
+     (pdf-view-mode-hook . pdf-history-minor-mode)
      (pdf-view-mode-hook . pdf-view-auto-slice-minor-mode)
      (pdf-view-mode-hook . (lambda ()
                              (when (eq
                                     (frame-parameter nil 'background-mode)
                                     'dark)
                                (pdf-view-midnight-minor-mode))))))
-#+end_src
 
-** epub
-#+begin_src emacs-lisp
+  (use-package djvu)
+
   (use-package nov
     :custom
     (nov-text-width 80)
