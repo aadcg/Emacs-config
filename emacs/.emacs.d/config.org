@@ -1087,13 +1087,22 @@ Amx is an alternative to smex.
 #+end_src
 
 ** Media
-Requires mpv.
+Requires mpv or vlc
+
+I can play smb stuff with
+$ vlc -Z -I rc smb://cloudynshady/public/Music/
+
+another solution is to use sshfs
+
+[[https://emacs.stackexchange.com/questions/46782/how-to-access-remote-ms-windows-shared-directory-or-files-in-emacs25-running-o][have a look here]]
 
 #+begin_src emacs-lisp
   (use-package emms
-    ;; :custom
+    :custom
+    (emms-volume-change-amount 5)
     ;; (emms-mode-line-format " %s ")
     ;; (emms-mode-line-mode-line-function nil)
+
     :config
     (require 'emms-setup)
     (emms-all)
