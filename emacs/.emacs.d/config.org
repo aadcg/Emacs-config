@@ -1297,10 +1297,12 @@ another solution is to use sshfs
     (shr-use-colors nil)
     (shr-max-image-proportion 0.7)
     (shr-width (current-fill-column))
+    (browse-url-generic-program "nyxt")
     :config
-    (when in-termux-p
-      (setq shr-external-browser
-            (lambda (url) (shell-command (concat "termux-open-url " url))))))
+    (if in-termux-p
+        (setq shr-external-browser
+              (lambda (url) (shell-command (concat "termux-open-url " url))))
+      (setq shr-external-browser 'browse-url-generic)))
 
   (use-package eww
     :custom
