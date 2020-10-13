@@ -448,6 +448,8 @@ Requires gocode for the autocomplete to work.
           TeX-parse-self t)
     (setq-default TeX-master nil)
     :hook (latex-mode-hook . cdlatex-mode))
+
+  ;; TODO bibtex packages
 #+end_src
 
 ** Version Control
@@ -668,9 +670,9 @@ in python source code blocks.
 
   ;; for exporting in foreing languages
   (add-to-list 'org-latex-packages-alist
-               '("AUTO" "babel" t ("pdflatex")))
+               '("russian,main=english" "babel" t ("pdflatex")))
   (add-to-list 'org-latex-packages-alist
-                         '("AUTO" "polyglossia" t ("xelatex" "lualatex")))
+               '("AUTO" "polyglossia" t ("xelatex" "lualatex")))
 
   ;; this should be added at the end of the list rather
   ;; (add-to-list 'org-latex-default-packages-alist '("" "amsthm" t))
@@ -914,7 +916,7 @@ This is how ~/.authinfo.gpg looks like:
       ;;   (flyspell-mode-off))))
 #+end_src
 
-** PDF
+** Document Files (pdf, djvu, epub)
 #+begin_src emacs-lisp
   (use-package pdf-tools
     :when window-system
@@ -972,7 +974,7 @@ Amx is an alternative to smex.
     (ivy-extra-directories nil)
     (ivy-initial-inputs-alist nil)
     (ivy-use-virtual-buffers t)
-    ;; (ivy-read-action-function 'ivy-read-action-ivy)
+    (ivy-read-action-function 'ivy-read-action-hydra)
     ;; (ivy-height-alist '((t lambda (_caller) (/ (window-height) 3))))
     :config
     (ivy-mode 1)
@@ -1054,7 +1056,6 @@ Amx is an alternative to smex.
 ** IRC (freenode)
 #+begin_src emacs-lisp
   (use-package erc
-    :defer t
     :config
     (defun my-freenode ()
       (interactive)
@@ -1158,19 +1159,20 @@ Requires mpv.
   (global-set-key (kbd "C-|") 'yeis-transform-previous-word)
   ;; (global-set-key (kbd "C-x C-\\") 'yeis-transform-previous-word)
 
-  (defun my-change-to-dict (dict)
-    "Change to the dictionary given by string DICT."
-    (let ((inhibit-message t))
-      (ispell-change-dictionary
-       (cl-find (or (concat "^" dict "$") (concat "^" dict))
-                (ispell-valid-dictionary-list)
-                :test #'string-match-p))))
+  ;; DEPRECATED
+  ;; (defun my-change-to-dict (dict)
+  ;;   "Change to the dictionary given by string DICT."
+  ;;   (let ((inhibit-message t))
+  ;;     (ispell-change-dictionary
+  ;;      (cl-find (or (concat "^" dict "$") (concat "^" dict))
+  ;;               (ispell-valid-dictionary-list)
+  ;;               :test #'string-match-p))))
 
   (add-hook 'input-method-activate-hook
-            (lambda () (my-change-to-dict "ru")))
+            (lambda () (ispell-change-dictionary "ru")))
 
   (add-hook 'input-method-deactivate-hook
-            (lambda () (my-change-to-dict "en")))
+            (lambda () (ispell-change-dictionary "en")))
 #+end_src
 
 *** Calendar
