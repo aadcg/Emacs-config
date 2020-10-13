@@ -839,8 +839,11 @@ in python source code blocks.
   (use-package auth-source
     :custom (auth-sources '("~/.authinfo.gpg" "~/.authinfo")))
 
-  (use-package epg-config
-    :custom (epa-pinentry-mode 'loopback))
+  ;; (use-package epg-config
+  ;;   :custom (epg-pinentry-mode 'loopback))
+
+  (use-package pinentry
+    :hook (after-init-hook . pinentry-start))
 
   (use-package epa
     :custom (epa-replace-original-text t))
