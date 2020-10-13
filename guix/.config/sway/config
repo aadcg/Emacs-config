@@ -9,6 +9,8 @@ set $term emacsclient -c -e '(eshell)'
 set $background #efedef
 set $foreground #424242
 
+font Hack 12
+
 # (man "dmenu(1)")
 set $menu dmenu_path | dmenu -fn "Hack-16" -nb "$background" -nf "$foreground" -sb "$foreground" -sf "$background"| xargs swaymsg exec --
 
@@ -125,8 +127,8 @@ bindsym --to-code $mod+m mode "media"
 # bindsym XF86MonBrightnessDown exec sudo light set 100-
 # bindsym XF86MonBrightnessUp exec sudo light set +100
 
-bindsym XF86MonBrightnessDown exec emacsclient -e '(let ((inhibit-message t)) (eshell-command "sudo light -U 10"))'
-bindsym XF86MonBrightnessUp exec emacsclient -e '(let ((inhibit-message t)) (eshell-command "sudo light -A 10"))'
+bindsym XF86MonBrightnessDown exec emacsclient -e '(let ((inhibit-message t)) (eshell-command "sudo light -U 5"))'
+bindsym XF86MonBrightnessUp exec emacsclient -e '(let ((inhibit-message t)) (eshell-command "sudo light -A 5"))'
 
 # Lock
 bindsym $mod+Escape exec swaylock -f -c 000000
@@ -256,6 +258,8 @@ bar {
 # Rules
 assign [class="IceCat"] Browser
 assign [class="Firefox"] Browser
+# Nyxt
+assign [app_id="sbcl"] Browser
 assign [class="ownCloud"] 1
 assign [class="vlc"] 2
 
