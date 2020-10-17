@@ -16,7 +16,9 @@
 (when in-termux-p
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
-    (package-install 'use-package)))
+    (package-install 'use-package))
+  (require 'use-package-ensure)
+  (setq use-package-always-ensure t))
 
 (setq use-package-hook-name-suffix nil
       ;; use-package-verbose t
