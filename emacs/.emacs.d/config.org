@@ -929,7 +929,7 @@ This is how ~/.authinfo.gpg looks like:
     :mode ("\\.pdf\\'" . pdf-view-mode)
     :hook
     ((pdf-view-mode-hook . pdf-view-fit-height-to-window)
-     ;; (pdf-view-mode-hook . pdf-links-minor-mode)
+     (pdf-view-mode-hook . pdf-links-minor-mode)
      ;; (pdf-view-mode-hook . pdf-annot-minor-mode)
      (pdf-view-mode-hook . pdf-history-minor-mode)
      (pdf-view-mode-hook . pdf-view-auto-slice-minor-mode)
@@ -974,7 +974,7 @@ Amx is an alternative to smex.
     (ivy-extra-directories nil)
     (ivy-initial-inputs-alist nil)
     (ivy-use-virtual-buffers t)
-    (ivy-read-action-function 'ivy-read-action-hydra)
+    (ivy-read-action-function 'ivy-read-action-by-key)
     ;; (ivy-height-alist '((t lambda (_caller) (/ (window-height) 3))))
     :config
     (ivy-mode 1)
@@ -984,7 +984,6 @@ Amx is an alternative to smex.
 
   (use-package counsel
     :after ivy
-    :custom (ivy-initial-inputs-alist nil)
     :config
     (counsel-mode 1)
     :bind
@@ -1000,6 +999,7 @@ Amx is an alternative to smex.
     :custom (smex-save-file (concat user-emacs-directory ".smex")))
 
   (use-package ivy-posframe
+    :unless in-termux-p
     :after ivy
     :custom
     (ivy-posframe-parameters
