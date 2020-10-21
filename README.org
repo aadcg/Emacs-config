@@ -20,8 +20,9 @@ computing environment is easily reproducible on a new machine.  That's
 the scope of this project.
 
 * Philosophy
-Most of my computing orbitates around GNU Emacs.  Let [[https://www.youtube.com/watch?v=FLjbKuoBlXs&t=0][Protesilaos
-Stravrou help you understand if this tool is for you]].
+Most of my computing orbitates around GNU Emacs.
+
+[[https://www.youtube.com/watch?v=FLjbKuoBlXs&t=0][Let Protesilaos Stravrou help you understand if this tool is for you]].
 
 /Are you ready to go down the rabbit hole?/
 
@@ -30,8 +31,6 @@ I started using GNU/Linux and GNU Emacs in August 2018.
 My life changed forever.
 
 [[https://www.gnu.org/philosophy/philosophy.html][GNU is about freedom]].
-
-*Free Thought, Free World.*
 
 * dotfiles I follow
 - [[https://github.com/daviwil/dotfiles][David Wilson]]
