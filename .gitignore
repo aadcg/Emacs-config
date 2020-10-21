@@ -7,3 +7,6 @@ guix/.config/gtk-3.0
 !guix/.config/gtk-3.0/settings.ini
 
 git/.gitconfig
+
+*.tex
+*.pdf
