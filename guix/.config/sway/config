@@ -273,5 +273,15 @@ exec owncloud
 workspace GNU Emacs output DP-1 eDP-1
 exec emacs
 
+# run nyxt in a container
+# exec guix environment \
+#      --no-grafts \
+#      --container \
+#      --network \
+#      --preserve='^DISPLAY$' \
+#      --expose=/etc/ssl/certs \
+#      --ad-hoc nss-certs nyxt \
+#      -- nyxt
+
 # (man "redshift(1)")
 exec redshift
