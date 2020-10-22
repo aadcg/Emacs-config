@@ -1,9 +1,15 @@
 (defvar *my-keymap* (make-keymap "my-map"))
 (define-key *my-keymap*
+  "C-s" 'nyxt/web-mode:search-buffer
   "C-j" 'nyxt/web-mode:follow-hint
   "C-J" 'nyxt/web-mode:follow-hint-new-buffer
+  "C-g" 'nyxt/web-mode:remove-search-hints
   "C-u C-J" 'nyxt/web-mode:follow-hint-new-buffer-focus
-  "C-x C-b" 'nyxt:list-buffers
+  ;; "C-x C-b" 'nyxt:list-buffers
+  "M-b" 'nyxt/input-edit-mode:cursor-backwards-word
+  "M-f" 'nyxt/input-edit-mode:cursor-forwards-word
+  "C-b" 'nyxt/input-edit-mode:cursor-backwards
+  "C-f" 'nyxt/input-edit-mode:cursor-forwards
   "menu" 'nyxt:execute-command)
 
 ;; TODO
@@ -17,8 +23,8 @@
 (define-configuration (buffer web-buffer)
   ((default-modes (append '(emacs-mode my-mode)
                             %slot-default))
-   (current-zoom-ratio 1.75)
-   (zoom-ratio-default 1.75)
+   (current-zoom-ratio 1.5)
+   ;; (zoom-ratio-default 1.75)
    ))
 
 (define-configuration web-buffer
@@ -30,7 +36,8 @@
                      proxy-mode)
                    %slot-default))))
 
-;; (fullscreen-current-window)
+;; (setf nyxt/certificate-exception-mode:*default-certificate-exceptions*
+;;        '("your.unacceptable.cert.website"))
 
 (define-configuration minibuffer
   ((max-lines 8)
@@ -43,6 +50,7 @@
                                 :padding "0 6px")
                           ("#container" :display "flex"
                                         :flex-flow "column"
+
                                         :height "100%")
                           ("#input" :padding "6px 0"
                                     :border-bottom "solid 1px lightgray")
@@ -72,3 +80,5 @@
 ;;                              :padding 0
 ;;                              :padding-left "4px"
 ;;                              :margin 0))))))
+
+;; https://github.com/jmercouris/configuration/blob/master/.config/nyxt/init.lisp
