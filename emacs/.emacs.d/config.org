@@ -5,25 +5,9 @@
 #+PROPERTY: header-args :results silent
 :END:
 
-* Defaults, Preferences and Aesthetics
-** Regional
-*** Solar
-[[info:emacs#Sunrise/Sunset][Documentation]]
-#+begin_src emacs-lisp
-  (use-package solar
-    :custom
-    (calendar-latitude 59.94)
-    (calendar-longitude 30.31)
-    (calendar-location-name "Санкт-Петербург, Россия")
-    ;; calendar-latitude 41.16
-    ;; calendar-longitude -8.63
-    ;; calendar-location-name "Porto, Portugal"
-    )
-#+end_src
-
+* Defaults and Aesthetics
+** Locale
 *** Input Method
-Всё ясно, да?
-
 #+begin_src emacs-lisp
   (setq yeis-dir (expand-file-name "repos/emacs-yeis/" "~"))
 
@@ -54,17 +38,97 @@
             (lambda () (ispell-change-dictionary "en")))
 #+end_src
 
-*** Calendar
+*** Holidays
+[[info:emacs#Holidays][Documentation]]
+
 #+begin_src emacs-lisp
+  (use-package holidays
+    :custom
+    (holiday-bahai-holidays nil)
+    (holiday-oriental-holidays nil)
+    (holiday-islamic-holidays nil)
+    (holiday-hebrew-holidays nil)
+    (holiday-christian-holidays nil)
+
+    (holiday-general-holidays
+     '(;; Portuguese Public Holidays
+       (holiday-fixed 1 1      "Ano Novo")
+       (holiday-easter-etc -47 "Carnaval")
+       (holiday-easter-etc -2  "Sexta-feira Santa")
+       (holiday-easter-etc 0   "Domingo de Páscoa")
+       (holiday-fixed 3 19     "Dia do Pai")
+       (holiday-fixed 4 25     "Dia da Liberdade")
+       (holiday-fixed 5 1      "Dia do Trabalhador")
+       (holiday-easter-etc +60 "Corpo de Deus")
+       (holiday-float 5 0 1    "Dia da Mãe")
+       (holiday-fixed 6 10     "Dia de Portugal, de Camões e das
+          Comunidades Portuguesas")
+       (holiday-fixed 8 15     "Assunção de Nossa Senhora")
+       (holiday-fixed 10 5     "Implantação da República")
+       (holiday-fixed 11 1     "Dia de Todos-os-Santos")
+       (holiday-fixed 12 1     "Restauração da Independência")
+       (holiday-fixed 12 8     "Imaculada Conceição")
+       (holiday-fixed 12 45    "Consoada")
+       (holiday-fixed 12 25    "Natal")
+
+       ;; Russian Public Holidays
+       (holiday-fixed 1 1  "Новый Год")
+       (holiday-fixed 1 2  "Новогодние Каникулы")
+       (holiday-fixed 1 3  "Новогодние Каникулы")
+       (holiday-fixed 1 4  "Новогодние Каникулы")
+       (holiday-fixed 1 5  "Новогодние Каникулы")
+       (holiday-fixed 1 6  "Новогодние Каникулы")
+       (holiday-fixed 1 7  "Рождество Христово")
+       (holiday-fixed 1 8  "Новогодние Каникулы")
+       (holiday-fixed 2 23 "День защитника Отечества")
+       (holiday-fixed 3 8  "Международный Женский День")
+       (holiday-fixed 5 1  "Праздник Весны и Труда")
+       (holiday-fixed 5 9  "День Победы")
+       (holiday-fixed 6 12 "День России")
+       (holiday-fixed 11 4 "День Народного Единства")
+
+       ;; Miscellaneous
+       (holiday-fixed 2 14  "Valentine's Day")
+       (holiday-fixed 4 1   "April Fools' Day")
+       (holiday-fixed 10 31 "Halloween"))
+
+     (holiday-local-holidays
+      '(;; Porto, PT
+        (holiday-fixed 6 24 "Dia de São João")
+
+        ;; Санкт-Петербург, Россия
+        (holiday-fixed 1 27 "День Снятия Блокады")
+        (holiday-fixed 5 27 "День Города")))
+
+     (holiday-other-holidays nil)))
+#+end_src
+
+*** Miscellaneous
+[[info:emacs#Sunrise/Sunset][Documentation]]
+
+#+begin_src emacs-lisp
+  (use-package solar
+    ;; :config
+    ;; (defvar porto '(41.16 -8.63 "Porto, Portugal"))
+    ;; (defvar piter '(59.94 30.31 "Санкт-Петербург, Россия"))
+
+    ;; (defun set-calendar (location-alist)
+    ;;   "Sets lat, lon and location name.")
+    :custom
+    (calendar-latitude 59.94)
+    (calendar-longitude 30.31)
+    (calendar-location-name "Санкт-Петербург, Россия")
+    ;; calendar-latitude 41.16
+    ;; calendar-longitude -8.63
+    ;; calendar-location-name "Porto, Portugal"
+    )
+
   (use-package calendar
     :custom
     (calendar-week-start-day 1)
     (calendar-date-style 'iso)
     :hook (calendar-today-visible-hook . calendar-mark-today))
-#+end_src
 
-*** Clock
-#+begin_src emacs-lisp
   (use-package time
     :custom
     (display-time-format " %k:%M %a %d %b")
@@ -73,202 +137,7 @@
                                ("Europe/Lisbon" "Lisboa"))))
 #+end_src
 
-*** Holidays
-#+begin_src emacs-lisp
-  (setq holiday-bahai-holidays nil
-        holiday-oriental-holidays nil
-        holiday-islamic-holidays nil
-        holiday-hebrew-holidays nil
-        holiday-christian-holidays nil
-
-        holiday-general-holidays
-        '(;; Portuguese Public Holidays
-          (holiday-fixed 1 1      "Ano Novo")
-          (holiday-easter-etc -47 "Carnaval")
-          (holiday-easter-etc -2  "Sexta-feira Santa")
-          (holiday-easter-etc 0   "Domingo de Páscoa")
-          (holiday-fixed 3 19     "Dia do Pai")
-          (holiday-fixed 4 25     "Dia da Liberdade")
-          (holiday-fixed 5 1      "Dia do Trabalhador")
-          (holiday-easter-etc +60 "Corpo de Deus")
-          (holiday-float 5 0 1    "Dia da Mãe")
-          (holiday-fixed 6 10     "Dia de Portugal, de Camões e das
-          Comunidades Portuguesas")
-          (holiday-fixed 8 15     "Assunção de Nossa Senhora")
-          (holiday-fixed 10 5     "Implantação da República")
-          (holiday-fixed 11 1     "Dia de Todos-os-Santos")
-          (holiday-fixed 12 1     "Restauração da Independência")
-          (holiday-fixed 12 8     "Imaculada Conceição")
-          (holiday-fixed 12 45    "Consoada")
-          (holiday-fixed 12 25    "Natal")
-
-          ;; Russian Public Holidays
-          (holiday-fixed 1 1  "Новый год")
-          (holiday-fixed 1 2  "Новогодние каникулы")
-          (holiday-fixed 1 3  "Новогодние каникулы")
-          (holiday-fixed 1 4  "Новогодние каникулы")
-          (holiday-fixed 1 5  "Новогодние каникулы")
-          (holiday-fixed 1 6  "Новогодние каникулы")
-          (holiday-fixed 1 7  "Рождество Христово")
-          (holiday-fixed 1 8  "Новогодние каникулы")
-          (holiday-fixed 2 23 "День защитника Отечества")
-          (holiday-fixed 3 8  "Международный женский день")
-          (holiday-fixed 5 1  "Праздник Весны и Труда")
-          (holiday-fixed 5 9  "День Победы")
-          (holiday-fixed 6 12 "День России")
-          (holiday-fixed 11 4 "День народного единства")
-
-          ;; American Public Holidays
-          ;; (holiday-float 1 1 3 "Martin Luther King Day")
-          ;; (holiday-fixed 2 2 "Groundhog Day")
-          (holiday-fixed 2 14 "Valentine's Day")
-          ;; (holiday-float 2 1 3 "President's Day")
-          ;; (holiday-fixed 3 17 "St. Patrick's Day")
-          (holiday-fixed 4 1 "April Fools' Day")
-          ;; (holiday-float 5 0 2 "Mother's Day")
-          ;; (holiday-float 5 1 -1 "Memorial Day")
-          ;; (holiday-fixed 6 14 "Flag Day")
-          ;; (holiday-float 6 0 3 "Father's Day")
-          ;; (holiday-fixed 7 4 "Independence Day")
-          ;; (holiday-float 9 1 1 "Labor Day")
-          ;; (holiday-float 10 1 2 "Columbus Day")
-          (holiday-fixed 10 31 "Halloween")
-          ;; (holiday-fixed 11 11 "Veteran's Day")
-          ;; (holiday-float 11 4 4 "Thanksgiving")
-          )
-
-        holiday-other-holidays
-        '(;; Days Off for 2019
-          ;; (holiday-fixed 12 24 "Day Off")
-          ;; (holiday-fixed 12 26 "Day Off")
-
-          ;; Company Holidays for 2019
-          ;; (holiday-fixed 7 19 "Company Holiday")
-          )
-
-          holiday-local-holidays
-          '(;; Porto, PT
-            (holiday-fixed 6 24 "Dia de São João")
-            ;; Санкт-Петербург, Россия
-            (holiday-fixed 1 27 "День Снятия Блокады")
-            (holiday-fixed 5 27 "День Города")))
-#+end_src
-
-** Aesthetics
-*** UI
-#+begin_src emacs-lisp
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  (tooltip-mode -1)
-  (scroll-bar-mode -1)
-  (horizontal-scroll-bar-mode -1)
-  (fringe-mode '(8 . 0))
-  (fset 'yes-or-no-p 'y-or-n-p)
-
-  ;; (setq initial-scratch-message ";; Happy Hacking!\n\n"
-  ;;       inhibit-startup-screen t)
-#+end_src
-
-*** Theme
-#+begin_src emacs-lisp
-  (defun my-load-theme (theme)
-    "Load THEME and change swaybar if needed."
-    (progn
-      (mapc #'disable-theme custom-enabled-themes)
-      (load-theme theme t)
-      (when (getenv "WAYLAND_DISPLAY")
-        (my-load-swaybar-theme))))
-
-  (defun my-toggle-modus-theme ()
-    "Toggle between `modus-operandi' and `modus-vivendi' themes."
-    (interactive)
-    (if (eq (frame-parameter nil 'background-mode) 'light)
-        (my-load-theme 'modus-vivendi)
-      (my-load-theme 'modus-operandi)))
-
-  (defun my-load-swaybar-theme ()
-    "Change swaybar colors according to Emacs theme."
-    (let ((inhibit-message t)
-          (bg (concat (face-attribute 'mode-line-inactive :background) " "))
-          (fg (concat (face-attribute 'mode-line-inactive :foreground) " "))
-          (swaycmd "swaymsg bar bar-0 colors "))
-      (eshell-command (concat swaycmd "statusline '" fg "'"))
-      (eshell-command (concat swaycmd "background '" bg "'"))
-      (eshell-command (concat swaycmd "inactive_workspace '" fg bg fg "'"))
-      (eshell-command (concat swaycmd "focused_workspace '" fg fg bg "'"))))
-
-  (defmacro my-format-sexp (sexp &rest objects)
-    "All credit to user b3n on Reddit."
-    `(eval (read (format ,(format "%S" sexp) ,@objects))))
-
-  (if (version<= "28" emacs-version)
-      (load-theme 'modus-operandi)
-    (dolist (theme '("operandi" "vivendi"))
-      (my-format-sexp
-       (use-package modus-%1$s-theme
-         :custom
-         (modus-%1$s-theme-slanted-constructs t)
-         (modus-%1$s-theme-bold-constructs t)
-         (modus-%1$s-theme-fringes nil) ; {nil,'subtle,'intense}
-         (modus-%1$s-theme-faint-syntax nil)
-         (modus-%1$s-theme-intense-hl-line t)
-         (modus-%1$s-theme-intense-paren-match t)
-         (modus-%1$s-theme-prompts nil) ; {nil,'subtle,'intense}
-         (modus-%1$s-theme-completions nil) ; {nil,'moderate,'opinionated}
-         (modus-%1$s-theme-diffs nil) ; {nil,'desaturated,'fg-only}
-         (modus-%1$s-theme-mode-line nil) ; {nil,'3d,'moody}
-         (modus-%1$s-theme-org-blocks 'greyscale) ; {nil,'greyscale,'rainbow}
-         (modus-%1$s-theme-scale-headings t)
-         (modus-%1$s-theme-rainbow-headings nil)
-         (modus-%1$s-theme-section-headings nil)
-         (modus-%1$s-theme-variable-pitch-headings nil)
-         :config
-         ;; alternate between light and dark theme only on my phone
-
-         ;; as soon as nyxt will support a dark theme I can consider
-         ;; otherwise
-         (if in-termux-p
-             (run-at-time (nth (if (string= theme "operandi") 1 4)
-                               (split-string (sunrise-sunset)))
-                          (* 60 60 24)
-                          (lambda () (my-load-theme 'modus-%1$s)))
-           (my-load-theme 'modus-operandi)))
-       theme)))
-#+end_src
-
-*** Font
-I love Fira Code but it lacks italics.
-
-#+begin_src emacs-lisp
-  (defun my-auto-size-font (n)
-    "Set the font size such that n buffers of 80 chars fit side by side."
-    (interactive "nHow many 80 chars buffers should fit side by side? ")
-    (let ((size 1.0))
-      (set-frame-font (concat "Fira Code-" (number-to-string size)) nil t)
-      (while (>= (save-window-excursion
-                  (delete-other-windows)
-                  (window-max-chars-per-line))
-                (* n 90))
-        (setq size (+ size 0.5))
-        (set-frame-font (concat "Fira Code-" (number-to-string size)) nil t))
-      (message "The suggested font size is %f" size)
-      (number-to-string size)))
-
-  (add-to-list 'default-frame-alist '(font . "Fira Code-18.5"))
-  (add-to-list 'default-frame-alist '(fullscreen . maximized))
-  ;; (add-to-list 'default-frame-alist '(alpha 90)) ;; transparent frame
-#+end_src
-
 ** Words, white spaces and text
-- No trailing whitespaces when a file is saved
-- CamelCaseSubWords are separate words
-- Overwrite selected text
-- Append a newline to the end of a file
-- 80 chars per line
-- Spaces over tabs
-- visual-line-mode in Termux
-- sentences can be separated by one space
-
 #+begin_src emacs-lisp
   (use-package files
     :custom (require-final-newline t)
@@ -285,9 +154,6 @@ I love Fira Code but it lacks italics.
   ;; (setq sentence-end-double-space t)
   (when in-termux-p
     (global-visual-line-mode t))
-
-  (use-package subword
-    :hook (prog-mode-hook . subword-mode))
 #+end_src
 
 ** Windows, buffers and files
@@ -326,7 +192,7 @@ Backups and auto-save files at ~/.emacs/backups
 
   (use-package recentf
     :custom
-    (recentf-max-saved-items 250)
+    (recentf-max-saved-items 500)
     :hook (after-init-hook . recentf-mode))
 
   (use-package saveplace
@@ -443,6 +309,111 @@ change this keybinding to C-m, C-i or M-j?
     (setq custom-file (concat user-emacs-directory ".emacs-custom.el"))
     :hook
     (after-init-hook . (lambda () (load-file custom-file))))
+#+end_src
+
+** Aesthetics
+*** UI
+#+begin_src emacs-lisp
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (tooltip-mode -1)
+  (scroll-bar-mode -1)
+  (horizontal-scroll-bar-mode -1)
+  (fringe-mode '(8 . 0))
+  (fset 'yes-or-no-p 'y-or-n-p)
+
+  ;; (setq initial-scratch-message ";; Happy Hacking!\n\n"
+  ;;       inhibit-startup-screen t)
+#+end_src
+
+*** Theme
+#+begin_src emacs-lisp
+  (defun my-load-theme (theme)
+    "Load THEME and change swaybar if needed."
+    (progn
+      (mapc #'disable-theme custom-enabled-themes)
+      (load-theme theme t)
+      (when (getenv "WAYLAND_DISPLAY")
+        (my-load-swaybar-theme))))
+
+  (defun my-toggle-modus-theme ()
+    "Toggle between `modus-operandi' and `modus-vivendi' themes."
+    (interactive)
+    (if (eq (frame-parameter nil 'background-mode) 'light)
+        (my-load-theme 'modus-vivendi)
+      (my-load-theme 'modus-operandi)))
+
+  (defun my-load-swaybar-theme ()
+    "Change swaybar colors according to Emacs theme."
+    (let ((inhibit-message t)
+          (bg (concat (face-attribute 'mode-line-inactive :background) " "))
+          (fg (concat (face-attribute 'mode-line-inactive :foreground) " "))
+          (swaycmd "swaymsg bar bar-0 colors "))
+      (eshell-command (concat swaycmd "statusline '" fg "'"))
+      (eshell-command (concat swaycmd "background '" bg "'"))
+      (eshell-command (concat swaycmd "inactive_workspace '" fg bg fg "'"))
+      (eshell-command (concat swaycmd "focused_workspace '" fg fg bg "'"))))
+
+  (defmacro my-format-sexp (sexp &rest objects)
+    "All credit to user b3n on Reddit."
+    `(eval (read (format ,(format "%S" sexp) ,@objects))))
+
+  (if (version<= "28" emacs-version)
+      (load-theme 'modus-operandi)
+    (dolist (theme '("operandi" "vivendi"))
+      (my-format-sexp
+       (use-package modus-%1$s-theme
+         :custom
+         (modus-%1$s-theme-slanted-constructs t)
+         (modus-%1$s-theme-bold-constructs t)
+         (modus-%1$s-theme-fringes nil) ; {nil,'subtle,'intense}
+         (modus-%1$s-theme-faint-syntax nil)
+         (modus-%1$s-theme-intense-hl-line t)
+         (modus-%1$s-theme-intense-paren-match t)
+         (modus-%1$s-theme-prompts nil) ; {nil,'subtle,'intense}
+         (modus-%1$s-theme-completions nil) ; {nil,'moderate,'opinionated}
+         (modus-%1$s-theme-diffs nil) ; {nil,'desaturated,'fg-only}
+         (modus-%1$s-theme-mode-line nil) ; {nil,'3d,'moody}
+         (modus-%1$s-theme-org-blocks 'greyscale) ; {nil,'greyscale,'rainbow}
+         (modus-%1$s-theme-scale-headings t)
+         (modus-%1$s-theme-rainbow-headings nil)
+         (modus-%1$s-theme-section-headings nil)
+         (modus-%1$s-theme-variable-pitch-headings nil)
+         :config
+         ;; alternate between light and dark theme only on my phone
+
+         ;; as soon as nyxt will support a dark theme I can consider
+         ;; otherwise
+         (if in-termux-p
+             (run-at-time (nth (if (string= theme "operandi") 1 4)
+                               (split-string (sunrise-sunset)))
+                          (* 60 60 24)
+                          (lambda () (my-load-theme 'modus-%1$s)))
+           (my-load-theme 'modus-operandi)))
+       theme)))
+#+end_src
+
+*** Font
+I love Fira Code but it lacks italics.
+
+#+begin_src emacs-lisp
+  (defun my-auto-size-font (n)
+    "Set the font size such that n buffers of 80 chars fit side by side."
+    (interactive "nHow many 80 chars buffers should fit side by side? ")
+    (let ((size 1.0))
+      (set-frame-font (concat "Fira Code-" (number-to-string size)) nil t)
+      (while (>= (save-window-excursion
+                  (delete-other-windows)
+                  (window-max-chars-per-line))
+                (* n 90))
+        (setq size (+ size 0.5))
+        (set-frame-font (concat "Fira Code-" (number-to-string size)) nil t))
+      (message "The suggested font size is %f" size)
+      (number-to-string size)))
+
+  (add-to-list 'default-frame-alist '(font . "Fira Code-18.5"))
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+  ;; (add-to-list 'default-frame-alist '(alpha 90)) ;; transparent frame
 #+end_src
 
 * Programming
@@ -620,26 +591,21 @@ Requires gocode for the autocomplete to work.
 
   (use-package gitpatch)
 
-  ;; (use-package gitignore-mode)
+  (use-package gitignore-mode)
 #+end_src
 
 ** Files
-*** Yaml
 #+begin_src emacs-lisp
   (use-package yaml-mode
     :defer t
     :mode (("\\.yml\\'" . yaml-mode)
            ("\\.yaml\\'" . yaml-mode)))
-#+end_src
 
-*** CSV
-#+begin_src emacs-lisp
   (use-package csv-mode
     :defer t)
 #+end_src
 
-** Misc
-*** Projectile
+** Miscellaneous Utils
 #+begin_src emacs-lisp
   (use-package projectile
     :defer t
@@ -649,19 +615,13 @@ Requires gocode for the autocomplete to work.
     (projectile-completion-system 'ivy)
     :bind-keymap
     ("C-c p" . projectile-command-map))
-#+end_src
 
-*** Colorful delimiters
-#+begin_src emacs-lisp
   (use-package rainbow-delimiters
     :hook (prog-mode-hook . rainbow-delimiters-mode))
-#+end_src
 
-*** Pretty mode
-Global pretty mode breaks html export of org-mode files when there are functions
-in python source code blocks.
+  ;; Global pretty mode breaks html export of org-mode files when there
+  ;; are functions in python source code blocks.
 
-#+begin_src emacs-lisp
   (use-package pretty-mode
     :disabled
     :config
@@ -671,10 +631,7 @@ in python source code blocks.
      '(:sub-and-superscripts :arithmetic-nary :quantifiers :types)))
 
   (global-prettify-symbols-mode t)
-#+end_src
 
-*** Parenthesis
-#+begin_src emacs-lisp
   (use-package smartparens
     :config
     (require 'smartparens-config)
@@ -693,21 +650,18 @@ in python source code blocks.
   ;;         show-paren-when-point-in-periphery t
   ;;         )
   ;;   :hook (after-init-hook . show-paren-mode))
-#+end_src
 
-*** Comint
-#+begin_src emacs-lisp
   (use-package comint
       :bind (:map comint-mode-map
                   ("M-p" . comint-previous-matching-input-from-input)
                   ("M-n" . comint-next-matching-input-from-input)
                   ("SPC" . comint-magic-space)))
-#+end_src
 
-*** Diff
-#+begin_src emacs-lisp
   (use-package ediff-wind
     :custom (ediff-window-setup-function 'ediff-setup-windows-plain))
+
+  (use-package subword
+    :hook (prog-mode-hook . subword-mode))
 #+end_src
 
 * Org
@@ -992,9 +946,6 @@ in python source code blocks.
   (use-package auth-source
     :custom (auth-sources '("~/.authinfo.gpg" "~/.authinfo")))
 
-  ;; (use-package epg-config
-  ;;   :custom (epg-pinentry-mode 'loopback))
-
   (use-package pinentry
     :hook (after-init-hook . pinentry-start))
 
@@ -1067,7 +1018,7 @@ This is how ~/.authinfo.gpg looks like:
       ;;   (flyspell-mode-off))))
 #+end_src
 
-** Document Files (pdf, djvu, epub)
+** Reader (pdf, djvu, epub)
 #+begin_src emacs-lisp
   (use-package pdf-tools
     :when window-system
@@ -1204,20 +1155,6 @@ Amx is an alternative to smex.
     :defer t)
 #+end_src
 
-** IRC (freenode)
-#+begin_src emacs-lisp
-  (use-package erc
-    :config
-    (defun my-freenode ()
-      (interactive)
-      (let ((erc-plist (car (auth-source-search :host "irc.freenode.net")))
-            (erc-prompt-for-password nil))
-        (setq erc-server "irc.freenode.net")
-        (setq erc-nick (plist-get erc-plist :user))
-        (setq erc-password (funcall (plist-get erc-plist :secret)))
-        (erc))))
-#+end_src
-
 ** Games
 #+begin_src emacs-lisp
   (use-package speed-type
@@ -1319,41 +1256,15 @@ another solution is to use sshfs
                                    (".*" . eww-browse-url))))
 #+end_src
 
-** Telegram
-#+begin_src emacs-lisp
-  (use-package telega
-    :unless in-termux-p
-    :custom (telega-chat-fill-column 70)
-    :config
-    (telega-mode-line-mode)
-    (global-telega-squash-message-mode 1)
-    :bind ("s-t" . telega))
+** Communications
+*** Email (gnus)
+configuring email]]
+gnus tutorial]]
 
-  ;; number of unread messages
-  ;; (plist-get telega--unread-message-count :unread_unmuted_count)
+another gnus tutorial]]
 
-  (use-package emojify
-    :custom (emojify-company-tooltips-p t)
-    :hook
-    ((telega-chat-mode-hook . emojify-mode)
-     (telega-root-mode-hook . emojify-mode))
-    ;; (emojify-mode-line-mode)
-    )
-
-  (use-package company-emoji
-    :defer t
-    :config
-    (add-to-list 'company-backends 'company-emoji))
-#+end_src
-
-** Email (gnus)
-[[https://protesilaos.com/dotemacs/#h:5ad80664-3163-4d9d-be65-462637d77903][configuring email]]
-[[https://www.emacswiki.org/emacs/GnusTutorial][gnus tutorial]]
-
-[[https://github.com/redguardtoo/mastering-emacs-in-one-year-guide/blob/master/gnus-guide-en.org#my-gnusel][another gnus tutorial]]
-
-[[https://www.fsf.org/resources/webmail-systems][fsf advice]]
-[[https://github.com/kensanata/ggg#gmail-gnus-gpg-guide-gggg][how to encrypt]]
+fsf advice]]
+how to encrypt]]
 
 TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
 
@@ -1420,6 +1331,47 @@ TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
       (goto-char (message-goto-body))
       (when (re-search-forward "attach")
         (message "Did you forget to attach something?"))))
+#+end_src
+
+*** Telegram
+#+begin_src emacs-lisp
+  (use-package telega
+    :unless in-termux-p
+    :custom (telega-chat-fill-column 70)
+    :config
+    (telega-mode-line-mode)
+    (global-telega-squash-message-mode 1)
+    :bind ("s-t" . telega))
+
+  ;; number of unread messages
+  ;; (plist-get telega--unread-message-count :unread_unmuted_count)
+
+  (use-package emojify
+    :custom (emojify-company-tooltips-p t)
+    :hook
+    ((telega-chat-mode-hook . emojify-mode)
+     (telega-root-mode-hook . emojify-mode))
+    ;; (emojify-mode-line-mode)
+    )
+
+  (use-package company-emoji
+    :defer t
+    :config
+    (add-to-list 'company-backends 'company-emoji))
+#+end_src
+
+*** IRC (freenode)
+#+begin_src emacs-lisp
+  (use-package erc
+    :config
+    (defun my-freenode ()
+      (interactive)
+      (let ((erc-plist (car (auth-source-search :host "irc.freenode.net")))
+            (erc-prompt-for-password nil))
+        (setq erc-server "irc.freenode.net")
+        (setq erc-nick (plist-get erc-plist :user))
+        (setq erc-password (funcall (plist-get erc-plist :secret)))
+        (erc))))
 #+end_src
 
 ** Weather
@@ -1560,6 +1512,6 @@ Visit and reload this config
      ))
 #+end_src
 
-* Ideas
+* TODO
 - write use-package extension that ensures guix emacs packages
 - [[https://guix.gnu.org/blog/2018/guix-on-android/][try guix on android]]
