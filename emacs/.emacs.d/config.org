@@ -6,6 +6,54 @@
 :END:
 
 * Defaults and Aesthetics
+** My Defaults
+#+begin_src emacs-lisp
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (tooltip-mode -1)
+  (scroll-bar-mode -1)
+  (horizontal-scroll-bar-mode -1)
+  (fset 'yes-or-no-p 'y-or-n-p)
+
+  (use-package files
+    :custom (require-final-newline t)
+    :config
+    (defvar backups-dir (concat user-emacs-directory "backups/"))
+    (unless (file-exists-p backups-dir) (mkdir backups-dir))
+    (setq backup-directory-alist `(("." . ,backups-dir))
+          tramp-backup-directory-alist backup-directory-alist)
+    :hook (before-save-hook . delete-trailing-whitespace))
+
+  (use-package delsel
+    :config (delete-selection-mode))
+
+  (use-package text-mode
+    :hook (text-mode-hook . turn-on-auto-fill))
+
+  (use-package autorevert
+    :custom
+    (auto-revert-remote-files t)
+    :config (global-auto-revert-mode))
+
+  (use-package window
+    :bind ([remap kill-buffer] . kill-buffer-and-window))
+
+  (use-package frame
+    :custom (blink-cursor-blinks 2))
+
+  (use-package cus-edit
+    :custom
+    (custom-file (concat user-emacs-directory ".emacs-custom.el"))
+    :hook (after-init-hook . (lambda () (load custom-file))))
+
+  (setq scroll-preserve-screen-position t)
+  (setq-default fill-column 72)
+  (setq-default indent-tabs-mode nil)
+  ;; (setq sentence-end-double-space t)
+  (when in-termux-p
+    (global-visual-line-mode t))
+#+end_src
+
 ** Locale
 *** Input Method
 #+begin_src emacs-lisp
@@ -22,24 +70,24 @@
   (global-set-key (kbd "C-|") 'yeis-transform-previous-word)
   ;; (global-set-key (kbd "C-x C-\\") 'yeis-transform-previous-word)
 
-  ;; DEPRECATED
-  ;; (defun my-change-to-dict (dict)
-  ;;   "Change to the dictionary given by string DICT."
-  ;;   (let ((inhibit-message t))
-  ;;     (ispell-change-dictionary
-  ;;      (cl-find (or (concat "^" dict "$") (concat "^" dict))
-  ;;               (ispell-valid-dictionary-list)
-  ;;               :test #'string-match-p))))
+  (defun my-change-to-dict (dict)
+    "Change to the dictionary given by string DICT."
+    (let ((inhibit-message t))
+      (ispell-change-dictionary dict
+       ;; (cl-find (or (concat "^" dict "$") (concat "^" dict))
+       ;;          (ispell-valid-dictionary-list)
+       ;;          :test #'string-match-p)
+       )))
 
   (add-hook 'input-method-activate-hook
-            (lambda () (ispell-change-dictionary "ru")))
+            (lambda () (my-change-to-dict "ru")))
 
   (add-hook 'input-method-deactivate-hook
-            (lambda () (ispell-change-dictionary "en")))
+            (lambda () (my-change-to-dict "en")))
 #+end_src
 
 *** Holidays
-[[info:emacs#Holidays][Documentation]]
+# (info "(emacs) Holidays")
 
 #+begin_src emacs-lisp
   (use-package holidays
@@ -137,52 +185,8 @@
                                ("Europe/Lisbon" "Lisboa"))))
 #+end_src
 
-** Words, white spaces and text
-#+begin_src emacs-lisp
-  (use-package files
-    :custom (require-final-newline t)
-    :hook (before-save-hook . delete-trailing-whitespace))
-
-  (use-package delsel
-    :config (delete-selection-mode))
-
-  (use-package text-mode
-    :hook (text-mode-hook . turn-on-auto-fill))
-
-  (setq-default fill-column 72)
-  (setq-default indent-tabs-mode nil)
-  ;; (setq sentence-end-double-space t)
-  (when in-termux-p
-    (global-visual-line-mode t))
-#+end_src
-
-** Windows, buffers and files
-- Remember recent files
-- Automatically revert buffers (perhaps no need to be done at init)
-- Killing a buffer also kills the window
-
-#+begin_src emacs-lisp
-  (use-package autorevert
-    :custom
-    (auto-revert-remote-files t)
-    :hook (after-init-hook . global-auto-revert-mode))
-
-  (use-package window
-    :bind ([remap kill-buffer] . kill-buffer-and-window))
-#+end_src
-
-** Backups
-Backups and auto-save files at ~/.emacs/backups
-
-#+begin_src emacs-lisp
-  (setq backups-dir (concat user-emacs-directory "backups/"))
-  (unless (file-exists-p backups-dir)
-    (mkdir backups-dir))
-  (setq backup-directory-alist `(("." . ,backups-dir))
-        tramp-backup-directory-alist backup-directory-alist)
-#+end_src
-
 ** History
+(info "(org) Top")
 #+begin_src emacs-lisp
   (use-package savehist
     :custom
@@ -218,7 +222,7 @@ C-x C-z - same as above
   (global-set-key (kbd "C-x w") 'eww)
   (global-set-key (kbd "C-x f") 'browse-url-firefox)
   (global-set-key (kbd "S-SPC") 'cycle-spacing)
-  (global-set-key (kbd "s-o") 'other-window)
+  (global-set-key (kbd "s-o")   'other-window)
   (global-set-key (kbd "M-SPC") 'other-window)
   (global-set-key (kbd "C-c f") 'my-switch-to-agenda)
   (global-set-key (kbd "M-o")   'mode-line-other-buffer)
@@ -257,75 +261,7 @@ C-x C-z - same as above
   ;;  ([remap apropos-command] . apropos)
 #+end_src
 
-** Modeline
-- Minion hides minor modes
-- I usually check the battery status from the window manager modeline
-- Tuple (#line, #column) on the modeline
-- Hide-mode-line does the obvious and it's handy for presentations
-
-#+begin_src emacs-lisp
-  (use-package minions
-    :custom
-    (minions-direct '(org-tree-slide-mode
-                      text-scale-mode
-                      geiser-mode
-                      yeis-mode))
-    (minions-mode-line-delimiters '("" . ""))
-    (minions-mode-line-lighter ".")
-    :config
-    (minions-mode 1))
-
-  ;; more info about the battery /sys/class/power_supply/BAT0
-  (use-package battery
-    :unless in-termux-p
-    :custom
-    (battery-mode-line-format " %p%")
-    (battery-mode-line-limit 25))
-
-  (column-number-mode)
-
-  (use-package hide-mode-line
-    :defer t)
-#+end_src
-
-** Cursor
-- Preserve cursor position after C-v or M-v
-- Preserve cursor position after closing a file
-- Avy moves my cursor around
-
-change this keybinding to C-m, C-i or M-j?
-#+begin_src emacs-lisp
-  (setq scroll-preserve-screen-position 'always)
-  (setq blink-cursor-blinks 2)
-
-  (use-package avy
-    :bind ("C-r" . avy-goto-word-1))
-#+end_src
-
-** Custom
-#+begin_src emacs-lisp
-  (use-package cus-edit
-    :config
-    (setq custom-file (concat user-emacs-directory ".emacs-custom.el"))
-    :hook
-    (after-init-hook . (lambda () (load-file custom-file))))
-#+end_src
-
 ** Aesthetics
-*** UI
-#+begin_src emacs-lisp
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  (tooltip-mode -1)
-  (scroll-bar-mode -1)
-  (horizontal-scroll-bar-mode -1)
-  (fringe-mode '(8 . 0))
-  (fset 'yes-or-no-p 'y-or-n-p)
-
-  ;; (setq initial-scratch-message ";; Happy Hacking!\n\n"
-  ;;       inhibit-startup-screen t)
-#+end_src
-
 *** Theme
 #+begin_src emacs-lisp
   (defun my-load-theme (theme)
@@ -391,6 +327,10 @@ change this keybinding to C-m, C-i or M-j?
                           (lambda () (my-load-theme 'modus-%1$s)))
            (my-load-theme 'modus-operandi)))
        theme)))
+
+  (use-package fringe
+    :config (fringe-mode '(8 . 0)))
+
 #+end_src
 
 *** Font
@@ -414,6 +354,32 @@ I love Fira Code but it lacks italics.
   (add-to-list 'default-frame-alist '(font . "Fira Code-18.5"))
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
   ;; (add-to-list 'default-frame-alist '(alpha 90)) ;; transparent frame
+#+end_src
+
+*** Modeline
+#+begin_src emacs-lisp
+  (use-package minions
+    :custom
+    (minions-direct '(org-tree-slide-mode
+                      text-scale-mode
+                      geiser-mode
+                      yeis-mode))
+    (minions-mode-line-delimiters '("" . ""))
+    (minions-mode-line-lighter ".")
+    :config
+    (minions-mode 1))
+
+  ;; check /sys/class/power_supply/BAT0
+  (use-package battery
+    :unless in-termux-p
+    :custom
+    (battery-mode-line-format " %p%")
+    (battery-mode-line-limit 25))
+
+  (column-number-mode)
+
+  (use-package hide-mode-line
+    :defer t)
 #+end_src
 
 * Programming
@@ -630,7 +596,8 @@ Requires gocode for the autocomplete to work.
     (pretty-activate-groups
      '(:sub-and-superscripts :arithmetic-nary :quantifiers :types)))
 
-  (global-prettify-symbols-mode t)
+  (use-package prog-mode
+    :config (global-prettify-symbols-mode t))
 
   (use-package smartparens
     :config
@@ -652,10 +619,10 @@ Requires gocode for the autocomplete to work.
   ;;   :hook (after-init-hook . show-paren-mode))
 
   (use-package comint
-      :bind (:map comint-mode-map
-                  ("M-p" . comint-previous-matching-input-from-input)
-                  ("M-n" . comint-next-matching-input-from-input)
-                  ("SPC" . comint-magic-space)))
+    :bind (:map comint-mode-map
+                ("M-p" . comint-previous-matching-input-from-input)
+                ("M-n" . comint-next-matching-input-from-input)
+                ("SPC" . comint-magic-space)))
 
   (use-package ediff-wind
     :custom (ediff-window-setup-function 'ediff-setup-windows-plain))
@@ -1119,6 +1086,9 @@ Amx is an alternative to smex.
     (ivy-posframe-width nil)
     :config
     (ivy-posframe-mode 1))
+
+  (use-package avy
+      :bind ("C-r" . avy-goto-word-1))
 #+end_src
 
 ** Auto-complete
@@ -1513,5 +1483,6 @@ Visit and reload this config
 #+end_src
 
 * TODO
+- full literate programming dotfiles
 - write use-package extension that ensures guix emacs packages
 - [[https://guix.gnu.org/blog/2018/guix-on-android/][try guix on android]]
