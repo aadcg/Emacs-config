@@ -40,9 +40,8 @@ alias zoom='flatpak run us.zoom.Zoom'
 # alias tree="find . -type d -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 
 # (info "(bash) Bash History Facilities")
-export HISTSIZE=-1
-export HISTFILESIZE=-1
-export HISTFILE=~/.bash_history
+# (info "(bash) Bash Variables")
+export HISTSIZE=1000000
 export HISTCONTROL=ignoreboth
 
 # (info "(bash) The Shopt Builtin")
