@@ -37,6 +37,7 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias zoom='flatpak run us.zoom.Zoom'
+alias jitsi='flatpak run org.jitsi.jitsi-meet'
 # alias tree="find . -type d -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 
 # (info "(bash) Bash History Facilities")
@@ -49,4 +50,3 @@ shopt -s globstar
 shopt -s autocd
 shopt -s cdspell
 shopt -s expand_aliases
-shopt -s progcomp_alias         # needed?
