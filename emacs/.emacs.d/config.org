@@ -46,6 +46,14 @@
     (custom-file (concat user-emacs-directory ".emacs-custom.el"))
     :hook (after-init-hook . (lambda () (load custom-file))))
 
+  (use-package ibuffer
+    :custom
+    (ibuffer-expert t)
+    (ibuffer-default-sorting-mode 'major-mode)
+    :hook
+    (ibuffer-mode-hook . hl-line-mode)
+    :bind (("C-x C-b" . ibuffer)))
+
   (setq scroll-preserve-screen-position t)
   (setq-default fill-column 72)
   (setq-default indent-tabs-mode nil)
@@ -346,7 +354,7 @@ I love Fira Code but it lacks italics.
                   (delete-other-windows)
                   (window-max-chars-per-line))
                 (* n 90))
-        (setq size (+ size 0.5))
+        (incf size 0.5)
         (set-frame-font (concat "Fira Code-" (number-to-string size)) nil t))
       (message "The suggested font size is %f" size)
       (number-to-string size)))
@@ -436,12 +444,14 @@ Add binds only to python-mode-map
 
 **** Eshell
 [[https://emacs.stackexchange.com/questions/27849/how-can-i-setup-eshell-to-use-ivy-for-tab-completion][ivy in eshell]]
+
+eshell doesn't behave well when we set $HISTSIZE to -1 because it works
+with a ring data structure.
 #+begin_src emacs-lisp
   (use-package eshell
     :custom
     (eshell-history-file-name nil)
-    ;; is it possible to make it infinite?
-    ;; (eshell-history-size 10000)
+    (eshell-history-size nil)
     (eshell-prefer-list-functions t)
     :init (require 'esh-module)
     :config
@@ -934,22 +944,6 @@ This is how ~/.authinfo.gpg looks like:
   ;; End:
 #+end_example
 
-** COMMENT Nix
-#+begin_src emacs-lisp
-
-#+end_src
-
-** Ibuffer
-#+begin_src emacs-lisp
-  (use-package ibuffer
-    :custom
-    (ibuffer-expert t)
-    (ibuffer-default-sorting-mode 'major-mode)
-    :hook
-    (ibuffer-mode-hook . hl-line-mode)
-    :bind (("C-x C-b" . ibuffer)))
-#+end_src
-
 ** Dired
 [[info:emacs#Dired][Documentation]]
 
@@ -1035,8 +1029,6 @@ This is how ~/.authinfo.gpg looks like:
 ** Emacs completion
 [[info:ivy#Top][Documentation]]
 
-Amx is an alternative to smex.
-
 #+begin_src emacs-lisp
   (use-package ivy
     :custom
@@ -1064,9 +1056,8 @@ Amx is an alternative to smex.
     :bind
     ("C-s" . swiper))
 
-  (use-package smex
-    :after ivy
-    :custom (smex-save-file (concat user-emacs-directory ".smex")))
+  (use-package amx
+    :config (amx-mode))
 
   (use-package ivy-posframe
     :unless in-termux-p
@@ -1197,7 +1188,8 @@ another solution is to use sshfs
 
 ** Man
 #+begin_src emacs-lisp
-  (setq Man-notify-method 'pushy)
+  (use-package man
+    :custom Man-notify-method 'pushy)
 #+end_src
 
 ** Browser (eww)
@@ -1305,6 +1297,8 @@ TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
 #+end_src
 
 *** Telegram
+[[https://zevlg.github.io/telega.el/][Documentation]]
+
 #+begin_src emacs-lisp
   (use-package telega
     :unless in-termux-p
@@ -1431,7 +1425,7 @@ Visit and reload this config
         (nth 0 ispell-message))))
 #+end_src
 
-* Startup
+* Startup and State
 ** Startup
 #+begin_src emacs-lisp
   (use-package emacs
