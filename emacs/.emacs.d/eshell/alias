@@ -1,1 +1,3 @@
 alias ll ls -Atrhlb --group-directories-first
+alias zoom flatpak run us.zoom.Zoom
+alias jitsi flatpak run org.jitsi.jitsi-meet
