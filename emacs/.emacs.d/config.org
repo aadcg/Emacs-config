@@ -100,6 +100,12 @@
 #+begin_src emacs-lisp
   (use-package holidays
     :custom
+    ;; this is just a fix since calendar-holidays is autoloaded
+    (calendar-holidays (append holiday-general-holidays holiday-local-holidays
+                               holiday-other-holidays holiday-christian-holidays
+                               holiday-hebrew-holidays holiday-islamic-holidays
+                               holiday-bahai-holidays holiday-oriental-holidays
+                               holiday-solar-holidays))
     (holiday-bahai-holidays nil)
     (holiday-oriental-holidays nil)
     (holiday-islamic-holidays nil)
@@ -450,7 +456,7 @@ with a ring data structure.
 #+begin_src emacs-lisp
   (use-package eshell
     :custom
-    (eshell-history-file-name nil)
+    (eshell-history-file-name "~/.bash_history")
     (eshell-history-size nil)
     (eshell-prefer-list-functions t)
     :init (require 'esh-module)
