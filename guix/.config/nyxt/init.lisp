@@ -6,10 +6,10 @@
   "C-g" 'nyxt/web-mode:remove-search-hints
   "C-u C-J" 'nyxt/web-mode:follow-hint-new-buffer-focus
   ;; "C-x C-b" 'nyxt:list-buffers
-  "M-b" 'nyxt/input-edit-mode:cursor-backwards-word
-  "M-f" 'nyxt/input-edit-mode:cursor-forwards-word
-  "C-b" 'nyxt/input-edit-mode:cursor-backwards
-  "C-f" 'nyxt/input-edit-mode:cursor-forwards
+  ;; "M-b" 'nyxt/input-edit-mode:cursor-backwards-word
+  ;; "M-f" 'nyxt/input-edit-mode:cursor-forwards-word
+  ;; "C-b" 'nyxt/input-edit-mode:cursor-backwards
+  ;; "C-f" 'nyxt/input-edit-mode:cursor-forwards
   "menu" 'nyxt:execute-command)
 
 ;; TODO
@@ -38,6 +38,9 @@
 
 ;; (setf nyxt/certificate-exception-mode:*default-certificate-exceptions*
 ;;        '("your.unacceptable.cert.website"))
+
+;; for dev purposes
+;; (load-after-system :slynk "/home/aadcg/dotfiles/guix/.config/nyxt/my-slink.lisp")
 
 (define-configuration minibuffer
   ((max-lines 8)
