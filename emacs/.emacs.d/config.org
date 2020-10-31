@@ -565,6 +565,7 @@ Requires gocode for the autocomplete to work.
 ** Version Control
 #+begin_src emacs-lisp
   (use-package magit
+    :custom (magit-log-section-commit-count 25)
     :config
     (setq magit-display-buffer-function
           (quote magit-display-buffer-same-window-except-diff-v1))
@@ -1102,7 +1103,7 @@ This is how ~/.authinfo.gpg looks like:
   (use-package company
     :custom
     (company-require-match nil)
-    (company-idle-delay 0.1)
+    (company-idle-delay 0)
     (company-selection-wrap-around t)
     :config
     (global-company-mode 1)
@@ -1111,16 +1112,10 @@ This is how ~/.authinfo.gpg looks like:
                 ("C-n"      . company-select-next)
                 ("C-p"      . company-select-previous)
                 ("<tab>"    . company-complete-common-or-cycle)
+                ("C-h"      . company-show-doc-buffer)
+                ("M-."      . company-show-location)
                 ("RET"      . nil)
                 ("<return>" . nil)))
-
-  ;; (define-key company-active-map (kbd "RET") nil)
-  ;; (define-key company-active-map (kbd "<return>") nil)
-  ;; (define-key company-active-map (kbd "C-j") 'company-complete-selection)
-  ;; (define-key company-active-map (kbd "<tab>")
-  ;; 'company-complete-common-or-cycle)
-  ;; (define-key company-active-map (kbd "C-n") 'company-select-next)
-  ;; (define-key company-active-map (kbd "C-p") 'company-select-previous)
 #+end_src
 
 ** Elmacro
