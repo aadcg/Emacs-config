@@ -490,8 +490,14 @@ with a ring data structure.
 
 *** Lisp
 #+begin_src emacs-lisp
-  (use-package sly
-    :custom (inferior-lisp-program "/gnu/store/pfbkk46qg5fk0h5vmpzjff20i1ddy781-profile/bin/sbcl"))
+  (use-package slime
+    :custom (slime-port 4006))
+
+  (use-package slime-company
+    :config (slime-setup '(slime-company)))
+
+  ;; (use-package sly
+  ;;   :custom (inferior-lisp-program "/gnu/store/pfbkk46qg5fk0h5vmpzjff20i1ddy781-profile/bin/sbcl"))
 
   (use-package flycheck-package
     :after flycheck
