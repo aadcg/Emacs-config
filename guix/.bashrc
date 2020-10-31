@@ -43,7 +43,7 @@ alias jitsi='flatpak run org.jitsi.jitsi-meet'
 # (info "(bash) Bash History Facilities")
 # (info "(bash) Bash Variables")
 export HISTSIZE=1000000 # not set to -1 (infinite) because of eshell
-export HISTFIL=~/.bash_history
+export HISTFILE=~/.bash_history
 export HISTCONTROL=ignoreboth
 
 # (info "(bash) The Shopt Builtin")
