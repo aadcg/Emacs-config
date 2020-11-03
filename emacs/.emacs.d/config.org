@@ -99,13 +99,20 @@
 
 #+begin_src emacs-lisp
   (use-package holidays
-    :custom
     ;; this is just a fix since calendar-holidays is autoloaded
-    (calendar-holidays (append holiday-general-holidays holiday-local-holidays
-                               holiday-other-holidays holiday-christian-holidays
-                               holiday-hebrew-holidays holiday-islamic-holidays
-                               holiday-bahai-holidays holiday-oriental-holidays
-                               holiday-solar-holidays))
+    :hook (after-init-hook . (lambda ()
+                               (setq calendar-holidays
+                                     (append
+                                      holiday-general-holidays
+                                      holiday-local-holidays
+                                      holiday-other-holidays
+                                      holiday-christian-holidays
+                                      holiday-hebrew-holidays
+                                      holiday-islamic-holidays
+                                      holiday-bahai-holidays
+                                      holiday-oriental-holidays
+                                      holiday-solar-holidays))))
+    :custom
     (holiday-bahai-holidays nil)
     (holiday-oriental-holidays nil)
     (holiday-islamic-holidays nil)
@@ -490,14 +497,11 @@ with a ring data structure.
 
 *** Lisp
 #+begin_src emacs-lisp
-  (use-package slime
-    :custom (slime-port 4006))
-
-  (use-package slime-company
-    :config (slime-setup '(slime-company)))
-
-  ;; (use-package sly
-  ;;   :custom (inferior-lisp-program "/gnu/store/pfbkk46qg5fk0h5vmpzjff20i1ddy781-profile/bin/sbcl"))
+  (use-package sly
+    :custom
+    (sly-port 4006)
+    :bind
+    ("C-c o" . sly-documentation))
 
   (use-package flycheck-package
     :after flycheck
@@ -919,6 +923,7 @@ Requires gocode for the autocomplete to work.
 
 #+begin_src emacs-lisp
   (use-package guix
+    :custom (guix-operation-confirm nil)
     :bind ("s-g" . guix))
 
   (use-package pretty-sha-path
