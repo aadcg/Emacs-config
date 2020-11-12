@@ -1426,6 +1426,37 @@ Visit and reload this config
         (nth 0 ispell-message))))
 #+end_src
 
+** Wifi utils
+I use a Qualcomm Atheros TP-Link TL-WN821N / TL-WN822N, that uses the
+ath9k_htc Linux-libre driver.
+
+To connect to a new wifi:
+nmcli device wifi connect "$SSID" password "$PASSWORD"
+
+#+begin_src emacs-lisp
+  (defun my-shell-cmd (command)
+    "Run CMD and output the result to a string without trailing spaces."
+    (let ((cmd (concat command " | tr -d [:space:]")))
+      (shell-command-to-string cmd)))
+
+  (defun toggle-wifi ()
+    "Toggle wifi connection."
+    (interactive)
+    (let ((wifi-state
+           (my-shell-cmd "nmcli radio wifi")))
+      (if (string-match-p wifi-state "disabled")
+          (progn
+            (shell-command "nmcli radio wifi on")
+            (my-turn-off-wifi-light))
+        (shell-command "nmcli radio wifi off"))))
+
+  (defun my-turn-off-wifi-light ()
+      "Turn off annoying TP Link light"
+      (interactive)
+      (let ((led (my-shell-cmd "light -L | grep ath")))
+        (eshell-command (format "sudo light -s  %s -S 0" led))))
+#+end_src
+
 * Startup and State
 ** Startup
 #+begin_src emacs-lisp
