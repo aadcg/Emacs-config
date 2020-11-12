@@ -40,7 +40,7 @@
 ;;        '("your.unacceptable.cert.website"))
 
 ;; for dev purposes
-;; (load-after-system :slynk "/home/aadcg/dotfiles/guix/.config/nyxt/my-slink.lisp")
+(load-after-system :slynk "/home/aadcg/dotfiles/guix/.config/nyxt/my-slink.lisp")
 
 (define-configuration minibuffer
   ((max-lines 8)
