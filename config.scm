@@ -9,8 +9,8 @@
    (keyboard-layout
     "us,ru" "altgr-intl"
     #:options
-    '("grp:win_space_toggle"
-      "caps:ctrl_modifier"
+    '("caps:ctrl_modifier"
+      "grp:win_space_toggle"
       "grp_led:caps"
       "lv3:ralt_switch_multikey")))
   (host-name "guix-xps13")
@@ -27,10 +27,7 @@
     (bootloader grub-efi-bootloader)
     (timeout 2)
     (target "/boot/efi")
-    (keyboard-layout keyboard-layout)
-    (theme (grub-theme
-            (inherit (grub-theme))
-            (gfxmode '("1920x1080x32" "auto"))))))
+    (keyboard-layout keyboard-layout)))
   (file-systems
    (cons* (file-system
            (mount-point "/boot/efi")
@@ -47,12 +44,7 @@
   (packages
    (append (map specification->package
                 '("nss-certs"
-                  "i3status"
-                  "sway"
-                  "swaylock"
-                  "swayidle"
-                  "tor"
-                  "grim"))
+                  "tor"))
            %base-packages))
   (services
    (append
