@@ -1,5 +1,6 @@
-(use-modules (gnu))
-(use-service-modules desktop networking ssh xorg pm nix)
+(use-modules (gnu)
+             (srfi srfi-1))
+(use-service-modules desktop sddm networking ssh xorg pm nix)
 
 (operating-system
   (locale "en_US.utf8")
@@ -44,17 +45,33 @@
   (packages
    (append (map specification->package
                 '("nss-certs"
+                  "emacs-exwm"
+                  "sway"
+                  "guix-simplyblack-sddm-theme"
                   "tor"))
            %base-packages))
   (services
    (append
     (list
      (service gnome-desktop-service-type)
+     ;; (info "(guix) X Window")
+     (service sddm-service-type
+              (sddm-configuration
+               ;; could I use the literate capabilities of org?
+               ;; ‘xsession-command’ (default: ‘xinitrc’)
+               ;; add your avatar at ~/.face.icon
+               (theme "guix-simplyblack-sddm")))
+     ;; (info "(service unattended-upgrade-service-type)")
+     ;; (service unattended-upgrade-service-type)
      ;; (service docker-service-type)
      (service openssh-service-type)
      (service tor-service-type)
      (service tlp-service-type)
      (set-xorg-configuration
       (xorg-configuration
-       (keyboard-layout keyboard-layout))))
-    %desktop-services)))
+       (keyboard-layout keyboard-layout)
+       (resolutions '((2560 1440))))
+      sddm-service-type))
+    (remove (lambda (service)
+	      (eq? (service-kind service) gdm-service-type))
+            %desktop-services))))
