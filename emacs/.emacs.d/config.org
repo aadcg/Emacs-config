@@ -271,69 +271,35 @@ C-x C-z - same as above
 ** Aesthetics
 *** Theme
 #+begin_src emacs-lisp
-  (defun my-load-theme (theme)
-    "Load THEME and change swaybar if needed."
-    (progn
-      (mapc #'disable-theme custom-enabled-themes)
-      (load-theme theme t)
-      (when (getenv "WAYLAND_DISPLAY")
-        (my-load-swaybar-theme))))
-
-  (defun my-toggle-modus-theme ()
-    "Toggle between `modus-operandi' and `modus-vivendi' themes."
-    (interactive)
-    (if (eq (frame-parameter nil 'background-mode) 'light)
-        (my-load-theme 'modus-vivendi)
-      (my-load-theme 'modus-operandi)))
-
-  (defun my-load-swaybar-theme ()
-    "Change swaybar colors according to Emacs theme."
-    (let ((inhibit-message t)
-          (bg (concat (face-attribute 'mode-line-inactive :background) " "))
-          (fg (concat (face-attribute 'mode-line-inactive :foreground) " "))
-          (swaycmd "swaymsg bar bar-0 colors "))
-      (eshell-command (concat swaycmd "statusline '" fg "'"))
-      (eshell-command (concat swaycmd "background '" bg "'"))
-      (eshell-command (concat swaycmd "inactive_workspace '" fg bg fg "'"))
-      (eshell-command (concat swaycmd "focused_workspace '" fg fg bg "'"))))
-
-  (defmacro my-format-sexp (sexp &rest objects)
-    "All credit to user b3n on Reddit."
-    `(eval (read (format ,(format "%S" sexp) ,@objects))))
-
-  (if (version<= "28" emacs-version)
-      (load-theme 'modus-operandi)
-    (dolist (theme '("operandi" "vivendi"))
-      (my-format-sexp
-       (use-package modus-%1$s-theme
-         :custom
-         (modus-%1$s-theme-slanted-constructs t)
-         (modus-%1$s-theme-bold-constructs t)
-         (modus-%1$s-theme-fringes nil) ; {nil,'subtle,'intense}
-         (modus-%1$s-theme-faint-syntax nil)
-         (modus-%1$s-theme-intense-hl-line t)
-         (modus-%1$s-theme-intense-paren-match t)
-         (modus-%1$s-theme-prompts nil) ; {nil,'subtle,'intense}
-         (modus-%1$s-theme-completions nil) ; {nil,'moderate,'opinionated}
-         (modus-%1$s-theme-diffs nil) ; {nil,'desaturated,'fg-only}
-         (modus-%1$s-theme-mode-line nil) ; {nil,'3d,'moody}
-         (modus-%1$s-theme-org-blocks 'greyscale) ; {nil,'greyscale,'rainbow}
-         (modus-%1$s-theme-scale-headings t)
-         (modus-%1$s-theme-rainbow-headings nil)
-         (modus-%1$s-theme-section-headings nil)
-         (modus-%1$s-theme-variable-pitch-headings nil)
-         :config
-         ;; alternate between light and dark theme only on my phone
-
-         ;; as soon as nyxt will support a dark theme I can consider
-         ;; otherwise
-         (if in-termux-p
-             (run-at-time (nth (if (string= theme "operandi") 1 4)
-                               (split-string (sunrise-sunset)))
-                          (* 60 60 24)
-                          (lambda () (my-load-theme 'modus-%1$s)))
-           (my-load-theme 'modus-operandi)))
-       theme)))
+  (use-package modus-themes
+    :init
+    (setq modus-themes-slanted-constructs t
+          modus-themes-bold-constructs t
+          modus-themes-variable-pitch-headings nil
+          modus-themes-no-mixed-fonts nil
+          modus-themes-headings nil
+          ;; '((1 . section)
+          ;;   (2 . section-no-bold)
+          ;;   (3 . rainbow-line)
+          ;;   (t . rainbow-line-no-bold))
+          modus-themes-scale-headings t
+          modus-themes-fringes nil
+          modus-themes-org-blocks 'greyscale
+          modus-themes-prompts nil
+          modus-themes-mode-line nil
+          modus-themes-diffs nil
+          modus-themes-syntax nil
+          modus-themes-intense-hl-line nil
+          modus-themes-intense-paren-match nil
+          modus-themes-links nil
+          modus-themes-completions nil)
+    :config
+    (run-at-time (nth 1 (split-string (sunrise-sunset)))
+                 (* 60 60 24)
+                 'modus-themes-load-operandi)
+    (run-at-time (nth 4 (split-string (sunrise-sunset)))
+                 (* 60 60 24)
+                 'modus-themes-load-vivendi))
 
   (use-package fringe
     :config (fringe-mode '(8 . 0)))
