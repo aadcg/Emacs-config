@@ -97,68 +97,65 @@
 *** Holidays
 # (info "(emacs) Holidays")
 
-ATTENTION: using use-package breaks the following configuration!  It
-might be related to the way use-package (auto)loads packages.
+If you wrap your holidays configuration with use-package make sure you
+sure the :init key (instead of :config or :custom) otherwise it won't
+work properly.
 
 #+begin_src emacs-lisp
-  (setq
-   holiday-bahai-holidays nil
-   holiday-oriental-holidays nil
-   holiday-islamic-holidays nil
-   holiday-hebrew-holidays nil
-   holiday-christian-holidays nil
+  (use-package holidays
+    :init
+    (setq holiday-bahai-holidays nil
+          holiday-oriental-holidays nil
+          holiday-islamic-holidays nil
+          holiday-hebrew-holidays nil
+          holiday-christian-holidays nil
 
-   holiday-general-holidays
-   '(;; Portuguese Public Holidays
-     (holiday-fixed 1 1      "Ano Novo")
-     (holiday-easter-etc -47 "Carnaval")
-     (holiday-easter-etc -2  "Sexta-feira Santa")
-     (holiday-easter-etc 0   "Domingo de Páscoa")
-     (holiday-fixed 3 19     "Dia do Pai")
-     (holiday-fixed 4 25     "Dia da Liberdade")
-     (holiday-fixed 5 1      "Dia do Trabalhador")
-     (holiday-easter-etc +60 "Corpo de Deus")
-     (holiday-float 5 0 1    "Dia da Mãe")
-     (holiday-fixed 6 10     "Dia de Portugal, de Camões e das
-     Comunidades Portuguesas")
-     (holiday-fixed 8 15     "Assunção de Nossa Senhora")
-     (holiday-fixed 10 5     "Implantação da República")
-     (holiday-fixed 11 1     "Dia de Todos-os-Santos")
-     (holiday-fixed 12 1     "Restauração da Independência")
-     (holiday-fixed 12 8     "Imaculada Conceição")
-     (holiday-fixed 12 24    "Consoada")
-     (holiday-fixed 12 25    "Natal")
+          holiday-general-holidays
+          '(;; Portuguese Public Holidays
+            (holiday-fixed 1 1      "Ano Novo")
+            (holiday-easter-etc -47 "Carnaval")
+            (holiday-easter-etc -2  "Sexta-feira Santa")
+            (holiday-easter-etc 0   "Domingo de Páscoa")
+            (holiday-fixed 3 19     "Dia do Pai")
+            (holiday-fixed 4 25     "Dia da Liberdade")
+            (holiday-fixed 5 1      "Dia do Trabalhador")
+            (holiday-easter-etc +60 "Corpo de Deus")
+            (holiday-float 5 0 1    "Dia da Mãe")
+            (holiday-fixed 6 10     "Dia de Portugal, de Camões e das Comunidades Portuguesas")
+            (holiday-fixed 8 15     "Assunção de Nossa Senhora")
+            (holiday-fixed 10 5     "Implantação da República")
+            (holiday-fixed 11 1     "Dia de Todos-os-Santos")
+            (holiday-fixed 12 1     "Restauração da Independência")
+            (holiday-fixed 12 8     "Imaculada Conceição")
+            (holiday-fixed 12 24    "Consoada")
+            (holiday-fixed 12 25    "Natal")
 
-     ;; Russian Public Holidays
-     (holiday-fixed 1 1  "Новый Год")
-     (holiday-fixed 1 2  "Новогодние Каникулы")
-     (holiday-fixed 1 3  "Новогодние Каникулы")
-     (holiday-fixed 1 4  "Новогодние Каникулы")
-     (holiday-fixed 1 5  "Новогодние Каникулы")
-     (holiday-fixed 1 6  "Новогодние Каникулы")
-     (holiday-fixed 1 7  "Рождество Христово")
-     (holiday-fixed 1 8  "Новогодние Каникулы")
-     (holiday-fixed 2 23 "День Защитника Отечества")
-     (holiday-fixed 3 8  "Международный Женский День")
-     (holiday-fixed 5 1  "Праздник Весны и Труда")
-     (holiday-fixed 5 9  "День Победы")
-     (holiday-fixed 6 12 "День России")
-     (holiday-fixed 11 4 "День Народного Единства")
+            ;; Russian Public Holidays
+            (holiday-fixed 1 1  "Новый Год")
+            (holiday-fixed 1 2  "Новогодние Каникулы")
+            (holiday-fixed 1 3  "Новогодние Каникулы")
+            (holiday-fixed 1 4  "Новогодние Каникулы")
+            (holiday-fixed 1 5  "Новогодние Каникулы")
+            (holiday-fixed 1 6  "Новогодние Каникулы")
+            (holiday-fixed 1 7  "Рождество Христово")
+            (holiday-fixed 1 8  "Новогодние Каникулы")
+            (holiday-fixed 2 23 "День Защитника Отечества")
+            (holiday-fixed 3 8  "Международный Женский День")
+            (holiday-fixed 5 1  "Праздник Весны и Труда")
+            (holiday-fixed 5 9  "День Победы")
+            (holiday-fixed 6 12 "День России")
+            (holiday-fixed 11 4 "День Народного Единства")
 
-     ;; Miscellaneous
-     (holiday-fixed 2 14  "Valentine's Day")
-     (holiday-fixed 4 1   "April Fools' Day")
-     (holiday-fixed 10 31 "Halloween"))
+            ;; Miscellaneous
+            (holiday-fixed 2 14  "Valentine's Day")
+            (holiday-fixed 4 1   "April Fools' Day")
+            (holiday-fixed 10 31 "Halloween"))
 
-   holiday-local-holidays
-   '(;; Porto, PT
-     (holiday-fixed 6 24 "Dia de São João")
+          holiday-local-holidays
+          '(;; Porto, PT
+            (holiday-fixed 6 24 "Dia de São João"))
 
-     ;; Санкт-Петербург, Россия
-     (holiday-fixed 1 27 "День Снятия Блокады")
-     (holiday-fixed 5 27 "День Города"))
-
-   holiday-other-holidays nil)
+          holiday-other-holidays nil))
 #+end_src
 
 *** Miscellaneous
