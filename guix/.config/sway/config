@@ -1,11 +1,8 @@
 # (man "sway(5)")
 
 # Variables
-
 set $mod Mod4
-
 set $term emacsclient -c -e '(eshell)'
-
 set $background #efedef
 set $foreground #424242
 
@@ -17,9 +14,6 @@ set $menu dmenu_path | dmenu -fn "Hack-16" -nb "$background" -nf "$foreground" -
 # Output
 # (man "sway-output(5)")
 
-# Wallpaper
-output * bg ~/dotfiles/wallpaper.jpg fill
-
 # Monitors
 set $laptop eDP-1
 bindswitch --reload lid:on output $laptop disable
@@ -27,6 +21,9 @@ bindswitch --reload lid:off output $laptop enable
 
 output $laptop scale 1
 output $laptop mode --custom 2560x1440
+
+# Wallpaper
+output * background ~/dotfiles/wallpaper fill
 
 # Idle configuration
 
@@ -46,13 +43,13 @@ output $laptop mode --custom 2560x1440
 # (man "sway-input(5)")
 
 # visit base.lst file for more info
-# sudo find / | grep base.lst
+# $ sudo find / -name base.lst
 
 # general settings for a random laptop keyboard
 input type:keyboard {
   xkb_layout us,ru
   xkb_variant altgr-intl,
-  xkb_options ctrl:swapcaps,grp:win_space_toggle,grp_led:caps,lv3:ralt_switch_multikey
+  xkb_options caps:ctrl_modifier,grp:win_space_toggle,grp_led:caps,lv3:ralt_switch_multikey
 }
 
 # Niz atom66
@@ -100,7 +97,7 @@ floating_modifier $mod normal
 bindsym --to-code $mod+r reload
 
 # Exit sway (logs you out of your Wayland session)
-# bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+bindsym $mod+Shift+e exec swaymsg exit
 
 # Volume
 bindsym XF86AudioRaiseVolume exec amixer -q sset Master 10%+
@@ -265,6 +262,7 @@ assign [class="vlc"] 2
 
 # default_border pixel 2
 for_window [class="Emacs"] border none
+# for_window [class=".*"] opacity 0.9
 # client.focused $foreground $background $foreground
 # client.unfocused $foreground $background $foreground
 
@@ -274,14 +272,11 @@ workspace GNU Emacs output DP-1 eDP-1
 exec emacs
 
 # run nyxt in a container
-# exec guix environment \
-#      --no-grafts \
-#      --container \
-#      --network \
-#      --preserve='^DISPLAY$' \
-#      --expose=/etc/ssl/certs \
-#      --ad-hoc nss-certs nyxt \
-#      -- nyxt
+# exec guix environment --no-grafts --container --network
+# --preserve='^DISPLAY$' --expose=/etc/ssl/certs
+# --expose="$HOME/.config/nyxt/"
+# --share="$HOME/.local/share/nyxt"="$HOME/.local/share/nyxt/" --ad-hoc
+# nss-certs nyxt -- nyxt
 
 # (man "redshift(1)")
 exec redshift
