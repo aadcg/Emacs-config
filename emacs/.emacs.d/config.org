@@ -458,9 +458,12 @@ with a ring data structure.
 #+begin_src emacs-lisp
   (use-package sly
     :custom
+    (inferior-lisp-program "sbcl")
     (sly-port 4006)
     :bind
     ("C-c o" . sly-documentation))
+
+  (use-package sly-asdf)
 
   (use-package flycheck-package
     :after flycheck
