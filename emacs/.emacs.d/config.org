@@ -1193,13 +1193,11 @@ another solution is to use sshfs
 
 ** Communications
 *** Email (gnus)
-configuring email]]
-gnus tutorial]]
-
-another gnus tutorial]]
-
-fsf advice]]
-how to encrypt]]
+- [[https://protesilaos.com/dotemacs/#h:5ad80664-3163-4d9d-be65-462637d77903][configuring email]]
+- [[https://www.emacswiki.org/emacs/GnusTutorial][gnus tutorial]]
+- [[https://github.com/redguardtoo/mastering-emacs-in-one-year-guide/blob/master/gnus-guide-en.org#my-gnusel][another gnus tutorial]]
+- [[https://www.fsf.org/resources/webmail-systems][fsf advice]]
+- [[https://github.com/kensanata/ggg#gmail-gnus-gpg-guide-gggg][how to encrypt]]
 
 TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
 
@@ -1218,6 +1216,12 @@ TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
     :hook
     (message-send-hook . ispell-message)
     :bind ("C-c m" . gnus))
+
+  (use-package gnus-art
+    :after gnus
+    :commands gnus-mime-button-map
+    :bind (:map gnus-mime-button-map
+                ("RET" . gnus-mime-copy-part)))
 
   (use-package gnus-async
     :after gnus
