@@ -1291,7 +1291,7 @@ TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
     (add-to-list 'company-backends 'company-emoji))
 #+end_src
 
-*** IRC (freenode)
+*** IRC (Freenode)
 #+begin_src emacs-lisp
   (use-package erc
     :config
@@ -1299,10 +1299,9 @@ TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
       (interactive)
       (let ((erc-plist (car (auth-source-search :host "irc.freenode.net")))
             (erc-prompt-for-password nil))
-        (setq erc-server "irc.freenode.net")
-        (setq erc-nick (plist-get erc-plist :user))
-        (setq erc-password (funcall (plist-get erc-plist :secret)))
-        (erc))))
+        (erc :server "irc.freenode.net"
+             :nick (plist-get erc-plist :user)
+             :password (funcall (plist-get erc-plist :secret))))))
 #+end_src
 
 ** Weather
