@@ -279,4 +279,6 @@ exec emacs
 # nss-certs nyxt -- nyxt
 
 # (man "redshift(1)")
+
+# TODO redshift needs to adapted to run on wayland (redshift-wayland)
 exec redshift
