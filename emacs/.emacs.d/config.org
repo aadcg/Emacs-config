@@ -1029,9 +1029,6 @@ This is how ~/.authinfo.gpg looks like:
     :unless in-termux-p
     :after ivy
     :custom
-    (ivy-posframe-parameters
-     '((internal-border-width . 4)
-       (alpha . 10)))
     (ivy-posframe-height-alist
      '((swiper . 15)
        (swiper-isearch . 15)
@@ -1043,6 +1040,14 @@ This is how ~/.authinfo.gpg looks like:
        (t . ivy-posframe-display-at-frame-center)))
     (ivy-posframe-width nil)
     :config
+    (if (string-match-p "exwm" (getenv "DESKTOP_SESSION"))
+        (setq ivy-posframe-parameters
+              '((internal-border-width . 4)
+                (alpha . 80)
+                (parent-frame . nil)))
+      (setq ivy-posframe-parameters
+            '((internal-border-width . 4)
+              (alpha . 80))))
     (ivy-posframe-mode 1))
 
   (use-package avy
