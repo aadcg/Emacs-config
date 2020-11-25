@@ -480,9 +480,9 @@ with a ring data structure.
     'reindent-then-newline-and-indent)
 
   (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
-  (add-hook 'emacs-lisp-mode-hook 'my-starter-kit-remove-elc-on-save)
+  (add-hook 'emacs-lisp-mode-hook 'my-remove-elc-on-save)
 
-  (defun my-starter-kit-remove-elc-on-save ()
+  (defun my-remove-elc-on-save ()
     "If you're saving an elisp file, likely the .elc is no longer valid."
     (make-local-variable 'after-save-hook)
     (add-hook 'after-save-hook
@@ -491,27 +491,13 @@ with a ring data structure.
                     (delete-file (concat buffer-file-name "c"))))))
 #+end_src
 
-*** COMMENT Scala
-#+begin_src emacs-lisp
-  (use-package scala-mode
-    :disabled)
-
-  (use-package ensime
-    :disabled)
-  (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
-#+end_src
-
-*** COMMENT Golang
+*** Golang
 Requires gocode for the autocomplete to work.
 
 #+begin_src emacs-lisp
-  (use-package go-mode
-    :disabled
-    :defer t)
+  (use-package go-mode)
 
   (use-package company-go
-    :disabled
-    :defer t
     :config (add-to-list 'company-backends 'company-go))
 #+end_src
 
