@@ -1128,7 +1128,8 @@ another solution is to use sshfs
     (defun my-emms-play-url-at-point ()
       "Same as `emms-play-url' but with url at point."
       (interactive)
-      (emms-play-url (url-get-url-at-point)))
+      (emms-play-url (or (url-get-url-at-point)
+                         (shr-url-at-point current-prefix-arg))))
 
     ;; patch
     (defun my-emms-volume-amixer-change (amount)
