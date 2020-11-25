@@ -192,6 +192,12 @@ work properly.
                                ("Europe/Lisbon" "Lisboa"))))
 #+end_src
 
+*** Me
+#+begin_src emacs-lisp
+  (setq user-full-name "André Alexandre Gomes"
+        user-mail-address "andremegafone@gmail.com")
+#+end_src
+
 ** History
 (info "(org) Top")
 #+begin_src emacs-lisp
@@ -1403,7 +1409,7 @@ nmcli device wifi connect "$SSID" password "$PASSWORD"
     (let ((cmd (concat command " | tr -d [:space:]")))
       (shell-command-to-string cmd)))
 
-  (defun toggle-wifi ()
+  (defun my-toggle-wifi ()
     "Toggle wifi connection."
     (interactive)
     (let ((wifi-state
@@ -1415,10 +1421,10 @@ nmcli device wifi connect "$SSID" password "$PASSWORD"
         (shell-command "nmcli radio wifi off"))))
 
   (defun my-turn-off-wifi-light ()
-      "Turn off annoying TP Link light"
-      (interactive)
-      (let ((led (my-shell-cmd "light -L | grep ath")))
-        (eshell-command (format "sudo light -s  %s -S 0" led))))
+    "Turn off annoying TP Link light"
+    (interactive)
+    (let ((led (my-shell-cmd "light -L | grep ath")))
+      (eshell-command (format "sudo light -s  %s -S 0" led))))
 #+end_src
 
 * Startup and State
@@ -1460,17 +1466,9 @@ nmcli device wifi connect "$SSID" password "$PASSWORD"
 ** Server
 #+begin_src emacs-lisp
   (use-package server
-    :config
-    (defun my-turn-off-wifi-light ()
-      "Turn off annoying TP Link light"
-      (interactive)
-      (let ((led (shell-command-to-string
-                  "light -L | grep ath | tr -d [:space:]")))
-        (eshell-command (concat "sudo light -s " led " -S 0"))))
     :hook
-    ((after-init-hook . (lambda () (unless (server-running-p) (server-start))))
-        ;; (after-init-hook . my-turn-off-wifi-light)
-     ))
+    ((after-init-hook . (lambda () (unless (server-running-p)
+                                (server-start))))))
 #+end_src
 
 * TODO
