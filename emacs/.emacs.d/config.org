@@ -281,7 +281,7 @@ C-x C-z - same as above
     :init
     (setq modus-themes-slanted-constructs t
           modus-themes-bold-constructs t
-          modus-themes-fringes 'intense ; {nil,'subtle,'intense}
+          modus-themes-fringes 'suble ; {nil,'subtle,'intense}
           modus-themes-mode-line nil ; {nil,'3d,'moody}
           modus-themes-syntax nil ; read the manual
           modus-themes-intense-hl-line t
@@ -944,7 +944,6 @@ This is how ~/.authinfo.gpg looks like:
 #+begin_src emacs-lisp
   (when window-system
     (use-package flyspell
-      :defer t
       :config
       (flyspell-prog-mode)))
       ;; (when org-mode-hook
@@ -955,7 +954,6 @@ This is how ~/.authinfo.gpg looks like:
 #+begin_src emacs-lisp
   (use-package pdf-tools
     :when window-system
-    :custom (pdf-view-midnight-colors '("#ffffff" . "#000000"))
     :config
     (when (>= emacs-major-version 27)
       (setq image-scaling-factor 1))
