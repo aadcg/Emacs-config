@@ -163,20 +163,19 @@ work properly.
 
 #+begin_src emacs-lisp
   (use-package solar
-    ;; :config
-    ;; (defvar porto '(41.16 -8.63 "Porto, Portugal"))
-    ;; (defvar piter '(59.94 30.31 "Санкт-Петербург, Россия"))
+    :config
+    (defvar location-alist
+      '((piter . (59.94 30.31 "Санкт-Петербург, Россия"))
+        (porto . (41.16 -8.63 "Porto, Portugal")))
+      "An alist of locations featuring lat/lon and a label.")
 
-    ;; (defun set-calendar (location-alist)
-    ;;   "Sets lat, lon and location name.")
-    :custom
-    (calendar-latitude 59.94)
-    (calendar-longitude 30.31)
-    (calendar-location-name "Санкт-Петербург, Россия")
-    ;; calendar-latitude 41.16
-    ;; calendar-longitude -8.63
-    ;; calendar-location-name "Porto, Portugal"
-    )
+    (defun set-calendar-parameters (location)
+      (let ((parameters (alist-get location location-alist)))
+        (setq calendar-latitude (nth 0 parameters)
+              calendar-longitude (nth 1 parameters)
+              calendar-location-name (nth 2 parameters))))
+
+    (set-calendar-parameters 'piter))
 
   (use-package calendar
     :custom
