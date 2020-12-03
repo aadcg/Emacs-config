@@ -8,6 +8,7 @@
 ;; (man "xinput(1)")
 ;; This lands at /gnu/store/...-xserver.conf
 ;; accell speed not tested
+;; xinput --set-prop 13 330 0.8
 (define xorg-touchpad
   "Section \"InputClass\"
   Identifier \"Touchpad\"
