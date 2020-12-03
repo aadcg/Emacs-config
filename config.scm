@@ -2,21 +2,20 @@
              (guix packages)
              (srfi srfi-1))
 (use-service-modules desktop sddm networking ssh xorg pm nix)
-(use-package-modules gnome)
+(use-package-modules gnome xorg)
 
-;; Thanks Pierre Neidhardt
+;; (man "xorg.conf(5)")
+;; (man "xinput(1)")
+;; This lands at /gnu/store/...-xserver.conf
+;; accell speed not tested
 (define xorg-touchpad
   "Section \"InputClass\"
-  Identifier \"Touchpads\"
+  Identifier \"Touchpad\"
   Driver \"libinput\"
   MatchDevicePath \"/dev/input/event*\"
   MatchIsTouchpad \"on\"
-
-  Option \"DisableWhileTyping\" \"on\"
-  Option \"MiddleEmulation\" \"on\"
-  Option \"ClickMethod\" \"clickfinger\"
-  Option \"ScrollMethod\" \"twofinger\"
-  Option \"NaturalScrolling\" \"true\"
+  Option \"Tapping\" \"on\"
+  Option \"Accel Speed\" \"0.7\"
 EndSection")
 
 (define-public gnome-minimal
@@ -29,6 +28,7 @@ EndSection")
              "gnome-themes-extra"
              "gnome-getting-started-docs"
              "gnome-user-docs"
+             "gnome-keyring"
              "orca"
              "rygel"
              "baobab"
@@ -52,6 +52,7 @@ EndSection")
              "simple-scan"
              "totem"
              "gucharmap"
+             "at-spi2-core"
              "gnome-online-accounts")))))
 
 (operating-system
@@ -106,6 +107,8 @@ EndSection")
    (list
     (set-xorg-configuration
      (xorg-configuration
+      (modules (list xf86-video-intel
+                     xf86-input-libinput))
       (keyboard-layout keyboard-layout)
       (resolutions '((2560 1440)))
       (extra-config (list xorg-touchpad)))
@@ -118,6 +121,10 @@ EndSection")
               (theme "guix-simplyblack-sddm")))
     ;; (info "(service unattended-upgrade-service-type)")
     ;; (service unattended-upgrade-service-type)
+    ;; (info "(guix) Desktop Services")
+    ;; (man "logind.conf(5)")
+    ;; (elogind-service
+    ;;  (elogind-configuration))
     (service openssh-service-type)
     (service tor-service-type)
     (service tlp-service-type))
