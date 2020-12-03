@@ -281,4 +281,4 @@ exec emacs
 # (man "redshift(1)")
 
 # TODO redshift needs to adapted to run on wayland (redshift-wayland)
-exec redshift
+# exec redshift -l 59.94:30.31 -t 5700:4000 -m wayland
