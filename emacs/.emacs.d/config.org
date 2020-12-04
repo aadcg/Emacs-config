@@ -280,7 +280,7 @@ C-x C-z - same as above
     :init
     (setq modus-themes-slanted-constructs t
           modus-themes-bold-constructs t
-          modus-themes-fringes 'suble ; {nil,'subtle,'intense}
+          modus-themes-fringes 'subtle ; {nil,'subtle,'intense}
           modus-themes-mode-line nil ; {nil,'3d,'moody}
           modus-themes-syntax nil ; read the manual
           modus-themes-intense-hl-line t
@@ -292,11 +292,6 @@ C-x C-z - same as above
           modus-themes-diffs nil ; {nil,'desaturated,'fg-only}
           modus-themes-org-blocks 'grayscale ; {nil,'grayscale,'rainbow}
           modus-themes-headings nil ; read the manual
-          ;; example:
-          ;; '((1 . section)
-          ;;   (2 . section-no-bold)
-          ;;   (3 . rainbow-line)
-          ;;   (t . rainbow-line-no-bold))
           modus-themes-variable-pitch-headings nil
           modus-themes-scale-headings t
           modus-themes-scale-1 1.1
