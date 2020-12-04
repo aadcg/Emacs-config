@@ -517,10 +517,9 @@ Requires gocode for the autocomplete to work.
 ** Version Control
 #+begin_src emacs-lisp
   (use-package magit
-    :custom (magit-log-section-commit-count 25)
-    :config
-    (setq magit-display-buffer-function
-          (quote magit-display-buffer-same-window-except-diff-v1))
+    :custom
+    (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
+    (magit-log-section-commit-count 25)
     :bind ("C-x g" . magit-status))
 
   ;; to avoid passphrase prompts
