@@ -6,9 +6,6 @@
 
 ;; (man "xorg.conf(5)")
 ;; (man "xinput(1)")
-;; This lands at /gnu/store/...-xserver.conf
-;; accell speed not tested
-;; xinput --set-prop 13 330 0.8
 (define xorg-touchpad
   "Section \"InputClass\"
   Identifier \"Touchpad\"
@@ -17,7 +14,42 @@
   MatchIsTouchpad \"on\"
   Option \"Tapping\" \"on\"
   Option \"Accel Speed\" \"0.7\"
-EndSection")
+EndSection
+
+")
+
+(define xorg-graphics
+  "Section \"Device\"
+Identifier \"device-intel\"
+Driver \"intel\"
+Option \"PreferCloneMode\" \"on\"
+EndSection
+
+Section \"Screen\"
+Identifier \"test\"
+Device \"device-intel\"
+Monitor \"eDP-1\"
+EndSection
+
+Section \"Screen\"
+Identifier \"test2\"
+Device \"device-intel\"
+Monitor \"DP-1\"
+EndSection
+
+Section \"Monitor\"
+Identifier \"eDP-1\"
+Option \"PreferredMode\" \"2560x1440\"
+EndSection
+
+Section \"Monitor\"
+Identifier \"DP-1\"
+VendorName \"DELL\"
+ModelName \"U2515H\"
+Option \"DPMS\" \"off\"
+Option \"Primary\" \"on\"
+EndSection
+")
 
 (define-public gnome-minimal
   (package
@@ -109,26 +141,34 @@ EndSection")
     (set-xorg-configuration
      (xorg-configuration
       (modules (list xf86-video-intel
-                     xf86-input-libinput))
+                     xf86-input-libinput
+                     xf86-input-evdev))
       (keyboard-layout keyboard-layout)
-      (resolutions '((2560 1440)))
-      (extra-config (list xorg-touchpad)))
+      ;; (drivers '("intel"))
+      (extra-config (list xorg-touchpad
+			  xorg-graphics)))
      sddm-service-type)
     (service gnome-desktop-service-type
              (gnome-desktop-configuration
               (gnome gnome-minimal)))
     (service sddm-service-type
              (sddm-configuration
-              (theme "guix-simplyblack-sddm")))
+              (theme "guix-simplyblack-sddm")
+              (xdisplay-start "/home/aadcg/screen-script.sh")
+	      ))
     ;; (info "(service unattended-upgrade-service-type)")
     ;; (service unattended-upgrade-service-type)
     ;; (info "(guix) Desktop Services")
-    ;; (man "logind.conf(5)")
-    ;; (elogind-service
-    ;;  (elogind-configuration))
     (service openssh-service-type)
     (service tor-service-type)
     (service tlp-service-type))
+   ;; (modify-services %desktop-services
+   ;;     ;; (man "logind.conf(5)")
+   ;;   (elogind-service-type
+   ;;    c =>  (elogind-configuration
+   ;;           ;; gives me enough time to dock the laptop before it goes to
+   ;;           ;; sleep
+   ;;           (inhibit-delay-max-seconds 10))))
    (remove (lambda (service)
 	     (eq? (service-kind service) gdm-service-type))
            %desktop-services))))
