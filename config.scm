@@ -20,36 +20,22 @@ EndSection
 
 (define xorg-graphics
   "Section \"Device\"
-Identifier \"device-intel\"
-Driver \"intel\"
-Option \"PreferCloneMode\" \"on\"
-EndSection
-
-Section \"Screen\"
-Identifier \"test\"
-Device \"device-intel\"
-Monitor \"eDP-1\"
-EndSection
-
-Section \"Screen\"
-Identifier \"test2\"
-Device \"device-intel\"
-Monitor \"DP-1\"
+  Identifier \"intel\"
+  Option \"PreferCloneMode\" \"on\"
 EndSection
 
 Section \"Monitor\"
-Identifier \"eDP-1\"
-Option \"PreferredMode\" \"2560x1440\"
+  Identifier \"eDP-1\"
+  Option \"PreferredMode\" \"2560x1440\"
+  Option \"DPMS\" \"off\"
 EndSection
 
 Section \"Monitor\"
-Identifier \"DP-1\"
-VendorName \"DELL\"
-ModelName \"U2515H\"
-Option \"DPMS\" \"off\"
-Option \"Primary\" \"on\"
-EndSection
-")
+  Identifier \"DP-1\"
+  VendorName \"DELL\"
+  ModelName \"U2515H\"
+  Option \"DPMS\" \"off\"
+EndSection")
 
 (define-public gnome-minimal
   (package
@@ -140,11 +126,9 @@ EndSection
    (list
     (set-xorg-configuration
      (xorg-configuration
-      (modules (list xf86-video-intel
-                     xf86-input-libinput
+      (modules (list xf86-input-libinput
                      xf86-input-evdev))
       (keyboard-layout keyboard-layout)
-      ;; (drivers '("intel"))
       (extra-config (list xorg-touchpad
 			  xorg-graphics)))
      sddm-service-type)
@@ -154,8 +138,7 @@ EndSection
     (service sddm-service-type
              (sddm-configuration
               (theme "guix-simplyblack-sddm")
-              (xdisplay-start "/home/aadcg/screen-script.sh")
-	      ))
+              (xdisplay-start "/home/aadcg/screen-script.sh")))
     ;; (info "(service unattended-upgrade-service-type)")
     ;; (service unattended-upgrade-service-type)
     ;; (info "(guix) Desktop Services")
