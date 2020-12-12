@@ -1,19 +1,18 @@
 (defvar *my-keymap* (make-keymap "my-map"))
 (define-key *my-keymap*
-  "C-s" 'nyxt/web-mode:search-buffer
-  "C-j" 'nyxt/web-mode:follow-hint
-  "C-J" 'nyxt/web-mode:follow-hint-new-buffer
-  "C-g" 'nyxt/web-mode:remove-search-hints
+  "C-s"     'nyxt/web-mode:search-buffer
+  "C-j"     'nyxt/web-mode:follow-hint
+  "C-J"     'nyxt/web-mode:follow-hint-new-buffer
+  "C-g"     'nyxt/web-mode:remove-search-hints
   "C-u C-J" 'nyxt/web-mode:follow-hint-new-buffer-focus
+  ;; this doesn't work because there are no keybindings maps
+  ;; "C-j"     'nyxt/minibuffer-mode:return-selection
   ;; "C-x C-b" 'nyxt:list-buffers
   ;; "M-b" 'nyxt/input-edit-mode:cursor-backwards-word
   ;; "M-f" 'nyxt/input-edit-mode:cursor-forwards-word
   ;; "C-b" 'nyxt/input-edit-mode:cursor-backwards
   ;; "C-f" 'nyxt/input-edit-mode:cursor-forwards
   "menu" 'nyxt:execute-command)
-
-;; TODO
-;; set cursor movements
 
 (define-mode my-mode ()
   "Dummy mode for the custom key bindings in `*my-keymap*'."
@@ -24,8 +23,8 @@
   ((default-modes (append '(emacs-mode my-mode)
                             %slot-default))
    (current-zoom-ratio 1.5)
-   ;; (zoom-ratio-default 1.75)
-   ))
+   (zoom-ratio-default 1.5)
+   (conservative-word-move t)))
 
 (define-configuration web-buffer
   ((default-modes (append
@@ -34,7 +33,8 @@
                      ;; noimage-mode
                      ;; noscript-mode
                      proxy-mode)
-                   %slot-default))))
+                   %slot-default))
+   (default-new-buffer-url "https://github.com/aadcg")))
 
 ;; (setf nyxt/certificate-exception-mode:*default-certificate-exceptions*
 ;;        '("your.unacceptable.cert.website"))
