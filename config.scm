@@ -18,7 +18,7 @@ EndSection
 
 ")
 
-(define xorg-graphics
+(define xorg-monitors
   "Section \"Device\"
   Identifier \"intel\"
   Option \"PreferCloneMode\" \"on\"
@@ -113,14 +113,14 @@ EndSection")
                  'ext4))
           (type "ext4"))
          %base-file-systems))
+
  (packages
   (append (map specification->package
-               '("nss-certs"
-                 "emacs-exwm"
-                 "sway"
+               '("emacs-exwm"
                  "guix-simplyblack-sddm-theme"
-                 "tor"))
+                 "nss-certs"))
           %base-packages))
+
  (services
   (append
    (list
@@ -130,19 +130,15 @@ EndSection")
                      xf86-input-evdev))
       (keyboard-layout keyboard-layout)
       (extra-config (list xorg-touchpad
-			  xorg-graphics)))
+			  xorg-monitors)))
      sddm-service-type)
     (service gnome-desktop-service-type
              (gnome-desktop-configuration
               (gnome gnome-minimal)))
     (service sddm-service-type
              (sddm-configuration
-              (theme "guix-simplyblack-sddm")
-              (xdisplay-start "/home/aadcg/screen-script.sh")))
-    ;; (info "(service unattended-upgrade-service-type)")
-    ;; (service unattended-upgrade-service-type)
-    ;; (info "(guix) Desktop Services")
-    (service openssh-service-type)
+              (theme "guix-simplyblack-sddm")))
+    ;; (service openssh-service-type)
     (service tor-service-type)
     (service tlp-service-type))
    ;; (modify-services %desktop-services
