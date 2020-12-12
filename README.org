@@ -4,7 +4,7 @@
 
 | OS             | [[https://guix.gnu.org/][GNU/Linux Guix]]          |
 | Text Editor    | [[https://www.gnu.org/software/emacs/][GNU Emacs]]               |
-| Window manager | [[https://swaywm.org/][sway ]]& [[https://www.gnome.org/][GNOME]]            |
+| Window manager | [[https://github.com/ch11ng/exwm][EXWM]] & [[https://www.gnome.org/][GNOME]]            |
 | Web Browser    | [[https://www.gnu.org/software/emacs/manual/html_node/eww/][eww]] & [[https://github.com/atlas-engineer/nyxt][Nyxt]] & [[https://www.gnu.org/software/gnuzilla/][GNU icecat]] |
 | Shell          | [[https://www.gnu.org/software/emacs/manual/html_mono/eshell.html][eshell]]                  |
 | Media Player   | [[https://www.gnu.org/software/emms/][emms]]                    |
