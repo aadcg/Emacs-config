@@ -392,96 +392,6 @@ I love Fira Code but it lacks italics.
 
 * Programming
 ** Languages
-*** Python
-Add binds only to python-mode-map
-
-#+begin_src emacs-lisp
-  (use-package elpy
-    :defer t
-    :init
-    (advice-add 'python-mode :before 'elpy-enable)
-    :custom
-    (python-shell-interpreter "ipython")
-    (python-shell-interpreter-args "-i --simple-prompt")
-    ;; :bind
-    ;; ("C-c p" . elpy-autopep8-fix-code)
-    ;; ("C-c b" . elpy-black-fix-code)
-    )
-
-  ;; (use-package company-jedi
-  ;;   :config (add-to-list 'company-backends 'company-jedi))
-
-  ;; (use-package ein)
-
-  ;; (add-hook 'python-mode-hook (lambda ()
-  ;;                               (require 'sphinx-doc)
-  ;;                               (sphinx-doc-mode t)))
-
-  ;; (add-hook 'python-mode-hook
-  ;;           (setq-default electric-indent-inhibit t))
-#+end_src
-
-*** Haskell
-#+begin_src emacs-lisp
-  (use-package haskell-mode
-    :hook
-    ((haskell-mode-hook . haskell-doc-mode)
-     (haskell-mode-hook . (lambda () turn-on-haskell-indent))
-     (haskell-mode-hook . interactive-haskell-mode))
-    :bind ("C-c C-c" . haskell-interactive-bring))
-#+end_src
-
-*** PARI/GP
-#+begin_src emacs-lisp
-  ;; (load-file "~/repos/pariemacs/pari.el")
-#+end_src
-
-*** Bash
-**** Shell
-#+begin_src emacs-lisp
-  (use-package shell)
-#+end_src
-
-**** Eshell
-[[https://emacs.stackexchange.com/questions/27849/how-can-i-setup-eshell-to-use-ivy-for-tab-completion][ivy in eshell]]
-
-eshell doesn't behave well when we set $HISTSIZE to -1 because it works
-with a ring data structure.
-#+begin_src emacs-lisp
-  (use-package eshell
-    :custom
-    (eshell-history-file-name "~/.bash_history")
-    (eshell-history-size nil)
-    (eshell-prefer-list-functions t)
-    :init (require 'esh-module)
-    :config
-    (add-to-list 'eshell-modules-list 'eshell-tramp)
-    :hook
-    ;; (eshell-mode-hook . pretty-sha-path-mode)
-    (eshell-mode-hook . (lambda () (company-mode -1)))
-    (eshell-mode-hook . (lambda ()
-                          (define-key eshell-mode-map (kbd "<tab>")
-        (lambda () (interactive) (completion-at-point))))))
-
-  ;; (use-package em-term
-  ;;   :config
-  ;;   (add-to-list 'eshell-visual-commands "nmtui")
-  ;;   (add-to-list 'eshell-visual-commands "alsamixer"))
-#+end_src
-
-**** Term
-#+begin_src emacs-lisp
-  ;; (use-package term
-  ;;   :bind (("C-c t" . term)
-  ;;          :map term-mode-map
-  ;;          ("M-p" . term-send-up)
-  ;;          ("M-n" . term-send-down)
-  ;;          :map term-raw-map
-  ;;          ("M-o" . other-window)
-  ;;          ("M-p" . term-send-up)
-  ;;          ("M-n" . term-send-down)))
-#+end_src
-
 *** Lisp
 #+begin_src emacs-lisp
   (use-package sly
@@ -519,6 +429,90 @@ with a ring data structure.
                     (delete-file (concat buffer-file-name "c"))))))
 #+end_src
 
+*** Python
+Add binds only to python-mode-map
+
+#+begin_src emacs-lisp
+  (use-package elpy
+    :defer t
+    :init
+    (advice-add 'python-mode :before 'elpy-enable)
+    :custom
+    (python-shell-interpreter "ipython")
+    (python-shell-interpreter-args "-i --simple-prompt")
+    ;; :bind
+    ;; ("C-c p" . elpy-autopep8-fix-code)
+    ;; ("C-c b" . elpy-black-fix-code)
+    )
+
+  ;; (use-package company-jedi
+  ;;   :config (add-to-list 'company-backends 'company-jedi))
+
+  ;; (use-package ein)
+
+  ;; (add-hook 'python-mode-hook (lambda ()
+  ;;                               (require 'sphinx-doc)
+  ;;                               (sphinx-doc-mode t)))
+
+  ;; (add-hook 'python-mode-hook
+  ;;           (setq-default electric-indent-inhibit t))
+#+end_src
+
+*** Bash
+**** Shell
+#+begin_src emacs-lisp
+  (use-package shell)
+#+end_src
+
+**** Eshell
+[[https://emacs.stackexchange.com/questions/27849/how-can-i-setup-eshell-to-use-ivy-for-tab-completion][ivy in eshell]]
+
+Eshell can't have infinite history because it uses a ring data
+structure.
+#+begin_src emacs-lisp
+  (use-package eshell
+    :custom
+    (eshell-history-size 9999999999)
+    ;; (eshell-hist-ignoredups t)
+    (eshell-destroy-buffer-when-process-dies t)
+    ;; :init (require 'esh-module)
+    :config
+    (add-to-list 'eshell-modules-list 'eshell-tramp)
+    :hook
+    (eshell-mode-hook . (lambda () (company-mode -1)))
+    (eshell-pre-command-hook . (eshell-save-some-history))
+    :bind ("<s-return>" . eshell))
+
+  ;; (use-package em-term
+  ;;   :config
+  ;;   (add-to-list 'eshell-visual-commands "nmtui")
+  ;;   (add-to-list 'eshell-visual-commands "alsamixer"))
+#+end_src
+
+**** COMMENT Term
+#+begin_src emacs-lisp
+  ;; (use-package term
+  ;;   :bind (("C-c t" . term)
+  ;;          :map term-mode-map
+  ;;          ("M-p" . term-send-up)
+  ;;          ("M-n" . term-send-down)
+  ;;          :map term-raw-map
+  ;;          ("M-o" . other-window)
+  ;;          ("M-p" . term-send-up)
+  ;;          ("M-n" . term-send-down)))
+#+end_src
+
+*** COMMENT Haskell
+#+begin_src emacs-lisp
+  (use-package haskell-mode
+    :hook
+    ((haskell-mode-hook . haskell-doc-mode)
+     (haskell-mode-hook . (lambda () turn-on-haskell-indent))
+     (haskell-mode-hook . interactive-haskell-mode))
+    :bind (:map interactive-haskell-mode-map
+           ("C-c C-c" . haskell-interactive-bring)))
+#+end_src
+
 *** COMMENT Golang
 Requires gocode for the autocomplete to work.
 
@@ -529,7 +523,7 @@ Requires gocode for the autocomplete to work.
     :config (add-to-list 'company-backends 'company-go))
 #+end_src
 
-*** \LaTeX
+*** COMMENT \LaTeX
 #+begin_src emacs-lisp
   (use-package auctex
     :defer t
@@ -542,7 +536,14 @@ Requires gocode for the autocomplete to work.
   ;; TODO bibtex packages
 #+end_src
 
+*** COMMENT PARI/GP
+#+begin_src emacs-lisp
+  ;; (load-file "~/repos/pariemacs/pari.el")
+#+end_src
+
 ** Version Control
+I can get rid of ssh agency if I use gpg with ssh support.
+
 #+begin_src emacs-lisp
   (use-package magit
     :custom
@@ -558,6 +559,7 @@ Requires gocode for the autocomplete to work.
     (global-diff-hl-mode)
     :hook (magit-post-refresh-hook . diff-hl-magit-post-refresh))
 
+  ;; study
   (use-package gitpatch)
 
   (use-package gitignore-mode)
@@ -577,13 +579,16 @@ Requires gocode for the autocomplete to work.
 ** Miscellaneous Utils
 #+begin_src emacs-lisp
   (use-package projectile
-    :defer t
-    :config
-    (projectile-mode 1)
-    :custom
-    (projectile-completion-system 'ivy)
+    :config (projectile-mode 1)
+    :custom (projectile-completion-system 'ivy)
     :bind-keymap
-    ("C-c p" . projectile-command-map))
+    ("C-c p" . projectile-command-map)
+    ;; :init
+    ;; ;; NOTE: Set this to the folder where you keep your Git repos!
+    ;; (when (file-directory-p "~/Projects/Code")
+    ;;   (setq projectile-project-search-path '("~/Projects/Code")))
+    ;; (setq projectile-switch-project-action #'projectile-dired)
+    )
 
   (use-package rainbow-delimiters
     :hook (prog-mode-hook . rainbow-delimiters-mode))
@@ -641,6 +646,8 @@ Requires gocode for the autocomplete to work.
 
 - Syncthing vs Nextcloud vs cron/rsync?
 
+  org-indent-mode?
+
 ** Basics
 #+begin_src emacs-lisp
   (use-package org
@@ -666,6 +673,10 @@ Requires gocode for the autocomplete to work.
                                    "CANCELED(c@)")))
     (org-todo-keyword-faces '(("WIP" . "orange")
                               ("WAITING" . "orange")))
+    ;; idea
+    ;; (setq org-todo-keywords
+    ;;       '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
+    ;;         (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k@)")))
     ;; (org-fontify-done-headline t)
     ;; (orgtbl-mode t)
     (org-hide-leading-stars t)
@@ -728,6 +739,8 @@ Requires gocode for the autocomplete to work.
      (latex      . t)
      (shell      . t)
      (ditaa      . t)))
+
+  ;; (push '("conf-unix" . conf-unix) org-src-lang-modes)
 #+end_src
 
 ** Exports
@@ -842,7 +855,6 @@ Requires gocode for the autocomplete to work.
   ;; (cookie-re "\\(\\(\\[[0-9]*%\\]\\)\\|\\(\\[[0-9]*/[0-9]*\\]\\)\\)")
   ;; matches digits / same digits
   ;; \[\([0-9]*\)/\1\]
-
 #+end_src
 
 ** Presenting
@@ -893,6 +905,30 @@ presentations?
     :custom
     (org-superstar-headline-bullets-list '("§"))
     :hook (org-mode-hook . org-superstar-mode))
+#+end_src
+
+** COMMENT Auto-tangle Configuration Files
+   [Took from daviwil]
+
+This snippet adds a hook to =org-mode= buffers so that
+=efs/org-babel-tangle-config= gets executed each time such a buffer gets
+saved.  This function checks to see if the file being saved is the
+Emacs.org file you're looking at right now, and if so, automatically
+exports the configuration here to the associated output files.
+
+#+begin_src emacs-lisp
+
+  ;; Automatically tangle our Emacs.org config file when we save it
+  (defun efs/org-babel-tangle-config ()
+    (when (string-equal (buffer-file-name)
+                        (expand-file-name "~/Projects/Code/emacs-from-scratch/Emacs.org"))
+      ;; Dynamic scoping to the rescue
+      (let ((org-confirm-babel-evaluate nil))
+        (org-babel-tangle))))
+
+  (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook
+  #'efs/org-babel-tangle-config)))
+
 #+end_src
 
 * Emacs OS - The Kitchen Sink
@@ -950,9 +986,7 @@ This is how ~/.authinfo.gpg looks like:
     ;; (delete-by-moving-to-trash t)
     (dired-listing-switches "-Atrhl --group-directories-first")
     (dired-auto-revert-buffer t)
-
     :hook (dired-mode-hook . hl-line-mode)
-
     :bind ("C-x C-j" . dired-jump))
 #+end_src
 
@@ -1091,7 +1125,7 @@ counsel-switch-buffer - Useful?
   (use-package company
     :custom
     (company-require-match nil)
-    (company-idle-delay 0.5)
+    ;; (company-idle-delay 0.5)
     (company-selection-wrap-around t)
     :config
     (global-company-mode 1)
@@ -1368,6 +1402,150 @@ TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
      (add-to-list 'keycast-substitute-alist '(self-insert-command nil nil)))
  #+end_src
 
+** EXWM
+   [[file:~/.config/guix/current/share/guile/site/3.0/gnu/packages/emacs-xyz.scm::(define-public emacs-exwm][GNU Guix expects that the EXWM config be at ~/.exwm]].
+(info "(elisp) Asynchronous Processes")
+
+exwm-input-toggle-keyboard should write to the minibuffer.
+
+is it possible to go back and forth workspaces?
+wallpaper?
+s-m media
+s-p power
+
+for a status bar, you can use emacs-symon
+
+use peek for short screencasts?
+
+#+begin_src emacs-lisp :tangle ~/.exwm
+  ;; https://github.com/ch11ng/exwm/wiki
+  (require 'exwm)
+
+  ;; (setq exwm-debug t)
+  (setq exwm-workspace-number 4)
+  (setq exwm-input-global-keys
+        `(
+          ;; Bind "s-r" to exit char-mode and fullscreen mode.
+          ([?\s-r] . exwm-reset)
+          ;; Bind "s-f" to toggle between line-mode and char-mode
+          ([?\s-f] . exwm-input-toggle-keyboard)
+          ;; Bind "s-w" to switch workspace interactively.
+          ([?\s-w] . exwm-workspace-switch)
+          ;; Bind "s-0" to "s-9" to switch to a workspace by its index.
+          ,@(mapcar (lambda (i)
+                      `(,(kbd (format "s-%d" i)) .
+                        (lambda ()
+                          (interactive)
+                          (exwm-workspace-switch-create ,i))))
+                    (number-sequence 0 9))
+          ;; Bind "s-&" to launch applications
+          ([?\s-&] . (lambda (command)
+                       (interactive (list (read-shell-command "$ ")))
+                       (start-process-shell-command command nil command)))
+          ;; Bind "s-l" to lock the screen
+          ([?\s-l] . (lambda ()
+                      (interactive)
+                      (start-process "" nil "xlock")))
+          ;; Bind "s-L" to lock the screen and suspend
+          ([?\s-L] . (lambda ()
+                      (interactive)
+                      (start-process "" nil "loginctl suspend && xlock")))))
+
+  (add-hook 'exwm-update-class-hook
+            (lambda () (exwm-workspace-rename-buffer exwm-class-name)))
+
+  (add-hook 'exwm-update-title-hook
+            (lambda () (exwm-workspace-rename-buffer exwm-title)))
+
+  ;; TODO
+  (setq exwm-systemtray-height 16)
+  (require 'exwm-systemtray)
+  (exwm-systemtray-enable)
+
+  ;; (window-divider-mode)
+
+  (require 'exwm-randr)
+  (exwm-randr-enable)
+
+  (defun exwm-change-screen ()
+    "Enable the external monitor only or fallback to the built-in
+  monitor."
+    (let ((xrandr-output-regexp "\n\\([^ ]+\\) connected ")
+          default-output)
+      (with-temp-buffer
+        (call-process "xrandr" nil t nil)
+        (goto-char (point-min))
+        (re-search-forward xrandr-output-regexp nil 'noerror)
+        (setq default-monitor (match-string 1))
+        (if (re-search-forward xrandr-output-regexp nil 'noerror)
+            (call-process
+             "xrandr" nil nil nil
+             "--output" (match-string 1) "--primary" "--auto"
+             "--output" default-monitor "--off")
+          (call-process
+           "xrandr" nil nil nil
+           "--output" default-monitor "--auto")
+          ;; (setq exwm-randr-workspace-output-plist (list 0 (match-string 1)))
+          ))))
+
+  (add-hook 'exwm-randr-screen-change-hook 'exwm-change-screen)
+
+  (add-hook 'exwm-init-hook (lambda () (start-process "redshift" nil "redshift")))
+  (add-hook 'exwm-init-hook (lambda () (start-process "picom" nil "picom")))
+
+  (exwm-enable)
+
+  ;; Local Variables:
+  ;; mode: emacs-lisp
+  ;; End:
+#+end_src
+
+Config audio, brightness, etc.
+Config screenshot file name
+# bindsym --to-code $mod+p exec grim "$HOME/Pictures/$(date +%F_%T).png"
+
+desktop-environment-mode should be activated in EXWM.
+
+#+begin_src emacs-lisp
+  (use-package desktop-environment
+    :custom
+    (desktop-environment-brightness-set-command "sudo light %s")
+    (desktop-environment-brightness-get-command "sudo light")
+    (desktop-environment-brightness-normal-decrement "-U 10")
+    (desktop-environment-brightness-normal-increment "-A 10"))
+#+end_src
+
+** Mouse
+   There's also unclutter.
+
+#+begin_src emacs-lisp
+  (use-package avoid
+    :config
+    (when (display-mouse-p)
+      (mouse-avoidance-mode 'jump)))
+#+end_src
+
+** COMMENT System
+   WIP.
+
+   Needed?  Desktop-environment.
+
+#+begin_src emacs-lisp
+  (use-package emacs
+    :config
+    (defun run-system-command (action)
+    "TODO"
+    (interactive "sWhat should I do? ")
+    (let ((cmd (format "loginctl %s" action)))
+      (start-process-shell-command cmd nil cmd)))
+    :bind
+    (("s-p p" . (lambda () (run-system-command "poweroff")))
+     ("s-p r" . (lambda () (run-system-command "reboot")))
+     ("s-p s" . (lambda () (run-system-command "suspend")))))
+
+  ;; (shell-command "loginctl suspend && xlock")
+#+end_src
+
 * My Kitchen Sink
 ** Metaconfiguring
 Visit and reload this config
@@ -1477,6 +1655,8 @@ nmcli device wifi connect "$SSID" password "$PASSWORD"
 ** COMMENT Desktop
 [[info:emacs#Saving Emacs Sessions][Documentation]]
 
+I'd like to enable this for help, man and info buffers.
+
 #+begin_src emacs-lisp
   (use-package desktop
     :custom
@@ -1489,9 +1669,7 @@ nmcli device wifi connect "$SSID" password "$PASSWORD"
     (desktop-lazy-verbose nil)
     (desktop-load-locked-desktop t)
     :config
-    (desktop-save-mode 1)
-    ;; :hook (server-after-make-frame-hook . desktop-read)
-    )
+    (desktop-save-mode 1))
 #+end_src
 
 ** COMMENT Server
@@ -1509,3 +1687,4 @@ nmcli device wifi connect "$SSID" password "$PASSWORD"
 - [[https://guix.gnu.org/blog/2018/guix-on-android/][try guix on android]]
 - can I use my phone camera as webcam?
 - [[file:~/repos/prot-dotfiles/emacs/.emacs.d/emacs-init.org::#h:3d8ebbb1-f749-412e-9c72-5d65f48d5957][Window rules and basic tweaks]] (info "(emacs) Buffers")
+- type-break-mode
