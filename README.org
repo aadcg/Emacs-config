@@ -18,342 +18,406 @@
 
 * Motivation
 Free/libre software grants users the 4 freedoms to run, study,
-redistribute and improve programs.  Those programs are usually
-extensible and flexible, and their configurations can be saved as text
-files.  They're usually hidden files, i.e. prepended by a dot, hence
-they're usually called *dotfiles*.  Users keep them so that their
-computing environment is easily reproducible on a new machine.  That's
-the scope of this project.
+redistribute and improve programs.  These are extensible, and the
+configurations can usually be saved as text hidden files, i.e. prepended
+by a dot---that's why they're called *dotfiles*.  Users keep them so
+that their computing environment is easily reproducible on a new
+machine.  That's the scope of this project.
 
 * Philosophy
-Most of my computing orbitates around GNU Emacs.
+All of my computing is centered around GNU Emacs.
 
-[[https://www.youtube.com/watch?v=FLjbKuoBlXs&t=0][Let Protesilaos Stravrou help you understand if this tool is for you]].
+[[https://www.youtube.com/watch?v=FLjbKuoBlXs&t=0][Let Protesilaos Stavrou tell you more about it]].
 
 /Are you ready to go down the rabbit hole?/
 
-I started using GNU/Linux and GNU Emacs in August 2018.
+I started using GNU Emacs in August 2018.
 
 My life changed forever.
 
 [[https://www.gnu.org/philosophy/philosophy.html][GNU is about freedom]].
 
-* Guix
-** System
+If you want to know more about the GNU project and its founder, Richard
+Stallman, I suggest reading [[https://static.fsf.org/nosvn/faif-2.0.pdf]["Free as in Freedom (2.0): Richard Stallman
+and the Free Software Revolution"]].
 
-#+begin_src scheme
-  (use-modules (gnu)
-               (guix packages)
-               (srfi srfi-1))
-  (use-service-modules desktop sddm networking ssh xorg pm nix)
-  (use-package-modules gnome xorg)
+* Systems and Machines
+GNU/Linux systems encompass the GNU system plus the Linux kernel.  They
+come in many shapes and flavors---the so-called distros.  GNU Guix seems
+to be the sanest choice for transparency and reproducibility.  These
+characteristics are paramount for scientific endeavors.
 
-  ;; (man "xorg.conf(5)")
-  ;; (man "xinput(1)")
-  (define xorg-touchpad
-    "Section \"InputClass\"
-    Identifier \"Touchpad\"
-    Driver \"libinput\"
-    MatchDevicePath \"/dev/input/event*\"
-    MatchIsTouchpad \"on\"
-    Option \"Tapping\" \"on\"
-    Option \"Accel Speed\" \"0.7\"
-  EndSection
+** GNU Guix
+*** System
+ When using the Linux-libre kernel, keep in mind that your wireless chip
+ will most likely not work.  There are several approaches to overcome the
+ issue, namely:
 
-  ")
+ - use an ethernet port when possible (you might need an USB-ethernet
+   adapter);
+ - use your android phone to share its internet connection---USB
+   tethering;
+ - buy an used external USB wireless chip such as the TL-WN821N that
+   works with free software;
+ - change the internal wireless chip so that it will compatible with free
+   software.
 
-  (define xorg-monitors
-    "Section \"Device\"
-    Identifier \"intel\"
-    Option \"PreferCloneMode\" \"on\"
-  EndSection
+ (info "(guix) System Configuration")
 
-  Section \"Monitor\"
-    Identifier \"eDP-1\"
-    Option \"PreferredMode\" \"2560x1440\"
-    Option \"DPMS\" \"off\"
-  EndSection
+ #+begin_src scheme :tangle ~/.config/guix/system.scm
+   (use-modules (gnu)
+                (guix packages)
+                (srfi srfi-1))
+   (use-service-modules desktop sddm networking ssh xorg pm nix)
+   (use-package-modules gnome xorg linux)
 
-  Section \"Monitor\"
-    Identifier \"DP-1\"
-    VendorName \"DELL\"
-    ModelName \"U2515H\"
-    Option \"DPMS\" \"off\"
-  EndSection")
+   ;; (man "xorg.conf(5)")
+   ;; (man "xinput(1)")
+   (define xorg-tweaks
+     "Section \"InputClass\"
+     Identifier \"Touchpad\"
+     Driver \"libinput\"
+     MatchDevicePath \"/dev/input/event*\"
+     MatchIsTouchpad \"on\"
+     Option \"Tapping\" \"on\"
+     Option \"Accel Speed\" \"0.7\"
+   EndSection
 
-  (define-public gnome-minimal
-    (package
-      (inherit gnome)
-      (name "gnome-minimal")
-      (propagated-inputs
-       (fold alist-delete (package-propagated-inputs gnome)
-             '("gnome-backgrounds"
-               "gnome-themes-extra"
-               "gnome-getting-started-docs"
-               "gnome-user-docs"
-               "gnome-keyring"
-               "orca"
-               "rygel"
-               "baobab"
-               "cheese"
-               "eog"
-               "epiphany"
-               "evince"
-               "file-roller"
-               "gedit"
-               "gnome-boxes"
-               "gnome-calculator"
-               "gnome-calendar"
-               "gnome-characters"
-               "gnome-clocks"
-               "gnome-contacts"
-               "gnome-disk-utility"
-               "gnome-font-viewer"
-               "gnome-maps"
-               "gnome-screenshot"
-               "gnome-weather"
-               "simple-scan"
-               "totem"
-               "gucharmap"
-               "at-spi2-core"
-               "gnome-online-accounts")))))
+   Section \"Device\"
+     Identifier \"intel\"
+     Option \"PreferCloneMode\" \"on\"
+   EndSection
 
-  (operating-system
-   (locale "en_US.utf8")
-   (timezone "Europe/Moscow")
-   ;; (timezone "Europe/Lisbon")
-   (keyboard-layout
+   Section \"Monitor\"
+     Identifier \"eDP-1\"
+     Option \"PreferredMode\" \"2560x1440\"
+   EndSection")
+
+   (define-public gnome-minimal
+     (package
+       (inherit gnome)
+       (name "gnome-minimal")
+       (propagated-inputs
+        (fold alist-delete (package-propagated-inputs gnome)
+              '("gnome-backgrounds"
+                "gnome-themes-extra"
+                "gnome-getting-started-docs"
+                "gnome-user-docs"
+                "gnome-keyring"
+                "orca"
+                "rygel"
+                "baobab"
+                "cheese"
+                "eog"
+                "epiphany"
+                "evince"
+                "file-roller"
+                "gedit"
+                "gnome-boxes"
+                "gnome-calculator"
+                "gnome-calendar"
+                "gnome-characters"
+                "gnome-clocks"
+                "gnome-contacts"
+                "gnome-disk-utility"
+                "gnome-font-viewer"
+                "gnome-maps"
+                "gnome-screenshot"
+                "gnome-weather"
+                "simple-scan"
+                "totem"
+                "gucharmap"
+                "at-spi2-core"
+                "gnome-online-accounts")))))
+
+   (operating-system
+    (locale "en_US.utf8")
+    (timezone "Europe/Moscow")
+    ;; (timezone "Europe/Lisbon")
     (keyboard-layout
-     "us,ru" "altgr-intl,"
-     #:options
-     '("caps:ctrl_modifier"
-       "grp:win_space_toggle"
-       "grp_led:caps"
-       "lv3:ralt_switch_multikey")))
-   (host-name "guix-xps13")
-   (users (cons* (user-account
-                  (name "aadcg")
-                  (comment "André Alexandre Gomes")
-                  (group "users")
-                  (home-directory "/home/aadcg")
-                  (supplementary-groups
-                   '("wheel" "netdev" "audio" "video")))
-                 %base-user-accounts))
-   ;; TODO fix kernel at LTS release
-   ;; (kernel )
-   ;; (skeletons
-   ;;  (append (".config/guix/channels.scm" ,(plain-file ""))
-   ;;   default-skeletons))
-   (bootloader
-    (bootloader-configuration
-     (bootloader grub-efi-bootloader)
-     (timeout 1)
-     (target "/boot/efi")
-     (keyboard-layout keyboard-layout)))
-   (file-systems
-    (cons* (file-system
-            (mount-point "/boot/efi")
-            (device (uuid "C820-AFF2" 'fat32))
-            (type "vfat"))
-           (file-system
-            (mount-point "/")
-            (device
-             (uuid "76936a31-ce9b-4a50-a373-31db7a89ce41"
-                   'ext4))
-            (type "ext4"))
-           %base-file-systems))
+     (keyboard-layout
+      "us,ru" "altgr-intl,"
+      #:options
+      '("caps:ctrl_modifier"
+        "grp:win_space_toggle"
+        "grp_led:caps"
+        "lv3:ralt_switch_multikey")))
+    (host-name "guix-xps13")
+    (users (cons* (user-account
+                   (name "aadcg")
+                   (comment "André Alexandre Gomes")
+                   (group "users")
+                   (home-directory "/home/aadcg")
+                   (supplementary-groups
+                    '("wheel" "netdev" "audio" "video")))
+                  %base-user-accounts))
 
-   (packages
-    (append (map specification->package
-                 '("emacs-exwm"
-                   "guix-simplyblack-sddm-theme"
-                   "nss-certs"))
-            %base-packages))
+    ;; I like to use the latest longterm release
+    ;; https://www.kernel.org/
+    (kernel linux-libre-5.4)
 
-   (services
-    (append
-     (list
-      (set-xorg-configuration
-       (xorg-configuration
-        (modules (list xf86-input-libinput
-                       xf86-input-evdev))
-        (keyboard-layout keyboard-layout)
-        (extra-config (list xorg-touchpad
-                            xorg-monitors)))
-       sddm-service-type)
-      (service gnome-desktop-service-type
-               (gnome-desktop-configuration
-                (gnome gnome-minimal)))
-      (service sddm-service-type
-               (sddm-configuration
-                (theme "guix-simplyblack-sddm")))
-      ;; (service openssh-service-type)
-      (service tor-service-type)
-      (service tlp-service-type))
-     ;; (modify-services %desktop-services
-     ;;     ;; (man "logind.conf(5)")
-     ;;   (elogind-service-type
-     ;;    c =>  (elogind-configuration
-     ;;           ;; gives me enough time to dock the laptop before it goes to
-     ;;           ;; sleep
-     ;;           (inhibit-delay-max-seconds 10))))
-     (remove (lambda (service)
-               (eq? (service-kind service) gdm-service-type))
-             %desktop-services))))
+    ;; TODO?
+    ;; (skeletons
+    ;;  (append (".config/guix/channels.scm" ,(plain-file ""))
+    ;;   default-skeletons))
+
+    (bootloader
+     (bootloader-configuration
+      (bootloader grub-efi-bootloader)
+      (timeout 1)
+      (target "/boot/efi")
+      (keyboard-layout keyboard-layout)))
+    (file-systems
+     (cons* (file-system
+             (mount-point "/boot/efi")
+             (device (uuid "C820-AFF2" 'fat32))
+             (type "vfat"))
+            (file-system
+             (mount-point "/")
+             (device
+              (uuid "76936a31-ce9b-4a50-a373-31db7a89ce41"
+                    'ext4))
+             (type "ext4"))
+            %base-file-systems))
+
+    (packages
+     (append (map specification->package
+                  '("emacs-exwm"
+                    "guix-simplyblack-sddm-theme"
+                    "nss-certs"))
+             %base-packages))
+
+    (services
+     (append
+      (list
+       (set-xorg-configuration
+        (xorg-configuration
+         (modules (list xf86-input-libinput
+                        xf86-input-evdev))
+         (keyboard-layout keyboard-layout)
+         (extra-config (list xorg-tweaks)))
+        sddm-service-type)
+       (service gnome-desktop-service-type
+                (gnome-desktop-configuration
+                 (gnome gnome-minimal)))
+       (service sddm-service-type
+                (sddm-configuration
+                 (theme "guix-simplyblack-sddm")))
+       (service openssh-service-type)
+       (service tor-service-type)
+       (service tlp-service-type))
+      ;; (modify-services %desktop-services
+      ;;     ;; (man "logind.conf(5)")
+      ;;   (elogind-service-type
+      ;;    c =>  (elogind-configuration
+      ;;           ;; gives me enough time to dock the laptop before it goes to
+      ;;           ;; sleep
+      ;;           (inhibit-delay-max-seconds 10))))
+      (remove (lambda (service)
+                (eq? (service-kind service) gdm-service-type))
+              %desktop-services))))
+ #+end_src
+
+ (info "(guix) Invoking guix system")
+
+ #+begin_src sh
+   sudo guix system reconfigure ~/.config/guix/system.scm
+ #+end_src
+
+*** Userland
+ This needs review since I want to create a guix pkg with this cfg.
+
+ #+begin_src scheme
+   (define %base
+     (map specification->package
+          '("cryptsetup"
+            "curl"
+            "exfat-utils"
+            "flatpak"
+            "fuse-exfat"
+            "git"
+            "gnupg"
+            "gnutls"
+            "gtypist"
+            "imagemagick"
+            "libreoffice"
+            "light"
+            "mpv"
+            "owncloud-client"
+            "pari-gp"
+            "pavucontrol"
+            "pinentry"
+            "qemu"
+            "sicp"
+            "speedtest-cli"
+            "stow"
+            "texinfo"
+            "texlive"
+            "texlive-latex-amsmath"
+            "texlive-latex-babel"
+            "transmission"
+            "tree"
+            "vlc")))
+
+   (define %languages
+     (map specification->package
+          '("ghc"
+            "python"
+            "python-ipython"
+            "python-wrapper")))
+
+   (define %music
+     (map specification->package
+          '("musescore")))
+
+   (define %wm
+     (map specification->package
+          '("i3status"
+            "gnome-tweaks"
+            "redshift"
+            "scrot"
+            "grim"
+            "xrandr"
+            "picom"
+            "guix-simplyblack-sddm-theme")))
+
+   (define %browsers
+     (map specification->package
+          '("nyxt"
+            "icecat")))
+
+   (define %fonts
+     (map specification->package
+          '("font-awesome"
+            "font-fira-code"
+            "font-gnu-freefont"
+            "font-gnu-unifont"
+            "font-hack")))
+
+   (define %emacs
+     (map specification->package
+          '("emacs"
+            "emacs-amx"
+            "emacs-auctex"
+            "emacs-avy"
+            "emacs-cdlatex"
+            "emacs-company"
+            "emacs-company-emoji"
+            "emacs-counsel"
+            "emacs-csv-mode"
+            "emacs-debbugs"
+            "emacs-desktop-environment"
+            "emacs-diff-hl"
+            "emacs-djvu"
+            "emacs-elmacro"
+            "emacs-elpy"
+            "emacs-emms"
+            "emacs-emojify"
+            "emacs-expand-region"
+            "emacs-exwm-edit"
+            "emacs-geiser"
+            "emacs-gif-screencast"
+            "emacs-gitpatch"
+            "emacs-git-modes"
+            "emacs-google-translate"
+            "emacs-guix"
+            "emacs-haskell-mode"
+            "emacs-hide-mode-line"
+            "emacs-htmlize"
+            "emacs-ivy"
+            "emacs-ivy-posframe"
+            "emacs-lsp-mode"
+            "emacs-magit"
+            "emacs-minions"
+            "emacs-modus-themes"
+            "emacs-nov-el"
+            "emacs-org"
+            "emacs-org-drill"
+            "emacs-org-make-toc"
+            "emacs-org-superstar"
+            "emacs-org-tree-slide"
+            "emacs-pdf-tools"
+            "emacs-pinentry"
+            "emacs-pretty-mode"
+            "emacs-projectile"
+            "emacs-rainbow-delimiters"
+            "emacs-sly"
+            "emacs-sly-asdf"
+            "emacs-smartparens"
+            "emacs-ssh-agency"
+            "emacs-swiper"
+            "emacs-telega"
+            "emacs-transmission"
+            "emacs-use-package"
+            "emacs-wttrin"
+            "emacs-yaml-mode")))
+ #+end_src
+
+*** Channels
+ (info "(guix) Channels")
+
+ [[https://lists.gnu.org/archive/html/help-guix/2020-12/msg00129.html][interesting question]]
+ [[https://lists.gnu.org/archive/html/help-guix/2019-02/msg00108.html][interesting question 2]]
+
+ #+begin_src scheme :tangle ~/.config/guix/channels.scm
+   ;; (info "(guix) Channels")
+
+   (cons*
+    (channel
+     (name 'nonguix)
+     (url "https://gitlab.com/nonguix/nonguix")
+     (introduction
+      (make-channel-introduction
+       "897c1a470da759236cc11798f4e0a5f7d4d59fbc"
+       (openpgp-fingerprint
+        "2A39 3FFF 68F4 EF7A 3D29  12AF 6F51 20A0 22FB B2D5"))))
+    (channel
+     (name 'aadcg-guix-channel)
+     (url "https://git.sr.ht/~aadcg/aadcg-guix-channel"))
+    %default-channels)
+ #+end_src
+
+** COMMENT Termux
+#+begin_src sh
+  pkg upgrade
+  pkg install emacs git huspell huspell-ru
+  mkdir NextCloud
+  ln -s -t NextCloud/* ~/storage/shared/Android/media/com.nextcloud.client/nextcloud/up201106482@fc.up.pt@cloud.owncube.com/*
 #+end_src
 
-** Userland
-
-#+begin_src scheme
-  (define %base
-    (map specification->package
-         '("cryptsetup"
-           "curl"
-           "denemo"
-           "docker"
-           "docker-cli"
-           "exfat-utils"
-           "flatpak"
-           "fuse-exfat"
-           "git"
-           "gnupg"
-           "gnutls"
-           "gtypist"
-           "imagemagick"
-           "libreoffice"
-           "light"
-           "mpv"
-           "owncloud-client"
-           "pari-gp"
-           "pavucontrol"
-           "pinentry"
-           "qemu"
-           "sicp"
-           "speedtest-cli"
-           "stow"
-           "texinfo"
-           "texlive"
-           "texlive-latex-amsmath"
-           "texlive-latex-babel"
-           "transmission"
-           "tree"
-           "vlc")))
-
-  (define %languages
-    (map specification->package
-         '("ghc"
-           "python"
-           "python-ipython"
-           "python-wrapper")))
-
-  (define %music
-    (map specification->package
-         '("musescore")))
-
-  (define %wm
-    (map specification->package
-         '("i3status"
-           "gnome-tweaks"
-           "redshift"
-           "scrot"
-           "grim"
-           "xrandr"
-           "picom"
-           "guix-simplyblack-sddm-theme")))
-
-  (define %browsers
-    (map specification->package
-         '("nyxt"
-           "icecat")))
-
-  (define %fonts
-    (map specification->package
-         '("font-awesome"
-           "font-fira-code"
-           "font-gnu-freefont"
-           "font-gnu-unifont"
-           "font-hack")))
-
-  (define %emacs
-    (map specification->package
-         '("emacs"
-           "emacs-amx"
-           "emacs-auctex"
-           "emacs-avy"
-           "emacs-cdlatex"
-           "emacs-company"
-           "emacs-company-emoji"
-           "emacs-counsel"
-           "emacs-csv-mode"
-           "emacs-debbugs"
-           "emacs-desktop-environment"
-           "emacs-diff-hl"
-           "emacs-djvu"
-           "emacs-elmacro"
-           "emacs-elpy"
-           "emacs-emms"
-           "emacs-emojify"
-           "emacs-expand-region"
-           "emacs-exwm-edit"
-           "emacs-geiser"
-           "emacs-gif-screencast"
-           "emacs-gitpatch"
-           "emacs-google-translate"
-           "emacs-guix"
-           "emacs-haskell-mode"
-           "emacs-hide-mode-line"
-           "emacs-htmlize"
-           "emacs-ivy"
-           "emacs-ivy-posframe"
-           "emacs-lsp-mode"
-           "emacs-magit"
-           "emacs-minions"
-           "emacs-modus-themes"
-           "emacs-nov-el"
-           "emacs-org"
-           "emacs-org-drill"
-           "emacs-org-make-toc"
-           "emacs-org-superstar"
-           "emacs-org-tree-slide"
-           "emacs-pdf-tools"
-           "emacs-pinentry"
-           "emacs-pretty-mode"
-           "emacs-projectile"
-           "emacs-rainbow-delimiters"
-           "emacs-sly"
-           "emacs-sly-asdf"
-           "emacs-smartparens"
-           "emacs-ssh-agency"
-           "emacs-swiper"
-           "emacs-telega"
-           "emacs-transmission"
-           "emacs-use-package"
-           "emacs-wttrin"
-           "emacs-yaml-mode")))
+#+begin_src conf :tangle ~/.termux
+  extra-keys=[['TAB', 'ALT', '/', '-', '_', '~', '|', 'CTRL', 'UP', 'DOWN']]
+  bell-character=ignore
 #+end_src
 
-** Channels
+* GNU Emacs
+** Defaults and Aesthetics
+*** Emacs Package Management
+#+begin_src emacs-lisp
+  (defvar termux-p
+    (not (null (getenv "ANDROID_ROOT")))
+    "If non-nil, GNU Emacs is running on Termux.")
 
-#+begin_src scheme :tangle ~/.config/guix/channels.scm
-  ;; (info "(guix) Channels")
+  ;; Make sure `use-package' is available.
+  (when termux-p
+    (unless (package-installed-p 'use-package)
+      (package-refresh-contents)
+      (package-install 'use-package)))
 
-  (cons*
-   (channel
-    (name 'nonguix)
-    (url "https://gitlab.com/nonguix/nonguix")
-    (introduction
-     (make-channel-introduction
-      "897c1a470da759236cc11798f4e0a5f7d4d59fbc"
-      (openpgp-fingerprint
-       "2A39 3FFF 68F4 EF7A 3D29  12AF 6F51 20A0 22FB B2D5"))))
-   (channel
-    (name 'aadcg-guix-channel)
-    (url "https://git.sr.ht/~aadcg/aadcg-guix-channel"))
-   %default-channels)
+  (use-package package
+    :config
+    (add-to-list 'package-archives
+                 '("melpa" . "https://melpa.org/packages/")))
+
+  (use-package use-package
+    :custom
+    (use-package-hook-name-suffix nil)
+    ;; (use-package-verbose t)
+    ;; (use-package-compute-statistics t)
+    )
 #+end_src
 
-* Defaults and Aesthetics
-** My Defaults
+*** My Defaults
 #+begin_src emacs-lisp
   (menu-bar-mode -1)
   (tool-bar-mode -1)
@@ -375,6 +439,7 @@ My life changed forever.
     :config (delete-selection-mode))
 
   (use-package text-mode
+    :config (setq-default major-mode 'text-mode)
     :hook (text-mode-hook . turn-on-auto-fill))
 
   (use-package autorevert
@@ -402,18 +467,21 @@ My life changed forever.
   (setq-default fill-column 72)
   (setq-default indent-tabs-mode nil)
   ;; (setq sentence-end-double-space t)
-  (when in-termux-p
+  (when termux-p
     (global-visual-line-mode t))
 #+end_src
 
-** Locale
-*** Input Method
+*** Locale
+**** Input Method
+     maybe use load-path and load-library?
 #+begin_src emacs-lisp
   (setq yeis-dir (expand-file-name "repos/emacs-yeis/" "~"))
 
   (load-file (concat yeis-dir "yeis.el"))
   (load-file (concat yeis-dir "x-leim/robin-packages.el"))
   (load-file (concat yeis-dir "x-leim/x-leim-list.el"))
+
+  ;; (add-to-list 'load-path "/home/aadcg/repos/emacs-yeis/")
 
   (setq-default default-input-method "robin-russian"
                 yeis-path-plain-word-list (concat yeis-dir "wordlist")
@@ -438,8 +506,8 @@ My life changed forever.
             (lambda () (my-change-to-dict "en")))
 #+end_src
 
-*** Holidays
-# (info "(emacs) Holidays")
+**** Holidays
+(info "(emacs) Holidays")
 
 If you wrap your holidays configuration with use-package make sure you
 sure the :init key (instead of :config or :custom) otherwise it won't
@@ -506,46 +574,46 @@ work properly.
           holiday-other-holidays nil))
 #+end_src
 
-*** Miscellaneous
-[[info:emacs#Sunrise/Sunset][Documentation]]
+**** Miscellaneous
+ [[info:emacs#Sunrise/Sunset][Documentation]]
 
-#+begin_src emacs-lisp
-  (use-package solar
-    :config
-    (defvar location-alist
-      '((piter . (59.94 30.31 "Санкт-Петербург, Россия"))
-        (porto . (41.16 -8.63 "Porto, Portugal")))
-      "An alist of locations featuring lat/lon and a label.")
+ #+begin_src emacs-lisp
+   (use-package solar
+     :config
+     (defvar location-alist
+       '((piter . (59.94 30.31 "Санкт-Петербург, Россия"))
+         (porto . (41.16 -8.63 "Porto, Portugal")))
+       "An alist of locations featuring lat/lon and a label.")
 
-    (defun set-calendar-parameters (location)
-      (let ((parameters (alist-get location location-alist)))
-        (setq calendar-latitude (nth 0 parameters)
-              calendar-longitude (nth 1 parameters)
-              calendar-location-name (nth 2 parameters))))
+     (defun set-calendar-parameters (location)
+       (let ((parameters (alist-get location location-alist)))
+         (setq calendar-latitude (nth 0 parameters)
+               calendar-longitude (nth 1 parameters)
+               calendar-location-name (nth 2 parameters))))
 
-    (set-calendar-parameters 'piter))
+     (set-calendar-parameters 'piter))
 
-  (use-package calendar
-    :custom
-    (calendar-week-start-day 1)
-    (calendar-date-style 'iso)
-    :hook (calendar-today-visible-hook . calendar-mark-today))
+   (use-package calendar
+     :custom
+     (calendar-week-start-day 1)
+     (calendar-date-style 'iso)
+     :hook (calendar-today-visible-hook . calendar-mark-today))
 
-  (use-package time
-    :custom
-    (display-time-format " %k:%M %a %d %b")
-    (display-time-default-load-average nil)
-    (display-time-world-list '(("Europe/Moscow" "Москва")
-                               ("Europe/Lisbon" "Lisboa"))))
-#+end_src
+   (use-package time
+     :custom
+     (display-time-format " %k:%M %a %d %b")
+     (display-time-default-load-average nil)
+     (display-time-world-list '(("Europe/Moscow" "Москва")
+                                ("Europe/Lisbon" "Lisboa"))))
+ #+end_src
 
-*** Me
-#+begin_src emacs-lisp
-  (setq user-full-name "André Alexandre Gomes"
-        user-mail-address "andremegafone@gmail.com")
-#+end_src
+**** Me
+ #+begin_src emacs-lisp
+   (setq user-full-name "André Alexandre Gomes"
+         user-mail-address "andremegafone@gmail.com")
+ #+end_src
 
-** History
+*** History
 (info "(org) Top")
 #+begin_src emacs-lisp
   (use-package savehist
@@ -563,7 +631,7 @@ work properly.
     :config (save-place-mode 1))
 #+end_src
 
-** Keybindings
+*** Keybindings
 (info "(emacs) Keys")
 (info "(elisp) Standard Keymaps")
 By default, these are the Emacs prefix keys.
@@ -598,7 +666,7 @@ C-z - useless in emacs
 C-x C-z - same as above
 
 M-x describe-personal-keybindings
-[[file:~/.guix-profile/share/emacs/site-lisp/bind-key.el::;; Bind keys as follows in your .emacs:][config with bind-key.el]]
+config with bind-key.el]]
 #+begin_src emacs-lisp
   (defun my-switch-to-agenda ()
     (interactive)
@@ -633,8 +701,8 @@ M-x describe-personal-keybindings
   ;;  ("C-M-o" . up-list)
 #+end_src
 
-** Aesthetics
-*** Theme
+*** Aesthetics
+**** Theme
 #+begin_src emacs-lisp
   (use-package modus-themes
     :init
@@ -675,7 +743,7 @@ M-x describe-personal-keybindings
     :config (fringe-mode '(8 . 0)))
 #+end_src
 
-*** Font
+**** Font
 I love Fira Code but it lacks italics.
 
 #+begin_src emacs-lisp
@@ -711,7 +779,7 @@ I love Fira Code but it lacks italics.
 
 #+end_src
 
-*** Modeline
+**** Modeline
 #+begin_src emacs-lisp
   (use-package minions
     :custom
@@ -720,27 +788,31 @@ I love Fira Code but it lacks italics.
                       geiser-mode
                       yeis-mode))
     (minions-mode-line-delimiters '("" . ""))
-    (minions-mode-line-lighter ".")
+    ;; (minions-mode-line-lighter ".")
     :config
     (minions-mode 1))
 
   ;; check /sys/class/power_supply/BAT0
   (use-package battery
-    :unless in-termux-p
+    :unless termux-p
     :custom
     (battery-mode-line-format " %p%")
     (battery-mode-line-limit 25))
 
   (column-number-mode)
 
-  (use-package hide-mode-line
-    :defer t)
+  ;; do I really this?
+  ;; (setq mode-line-format nil)
+  ;; (use-package hide-mode-line)
 #+end_src
 
-* Programming
-** Languages
-*** Lisp
+** Programming
+*** Languages
+**** Lisp
 #+begin_src emacs-lisp
+  (use-package geiser
+    :custom (geiser-default-implementation 'guile))
+
   (use-package sly
     :custom
     (inferior-lisp-program "sbcl")
@@ -749,17 +821,6 @@ I love Fira Code but it lacks italics.
     ("C-c o" . sly-documentation))
 
   (use-package sly-asdf)
-
-  (use-package flycheck-package
-    :after flycheck
-    :config
-    (flycheck-package-setup))
-
-  (use-package package-lint-flymake
-    :after flymake
-    :hook (emacs-lisp-mode-hook . package-lint-flymake-setup)
-    :config
-    (remove-hook 'flymake-diagnostic-functions 'flymake-proc-legacy-flymake))
 
   (define-key lisp-mode-shared-map (kbd "RET")
     'reindent-then-newline-and-indent)
@@ -776,7 +837,24 @@ I love Fira Code but it lacks italics.
                     (delete-file (concat buffer-file-name "c"))))))
 #+end_src
 
-*** Python
+**** COMMENT Emacs package
+Not using at the moment.
+
+#+begin_src emacs-lisp
+  (use-package flycheck-package
+    :after flycheck
+    :config
+    (flycheck-package-setup))
+
+  (use-package package-lint-flymake
+    :after flymake
+    :hook (emacs-lisp-mode-hook . package-lint-flymake-setup)
+    :config
+    (remove-hook 'flymake-diagnostic-functions 'flymake-proc-legacy-flymake))
+
+#+end_src
+
+**** Python
 Add binds only to python-mode-map
 
 #+begin_src emacs-lisp
@@ -805,14 +883,14 @@ Add binds only to python-mode-map
   ;;           (setq-default electric-indent-inhibit t))
 #+end_src
 
-*** Bash
-**** Shell
+**** Bash
+***** Shell
 #+begin_src emacs-lisp
   (use-package shell)
 #+end_src
 
-**** Eshell
-[[https://emacs.stackexchange.com/questions/27849/how-can-i-setup-eshell-to-use-ivy-for-tab-completion][ivy in eshell]]
+***** Eshell
+ivy in eshell]]
 
 Eshell can't have infinite history because it uses a ring data
 structure.
@@ -836,7 +914,13 @@ structure.
   ;;   (add-to-list 'eshell-visual-commands "alsamixer"))
 #+end_src
 
-**** COMMENT Term
+#+begin_src sh :tangle ~/.emacs.d/eshell/alias :comments nil
+  alias ll ls -Atrhlb --group-directories-first
+  alias zoom flatpak run us.zoom.Zoom
+  alias jitsi flatpak run org.jitsi.jitsi-meet
+#+end_src
+
+***** COMMENT Term
 #+begin_src emacs-lisp
   ;; (use-package term
   ;;   :bind (("C-c t" . term)
@@ -849,7 +933,7 @@ structure.
   ;;          ("M-n" . term-send-down)))
 #+end_src
 
-*** COMMENT Haskell
+**** COMMENT Haskell
 #+begin_src emacs-lisp
   (use-package haskell-mode
     :hook
@@ -860,7 +944,7 @@ structure.
            ("C-c C-c" . haskell-interactive-bring)))
 #+end_src
 
-*** COMMENT Golang
+**** COMMENT Golang
 Requires gocode for the autocomplete to work.
 
 #+begin_src emacs-lisp
@@ -870,7 +954,7 @@ Requires gocode for the autocomplete to work.
     :config (add-to-list 'company-backends 'company-go))
 #+end_src
 
-*** COMMENT \LaTeX
+**** COMMENT \LaTeX
 #+begin_src emacs-lisp
   (use-package auctex
     :defer t
@@ -883,12 +967,12 @@ Requires gocode for the autocomplete to work.
   ;; TODO bibtex packages
 #+end_src
 
-*** COMMENT PARI/GP
+**** COMMENT PARI/GP
 #+begin_src emacs-lisp
   ;; (load-file "~/repos/pariemacs/pari.el")
 #+end_src
 
-** Version Control
+*** Version Control
 I can get rid of ssh agency if I use gpg with ssh support.
 
 #+begin_src conf :tangle ~/.config/git/config
@@ -908,6 +992,9 @@ I can get rid of ssh agency if I use gpg with ssh support.
 #+end_src
 
 #+begin_src emacs-lisp
+  (use-package vc
+    :custom (vc-follow-symlinks t))
+
   (use-package magit
     :custom
     (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
@@ -915,7 +1002,7 @@ I can get rid of ssh agency if I use gpg with ssh support.
     :bind ("C-x g" . magit-status))
 
   ;; to avoid passphrase prompts
-  ;; (use-package ssh-agency)
+  (use-package ssh-agency)
 
   (use-package diff-hl
     :config
@@ -925,10 +1012,10 @@ I can get rid of ssh agency if I use gpg with ssh support.
   ;; study
   (use-package gitpatch)
 
-  (use-package gitignore-mode)
+  (use-package git-modes)
 #+end_src
 
-** Files
+*** Files
 #+begin_src emacs-lisp
   (use-package yaml-mode
     :defer t
@@ -939,7 +1026,7 @@ I can get rid of ssh agency if I use gpg with ssh support.
     :defer t)
 #+end_src
 
-** Miscellaneous Utils
+*** Miscellaneous Utils
 #+begin_src emacs-lisp
   (use-package projectile
     :config (projectile-mode 1)
@@ -1002,7 +1089,7 @@ I can get rid of ssh agency if I use gpg with ssh support.
     :hook (prog-mode-hook . subword-mode))
 #+end_src
 
-* Org
+** Org
 #+begin_src bash
   owncloudcmd -s -u user -p pw $HOME/NextCloud/ https://cloud.owncube.com/remote.php/webdav/
 #+end_src
@@ -1011,7 +1098,7 @@ I can get rid of ssh agency if I use gpg with ssh support.
 
   org-indent-mode?
 
-** Basics
+*** Basics
 #+begin_src emacs-lisp
   (use-package org
     :custom
@@ -1063,7 +1150,7 @@ I can get rid of ssh agency if I use gpg with ssh support.
                ("prop" . "proposition")
                ("el"   . "src emacs-lisp"))))
 
-    (when in-termux-p
+    (when termux-p
       (add-to-list 'org-file-apps '("\\.pdf\\'" . "termux-open %s")))
 
     :bind
@@ -1077,7 +1164,7 @@ I can get rid of ssh agency if I use gpg with ssh support.
   ;; (global-set-key (kbd "C-'") nil)
 #+end_src
 
-** Literate Programming
+*** Literate Programming
 #+begin_src emacs-lisp
   (setq org-src-fontify-natively t
         org-src-tab-acts-natively t
@@ -1106,13 +1193,13 @@ I can get rid of ssh agency if I use gpg with ssh support.
   ;; (push '("conf-unix" . conf-unix) org-src-lang-modes)
 #+end_src
 
-** Exports
+*** Exports
 - Ox-beamer exports org files to beamer presentation
 - Minted gives syntax highlighting to latex exports
 - Htmlize gives syntax highlighting to html exports
 
-[[http://mirrors.ibiblio.org/CTAN/macros/latex/required/amscls/doc/amsthdoc.pdf][amsthm package documentation]]
-[[https://github.com/dangom/org-thesis][org/tex tips]]
+amsthm package documentation]]
+org/tex tips]]
 
 #+begin_src emacs-lisp
   (require 'ox-beamer)
@@ -1160,8 +1247,8 @@ I can get rid of ssh agency if I use gpg with ssh support.
   (use-package htmlize)
 #+end_src
 
-** Packages and Extensions
-[[https://orgmode.org/worg/org-contrib/org-drill.html][org-drill documentation]]
+*** Packages and Extensions
+org-drill documentation]]
 
 #+begin_src emacs-lisp
   (use-package org-drill
@@ -1220,7 +1307,7 @@ I can get rid of ssh agency if I use gpg with ssh support.
   ;; \[\([0-9]*\)/\1\]
 #+end_src
 
-** Presenting
+*** Presenting
 Visual-fill-column-mode and visual-fill-column-center-text for
 presentations?
 
@@ -1261,7 +1348,7 @@ presentations?
     ("C-<"  . org-tree-slide-move-previous-tree))
 #+end_src
 
-** Look and Feel
+*** Look and Feel
 #+begin_src emacs-lisp
   (use-package org-superstar
     :after org
@@ -1270,7 +1357,7 @@ presentations?
     :hook (org-mode-hook . org-superstar-mode))
 #+end_src
 
-** COMMENT Auto-tangle Configuration Files
+*** COMMENT Auto-tangle Configuration Files
    [Took from daviwil]
 
 This snippet adds a hook to =org-mode= buffers so that
@@ -1294,9 +1381,9 @@ exports the configuration here to the associated output files.
 
 #+end_src
 
-* Emacs OS - The Kitchen Sink
-** Guix
-[[https://hpc.guix.info/browse][searching for Guix packages on the web]]
+** Emacs OS - The Kitchen Sink
+*** Guix
+searching for Guix packages on the web]]
 
 #+begin_src emacs-lisp
   (use-package guix
@@ -1306,14 +1393,9 @@ exports the configuration here to the associated output files.
     :bind ("s-g" . guix))
 
   (use-package debbugs)
-
-  (defvar my-guix-or-nix-p
-    (or (not (null (shell-command-to-string "which guix")))
-        (not (null (shell-command-to-string "which nix"))))
-    "Return t if the nix package manager is available.")
 #+end_src
 
-** Authentication sources
+*** Authentication sources
 #+begin_src emacs-lisp
   (use-package auth-source
     :custom (auth-sources '("~/.authinfo.gpg" "~/.authinfo")))
@@ -1352,8 +1434,8 @@ This is how ~/.authinfo.gpg looks like:
   allow-emacs-pinentry
 #+end_src
 
-** Dired
-[[info:emacs#Dired][Documentation]]
+*** Dired
+Documentation]]
 
 #+begin_src emacs-lisp
   (use-package dired
@@ -1367,15 +1449,15 @@ This is how ~/.authinfo.gpg looks like:
     :bind ("C-x C-j" . dired-jump))
 #+end_src
 
-** Checking
-*** Flycheck
+*** Checking
+**** Flycheck
 #+begin_src emacs-lisp
   ;; (use-package flycheck
   ;;   :init
   ;;   (global-flycheck-mode t))
 #+end_src
 
-*** Flyspell
+**** Flyspell
 #+begin_src emacs-lisp
   (when window-system
     (use-package flyspell
@@ -1385,7 +1467,7 @@ This is how ~/.authinfo.gpg looks like:
       ;;   (flyspell-mode-off))))
 #+end_src
 
-** Reader (pdf, djvu, epub)
+*** Reader (pdf, djvu, epub)
 #+begin_src emacs-lisp
   (use-package pdf-tools
     :when window-system
@@ -1416,22 +1498,22 @@ This is how ~/.authinfo.gpg looks like:
     :mode ("\\.epub\\'" . nov-mode))
 #+end_src
 
-** Expand region
+*** Expand region
 #+begin_src emacs-lisp
   (use-package expand-region
     :defer t
     :bind ("C-=". 'er/expand-region))
 #+end_src
 
-** Transmission
+*** Transmission
 #+begin_src emacs-lisp
   (use-package transmission
     :hook
     (transmission-mode-hook . hl-line-mode))
 #+end_src
 
-** Emacs completion
-[[info:ivy#Top][Documentation]]
+*** Emacs completion
+Documentation]]
 
 counsel-switch-buffer - Useful?
 
@@ -1445,7 +1527,6 @@ counsel-switch-buffer - Useful?
     ;; (ivy-read-action-function 'ivy-read-action-by-key)
     ;; (ivy-height-alist '((t lambda (_caller) (/ (window-height) 3))))
     :config
-    ;; (ivy-mode 1)
     (add-to-list 'ivy-format-functions-alist '(t . ivy-format-function-arrow))
     :bind
     ("C-x B" . ivy-switch-buffer-other-window))
@@ -1467,7 +1548,7 @@ counsel-switch-buffer - Useful?
     :config (amx-mode))
 
   (use-package ivy-posframe
-    :unless in-termux-p
+    :unless termux-p
     :after ivy
     :custom
     (ivy-posframe-height-alist
@@ -1495,8 +1576,8 @@ counsel-switch-buffer - Useful?
       :bind ("C-r" . avy-goto-word-1))
 #+end_src
 
-** Auto-complete
-[[https://company-mode.github.io/][Documentation]]
+*** Auto-complete
+Documentation]]
 
 #+begin_src emacs-lisp
   (use-package company
@@ -1517,19 +1598,19 @@ counsel-switch-buffer - Useful?
                 ("<return>" . nil)))
 #+end_src
 
-** Elmacro
+*** Elmacro
 #+begin_src emacs-lisp
   (use-package elmacro
     :defer t)
 #+end_src
 
-** Games
+*** Games
 #+begin_src emacs-lisp
   (use-package speed-type
     :defer t)
 #+end_src
 
-** Google Translate
+*** Google Translate
 #+begin_src emacs-lisp
   (use-package google-translate
     :custom
@@ -1542,7 +1623,7 @@ counsel-switch-buffer - Useful?
     ("C-c T" . google-translate-query-translate))
 #+end_src
 
-** Media
+*** Media
 Requires mpv or vlc
 
 I can play smb stuff with
@@ -1550,7 +1631,7 @@ $ vlc -Z -I rc smb://cloudynshady/public/Music/
 
 another solution is to use sshfs
 
-[[https://emacs.stackexchange.com/questions/46782/how-to-access-remote-ms-windows-shared-directory-or-files-in-emacs25-running-o][have a look here]]
+have a look here]]
 
 The keybindings should depend on the wm I'm in. In EXWM volume setting
 must be global.
@@ -1603,13 +1684,15 @@ must be global.
     ("<XF86AudioLowerVolume>" . emms-volume-lower))
 #+end_src
 
-** Man
+*** Man
 #+begin_src emacs-lisp
   (use-package man
     :custom Man-notify-method 'pushy)
 #+end_src
 
-** Browser (eww)
+*** Browser (eww)
+   If the page contains gifs, emacs looses its mojo.
+
 #+begin_src emacs-lisp
   (use-package shr
     :custom
@@ -1617,9 +1700,10 @@ must be global.
     (shr-use-colors nil)
     (shr-max-image-proportion 0.7)
     (shr-width (current-fill-column))
+    (shr-image-animate nil)
     (browse-url-generic-program "nyxt")
     :config
-    (if in-termux-p
+    (if termux-p
         (setq shr-external-browser
               (lambda (url) (shell-command (concat "termux-open-url " url))))
       (setq shr-external-browser 'browse-url-generic)))
@@ -1636,8 +1720,8 @@ must be global.
                                    (".*" . eww-browse-url))))
 #+end_src
 
-** Communications
-*** Email (gnus)
+*** Communications
+**** Email (gnus)
 - [[https://protesilaos.com/dotemacs/#h:5ad80664-3163-4d9d-be65-462637d77903][configuring email]]
 - [[https://www.emacswiki.org/emacs/GnusTutorial][gnus tutorial]]
 - [[https://github.com/redguardtoo/mastering-emacs-in-one-year-guide/blob/master/gnus-guide-en.org#my-gnusel][another gnus tutorial]]
@@ -1717,12 +1801,12 @@ TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
         (message "Did you forget to attach something?"))))
 #+end_src
 
-*** Telegram
-[[https://zevlg.github.io/telega.el/][Documentation]]
+**** Telegram
+Documentation]]
 
 #+begin_src emacs-lisp
   (use-package telega
-    :unless in-termux-p
+    :unless termux-p
     :custom (telega-chat-fill-column 70)
     :config
     (telega-mode-line-mode)
@@ -1746,7 +1830,7 @@ TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
     (add-to-list 'company-backends 'company-emoji))
 #+end_src
 
-*** IRC (Freenode)
+**** IRC (Freenode)
 #+begin_src emacs-lisp
   (use-package erc
     :config
@@ -1759,16 +1843,12 @@ TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
              :password (funcall (plist-get erc-plist :secret))))))
 #+end_src
 
-** Weather
-#+begin_src emacs-lisp
-  (use-package wttrin
-    :custom
-    (wttrin-default-cities '("Saint Petersburg"
-                             "Porto"
-                             "Oliveira de Azeméis")))
+*** COMMENT Weather
+#+begin_src sh
+  curl wttr.in
 #+end_src
 
-** Screencast utilities
+*** Screencast utilities
 #+begin_src emacs-lisp
   (use-package gif-screencast
     :config
@@ -1778,13 +1858,11 @@ TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
     :bind ("<f9>" . gif-screencast-start-or-stop))
 
   (use-package keycast
-    :custom
-    (keycast-separator-width 2)
-    :config
-    (add-to-list 'keycast-substitute-alist '(self-insert-command nil nil)))
+    :custom (keycast-separator-width 2)
+    :config (add-to-list 'keycast-substitute-alist '(self-insert-command nil nil)))
 #+end_src
 
-** EXWM
+*** EXWM
    [[file:~/.config/guix/current/share/guile/site/3.0/gnu/packages/emacs-xyz.scm::(define-public emacs-exwm][GNU Guix expects that the EXWM config be at ~/.exwm]].
 (info "(elisp) Asynchronous Processes")
 
@@ -1799,7 +1877,9 @@ for a status bar, you can use emacs-symon
 
 use peek for short screencasts?
 
-#+begin_src conf :tangle ~/.config/redshift/redshift.conf
+if this redshift conf file has comments it doesn't work.  report upstream.
+
+#+begin_src conf :tangle ~/.config/redshift/redshift.conf :comments nil
   [redshift]
   temp-day=5700
   temp-night=4000
@@ -1888,6 +1968,8 @@ use peek for short screencasts?
 
   (add-hook 'exwm-init-hook (lambda () (start-process "redshift" nil "redshift")))
   (add-hook 'exwm-init-hook (lambda () (start-process "picom" nil "picom")))
+  ;; add feh?
+  ;; (add-hook 'exwm-init-hook (lambda () (start-process "picom" nil "picom")))
 
   (exwm-enable)
 
@@ -1911,7 +1993,7 @@ desktop-environment-mode should be activated in EXWM.
     (desktop-environment-brightness-normal-increment "-A 10"))
 #+end_src
 
-** Nyxt
+*** Nyxt
 
 #+begin_src lisp :tangle ~/.config/nyxt/init.lisp
   (defvar *my-keymap* (make-keymap "my-map"))
@@ -1971,13 +2053,13 @@ desktop-environment-mode should be activated in EXWM.
   ;; https://github.com/jmercouris/configuration/blob/master/.config/nyxt/init.lisp
 #+end_src
 
-** GTK apps
+*** GTK apps
 #+begin_src conf :tangle ~/.config/gtk-3.0/settings.ini
   [Settings]
   gtk-key-theme-name=Emacs
 #+end_src
 
-** Mouse
+*** Mouse
    There's also unclutter.
 
 #+begin_src emacs-lisp
@@ -1987,7 +2069,7 @@ desktop-environment-mode should be activated in EXWM.
       (mouse-avoidance-mode 'jump)))
 #+end_src
 
-** COMMENT System
+*** COMMENT System
    WIP.
 
    Needed?  Desktop-environment.
@@ -2008,8 +2090,8 @@ desktop-environment-mode should be activated in EXWM.
   ;; (shell-command "loginctl suspend && xlock")
 #+end_src
 
-* My Kitchen Sink
-** Metaconfiguring
+** My Kitchen Sink
+*** Metaconfiguring
 Visit and reload this config
 #+begin_src emacs-lisp
   (defun my-config-visit ()
@@ -2022,7 +2104,7 @@ Visit and reload this config
   ;; (load user-init-file)
 #+end_src
 
-** Learning Russian
+*** Learning Russian
 - how to open in new eww buffer is one already exists?
 - add method to look for the root of the work if verb if conjugated,
   adjective/noun is declinated ([[https://unix.stackexchange.com/questions/154098/copy-the-last-emacs-message-into-the-current-buffer][see]])
@@ -2069,7 +2151,7 @@ Visit and reload this config
         (nth 0 ispell-message))))
 #+end_src
 
-** Wifi utils
+*** Wifi utils
 I use a Qualcomm Atheros TP-Link TL-WN821N / TL-WN822N, that uses the
 ath9k_htc Linux-libre driver.
 
@@ -2100,8 +2182,8 @@ nmcli device wifi connect "$SSID" password "$PASSWORD"
       (eshell-command (format "sudo light -s  %s -S 0" led))))
 #+end_src
 
-* Startup and State
-** Startup
+** Startup and State
+*** Startup
 #+begin_src emacs-lisp
   (use-package emacs
     :custom
@@ -2114,8 +2196,8 @@ nmcli device wifi connect "$SSID" password "$PASSWORD"
     (inhibit-startup-screen t))
 #+end_src
 
-** COMMENT Desktop
-[[info:emacs#Saving Emacs Sessions][Documentation]]
+*** COMMENT Desktop
+Documentation]]
 
 I'd like to enable this for help, man and info buffers.
 
@@ -2134,7 +2216,7 @@ I'd like to enable this for help, man and info buffers.
     (desktop-save-mode 1))
 #+end_src
 
-** Server
+*** Server
 #+begin_src emacs-lisp
   (use-package server
     :hook
@@ -2142,38 +2224,16 @@ I'd like to enable this for help, man and info buffers.
                                 (server-start))))))
 #+end_src
 
-* COMMENT Termux
-#+begin_src sh
-  pkg upgrade
-
-  pkg install emacs git huspell huspell-ru
-
-  mkdir NextCloud
-
-  ln -s -t NextCloud/* ~/storage/shared/Android/media/com.nextcloud.client/nextcloud/up201106482@fc.up.pt@cloud.owncube.com/*
-#+end_src
-
-#+begin_src conf :tangle ~/.termux
-  extra-keys=[['TAB', 'ALT', '/', '-', '_', '~', '|', 'CTRL', 'UP', 'DOWN']]
-  bell-character=ignore
-#+end_src
-
-* TODO
-- move .emacs to .config
-  then I need to set in exwm/bin
-  export XDG_CONFIG_HOME=$HOME/.config
-- use gpg as a ssh key
-- [[https://github.com/pniedzielski/dotfiles-ng][full literate programming dotfiles]]
-- use-package extension that ensures guix emacs packages?  bad idea.
-  use manifests!
-- [[https://guix.gnu.org/blog/2018/guix-on-android/][try guix on android]]
-- can I use my phone camera as webcam?
-- [[file:~/repos/prot-dotfiles/emacs/.emacs.d/emacs-init.org::#h:3d8ebbb1-f749-412e-9c72-5d65f48d5957][Window rules and basic tweaks]] (info "(emacs) Buffers")
-- type-break-mode
-
 * dotfiles I follow
 - [[https://github.com/daviwil/dotfiles][David Wilson]]
 - [[https://git.sr.ht/~w96k/dotfiles][Mikhail Kirillov]]
 - [[https://github.com/oantolin/emacs-config][Omar Antolín Camarena]]
 - [[https://gitlab.com/ambrevar/dotfiles][Pierre Neidhardt]]
 - [[https://gitlab.com/protesilaos/dotfiles][Protesilaos Stravrou]]
+
+* TODO
+- use gpg as a ssh key
+- [[https://guix.gnu.org/blog/2018/guix-on-android/][try guix on android]]
+- can I use my phone camera as webcam?
+- [[file:~/repos/prot-dotfiles/emacs/.emacs.d/emacs-init.org::#h:3d8ebbb1-f749-412e-9c72-5d65f48d5957][Window rules and basic tweaks]] (info "(emacs) Buffers")
+- type-break-mode
