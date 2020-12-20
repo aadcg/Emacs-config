@@ -211,7 +211,7 @@ kernel, so keep in mind the following suggestions:
      ;;    c =>  (elogind-configuration
      ;;           ;; gives me enough time to dock the laptop before it goes to
      ;;           ;; sleep
-     ;;           (inhibit-delay-max-seconds 10))))
+     ;;           (inhibit-delay-max-seconds 10)))
      (remove (lambda (service)
                (eq? (service-kind service) gdm-service-type))
              %desktop-services))))
@@ -307,7 +307,6 @@ This needs review since I want to create a guix pkg with this cfg.
            "emacs-desktop-environment"
            "emacs-diff-hl"
            "emacs-djvu"
-           "emacs-elmacro"
            "emacs-elpy"
            "emacs-emms"
            "emacs-emojify"
@@ -416,6 +415,10 @@ interesting question 2]]
   (scroll-bar-mode -1)
   (horizontal-scroll-bar-mode -1)
   (fset 'yes-or-no-p 'y-or-n-p)
+
+  (use-package minibuffer
+    :custom (minibuffer-eldef-shorten-default t)
+    :config (minibuffer-electric-default-mode))
 
   (use-package files
     :custom (require-final-newline t)
@@ -666,7 +669,7 @@ I barely ever use them.
 
   (use-package recentf
     :custom (recentf-max-saved-items 500)
-    :config (recentf-mode)
+    :config (recentf-mode))
 
   (use-package saveplace
     :config (save-place-mode))
@@ -680,7 +683,7 @@ I barely ever use them.
     :custom
     (desktop-files-not-to-save ".")
     (desktop-globals-to-clear nil)
-    (desktop-restore-eager 3)
+    ;; (desktop-restore-eager 3)
     (desktop-restore-frames nil)
     (desktop-lazy-verbose nil)
     :config
@@ -688,6 +691,8 @@ I barely ever use them.
                  "\\*info\\*")
     (add-to-list 'desktop-modes-not-to-save
                  'image-mode)
+    (add-to-list 'desktop-modes-not-to-save
+                 'eww-mode)
     (desktop-save-mode))
 #+end_src
 
@@ -752,9 +757,9 @@ I love Fira Code but it lacks italics.
           modus-themes-scale-4 1.27
           modus-themes-scale-5 1.33)
     :config
-    (let ((inhibit-message t)
-          (sunrise (nth 1 (split-string (sunrise-sunset))))
-          (sunset (nth 4 (split-string (sunrise-sunset)))))
+    (let* ((inhibit-message t)
+           (sunrise (nth 1 (split-string (sunrise-sunset))))
+           (sunset (nth 4 (split-string (sunrise-sunset)))))
       (run-at-time sunrise
                    (* 60 60 24)
                    'modus-themes-load-operandi)
@@ -819,9 +824,9 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
   (use-package diff-hl
     :custom (diff-hl-draw-borders nil)
     :config (global-diff-hl-mode)
-    :hook (magit-post-refresh-hook . diff-hl-magit-post-refresh))
-
-  (use-package git-modes)
+    :hook
+    ((magit-pre-refresh-hook  . diff-hl-magit-pre-refresh)
+     (magit-post-refresh-hook . diff-hl-magit-post-refresh)))
 
   ;; to avoid passphrase prompts
   (use-package ssh-agency)
@@ -829,12 +834,25 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
 
 *** Languages and files
 **** Lisp
-     READ!
      (info "(emacs) Lisp Indent")
 
 #+begin_src emacs-lisp
-  (define-key lisp-mode-shared-map (kbd "RET")
-    'reindent-then-newline-and-indent)
+  ;; (define-key lisp-mode-shared-map (kbd "RET")
+  ;;   'reindent-then-newline-and-indent)
+
+  (use-package elisp-mode
+    ;; this is enabled by default no?
+    :config (global-eldoc-mode))
+
+  ;; needed?
+  ;; (add-hook 'emacs-lisp-mode-hook 'my-remove-elc-on-save)
+  ;; (defun my-remove-elc-on-save ()
+  ;;   "If you're saving an elisp file, likely the .elc is no longer valid."
+  ;;   (make-local-variable 'after-save-hook)
+  ;;   (add-hook 'after-save-hook
+  ;;             (lambda ()
+  ;;               (if (file-exists-p (concat buffer-file-name "c"))
+  ;;                   (delete-file (concat buffer-file-name "c"))))))
 
   (use-package geiser
     :custom (geiser-default-implementation 'guile))
@@ -847,17 +865,9 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
            sly-mode-map ("C-c o" . sly-documentation)))
 
   (use-package sly-asdf)
-
-  (use-package elisp-mode
-    :config (global-eldoc-mode)
-    :hook
-    ((emacs-lisp-mode-hook . my-remove-elc-on-save)
-     (emacs-lisp-mode-hook . (lambda () (delete-file (concat buffer-file-name "c"))))))
 #+end_src
 
 ***** COMMENT Emacs package
-Not using at the moment.
-
 #+begin_src emacs-lisp
   (use-package flycheck-package
     :after flycheck
@@ -873,19 +883,13 @@ Not using at the moment.
 #+end_src
 
 **** Python
-Add binds only to python-mode-map
-
 #+begin_src emacs-lisp
-  (use-package elpy
-    :defer t
-    :init
-    (advice-add 'python-mode :before 'elpy-enable)
+  (use-package python
     :custom
-    (python-shell-interpreter "ipython")
-    (python-shell-interpreter-args "-i --simple-prompt")
-    :bind (:map python-mode-map
-                ("C-c p" . elpy-autopep8-fix-code)
-                ("C-c b" . elpy-black-fix-code)))
+    ;; (python-shell-interpreter-args "-i --simple-prompt")
+    (python-shell-interpreter "ipython"))
+
+  ;; (use-package elpy)
 
   ;; (use-package company-jedi
   ;;   :config (add-to-list 'company-backends 'company-jedi))
@@ -895,9 +899,6 @@ Add binds only to python-mode-map
   ;; (add-hook 'python-mode-hook (lambda ()
   ;;                               (require 'sphinx-doc)
   ;;                               (sphinx-doc-mode t)))
-
-  ;; (add-hook 'python-mode-hook
-  ;;           (setq-default electric-indent-inhibit t))
 #+end_src
 
 **** Bash
@@ -912,11 +913,9 @@ Add binds only to python-mode-map
   (use-package eshell
     :custom
     (eshell-history-size 9999)
-    ;; (eshell-hist-ignoredups t)
+    (eshell-hist-ignoredups t)
     (eshell-destroy-buffer-when-process-dies t)
-    ;; :init (require 'esh-module)
-    :config
-    (add-to-list 'eshell-modules-list 'eshell-tramp)
+    :config (add-to-list 'eshell-modules-list 'eshell-tramp)
     :hook
     (eshell-mode-hook . (lambda () (company-mode -1)))
     (eshell-pre-command-hook . 'eshell-save-some-history)
@@ -924,7 +923,6 @@ Add binds only to python-mode-map
 
   ;; (use-package em-term
   ;;   :config
-  ;;   (add-to-list 'eshell-visual-commands "nmtui")
   ;;   (add-to-list 'eshell-visual-commands "alsamixer"))
 #+end_src
 
@@ -971,35 +969,42 @@ Requires gocode for the autocomplete to work.
 **** COMMENT Files
 #+begin_src emacs-lisp
   (use-package yaml-mode
+    :defer
     :mode (("\\.yml\\'" . yaml-mode)
            ("\\.yaml\\'" . yaml-mode)))
 
-  (use-package csv-mode)
+  (use-package csv-mode
+    :defer)
 #+end_src
 
 *** Utils
 (info "(emacs) Projects")
-
-The built-in should suffice for now.  Otherwise, try projectile.
-
 (info "(emacs) Parentheses")
 
-The built-in parentheses commands should suffice.
-
 #+begin_src emacs-lisp
+  (use-package paren
+    :custom
+    (show-paren-delay 0)
+    (show-paren-when-point-inside-paren t)
+    ;; (show-paren-when-point-in-periphery t)
+    :config
+    (show-paren-mode))
+
+  ;; needed?
   (use-package rainbow-delimiters
     :hook (prog-mode-hook . rainbow-delimiters-mode))
 
   (use-package prog-mode
     :config (global-prettify-symbols-mode))
 
-  (use-package paren
-    :custom
-    (show-paren-delay 0)
-    (show-paren-when-point-inside-paren t)
-    (show-paren-when-point-in-periphery t)
+  (use-package electric
+    ;; :custom
+    ;; (electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
     :config
-    (show-paren-mode))
+    (electric-indent-mode)
+    (electric-pair-mode)
+    ;; needed?
+    (electric-layout-mode))
 
   (use-package comint
     :bind (:map comint-mode-map
@@ -1890,6 +1895,7 @@ counsel-switch-buffer - Useful?
     :config (amx-mode))
 
   (use-package ivy-posframe
+    :when window-system
     :unless termux-p
     :after ivy
     :custom
@@ -1976,7 +1982,7 @@ Needs review.
 
 *** Misc
 #+begin_src emacs-lisp
-  (use-package speed-type)
+  ;; (use-package speed-type)
 
   (use-package transmission
     :hook
@@ -1991,9 +1997,6 @@ Needs review.
     :bind
     ("C-c t" . google-translate-at-point)
     ("C-c T" . google-translate-query-translate))
-
-  (use-package expand-region
-    :bind ("C-=". 'er/expand-region))
 #+end_src
 
 *** Unix utils
