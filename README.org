@@ -1019,53 +1019,44 @@ Requires gocode for the autocomplete to work.
     :hook (prog-mode-hook . subword-mode))
 #+end_src
 
-** Org
-#+begin_src bash
-  owncloudcmd -s -u user -p pw $HOME/NextCloud/ https://cloud.owncube.com/remote.php/webdav/
-#+end_src
-
-- Syncthing vs Nextcloud vs cron/rsync?
-
-  org-indent-mode?
-
-*** Basics
+** Org-mode
 #+begin_src emacs-lisp
   (use-package org
     :custom
+    ;; general
     (org-use-speed-commands t)
-    (org-special-ctrl-a/e t)
-    (org-special-ctrl-k t)
-    ;; (org-cycle-global-at-bob t)
+    (org-adapt-indentation nil)
+    (org-hide-leading-stars t)
+    (org-M-RET-may-split-line '((default . nil)))
+    (org-directory "~/NextCloud/org/")
+    ;; lists
     (org-list-demote-modify-bullet '(("-" . "+") ("+" . "-")))
     (org-list-indent-offset 1)
+    ;; links
     (org-return-follows-link t)
+    ;; latex
+    (org-format-latex-options (plist-put org-format-latex-options :scale 2))
+    (org-preview-latex-image-directory "ltximg/")
+    ;; images
+    (org-startup-with-inline-images t)
+    (org-image-actual-width 500)
+    ;; agenda
     (org-agenda-skip-deadline-prewarning-if-scheduled t)
     (org-agenda-include-diary t)
     (org-agenda-start-on-weekday nil)
-    (org-agenda-files '("~/NextCloud/org"))
-    (org-directory "~/NextCloud/org/")
-    (org-todo-keywords '((sequence "TODO(t!)"
-                                   "WIP(s!)"
-                                   "WAITING(w@)"
-                                   "|"
-                                   "DONE(d!)"
-                                   "NOT TODO(n@)"
-                                   "CANCELED(c@)")))
+    (org-agenda-files '(org-directory))
+    (org-todo-keywords
+     '((sequence "TODO(t!)" "WIP(s!)" "WAITING(w@)" "|"
+                 "DONE(d!)" "CANCEL(c@)")))
     (org-todo-keyword-faces '(("WIP" . "orange")
                               ("WAITING" . "orange")))
-    ;; idea
-    ;; (setq org-todo-keywords
-    ;;       '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
-    ;;         (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k@)")))
-    ;; (org-fontify-done-headline t)
-    ;; (orgtbl-mode t)
-    (org-hide-leading-stars t)
-    ;; (org-startup-indented t)
-    (org-startup-with-inline-images t)
-    (org-image-actual-width 500)
-    (org-format-latex-options (plist-put org-format-latex-options :scale 3))
-    (org-preview-latex-image-directory "ltximg/")
-
+    ;; literate programming
+    (org-src-fontify-natively t)
+    (org-src-tab-acts-natively t)
+    (org-edit-src-persistent-message nil)
+    (org-src-window-setup 'current-window)
+    (org-confirm-babel-evaluate nil)
+    (org-edit-src-content-indentation 0)
     :config
     (customize-set-variable
      'org-structure-template-alist
@@ -1080,6 +1071,15 @@ Requires gocode for the autocomplete to work.
                ("prop" . "proposition")
                ("el"   . "src emacs-lisp"))))
 
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((emacs-lisp . t)
+       (scheme     . t)
+       (python     . t)
+       (haskell    . t)
+       (latex      . t)
+       (shell      . t)))
+
     (when termux-p
       (add-to-list 'org-file-apps '("\\.pdf\\'" . "termux-open %s")))
 
@@ -1087,74 +1087,55 @@ Requires gocode for the autocomplete to work.
       (interactive)
       (switch-to-buffer "*Org Agenda*"))
 
-    :bind
-    ("C-c a"     . org-agenda)
-    ("C-x f" . my-switch-to-agenda)
-    ("C-c l"     . org-store-link)
-    ("C-c c"     . org-capture)
-    ("C-<tab>"   . org-force-cycle-archived)
-    ("C-c j"     . my-org-checkbox-next)
-    ("<mouse-1>" . my-org-checkbox-next))
+    (defun my-org-checkbox-next ()
+      "Mark checkboxes and sort."
+      (interactive)
+      (let ((home (point)))
+        (when (org-at-item-checkbox-p)
+          (org-toggle-checkbox)
+          (org-sort-list nil ?x)
+          (goto-char home))))
 
-  ;; (global-set-key (kbd "C-'") nil)
+    (defun my-diary-last-day-of-month (date)
+      "Return `t` if DATE is the last day of the month.
+  Credit to https://emacs.stackexchange.com/a/31708/19054."
+      (let* ((day (calendar-extract-day date))
+             (month (calendar-extract-month date))
+             (year (calendar-extract-year date))
+             (last-day-of-month
+              (calendar-last-day-of-month month year)))
+        (= day last-day-of-month)))
+    :bind (("C-c a"     . org-agenda)
+           ("C-c c"     . org-capture)
+           ("C-c l"     . org-store-link)
+           ("C-x f"     . my-switch-to-agenda)
+           :map org-mode-map
+           ("C-'"       . nil)
+           ("C-,"       . nil)
+           ("C-<tab>"   . org-force-cycle-archived)
+           ("C-c j"     . my-org-checkbox-next)
+           ("<mouse-1>" . my-org-checkbox-next)))
 #+end_src
 
-*** Literate Programming
-#+begin_src emacs-lisp
-  (setq org-src-fontify-natively t
-        org-src-tab-acts-natively t
-        org-edit-src-persistent-message nil
-        org-src-window-setup 'current-window
-        org-confirm-babel-evaluate nil)
-
-  ;; (use-package ob-ipython
-  ;;   :defer t)
-
-  ;; (use-package ob-go
-  ;;   :defer t)
-
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((emacs-lisp . t)
-     (scheme     . t)
-     (python     . t)
-     (haskell    . t)
-     ;; (ipython    . t)
-     ;; (go         . t)
-     (latex      . t)
-     (shell      . t)
-     (ditaa      . t)))
-
-  ;; (push '("conf-unix" . conf-unix) org-src-lang-modes)
-#+end_src
-
-*** Exports
-- Ox-beamer exports org files to beamer presentation
-- Minted gives syntax highlighting to latex exports
-- Htmlize gives syntax highlighting to html exports
-
-amsthm package documentation]]
-org/tex tips]]
+*** WIP Exports
+Ox-beamer exports org to beamer.  Htmlize provides syntax highlighting
+to HTML exports.
 
 #+begin_src emacs-lisp
-  (require 'ox-beamer)
-  ;; (setq org-latex-listings 'minted)
-  ;; (add-to-list 'org-latex-packages-alist '("newfloat" "minted"))
+  (use-package ox-beamer)
+  (use-package ox-texinfo)
 
-  ;; for exporting in foreign languages
   (add-to-list 'org-latex-packages-alist
                '("russian,main=english" "babel" t ("pdflatex")))
   (add-to-list 'org-latex-packages-alist
                '("AUTO" "polyglossia" t ("xelatex" "lualatex")))
 
-  ;; this should be added at the end of the list rather
-  ;; (add-to-list 'org-latex-default-packages-alist '("" "amsthm" t))
-  (add-to-list 'org-latex-packages-alist '("" "listings"))
   (setq org-latex-listings t)
+  (add-to-list 'org-latex-packages-alist '("" "listings"))
 
   (add-to-list 'org-latex-classes
                '("aadcg-article"
-  "\\documentclass[11pt]{amsart}
+                 "\\documentclass[11pt]{amsart}
   [DEFAULT-PACKAGES]
   [PACKAGES]
   \\usepackage{amsthm}
@@ -1178,145 +1159,62 @@ org/tex tips]]
                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-
-  (use-package htmlize)
 #+end_src
 
-*** Packages and Extensions
-[[https://gitlab.com/phillord/org-drill][documentation]]
+*** Extensions
+[[https://gitlab.com/phillord/org-drill][org-drill documentation]]
 
 #+begin_src emacs-lisp
-  (use-package org-drill
-    :custom
-    (org-drill-save-buffers-after-drill-sessions-p nil)
-    (org-drill-scope 'tree)
-    :config
-    (require 'org-drill))
+  ;; (use-package cdlatex
+  ;;   :hook (org-mode-hook . org-cdlatex-mode))
 
-  (use-package org-drill-table)
-
-  (use-package cdlatex
-    :defer t
-    :hook (org-mode-hook . org-cdlatex-mode))
-
-  (use-package org-fragtog
-    :hook (org-mode-hook . org-fragtog-mode))
-
-  (defun my-org-checkbox-next ()
-    "Mark checkboxes and sort."
-    (interactive)
-    (let ((home (point)))
-      (when (org-at-item-checkbox-p)
-        (org-toggle-checkbox)
-        (org-sort-list nil ?x)
-        (goto-char home))))
-
-  (defun my-org-replace-link-by-link-description ()
-    "Replace org link by its description or url."
-    (interactive)
-    (if (org-in-regexp org-bracket-link-regexp 1)
-        (let ((remove (list (match-beginning 0) (match-end 0)))
-              (description (if (match-end 3)
-                               (org-match-string-no-properties 3)
-                             (org-match-string-no-properties 1))))
-          (apply 'delete-region remove)
-          (insert description))))
-
-  (defun my-diary-last-day-of-month (date)
-    "Return `t` if DATE is the last day of the month.
-
-  Credit to https://emacs.stackexchange.com/a/31708/19054."
-    (let* ((day (calendar-extract-day date))
-           (month (calendar-extract-month date))
-           (year (calendar-extract-year date))
-           (last-day-of-month
-            (calendar-last-day-of-month month year)))
-      (= day last-day-of-month)))
-
-  ;; org-cycle if tree is all checkboxes are ticked
-  ;; (defun my-org-at-item-checkbox-p ()
-  ;;   "Is point at a line starting a plain-list item with a checklet?"
-  ;;   (org-list-at-regexp-after-bullet-p "\\(\\[[- X]\\]\\)[ \t]+"))
-  ;; (cookie-re "\\(\\(\\[[0-9]*%\\]\\)\\|\\(\\[[0-9]*/[0-9]*\\]\\)\\)")
-  ;; matches digits / same digits
-  ;; \[\([0-9]*\)/\1\]
-#+end_src
-
-*** Presenting
-Visual-fill-column-mode and visual-fill-column-center-text for
-presentations?
-
-To hide the mode-line just eval (setq mode-line-format nil) and revert
-the buffer if you want to get the mode-line back.
-
-#+begin_src emacs-lisp
-  (use-package org-tree-slide
-    :custom
-    (org-tree-slide-slide-in-effect nil)
-    (org-tree-slide-cursor-init nil)
-    (org-tree-slide-never-touch-face t)
-    (org-tree-slide-activate-message "Welcome to my presentation!")
-    (org-tree-slide-deactivate-message "Hope you have enjoyed!")
-
-    :config
-    (defun my-presenting ()
-      "Presenting mode"
-      (interactive)
-      (hide-mode-line-mode)
-      (global-diff-hl-mode 0)
-      (setq global-hl-line-mode nil)
-      (my-auto-size-font 1))
-
-    (defun my-non-presenting ()
-      "Non-presenting mode"
-      (interactive)
-      (setq hide-mode-line-mode t)
-      (global-diff-hl-mode)
-      (global-hl-line-mode)
-      (my-auto-size-font 2))
-
-    :hook
-    ((org-tree-slide-play-hook . my-presenting)
-     (org-tree-slide-stop-hook . my-non-presenting))
-
-    :bind
-    ("<f8>" . org-tree-slide-mode)
-    ("<f7>" . org-tree-slide-play-with-timer)
-    ("C->"  . org-tree-slide-move-next-tree)
-    ("C-<"  . org-tree-slide-move-previous-tree))
-#+end_src
-
-*** Look and Feel
-#+begin_src emacs-lisp
   (use-package org-superstar
     :after org
     :custom
     (org-superstar-headline-bullets-list '("§"))
     :hook (org-mode-hook . org-superstar-mode))
+
+  (use-package org-drill
+    :custom
+    (org-drill-save-buffers-after-drill-sessions-p nil)
+    (org-drill-scope 'tree)
+    :config (require 'org-drill))
+
+  (use-package org-drill-table)
+
+  (use-package org-fragtog
+    :hook (org-mode-hook . org-fragtog-mode))
 #+end_src
 
-*** COMMENT Auto-tangle Configuration Files
-   [Took from daviwil]
-
-This snippet adds a hook to =org-mode= buffers so that
-=efs/org-babel-tangle-config= gets executed each time such a buffer gets
-saved.  This function checks to see if the file being saved is the
-Emacs.org file you're looking at right now, and if so, automatically
-exports the configuration here to the associated output files.
-
+*** WIP Presentations
 #+begin_src emacs-lisp
+  (use-package org-tree-slide
+    :custom
+    (org-tree-slide-breadcrumbs nil)
+    (org-tree-slide-slide-in-effect nil)
+    (org-tree-slide-never-touch-face t)
+    (org-tree-slide-activate-message nil)
+    (org-tree-slide-deactivate-message nil)
+    :config
+    (defun my-presenting ()
+      "Presenting mode"
+      (interactive)
+      (setq mode-line-format nil)
+      (global-diff-hl-mode 0)
+      (my-auto-size-font 1))
 
-  ;; Automatically tangle our Emacs.org config file when we save it
-  (defun efs/org-babel-tangle-config ()
-    (when (string-equal (buffer-file-name)
-                        (expand-file-name "~/Projects/Code/emacs-from-scratch/Emacs.org"))
-      ;; Dynamic scoping to the rescue
-      (let ((org-confirm-babel-evaluate nil))
-        (org-babel-tangle))))
-
-  (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook
-  #'efs/org-babel-tangle-config)))
-
+    (defun my-non-presenting ()
+      "Non-presenting mode"
+      (interactive)
+      (revert-buffer nil t)
+      (global-diff-hl-mode)
+      (my-auto-size-font 2))
+    :hook
+    ((org-tree-slide-play-hook . my-presenting)
+     (org-tree-slide-stop-hook . my-non-presenting))
+    :bind (:map org-tree-slide-mode-map
+                ("C->"  . org-tree-slide-move-next-tree)
+                ("C-<"  . org-tree-slide-move-previous-tree)))
 #+end_src
 
 ** Emacs OS - The Kitchen Sink
@@ -2099,3 +1997,4 @@ Really needed?
 - type-break-mode
 - can I use my phone camera as webcam?
 - [[https://guix.gnu.org/blog/2018/guix-on-android/][try guix on android]]
+- Syncthing vs Nextcloud vs cron/rsync?
