@@ -64,157 +64,157 @@ kernel, so keep in mind the following suggestions:
 (info "(guix) System Configuration")
 
 #+begin_src scheme :tangle ~/.config/guix/system.scm
-  (use-modules (gnu)
-               (guix packages)
-               (srfi srfi-1))
-  (use-service-modules desktop sddm networking ssh xorg pm nix)
-  (use-package-modules gnome xorg linux)
+(use-modules (gnu)
+             (guix packages)
+             (srfi srfi-1))
+(use-service-modules desktop sddm networking ssh xorg pm nix)
+(use-package-modules gnome xorg linux)
 
-  ;; (man "xorg.conf(5)")
-  ;; (man "xinput(1)")
-  (define xorg-tweaks
-    "Section \"InputClass\"
-    Identifier \"Touchpad\"
-    Driver \"libinput\"
-    MatchDevicePath \"/dev/input/event*\"
-    MatchIsTouchpad \"on\"
-    Option \"Tapping\" \"on\"
-    Option \"Accel Speed\" \"0.7\"
-  EndSection
+;; (man "xorg.conf(5)")
+;; (man "xinput(1)")
+(define xorg-tweaks
+  "Section \"InputClass\"
+  Identifier \"Touchpad\"
+  Driver \"libinput\"
+  MatchDevicePath \"/dev/input/event*\"
+  MatchIsTouchpad \"on\"
+  Option \"Tapping\" \"on\"
+  Option \"Accel Speed\" \"0.7\"
+EndSection
 
-  Section \"Device\"
-    Identifier \"intel\"
-    Option \"PreferCloneMode\" \"on\"
-  EndSection
+Section \"Device\"
+  Identifier \"intel\"
+  Option \"PreferCloneMode\" \"on\"
+EndSection
 
-  Section \"Monitor\"
-    Identifier \"eDP-1\"
-    Option \"PreferredMode\" \"2560x1440\"
-  EndSection")
+Section \"Monitor\"
+  Identifier \"eDP-1\"
+  Option \"PreferredMode\" \"2560x1440\"
+EndSection")
 
-  (define-public gnome-minimal
-    (package
-      (inherit gnome)
-      (name "gnome-minimal")
-      (propagated-inputs
-       (fold alist-delete (package-propagated-inputs gnome)
-             '("gnome-backgrounds"
-               "gnome-themes-extra"
-               "gnome-getting-started-docs"
-               "gnome-user-docs"
-               "gnome-keyring"
-               "orca"
-               "rygel"
-               "baobab"
-               "cheese"
-               "eog"
-               "epiphany"
-               "evince"
-               "file-roller"
-               "gedit"
-               "gnome-boxes"
-               "gnome-calculator"
-               "gnome-calendar"
-               "gnome-characters"
-               "gnome-clocks"
-               "gnome-contacts"
-               "gnome-disk-utility"
-               "gnome-font-viewer"
-               "gnome-maps"
-               "gnome-screenshot"
-               "gnome-weather"
-               "simple-scan"
-               "totem"
-               "gucharmap"
-               "at-spi2-core"
-               "gnome-online-accounts")))))
+(define-public gnome-minimal
+  (package
+    (inherit gnome)
+    (name "gnome-minimal")
+    (propagated-inputs
+     (fold alist-delete (package-propagated-inputs gnome)
+           '("gnome-backgrounds"
+             "gnome-themes-extra"
+             "gnome-getting-started-docs"
+             "gnome-user-docs"
+             "gnome-keyring"
+             "orca"
+             "rygel"
+             "baobab"
+             "cheese"
+             "eog"
+             "epiphany"
+             "evince"
+             "file-roller"
+             "gedit"
+             "gnome-boxes"
+             "gnome-calculator"
+             "gnome-calendar"
+             "gnome-characters"
+             "gnome-clocks"
+             "gnome-contacts"
+             "gnome-disk-utility"
+             "gnome-font-viewer"
+             "gnome-maps"
+             "gnome-screenshot"
+             "gnome-weather"
+             "simple-scan"
+             "totem"
+             "gucharmap"
+             "at-spi2-core"
+             "gnome-online-accounts")))))
 
-  (operating-system
-   (locale "en_US.utf8")
-   (timezone "Europe/Moscow")
-   ;; (timezone "Europe/Lisbon")
-   (keyboard-layout
-    (keyboard-layout
-     "us,ru" "altgr-intl,"
-     #:options
-     '("caps:ctrl_modifier"
-       "grp:win_space_toggle"
-       "grp_led:caps"
-       "lv3:ralt_switch_multikey")))
-   (host-name "guix-xps13")
-   (users (cons* (user-account
-                  (name "aadcg")
-                  (comment "André Alexandre Gomes")
-                  (group "users")
-                  (home-directory "/home/aadcg")
-                  (supplementary-groups
-                   '("wheel" "netdev" "audio" "video")))
-                 %base-user-accounts))
+(operating-system
+ (locale "en_US.utf8")
+ (timezone "Europe/Moscow")
+ ;; (timezone "Europe/Lisbon")
+ (keyboard-layout
+  (keyboard-layout
+   "us,ru" "altgr-intl,"
+   #:options
+   '("caps:ctrl_modifier"
+     "grp:win_space_toggle"
+     "grp_led:caps"
+     "lv3:ralt_switch_multikey")))
+ (host-name "guix-xps13")
+ (users (cons* (user-account
+                (name "aadcg")
+                (comment "André Alexandre Gomes")
+                (group "users")
+                (home-directory "/home/aadcg")
+                (supplementary-groups
+                 '("wheel" "netdev" "audio" "video")))
+               %base-user-accounts))
 
-   ;; I like to use the latest longterm release
-   ;; https://www.kernel.org/
-   (kernel linux-libre-5.4)
+ ;; I like to use the latest longterm release
+ ;; https://www.kernel.org/
+ (kernel linux-libre-5.4)
 
-   ;; TODO?
-   ;; (skeletons
-   ;;  (append (".config/guix/channels.scm" ,(plain-file ""))
-   ;;   default-skeletons))
+ ;; TODO?
+ ;; (skeletons
+ ;;  (append (".config/guix/channels.scm" ,(plain-file ""))
+ ;;   default-skeletons))
 
-   (bootloader
-    (bootloader-configuration
-     (bootloader grub-efi-bootloader)
-     (timeout 1)
-     (target "/boot/efi")
-     (keyboard-layout keyboard-layout)))
-   (file-systems
-    (cons* (file-system
-            (mount-point "/boot/efi")
-            (device (uuid "C820-AFF2" 'fat32))
-            (type "vfat"))
-           (file-system
-            (mount-point "/")
-            (device
-             (uuid "76936a31-ce9b-4a50-a373-31db7a89ce41"
-                   'ext4))
-            (type "ext4"))
-           %base-file-systems))
+ (bootloader
+  (bootloader-configuration
+   (bootloader grub-efi-bootloader)
+   (timeout 1)
+   (target "/boot/efi")
+   (keyboard-layout keyboard-layout)))
+ (file-systems
+  (cons* (file-system
+          (mount-point "/boot/efi")
+          (device (uuid "C820-AFF2" 'fat32))
+          (type "vfat"))
+         (file-system
+          (mount-point "/")
+          (device
+           (uuid "76936a31-ce9b-4a50-a373-31db7a89ce41"
+                 'ext4))
+          (type "ext4"))
+         %base-file-systems))
 
-   (packages
-    (append (map specification->package
-                 '("emacs-exwm"
-                   "guix-simplyblack-sddm-theme"
-                   "nss-certs"))
-            %base-packages))
+ (packages
+  (append (map specification->package
+               '("emacs-exwm"
+                 "guix-simplyblack-sddm-theme"
+                 "nss-certs"))
+          %base-packages))
 
-   (services
-    (append
-     (list
-      (set-xorg-configuration
-       (xorg-configuration
-        (modules (list xf86-input-libinput
-                       xf86-input-evdev))
-        (keyboard-layout keyboard-layout)
-        (extra-config (list xorg-tweaks)))
-       sddm-service-type)
-      (service gnome-desktop-service-type
-               (gnome-desktop-configuration
-                (gnome gnome-minimal)))
-      (service sddm-service-type
-               (sddm-configuration
-                (theme "guix-simplyblack-sddm")))
-      (service openssh-service-type)
-      (service tor-service-type)
-      (service tlp-service-type))
-     ;; (modify-services %desktop-services
-     ;;     ;; (man "logind.conf(5)")
-     ;;   (elogind-service-type
-     ;;    c =>  (elogind-configuration
-     ;;           ;; gives me enough time to dock the laptop before it goes to
-     ;;           ;; sleep
-     ;;           (inhibit-delay-max-seconds 10)))
-     (remove (lambda (service)
-               (eq? (service-kind service) gdm-service-type))
-             %desktop-services))))
+ (services
+  (append
+   (list
+    (set-xorg-configuration
+     (xorg-configuration
+      (modules (list xf86-input-libinput
+                     xf86-input-evdev))
+      (keyboard-layout keyboard-layout)
+      (extra-config (list xorg-tweaks)))
+     sddm-service-type)
+    (service gnome-desktop-service-type
+             (gnome-desktop-configuration
+              (gnome gnome-minimal)))
+    (service sddm-service-type
+             (sddm-configuration
+              (theme "guix-simplyblack-sddm")))
+    (service openssh-service-type)
+    (service tor-service-type)
+    (service tlp-service-type))
+   ;; (modify-services %desktop-services
+   ;;     ;; (man "logind.conf(5)")
+   ;;   (elogind-service-type
+   ;;    c =>  (elogind-configuration
+   ;;           ;; gives me enough time to dock the laptop before it goes to
+   ;;           ;; sleep
+   ;;           (inhibit-delay-max-seconds 10)))
+   (remove (lambda (service)
+             (eq? (service-kind service) gdm-service-type))
+           %desktop-services))))
 #+end_src
 
 (info "(guix) Invoking guix system")
@@ -225,125 +225,126 @@ kernel, so keep in mind the following suggestions:
 
 *** Userland
 This needs review since I want to create a guix pkg with this cfg.
+Add aspell.
 
 #+begin_src scheme
-  (define %base
-    (map specification->package
-         '("cryptsetup"
-           "curl"
-           "exfat-utils"
-           "flatpak"
-           "fuse-exfat"
-           "git"
-           "gnupg"
-           "gnutls"
-           "gtypist"
-           "imagemagick"
-           "libreoffice"
-           "light"
-           "mpv"
-           "owncloud-client"
-           "pari-gp"
-           "pavucontrol"
-           "pinentry"
-           "qemu"
-           "sicp"
-           "speedtest-cli"
-           "stow"
-           "texinfo"
-           "texlive"
-           "texlive-latex-amsmath"
-           "texlive-latex-babel"
-           "transmission"
-           "tree"
-           "vlc")))
+(define %base
+  (map specification->package
+       '("cryptsetup"
+         "curl"
+         "exfat-utils"
+         "flatpak"
+         "fuse-exfat"
+         "git"
+         "gnupg"
+         "gnutls"
+         "gtypist"
+         "imagemagick"
+         "libreoffice"
+         "light"
+         "mpv"
+         "owncloud-client"
+         "pari-gp"
+         "pavucontrol"
+         "pinentry"
+         "qemu"
+         "sicp"
+         "speedtest-cli"
+         "stow"
+         "texinfo"
+         "texlive"
+         "texlive-latex-amsmath"
+         "texlive-latex-babel"
+         "transmission"
+         "tree"
+         "vlc")))
 
-  (define %languages
-    (map specification->package
-         '("ghc"
-           "python"
-           "python-ipython"
-           "python-wrapper")))
+(define %languages
+  (map specification->package
+       '("ghc"
+         "python"
+         "python-ipython"
+         "python-wrapper")))
 
-  (define %music
-    (map specification->package
-         '("musescore")))
+(define %music
+  (map specification->package
+       '("musescore")))
 
-  (define %wm
-    (map specification->package
-         '("i3status"
-           "gnome-tweaks"
-           "redshift"
-           "scrot"
-           "grim"
-           "xrandr"
-           "picom"
-           "guix-simplyblack-sddm-theme")))
+(define %wm
+  (map specification->package
+       '("i3status"
+         "gnome-tweaks"
+         "redshift"
+         "scrot"
+         "grim"
+         "xrandr"
+         "picom"
+         "guix-simplyblack-sddm-theme")))
 
-  (define %browsers
-    (map specification->package
-         '("nyxt"
-           "icecat")))
+(define %browsers
+  (map specification->package
+       '("nyxt"
+         "icecat")))
 
-  (define %fonts
-    (map specification->package
-         '("font-awesome"
-           "font-fira-code"
-           "font-gnu-freefont"
-           "font-gnu-unifont"
-           "font-hack")))
+(define %fonts
+  (map specification->package
+       '("font-awesome"
+         "font-fira-code"
+         "font-gnu-freefont"
+         "font-gnu-unifont"
+         "font-hack")))
 
-  (define %emacs
-    (map specification->package
-         '("emacs"
-           "emacs-amx"
-           "emacs-auctex"
-           "emacs-avy"
-           "emacs-cdlatex"
-           "emacs-company"
-           "emacs-company-emoji"
-           "emacs-counsel"
-           "emacs-debbugs"
-           "emacs-desktop-environment"
-           "emacs-diff-hl"
-           "emacs-djvu"
-           "emacs-elpy"
-           "emacs-emms"
-           "emacs-emojify"
-           "emacs-expand-region"
-           "emacs-exwm-edit"
-           "emacs-geiser"
-           "emacs-gif-screencast"
-           "emacs-gitpatch"
-           "emacs-git-modes"
-           "emacs-google-translate"
-           "emacs-guix"
-           "emacs-haskell-mode"
-           "emacs-htmlize"
-           "emacs-ivy"
-           "emacs-ivy-posframe"
-           "emacs-lsp-mode"
-           "emacs-magit"
-           "emacs-minions"
-           "emacs-modus-themes"
-           "emacs-nov-el"
-           "emacs-org"
-           "emacs-org-drill"
-           "emacs-org-make-toc"
-           "emacs-org-superstar"
-           "emacs-org-tree-slide"
-           "emacs-pdf-tools"
-           "emacs-pinentry"
-           "emacs-rainbow-delimiters"
-           "emacs-sly"
-           "emacs-sly-asdf"
-           "emacs-smartparens"
-           "emacs-ssh-agency"
-           "emacs-swiper"
-           "emacs-telega"
-           "emacs-transmission"
-           "emacs-use-package"
-           "emacs-wttrin")))
+(define %emacs
+  (map specification->package
+       '("emacs"
+         "emacs-amx"
+         "emacs-auctex"
+         "emacs-avy"
+         "emacs-cdlatex"
+         "emacs-company"
+         "emacs-company-emoji"
+         "emacs-counsel"
+         "emacs-debbugs"
+         "emacs-desktop-environment"
+         "emacs-diff-hl"
+         "emacs-djvu"
+         "emacs-elpy"
+         "emacs-emms"
+         "emacs-emojify"
+         "emacs-expand-region"
+         "emacs-exwm-edit"
+         "emacs-geiser"
+         "emacs-gif-screencast"
+         "emacs-gitpatch"
+         "emacs-git-modes"
+         "emacs-google-translate"
+         "emacs-guix"
+         "emacs-haskell-mode"
+         "emacs-htmlize"
+         "emacs-ivy"
+         "emacs-ivy-posframe"
+         "emacs-lsp-mode"
+         "emacs-magit"
+         "emacs-minions"
+         "emacs-modus-themes"
+         "emacs-nov-el"
+         "emacs-org"
+         "emacs-org-drill"
+         "emacs-org-make-toc"
+         "emacs-org-superstar"
+         "emacs-org-tree-slide"
+         "emacs-pdf-tools"
+         "emacs-pinentry"
+         "emacs-rainbow-delimiters"
+         "emacs-sly"
+         "emacs-sly-asdf"
+         "emacs-smartparens"
+         "emacs-ssh-agency"
+         "emacs-swiper"
+         "emacs-telega"
+         "emacs-transmission"
+         "emacs-use-package"
+         "emacs-wttrin")))
 #+end_src
 
 *** Channels
@@ -353,114 +354,126 @@ interesting question]]
 interesting question 2]]
 
 #+begin_src scheme :tangle ~/.config/guix/channels.scm
-  ;; (info "(guix) Channels")
+;; (info "(guix) Channels")
 
-  (cons*
-   (channel
-    (name 'nonguix)
-    (url "https://gitlab.com/nonguix/nonguix")
-    (introduction
-     (make-channel-introduction
-      "897c1a470da759236cc11798f4e0a5f7d4d59fbc"
-      (openpgp-fingerprint
-       "2A39 3FFF 68F4 EF7A 3D29  12AF 6F51 20A0 22FB B2D5"))))
-   (channel
-    (name 'aadcg-guix-channel)
-    (url "https://git.sr.ht/~aadcg/aadcg-guix-channel"))
-   %default-channels)
+(cons*
+ (channel
+  (name 'nonguix)
+  (url "https://gitlab.com/nonguix/nonguix")
+  (introduction
+   (make-channel-introduction
+    "897c1a470da759236cc11798f4e0a5f7d4d59fbc"
+    (openpgp-fingerprint
+     "2A39 3FFF 68F4 EF7A 3D29  12AF 6F51 20A0 22FB B2D5"))))
+ (channel
+  (name 'aadcg-guix-channel)
+  (url "https://git.sr.ht/~aadcg/aadcg-guix-channel"))
+ %default-channels)
 #+end_src
 
 ** COMMENT Termux
 #+begin_src sh
-  pkg upgrade
-  pkg install emacs git huspell huspell-ru
-  mkdir NextCloud
-  ln -s -t NextCloud/* ~/storage/shared/Android/media/com.nextcloud.client/nextcloud/up201106482@fc.up.pt@cloud.owncube.com/*
+pkg upgrade
+pkg install emacs git huspell huspell-ru
+mkdir NextCloud
+ln -s -t NextCloud/* ~/storage/shared/Android/media/com.nextcloud.client/nextcloud/up201106482@fc.up.pt@cloud.owncube.com/*
 #+end_src
 
 #+begin_src conf :tangle ~/.termux
-  extra-keys=[['TAB', 'ALT', '/', '-', '_', '~', '|', 'CTRL', 'UP', 'DOWN']]
-  bell-character=ignore
+extra-keys=[['TAB', 'ALT', '/', '-', '_', '~', '|', 'CTRL', 'UP', 'DOWN']]
+bell-character=ignore
 #+end_src
 
 * GNU Emacs and other configs
 ** Defaults and Aesthetics
 *** Emacs package management
 #+begin_src emacs-lisp
-  (defvar termux-p
-    (not (null (getenv "ANDROID_ROOT")))
-    "If non-nil, GNU Emacs is running on Termux.")
+(defvar termux-p
+  (not (null (getenv "ANDROID_ROOT")))
+  "If non-nil, GNU Emacs is running on Termux.")
 
-  (when termux-p
-    (unless (package-installed-p 'use-package)
-      (package-refresh-contents)
-      (package-install 'use-package)))
+(when termux-p
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package)))
 
-  (use-package package
-    :config (add-to-list 'package-archives
-                         '("melpa" . "https://melpa.org/packages/")))
+(use-package package
+  :config (add-to-list 'package-archives
+                       '("melpa" . "https://melpa.org/packages/")))
 
-  (use-package use-package
-    :custom
-    ;; (use-package-compute-statistics t)
-    ;; (use-package-verbose t)
-    (use-package-hook-name-suffix nil))
+(use-package use-package
+  :custom
+  ;; (use-package-compute-statistics t)
+  ;; (use-package-verbose t)
+  (use-package-hook-name-suffix nil))
 #+end_src
 
 *** My defaults
+(info "(emacs) Dired")
+
 #+begin_src emacs-lisp
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  (tooltip-mode -1)
-  (scroll-bar-mode -1)
-  (horizontal-scroll-bar-mode -1)
-  (fset 'yes-or-no-p 'y-or-n-p)
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(tooltip-mode -1)
+(scroll-bar-mode -1)
+(horizontal-scroll-bar-mode -1)
+(fset 'yes-or-no-p 'y-or-n-p)
 
-  (use-package minibuffer
-    :custom (minibuffer-eldef-shorten-default t)
-    :config (minibuffer-electric-default-mode))
+(use-package minibuffer
+  :custom (minibuffer-eldef-shorten-default t)
+  :config (minibuffer-electric-default-mode))
 
-  (use-package files
-    :custom (require-final-newline t)
-    :config
-    (defvar backups-dir (concat user-emacs-directory "backups/"))
-    (unless (file-exists-p backups-dir) (mkdir backups-dir))
-    (setq backup-directory-alist `(("." . ,backups-dir))
-          tramp-backup-directory-alist backup-directory-alist)
-    :hook (before-save-hook . delete-trailing-whitespace))
+(use-package files
+  :custom (require-final-newline t)
+  :config
+  (defvar backups-dir (concat user-emacs-directory "backups/"))
+  (unless (file-exists-p backups-dir) (mkdir backups-dir))
+  (setq backup-directory-alist `(("." . ,backups-dir))
+        tramp-backup-directory-alist backup-directory-alist)
+  :hook (before-save-hook . delete-trailing-whitespace))
 
-  (use-package delsel
-    :config (delete-selection-mode))
+(use-package delsel
+  :config (delete-selection-mode))
 
-  (use-package text-mode
-    :config (setq-default major-mode 'text-mode)
-    :hook (text-mode-hook . turn-on-auto-fill))
+(use-package text-mode
+  :config (setq-default major-mode 'text-mode)
+  :hook (text-mode-hook . turn-on-auto-fill))
 
-  (use-package autorevert
-    :custom (auto-revert-remote-files t)
-    :config (global-auto-revert-mode))
+(use-package autorevert
+  :custom (auto-revert-remote-files t)
+  :config (global-auto-revert-mode))
 
-  (use-package frame
-    :custom (blink-cursor-blinks 2))
+(use-package frame
+  :custom (blink-cursor-blinks 2))
 
-  ;; (use-package cus-edit
-  ;;   :custom (custom-file (concat user-emacs-directory ".emacs-custom.el"))
-  ;;   :hook (after-init-hook . (lambda () (load custom-file))))
+;; (use-package cus-edit
+;;   :custom (custom-file (concat user-emacs-directory ".emacs-custom.el"))
+;;   :hook (after-init-hook . (lambda () (load custom-file))))
 
-  (use-package ibuffer
-    :custom
-    (ibuffer-expert t)
-    (ibuffer-default-sorting-mode 'major-mode)
-    :hook (ibuffer-mode-hook . hl-line-mode)
-    :bind (("C-x C-b" . ibuffer)))
+(use-package ibuffer
+  :custom
+  (ibuffer-expert t)
+  (ibuffer-default-sorting-mode 'major-mode)
+  :hook (ibuffer-mode-hook . hl-line-mode)
+  :bind (("C-x C-b" . ibuffer)))
 
-  (setq scroll-preserve-screen-position 'always)
-  (setq-default fill-column 72)
-  (setq-default indent-tabs-mode nil)
-  (setq-default tab-width 2)
-  (setq-default tab-always-indent 'complete)
-  ;; (setq sentence-end-double-space t)
-  (when termux-p (global-visual-line-mode t))
+(use-package dired
+  :custom
+  (dired-recursive-copies 'always)
+  (dired-recursive-deletes 'always)
+  ;; (delete-by-moving-to-trash t)
+  (dired-listing-switches "-Atrhl --group-directories-first")
+  (dired-auto-revert-buffer t)
+  :hook (dired-mode-hook . hl-line-mode)
+  :bind ("C-x C-j" . dired-jump))
+
+(setq scroll-preserve-screen-position 'always)
+(setq-default fill-column 72)
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 2)
+(setq-default tab-always-indent 'complete)
+;; (setq sentence-end-double-space t)
+(when termux-p (global-visual-line-mode t))
 #+end_src
 
 **** Keybindings
@@ -499,209 +512,200 @@ Consider remapping keybindings like =C-i=, =M-r=, =C-z=, =C-x C-z= since
 I barely ever use them.
 
 #+begin_src emacs-lisp
-  (defun my-config-visit ()
-    (interactive)
-    (find-file "~/dotfiles/README.org"))
+(defun my-config-visit ()
+  (interactive)
+  (find-file "~/dotfiles/README.org"))
 
-  (bind-keys
-   ("C-x x"                    . my-config-visit)
-   ("M-o"                      . other-window)
-   ("M-O"                      . mode-line-other-buffer)
-   ("M-E"                      . mark-end-of-sentence)
-   ("M-T"                      . transpose-sentences)
-   ("C-x M-t"                  . transpose-paragraphs)
-   ("M-K"                      . kill-paragraph)
-   ("C-:"                      . eval-print-last-sexp)
-   ("M-R"                      . raise-sexp)
-   ;; so that M-= works without a selected region
-   ([remap count-words-region] . count-words)
-   ;; remap to S-SPC intead of M-SPC?
-   ([remap just-one-space]     . cycle-spacing)
-   ([remap upcase-word]        . upcase-dwim)
-   ([remap downcase-word]      . downcase-dwim)
-   ([remap capitalize-word]    . capitalize-dwim)
-   ([remap kill-buffer]        . kill-buffer-and-window)
-   ("<f1>"                     . nil)
-   ("<f2>"                     . nil))
+(bind-keys
+ ("C-x x"                    . my-config-visit)
+ ("M-o"                      . other-window)
+ ("M-O"                      . mode-line-other-buffer)
+ ("M-E"                      . mark-end-of-sentence)
+ ("M-T"                      . transpose-sentences)
+ ("C-x M-t"                  . transpose-paragraphs)
+ ("M-K"                      . kill-paragraph)
+ ("C-:"                      . eval-print-last-sexp)
+ ("M-R"                      . raise-sexp)
+ ("S-SPC"                    . cycle-spacing)
+ ;; so that M-= works without a selected region
+ ([remap count-words-region] . count-words)
+ ;; remap to S-SPC intead of M-SPC?
+ ;; ([remap just-one-space]     . cycle-spacing)
+ ([remap upcase-word]        . upcase-dwim)
+ ([remap downcase-word]      . downcase-dwim)
+ ([remap capitalize-word]    . capitalize-dwim)
+ ([remap kill-buffer]        . kill-buffer-and-window)
+ ("<f1>"                     . nil)
+ ("<f2>"                     . nil))
 #+end_src
 
 *** Locale
 #+begin_src emacs-lisp
-  (setq user-full-name "André Alexandre Gomes"
-        user-mail-address "andremegafone@gmail.com")
+(setq user-full-name "André Alexandre Gomes"
+      user-mail-address "andremegafone@gmail.com")
 
-  (use-package solar
-    :config
-    (defvar location-alist
-      '((piter . (59.94 30.31 "Санкт-Петербург, Россия"))
-        (porto . (41.16 -8.63 "Porto, Portugal")))
-      "An alist of locations featuring lat/lon and a label.")
+(use-package solar
+  :config
+  (defvar location-alist
+    '((piter . (59.94 30.31 "Санкт-Петербург, Россия"))
+      (porto . (41.16 -8.63 "Porto, Portugal")))
+    "An alist of locations featuring lat/lon and a label.")
 
-    (defun set-calendar-parameters (location)
-      (let ((parameters (alist-get location location-alist)))
-        (setq calendar-latitude (nth 0 parameters)
-              calendar-longitude (nth 1 parameters)
-              calendar-location-name (nth 2 parameters))))
+  (defun set-calendar-parameters (location)
+    (let ((parameters (alist-get location location-alist)))
+      (setq calendar-latitude (nth 0 parameters)
+            calendar-longitude (nth 1 parameters)
+            calendar-location-name (nth 2 parameters))))
 
-    (set-calendar-parameters 'piter))
+  (set-calendar-parameters 'piter))
 
-  (use-package calendar
-    :custom
-    (calendar-week-start-day 1)
-    (calendar-date-style 'iso)
-    :hook (calendar-today-visible-hook . calendar-mark-today))
+(use-package calendar
+  :custom
+  (calendar-week-start-day 1)
+  (calendar-date-style 'iso)
+  :hook (calendar-today-visible-hook . calendar-mark-today))
 
-  (use-package time
-    :custom
-    (display-time-format "%H:%M %a %d %b")
-    (display-time-default-load-average nil)
-    (display-time-world-list '(("Europe/Moscow" "Москва")
-                               ("Europe/Lisbon" "Lisboa")))
-    :config (display-time-mode))
+(use-package time
+  :custom
+  (display-time-format "%H:%M %a %d %b")
+  (display-time-default-load-average nil)
+  (display-time-world-list '(("Europe/Moscow" "Москва")
+                             ("Europe/Lisbon" "Lisboa")))
+  :config (display-time-mode))
 #+end_src
 
-**** WIP Input method
+**** WIP Input method and dicts
+The portuguese aspell dictionary sucks, why?
+
 #+begin_src emacs-lisp
-  (setq yeis-dir (expand-file-name "repos/emacs-yeis/" "~"))
+(setq yeis-dir (expand-file-name "repos/emacs-yeis/" "~"))
+(load-file (concat yeis-dir "yeis.el"))
+(load-file (concat yeis-dir "x-leim/robin-packages.el"))
+(load-file (concat yeis-dir "x-leim/x-leim-list.el"))
 
-  (load-file (concat yeis-dir "yeis.el"))
-  (load-file (concat yeis-dir "x-leim/robin-packages.el"))
-  (load-file (concat yeis-dir "x-leim/x-leim-list.el"))
+;; (add-to-list 'load-path "/home/aadcg/repos/emacs-yeis/")
 
-  ;; (add-to-list 'load-path "/home/aadcg/repos/emacs-yeis/")
+(setq-default default-input-method "robin-russian"
+              yeis-path-plain-word-list (concat yeis-dir "wordlist")
+              robin-current-package-name "robin-russian")
 
-  (setq-default default-input-method "robin-russian"
-                yeis-path-plain-word-list (concat yeis-dir "wordlist")
-                robin-current-package-name "robin-russian")
+(global-set-key (kbd "C-|") 'yeis-transform-previous-word)
 
-  (global-set-key (kbd "C-|") 'yeis-transform-previous-word)
-  ;; (global-set-key (kbd "C-x C-\\") 'yeis-transform-previous-word)
-
-  (defun my-change-to-dict (dict)
-    "Change to the dictionary given by string DICT."
-    (let ((inhibit-message t))
-      (ispell-change-dictionary dict
-       ;; (cl-find (or (concat "^" dict "$") (concat "^" dict))
-       ;;          (ispell-valid-dictionary-list)
-       ;;          :test #'string-match-p)
-       )))
-
-  (add-hook 'input-method-activate-hook
-            (lambda () (my-change-to-dict "ru")))
-
-  (add-hook 'input-method-deactivate-hook
-            (lambda () (my-change-to-dict "en")))
+(use-package ispell
+  :custom (ispell-dictionary "en_GB")
+  :hook
+  ((input-method-activate-hook   . (lambda () (ispell-change-dictionary "ru")))
+   (input-method-deactivate-hook . (lambda () (ispell-change-dictionary "en_GB")))))
 #+end_src
 
 **** Holidays
 (info "(emacs) Holidays")
 
 #+begin_src emacs-lisp
-  (use-package holidays
-    :init
-    (setq holiday-bahai-holidays nil
-          holiday-oriental-holidays nil
-          holiday-islamic-holidays nil
-          holiday-hebrew-holidays nil
-          holiday-christian-holidays nil
-          holiday-general-holidays
-          '(;; Portuguese Public Holidays
-            (holiday-fixed 1 1      "Ano Novo")
-            (holiday-easter-etc -47 "Carnaval")
-            (holiday-easter-etc -2  "Sexta-feira Santa")
-            (holiday-easter-etc 0   "Domingo de Páscoa")
-            (holiday-fixed 3 19     "Dia do Pai")
-            (holiday-fixed 4 25     "Dia da Liberdade")
-            (holiday-fixed 5 1      "Dia do Trabalhador")
-            (holiday-easter-etc +60 "Corpo de Deus")
-            (holiday-float 5 0 1    "Dia da Mãe")
-            (holiday-fixed 6 10     "Dia de Portugal, de Camões e das Comunidades Portuguesas")
-            (holiday-fixed 8 15     "Assunção de Nossa Senhora")
-            (holiday-fixed 10 5     "Implantação da República")
-            (holiday-fixed 11 1     "Dia de Todos-os-Santos")
-            (holiday-fixed 12 1     "Restauração da Independência")
-            (holiday-fixed 12 8     "Imaculada Conceição")
-            (holiday-fixed 12 24    "Consoada")
-            (holiday-fixed 12 25    "Natal")
-            ;; Russian Public Holidays
-            (holiday-fixed 1 1  "Новый Год")
-            (holiday-fixed 1 2  "Новогодние Каникулы")
-            (holiday-fixed 1 3  "Новогодние Каникулы")
-            (holiday-fixed 1 4  "Новогодние Каникулы")
-            (holiday-fixed 1 5  "Новогодние Каникулы")
-            (holiday-fixed 1 6  "Новогодние Каникулы")
-            (holiday-fixed 1 7  "Рождество Христово")
-            (holiday-fixed 1 8  "Новогодние Каникулы")
-            (holiday-fixed 2 23 "День Защитника Отечества")
-            (holiday-fixed 3 8  "Международный Женский День")
-            (holiday-fixed 5 1  "Праздник Весны и Труда")
-            (holiday-fixed 5 9  "День Победы")
-            (holiday-fixed 6 12 "День России")
-            (holiday-fixed 11 4 "День Народного Единства")
-            ;; Miscellaneous
-            (holiday-fixed 2 14  "Valentine's Day")
-            (holiday-fixed 4 1   "April Fools' Day")
-            (holiday-fixed 10 31 "Halloween"))
-          holiday-local-holidays
-          '(;; Porto, PT
-            (holiday-fixed 6 24 "Dia de São João")
-            ;; Санкт-Петербург, Россия
-            (holiday-fixed 1 27 "День Снятия Блокады")
-            (holiday-fixed 5 27 "День Города"))
-          holiday-other-holidays nil))
+(use-package holidays
+  :init
+  (setq holiday-bahai-holidays nil
+        holiday-oriental-holidays nil
+        holiday-islamic-holidays nil
+        holiday-hebrew-holidays nil
+        holiday-christian-holidays nil
+        holiday-general-holidays
+        '(;; Portuguese Public Holidays
+          (holiday-fixed 1 1      "Ano Novo")
+          (holiday-easter-etc -47 "Carnaval")
+          (holiday-easter-etc -2  "Sexta-feira Santa")
+          (holiday-easter-etc 0   "Domingo de Páscoa")
+          (holiday-fixed 3 19     "Dia do Pai")
+          (holiday-fixed 4 25     "Dia da Liberdade")
+          (holiday-fixed 5 1      "Dia do Trabalhador")
+          (holiday-easter-etc +60 "Corpo de Deus")
+          (holiday-float 5 0 1    "Dia da Mãe")
+          (holiday-fixed 6 10     "Dia de Portugal, de Camões e das Comunidades Portuguesas")
+          (holiday-fixed 8 15     "Assunção de Nossa Senhora")
+          (holiday-fixed 10 5     "Implantação da República")
+          (holiday-fixed 11 1     "Dia de Todos-os-Santos")
+          (holiday-fixed 12 1     "Restauração da Independência")
+          (holiday-fixed 12 8     "Imaculada Conceição")
+          (holiday-fixed 12 24    "Consoada")
+          (holiday-fixed 12 25    "Natal")
+          ;; Russian Public Holidays
+          (holiday-fixed 1 1  "Новый Год")
+          (holiday-fixed 1 2  "Новогодние Каникулы")
+          (holiday-fixed 1 3  "Новогодние Каникулы")
+          (holiday-fixed 1 4  "Новогодние Каникулы")
+          (holiday-fixed 1 5  "Новогодние Каникулы")
+          (holiday-fixed 1 6  "Новогодние Каникулы")
+          (holiday-fixed 1 7  "Рождество Христово")
+          (holiday-fixed 1 8  "Новогодние Каникулы")
+          (holiday-fixed 2 23 "День Защитника Отечества")
+          (holiday-fixed 3 8  "Международный Женский День")
+          (holiday-fixed 5 1  "Праздник Весны и Труда")
+          (holiday-fixed 5 9  "День Победы")
+          (holiday-fixed 6 12 "День России")
+          (holiday-fixed 11 4 "День Народного Единства")
+          ;; Miscellaneous
+          (holiday-fixed 2 14  "Valentine's Day")
+          (holiday-fixed 4 1   "April Fools' Day")
+          (holiday-fixed 10 31 "Halloween"))
+        holiday-local-holidays
+        '(;; Porto, PT
+          (holiday-fixed 6 24 "Dia de São João")
+          ;; Санкт-Петербург, Россия
+          (holiday-fixed 1 27 "День Снятия Блокады")
+          (holiday-fixed 5 27 "День Города"))
+        holiday-other-holidays nil))
 #+end_src
 
 *** Startup and state
 #+begin_src emacs-lisp
-  (use-package emacs
-    :custom
-    (initial-buffer-choice
-     (lambda ()
-       (org-agenda-list 1)
-       (my-switch-to-agenda)
-       (delete-other-windows)))
-    (initial-scratch-message ";; Happy Hacking!\n\n")
-    (inhibit-startup-screen t))
+(use-package emacs
+  :custom
+  (initial-buffer-choice
+   (lambda ()
+     (org-agenda-list 1)
+     (my-switch-to-agenda)
+     (delete-other-windows)))
+  (initial-scratch-message ";; Happy Hacking!\n\n")
+  (inhibit-startup-screen t))
 
-  (use-package savehist
-    :custom (history-length 500)
-    :config (savehist-mode))
+(use-package savehist
+  :custom (history-length 500)
+  :config (savehist-mode))
 
-  (use-package recentf
-    :custom (recentf-max-saved-items 500)
-    :config (recentf-mode))
+(use-package recentf
+  :custom (recentf-max-saved-items 500)
+  :config (recentf-mode))
 
-  (use-package saveplace
-    :config (save-place-mode))
+(use-package saveplace
+  :config (save-place-mode))
 #+end_src
 
 **** Desktop
 (info "(emacs) Saving Emacs Sessions")
 
 #+begin_src emacs-lisp
-  (use-package desktop
-    :custom
-    (desktop-files-not-to-save ".")
-    (desktop-globals-to-clear nil)
-    ;; (desktop-restore-eager 3)
-    (desktop-restore-frames nil)
-    (desktop-lazy-verbose nil)
-    :config
-    (add-to-list 'desktop-clear-preserve-buffers
-                 "\\*info\\*")
-    (add-to-list 'desktop-modes-not-to-save
-                 'image-mode)
-    (add-to-list 'desktop-modes-not-to-save
-                 'eww-mode)
-    (desktop-save-mode))
+(use-package desktop
+  :custom
+  (desktop-files-not-to-save ".")
+  (desktop-globals-to-clear nil)
+  (desktop-restore-frames nil)
+  (desktop-lazy-verbose nil)
+  :config
+  (add-to-list 'desktop-clear-preserve-buffers
+               "\\*info\\*")
+  (add-to-list 'desktop-modes-not-to-save
+               'image-mode)
+  (add-to-list 'desktop-modes-not-to-save
+               'eww-mode)
+  (desktop-save-mode))
 #+end_src
 
 **** Server
 (info "(emacs) Emacs Server")
 
 #+begin_src emacs-lisp
-  (use-package server
-    :config (unless (server-running-p) (server-start)))
+(use-package server
+  :config (unless (server-running-p) (server-start)))
 #+end_src
 
 *** Aesthetics
@@ -711,86 +715,86 @@ I barely ever use them.
 I love Fira Code but it lacks italics.
 
 #+begin_src emacs-lisp
-  (defun my-auto-size-font (n)
-    "Set the font size such that n buffers of 80 chars fit side by side."
-    (interactive "nHow many 80 chars buffers should fit side by side? ")
-    (let ((size 1.0))
-      (set-frame-font (concat "Fira Code-" (number-to-string size)) nil t)
-      (while (>= (save-window-excursion
-                  (delete-other-windows)
-                  (window-max-chars-per-line))
-                (* n 90))
-        (incf size 0.5)
-        (set-frame-font (concat "Fira Code-" (number-to-string size)) nil t))
-      (message "The suggested font size is %f" size)
-      (number-to-string size)))
+(defun my-auto-size-font (n)
+  "Set the font size such that n buffers of 80 chars fit side by side."
+  (interactive "nHow many 80 chars buffers should fit side by side? ")
+  (let ((size 1.0))
+    (set-frame-font (concat "Fira Code-" (number-to-string size)) nil t)
+    (while (>= (save-window-excursion
+                (delete-other-windows)
+                (window-max-chars-per-line))
+              (* n 90))
+      (incf size 0.5)
+      (set-frame-font (concat "Fira Code-" (number-to-string size)) nil t))
+    (message "The suggested font size is %f" size)
+    (number-to-string size)))
 
-  (add-to-list 'default-frame-alist '(font . "Fira Code-18.5"))
-  (add-to-list 'default-frame-alist '(fullscreen . maximized))
-  ;; (add-to-list 'default-frame-alist '(alpha . 100)) ;; transparent frame
+(add-to-list 'default-frame-alist '(font . "Fira Code-18.5"))
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+;; (add-to-list 'default-frame-alist '(alpha . 100)) ;; transparent frame
 #+end_src
 
 **** Theme
 #+begin_src emacs-lisp
-  (use-package modus-themes
-    :init
-    (setq modus-themes-slanted-constructs t
-          modus-themes-bold-constructs t
-          modus-themes-fringes 'subtle ; {nil,'subtle,'intense}
-          modus-themes-mode-line nil ; {nil,'3d,'moody}
-          modus-themes-syntax nil ; read the manual
-          modus-themes-intense-hl-line t
-          modus-themes-paren-match t
-          modus-themes-links 'neutral-underline ; read the manual
-          modus-themes-no-mixed-fonts nil
-          modus-themes-prompts nil ; {nil,'subtle,'intense}
-          modus-themes-completions nil ; {nil,'moderate,'opinionated}
-          modus-themes-region 'bg-only-no-extend ; {nil,'no-extend,'bg-only,'bg-only-no-extend}
-          modus-themes-diffs nil ; {nil,'desaturated,'fg-only,'bg-only}
-          modus-themes-org-blocks 'grayscale ; {nil,'grayscale,'rainbow}
-          modus-themes-headings nil ; read the manual
-          modus-themes-variable-pitch-headings nil
-          modus-themes-scale-headings t
-          modus-themes-scale-1 1.1
-          modus-themes-scale-2 1.15
-          modus-themes-scale-3 1.21
-          modus-themes-scale-4 1.27
-          modus-themes-scale-5 1.33)
-    :config
-    (let* ((inhibit-message t)
-           (sunrise (nth 1 (split-string (sunrise-sunset))))
-           (sunset (nth 4 (split-string (sunrise-sunset)))))
-      (run-at-time sunrise
-                   (* 60 60 24)
-                   'modus-themes-load-operandi)
-      (run-at-time sunset
-                   (* 60 60 24)
-                   'modus-themes-load-vivendi))
-    (modus-themes-load-operandi))
+(use-package modus-themes
+  :init
+  (setq modus-themes-slanted-constructs t
+        modus-themes-bold-constructs t
+        modus-themes-fringes 'subtle ; {nil,'subtle,'intense}
+        modus-themes-mode-line nil ; {nil,'3d,'moody}
+        modus-themes-syntax nil ; read the manual
+        modus-themes-intense-hl-line t
+        modus-themes-paren-match t
+        modus-themes-links 'neutral-underline ; read the manual
+        modus-themes-no-mixed-fonts nil
+        modus-themes-prompts nil ; {nil,'subtle,'intense}
+        modus-themes-completions nil ; {nil,'moderate,'opinionated}
+        modus-themes-region 'bg-only-no-extend ; {nil,'no-extend,'bg-only,'bg-only-no-extend}
+        modus-themes-diffs nil ; {nil,'desaturated,'fg-only,'bg-only}
+        modus-themes-org-blocks 'grayscale ; {nil,'grayscale,'rainbow}
+        modus-themes-headings nil ; read the manual
+        modus-themes-variable-pitch-headings nil
+        modus-themes-scale-headings t
+        modus-themes-scale-1 1.1
+        modus-themes-scale-2 1.15
+        modus-themes-scale-3 1.21
+        modus-themes-scale-4 1.27
+        modus-themes-scale-5 1.33)
+  :config
+  (let* ((inhibit-message t)
+         (sunrise (nth 1 (split-string (sunrise-sunset))))
+         (sunset (nth 4 (split-string (sunrise-sunset)))))
+    (run-at-time sunrise
+                 (* 60 60 24)
+                 'modus-themes-load-operandi)
+    (run-at-time sunset
+                 (* 60 60 24)
+                 'modus-themes-load-vivendi))
+  (modus-themes-load-operandi))
 
-  (use-package fringe
-    :config (fringe-mode '(8 . 0)))
+(use-package fringe
+  :config (fringe-mode '(8 . 0)))
 #+end_src
 
 **** Modeline
 #+begin_src emacs-lisp
-  (column-number-mode)
+(column-number-mode)
 
-  (use-package minions
-    :custom
-    (minions-direct '(org-tree-slide-mode
-                      geiser-mode
-                      yeis-mode))
-    (minions-mode-line-delimiters '("" . ""))
-    :config (minions-mode))
+(use-package minions
+  :custom
+  (minions-direct '(org-tree-slide-mode
+                    geiser-mode
+                    yeis-mode))
+  (minions-mode-line-delimiters '("" . ""))
+  :config (minions-mode))
 
-  ;; check /sys/class/power_supply/BAT0
-  (use-package battery
-    :unless termux-p
-    :custom
-    (battery-mode-line-format " ⌁ %p%")
-    (battery-mode-line-limit 25)
-    :config (display-battery-mode))
+;; check /sys/class/power_supply/BAT0
+(use-package battery
+  :unless termux-p
+  :custom
+  (battery-mode-line-format " ⌁ %p%")
+  (battery-mode-line-limit 25)
+  :config (display-battery-mode))
 #+end_src
 
 ** Programming
@@ -837,93 +841,93 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
      (info "(emacs) Lisp Indent")
 
 #+begin_src emacs-lisp
-  ;; (define-key lisp-mode-shared-map (kbd "RET")
-  ;;   'reindent-then-newline-and-indent)
+;; (define-key lisp-mode-shared-map (kbd "RET")
+;;   'reindent-then-newline-and-indent)
 
-  (use-package elisp-mode
-    ;; this is enabled by default no?
-    :config (global-eldoc-mode))
+(use-package elisp-mode
+  ;; this is enabled by default no?
+  :config (global-eldoc-mode))
 
-  ;; needed?
-  ;; (add-hook 'emacs-lisp-mode-hook 'my-remove-elc-on-save)
-  ;; (defun my-remove-elc-on-save ()
-  ;;   "If you're saving an elisp file, likely the .elc is no longer valid."
-  ;;   (make-local-variable 'after-save-hook)
-  ;;   (add-hook 'after-save-hook
-  ;;             (lambda ()
-  ;;               (if (file-exists-p (concat buffer-file-name "c"))
-  ;;                   (delete-file (concat buffer-file-name "c"))))))
+;; needed?
+;; (add-hook 'emacs-lisp-mode-hook 'my-remove-elc-on-save)
+;; (defun my-remove-elc-on-save ()
+;;   "If you're saving an elisp file, likely the .elc is no longer valid."
+;;   (make-local-variable 'after-save-hook)
+;;   (add-hook 'after-save-hook
+;;             (lambda ()
+;;               (if (file-exists-p (concat buffer-file-name "c"))
+;;                   (delete-file (concat buffer-file-name "c"))))))
 
-  (use-package geiser
-    :custom (geiser-default-implementation 'guile))
+(use-package geiser
+  :custom (geiser-default-implementation 'guile))
 
-  (use-package sly
-    :custom
-    (inferior-lisp-program "sbcl")
-    (sly-port 4006)
-    :bind (:map
-           sly-mode-map ("C-c o" . sly-documentation)))
+(use-package sly
+  :custom
+  (inferior-lisp-program "sbcl")
+  (sly-port 4006)
+  :bind (:map
+         sly-mode-map ("C-c o" . sly-documentation)))
 
-  (use-package sly-asdf)
+(use-package sly-asdf)
 #+end_src
 
 ***** COMMENT Emacs package
 #+begin_src emacs-lisp
-  (use-package flycheck-package
-    :after flycheck
-    :config
-    (flycheck-package-setup))
+(use-package flycheck-package
+  :after flycheck
+  :config
+  (flycheck-package-setup))
 
-  (use-package package-lint-flymake
-    :after flymake
-    :hook (emacs-lisp-mode-hook . package-lint-flymake-setup)
-    :config
-    (remove-hook 'flymake-diagnostic-functions 'flymake-proc-legacy-flymake))
+(use-package package-lint-flymake
+  :after flymake
+  :hook (emacs-lisp-mode-hook . package-lint-flymake-setup)
+  :config
+  (remove-hook 'flymake-diagnostic-functions 'flymake-proc-legacy-flymake))
 
 #+end_src
 
 **** Python
 #+begin_src emacs-lisp
-  (use-package python
-    :custom
-    ;; (python-shell-interpreter-args "-i --simple-prompt")
-    (python-shell-interpreter "ipython"))
+(use-package python
+  :custom
+  (python-shell-interpreter-args "-i --simple-prompt")
+  (python-shell-interpreter "ipython"))
 
-  ;; (use-package elpy)
+;; (use-package elpy)
 
-  ;; (use-package company-jedi
-  ;;   :config (add-to-list 'company-backends 'company-jedi))
+;; (use-package company-jedi
+;;   :config (add-to-list 'company-backends 'company-jedi))
 
-  ;; (use-package ein)
+;; (use-package ein)
 
-  ;; (add-hook 'python-mode-hook (lambda ()
-  ;;                               (require 'sphinx-doc)
-  ;;                               (sphinx-doc-mode t)))
+;; (add-hook 'python-mode-hook (lambda ()
+;;                               (require 'sphinx-doc)
+;;                               (sphinx-doc-mode t)))
 #+end_src
 
 **** Bash
 ***** Shell
 #+begin_src emacs-lisp
-  (use-package shell
-    :custom (shell-command-prompt-show-cwd t))
+(use-package shell
+  :custom (shell-command-prompt-show-cwd t))
 #+end_src
 
 ***** Eshell
 #+begin_src emacs-lisp
-  (use-package eshell
-    :custom
-    (eshell-history-size 9999)
-    (eshell-hist-ignoredups t)
-    (eshell-destroy-buffer-when-process-dies t)
-    :config (add-to-list 'eshell-modules-list 'eshell-tramp)
-    :hook
-    (eshell-mode-hook . (lambda () (company-mode -1)))
-    (eshell-pre-command-hook . 'eshell-save-some-history)
-    :bind ("<s-return>" . eshell))
+(use-package eshell
+  :custom
+  (eshell-history-size 9999)
+  (eshell-hist-ignoredups t)
+  (eshell-destroy-buffer-when-process-dies t)
+  :config (add-to-list 'eshell-modules-list 'eshell-tramp)
+  :hook
+  (eshell-mode-hook . (lambda () (company-mode -1)))
+  (eshell-pre-command-hook . 'eshell-save-some-history)
+  :bind ("<s-return>" . eshell))
 
-  ;; (use-package em-term
-  ;;   :config
-  ;;   (add-to-list 'eshell-visual-commands "alsamixer"))
+;; (use-package em-term
+;;   :config
+;;   (add-to-list 'eshell-visual-commands "alsamixer"))
 #+end_src
 
 #+begin_src sh :tangle ~/.emacs.d/eshell/alias :comments nil
@@ -934,187 +938,216 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
 
 **** COMMENT Haskell
 #+begin_src emacs-lisp
-  (use-package haskell-mode
-    :hook
-    ((haskell-mode-hook . haskell-doc-mode)
-     (haskell-mode-hook . (lambda () turn-on-haskell-indent))
-     (haskell-mode-hook . interactive-haskell-mode))
-    :bind (:map interactive-haskell-mode-map
-                ("C-c C-c" . haskell-interactive-bring)))
+(use-package haskell-mode
+  :hook
+  ((haskell-mode-hook . haskell-doc-mode)
+   (haskell-mode-hook . (lambda () turn-on-haskell-indent))
+   (haskell-mode-hook . interactive-haskell-mode))
+  :bind (:map interactive-haskell-mode-map
+              ("C-c C-c" . haskell-interactive-bring)))
 #+end_src
 
 **** COMMENT Golang
 Requires gocode for the autocomplete to work.
 
 #+begin_src emacs-lisp
-  (use-package go-mode)
+(use-package go-mode)
 
-  (use-package company-go
-    :config (add-to-list 'company-backends 'company-go))
+(use-package company-go
+  :config (add-to-list 'company-backends 'company-go))
 #+end_src
 
 **** COMMENT \LaTeX
 #+begin_src emacs-lisp
-  (use-package auctex
-    :defer t
-    :config
-    (setq TeX-auto-save t
-          TeX-parse-self t)
-    (setq-default TeX-master nil)
-    :hook (latex-mode-hook . cdlatex-mode))
+(use-package auctex
+  :config
+  (setq TeX-auto-save t
+        TeX-parse-self t)
+  (setq-default TeX-master nil)
+  :hook (latex-mode-hook . cdlatex-mode))
 
-  ;; TODO bibtex
+;; TODO bibtex
 #+end_src
 
 **** COMMENT Files
 #+begin_src emacs-lisp
-  (use-package yaml-mode
-    :defer
-    :mode (("\\.yml\\'" . yaml-mode)
-           ("\\.yaml\\'" . yaml-mode)))
+(use-package yaml-mode
+  :defer
+  :mode (("\\.yml\\'" . yaml-mode)
+         ("\\.yaml\\'" . yaml-mode)))
 
-  (use-package csv-mode
-    :defer)
+(use-package csv-mode
+  :defer)
 #+end_src
 
 *** Utils
 (info "(emacs) Projects")
 (info "(emacs) Parentheses")
+(info "(flymake) Top")
+[[https://company-mode.github.io/][company-mode documentation]]
 
 #+begin_src emacs-lisp
-  (use-package paren
-    :custom
-    (show-paren-delay 0)
-    (show-paren-when-point-inside-paren t)
-    ;; (show-paren-when-point-in-periphery t)
-    :config
-    (show-paren-mode))
+(use-package paren
+  :custom
+  (show-paren-delay 0)
+  (show-paren-when-point-inside-paren t)
+  ;; (show-paren-when-point-in-periphery t)
+  :config
+  (show-paren-mode))
 
+;; needed?
+(use-package rainbow-delimiters
+  :hook (prog-mode-hook . rainbow-delimiters-mode))
+
+(use-package prog-mode
+  :config (global-prettify-symbols-mode))
+
+(use-package electric
+  ;; :custom
+  ;; (electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
+  :config
+  (electric-indent-mode)
+  (electric-pair-mode)
   ;; needed?
-  (use-package rainbow-delimiters
-    :hook (prog-mode-hook . rainbow-delimiters-mode))
+  (electric-layout-mode))
 
-  (use-package prog-mode
-    :config (global-prettify-symbols-mode))
+(use-package comint
+  :bind (:map comint-mode-map
+              ("M-p" . comint-previous-matching-input-from-input)
+              ("M-n" . comint-next-matching-input-from-input)
+              ("SPC" . comint-magic-space)))
 
-  (use-package electric
-    ;; :custom
-    ;; (electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
-    :config
-    (electric-indent-mode)
-    (electric-pair-mode)
-    ;; needed?
-    (electric-layout-mode))
+(use-package ediff-wind
+  :custom (ediff-window-setup-function 'ediff-setup-windows-plain))
 
-  (use-package comint
-    :bind (:map comint-mode-map
-                ("M-p" . comint-previous-matching-input-from-input)
-                ("M-n" . comint-next-matching-input-from-input)
-                ("SPC" . comint-magic-space)))
+(use-package subword
+  :hook (prog-mode-hook . subword-mode))
 
-  (use-package ediff-wind
-    :custom (ediff-window-setup-function 'ediff-setup-windows-plain))
+(use-package flyspell
+  :hook ((text-mode-hook . flyspell-mode)
+         (prog-mode-hook . flyspell-prog-mode)))
 
-  (use-package subword
-    :hook (prog-mode-hook . subword-mode))
+(use-package flymake
+  :hook (prog-mode-hook . flymake-mode)
+  :bind (:map flymake-mode-map
+              ("C-c ! s" . flymake-start)
+              ("C-c ! d" . flymake-show-diagnostics-buffer)
+              ("C-c ! n" . flymake-goto-next-error)
+              ("C-c ! p" . flymake-goto-prev-error)))
+
+(use-package company
+  :custom
+  (company-require-match nil)
+  ;; (company-idle-delay 0.5)
+  (company-selection-wrap-around t)
+  :hook (prog-mode-hook . company-mode)
+  :bind (:map company-active-map
+              ("C-j"      . company-complete-selection)
+              ("C-n"      . company-select-next)
+              ("C-p"      . company-select-previous)
+              ("<tab>"    . company-complete-common-or-cycle)
+              ("C-h"      . company-show-doc-buffer)
+              ("M-."      . company-show-location)
+              ("RET"      . nil)
+              ("<return>" . nil)))
 #+end_src
 
 ** Org-mode
 #+begin_src emacs-lisp
-  (use-package org
-    :custom
-    ;; general
-    (org-use-speed-commands t)
-    (org-adapt-indentation nil)
-    (org-hide-leading-stars t)
-    (org-M-RET-may-split-line '((default . nil)))
-    (org-directory "~/NextCloud/org/")
-    ;; lists
-    (org-list-demote-modify-bullet '(("-" . "+") ("+" . "-")))
-    (org-list-indent-offset 1)
-    ;; links
-    (org-return-follows-link t)
-    ;; latex
-    (org-format-latex-options (plist-put org-format-latex-options :scale 2))
-    (org-preview-latex-image-directory "ltximg/")
-    ;; images
-    (org-startup-with-inline-images t)
-    (org-image-actual-width 500)
-    ;; agenda
-    (org-agenda-skip-deadline-prewarning-if-scheduled t)
-    (org-agenda-include-diary t)
-    (org-agenda-start-on-weekday nil)
-    (org-agenda-files '(org-directory))
-    (org-todo-keywords
-     '((sequence "TODO(t!)" "WIP(s!)" "WAITING(w@)" "|"
-                 "DONE(d!)" "CANCEL(c@)")))
-    (org-todo-keyword-faces '(("WIP" . "orange")
-                              ("WAITING" . "orange")))
-    ;; literate programming
-    (org-src-fontify-natively t)
-    (org-src-tab-acts-natively t)
-    (org-edit-src-persistent-message nil)
-    (org-src-window-setup 'current-window)
-    (org-confirm-babel-evaluate nil)
-    (org-edit-src-content-indentation 0)
-    :config
-    (customize-set-variable
-     'org-structure-template-alist
-     (append org-structure-template-alist
-             '(("thm"  . "theorem")
-               ("pf"   . "proof")
-               ("lem"  . "lemma")
-               ("cor"  . "corollary")
-               ("def"  . "definition")
-               ("rem"  . "remark")
-               ("exer" . "exercise")
-               ("prop" . "proposition")
-               ("el"   . "src emacs-lisp"))))
+(use-package org
+  :custom
+  ;; general
+  (org-use-speed-commands t)
+  (org-adapt-indentation nil)
+  (org-hide-leading-stars t)
+  (org-M-RET-may-split-line '((default . nil)))
+  (org-directory "~/NextCloud/org/")
+  ;; lists
+  (org-list-demote-modify-bullet '(("-" . "+") ("+" . "-")))
+  (org-list-indent-offset 1)
+  ;; links
+  (org-return-follows-link t)
+  ;; latex
+  (org-format-latex-options (plist-put org-format-latex-options :scale 2))
+  (org-preview-latex-image-directory "ltximg/")
+  ;; images
+  (org-startup-with-inline-images t)
+  (org-image-actual-width 500)
+  ;; agenda
+  (org-agenda-skip-deadline-prewarning-if-scheduled t)
+  (org-agenda-include-diary t)
+  (org-agenda-start-on-weekday nil)
+  (org-agenda-files '("~/NextCloud/org/"))
+  (org-todo-keywords
+   '((sequence "TODO(t!)" "WIP(s!)" "WAITING(w@)" "|"
+               "DONE(d!)" "CANCEL(c@)")))
+  (org-todo-keyword-faces '(("WIP" . "orange")
+                            ("WAITING" . "orange")))
+  ;; literate programming
+  (org-src-fontify-natively t)
+  (org-src-tab-acts-natively t)
+  (org-edit-src-persistent-message nil)
+  (org-src-window-setup 'current-window)
+  (org-confirm-babel-evaluate nil)
+  (org-edit-src-content-indentation 0)
+  :config
+  (customize-set-variable
+   'org-structure-template-alist
+   (append org-structure-template-alist
+           '(("thm"  . "theorem")
+             ("pf"   . "proof")
+             ("lem"  . "lemma")
+             ("cor"  . "corollary")
+             ("def"  . "definition")
+             ("rem"  . "remark")
+             ("exer" . "exercise")
+             ("prop" . "proposition")
+             ("el"   . "src emacs-lisp"))))
 
-    (org-babel-do-load-languages
-     'org-babel-load-languages
-     '((emacs-lisp . t)
-       (scheme     . t)
-       (python     . t)
-       (haskell    . t)
-       (latex      . t)
-       (shell      . t)))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (scheme     . t)
+     (python     . t)
+     (haskell    . t)
+     (latex      . t)
+     (shell      . t)))
 
-    (when termux-p
-      (add-to-list 'org-file-apps '("\\.pdf\\'" . "termux-open %s")))
+  (when termux-p
+    (add-to-list 'org-file-apps '("\\.pdf\\'" . "termux-open %s")))
 
-    (defun my-switch-to-agenda ()
-      (interactive)
-      (switch-to-buffer "*Org Agenda*"))
+  (defun my-switch-to-agenda ()
+    (interactive)
+    (switch-to-buffer "*Org Agenda*"))
 
-    (defun my-org-checkbox-next ()
-      "Mark checkboxes and sort."
-      (interactive)
-      (let ((home (point)))
-        (when (org-at-item-checkbox-p)
-          (org-toggle-checkbox)
-          (org-sort-list nil ?x)
-          (goto-char home))))
+  (defun my-org-checkbox-next ()
+    "Mark checkboxes and sort."
+    (interactive)
+    (let ((home (point)))
+      (when (org-at-item-checkbox-p)
+        (org-toggle-checkbox)
+        (org-sort-list nil ?x)
+        (goto-char home))))
 
-    (defun my-diary-last-day-of-month (date)
-      "Return `t` if DATE is the last day of the month.
-  Credit to https://emacs.stackexchange.com/a/31708/19054."
-      (let* ((day (calendar-extract-day date))
-             (month (calendar-extract-month date))
-             (year (calendar-extract-year date))
-             (last-day-of-month
-              (calendar-last-day-of-month month year)))
-        (= day last-day-of-month)))
-    :bind (("C-c a"     . org-agenda)
-           ("C-c c"     . org-capture)
-           ("C-c l"     . org-store-link)
-           ("C-x f"     . my-switch-to-agenda)
-           :map org-mode-map
-           ("C-'"       . nil)
-           ("C-,"       . nil)
-           ("C-<tab>"   . org-force-cycle-archived)
-           ("C-c j"     . my-org-checkbox-next)
-           ("<mouse-1>" . my-org-checkbox-next)))
+  (defun my-diary-last-day-of-month (date)
+    "Return `t` if DATE is the last day of the month.
+Credit to https://emacs.stackexchange.com/a/31708/19054."
+    (let* ((day (calendar-extract-day date))
+           (month (calendar-extract-month date))
+           (year (calendar-extract-year date))
+           (last-day-of-month
+            (calendar-last-day-of-month month year)))
+      (= day last-day-of-month)))
+  :bind (("C-c a"     . org-agenda)
+         ("C-c c"     . org-capture)
+         ("C-c l"     . org-store-link)
+         ("C-x f"     . my-switch-to-agenda)
+         :map org-mode-map
+         ("C-'"       . nil)
+         ("C-,"       . nil)
+         ("C-<tab>"   . org-force-cycle-archived)
+         ("C-c j"     . my-org-checkbox-next)
+         ("<mouse-1>" . my-org-checkbox-next)))
 #+end_src
 
 *** WIP Exports
@@ -1122,240 +1155,229 @@ Ox-beamer exports org to beamer.  Htmlize provides syntax highlighting
 to HTML exports.
 
 #+begin_src emacs-lisp
-  (use-package ox-beamer)
-  (use-package ox-texinfo)
+(use-package ox-beamer)
+(use-package ox-texinfo)
 
-  (add-to-list 'org-latex-packages-alist
-               '("russian,main=english" "babel" t ("pdflatex")))
-  (add-to-list 'org-latex-packages-alist
-               '("AUTO" "polyglossia" t ("xelatex" "lualatex")))
+(add-to-list 'org-latex-packages-alist
+             '("russian,main=english" "babel" t ("pdflatex")))
+(add-to-list 'org-latex-packages-alist
+             '("AUTO" "polyglossia" t ("xelatex" "lualatex")))
 
-  (setq org-latex-listings t)
-  (add-to-list 'org-latex-packages-alist '("" "listings"))
+(setq org-latex-listings t)
+(add-to-list 'org-latex-packages-alist '("" "listings"))
 
-  (add-to-list 'org-latex-classes
-               '("aadcg-article"
-                 "\\documentclass[11pt]{amsart}
-  [DEFAULT-PACKAGES]
-  [PACKAGES]
-  \\usepackage{amsthm}
-  \\newtheorem{theorem}{Theorem}[section]
-  \\newtheorem{lemmma}[theorem]{Lemma}
-  \\newtheorem{proposition}[theorem]{Proposition}
-  \\newtheorem{corollary}[theorem]{Corollary}
+(add-to-list 'org-latex-classes
+             '("aadcg-article"
+               "\\documentclass[11pt]{amsart}
+[DEFAULT-PACKAGES]
+[PACKAGES]
+\\usepackage{amsthm}
+\\newtheorem{theorem}{Theorem}[section]
+\\newtheorem{lemmma}[theorem]{Lemma}
+\\newtheorem{proposition}[theorem]{Proposition}
+\\newtheorem{corollary}[theorem]{Corollary}
 
-  \\theoremstyle{definition}
-  \\newtheorem{definition}{Definition}[section]
-  \\newtheorem{example}{Example}[section]
-  \\newtheorem{exercise}[exa]{Exercise}
+\\theoremstyle{definition}
+\\newtheorem{definition}{Definition}[section]
+\\newtheorem{example}{Example}[section]
+\\newtheorem{exercise}[exa]{Exercise}
 
-  \\theoremstyle{remark}
-  \\newtheorem{remark}{Remark}
-  \\newtheorem{note}{Note}
-  \\newtheorem{case}{case}
-  [EXTRA]"
-                 ("\\section{%s}" . "\\section*{%s}")
-                 ("\\subsection{%s}" . "\\subsection*{%s}")
-                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+\\theoremstyle{remark}
+\\newtheorem{remark}{Remark}
+\\newtheorem{note}{Note}
+\\newtheorem{case}{case}
+[EXTRA]"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 #+end_src
 
 *** Extensions
 [[https://gitlab.com/phillord/org-drill][org-drill documentation]]
 
 #+begin_src emacs-lisp
-  ;; (use-package cdlatex
-  ;;   :hook (org-mode-hook . org-cdlatex-mode))
+;; (use-package cdlatex
+;;   :hook (org-mode-hook . org-cdlatex-mode))
 
-  (use-package org-superstar
-    :after org
-    :custom
-    (org-superstar-headline-bullets-list '("§"))
-    :hook (org-mode-hook . org-superstar-mode))
+(use-package org-superstar
+  :after org
+  :custom
+  (org-superstar-headline-bullets-list '("§"))
+  :hook (org-mode-hook . org-superstar-mode))
 
-  (use-package org-drill
-    :custom
-    (org-drill-save-buffers-after-drill-sessions-p nil)
-    (org-drill-scope 'tree)
-    :config (require 'org-drill))
+(use-package org-drill
+  :custom
+  (org-drill-save-buffers-after-drill-sessions-p nil)
+  (org-drill-scope 'tree)
+  :config (require 'org-drill))
 
-  (use-package org-drill-table)
+(use-package org-drill-table)
 
-  (use-package org-fragtog
-    :hook (org-mode-hook . org-fragtog-mode))
+(use-package org-fragtog
+  :hook (org-mode-hook . org-fragtog-mode))
 #+end_src
 
 *** WIP Presentations
 #+begin_src emacs-lisp
-  (use-package org-tree-slide
-    :custom
-    (org-tree-slide-breadcrumbs nil)
-    (org-tree-slide-slide-in-effect nil)
-    (org-tree-slide-never-touch-face t)
-    (org-tree-slide-activate-message nil)
-    (org-tree-slide-deactivate-message nil)
-    :config
-    (defun my-presenting ()
-      "Presenting mode"
-      (interactive)
-      (setq mode-line-format nil)
-      (global-diff-hl-mode 0)
-      (my-auto-size-font 1))
+(use-package org-tree-slide
+  :custom
+  (org-tree-slide-breadcrumbs nil)
+  (org-tree-slide-slide-in-effect nil)
+  (org-tree-slide-never-touch-face t)
+  (org-tree-slide-activate-message nil)
+  (org-tree-slide-deactivate-message nil)
+  :config
+  (defun my-presenting ()
+    "Presenting mode"
+    (interactive)
+    (setq mode-line-format nil)
+    (global-diff-hl-mode 0)
+    (my-auto-size-font 1))
 
-    (defun my-non-presenting ()
-      "Non-presenting mode"
-      (interactive)
-      (revert-buffer nil t)
-      (global-diff-hl-mode)
-      (my-auto-size-font 2))
-    :hook
-    ((org-tree-slide-play-hook . my-presenting)
-     (org-tree-slide-stop-hook . my-non-presenting))
-    :bind (:map org-tree-slide-mode-map
-                ("C->"  . org-tree-slide-move-next-tree)
-                ("C-<"  . org-tree-slide-move-previous-tree)))
+  (defun my-non-presenting ()
+    "Non-presenting mode"
+    (interactive)
+    (revert-buffer nil t)
+    (global-diff-hl-mode)
+    (my-auto-size-font 2))
+  :hook
+  ((org-tree-slide-play-hook . my-presenting)
+   (org-tree-slide-stop-hook . my-non-presenting))
+  :bind (:map org-tree-slide-mode-map
+              ("C->"  . org-tree-slide-move-next-tree)
+              ("C-<"  . org-tree-slide-move-previous-tree)))
 #+end_src
 
 ** Emacs OS - The Kitchen Sink
+#+begin_src conf :tangle ~/.config/gtk-3.0/settings.ini
+[Settings]
+gtk-key-theme-name=Emacs
+#+end_src
+
 *** EXWM
-   [[file:~/.config/guix/current/share/guile/site/3.0/gnu/packages/emacs-xyz.scm::(define-public emacs-exwm][GNU Guix expects that the EXWM config be at ~/.exwm]].
-(info "(elisp) Asynchronous Processes")
+[[file:~/.config/guix/current/share/guile/site/3.0/gnu/packages/emacs-xyz.scm::(define-public emacs-exwm][GNU Guix expects that the EXWM config be at ~/.exwm]].
+[[https://github.com/ch11ng/exwm/wiki][EXWM wiki]]
 
-exwm-input-toggle-keyboard should write to the minibuffer.
+- how to go back and forth workspaces?
+- s-m media
+- s-p power
 
-is it possible to go back and forth workspaces?
-wallpaper?
-s-m media
-s-p power
+for a status bar, you can use emacs-symon, or polybar.
 
-for a status bar, you can use emacs-symon
+When the redshift conf file has comments it doesn't work---report
+upstream.
 
-use peek for short screencasts?
-
-if this redshift conf file has comments it doesn't work.  report upstream.
+Add mirror-screen functionality.
 
 #+begin_src conf :tangle ~/.config/redshift/redshift.conf :comments nil
-  [redshift]
-  temp-day=5700
-  temp-night=4000
-  fade=1
-  brightness-night=0.5
-  adjustment-method=randr
-  location-provider=manual
+[redshift]
+temp-day=5700
+temp-night=4000
+fade=1
+brightness-night=0.5
+adjustment-method=randr
+location-provider=manual
 
-  [manual]
-  lat=59.94
-  lon=30.31
+[manual]
+lat=59.94
+lon=30.31
 #+end_src
 
 #+begin_src emacs-lisp :tangle ~/.exwm
-  ;; https://github.com/ch11ng/exwm/wiki
-  (require 'exwm)
+(require 'exwm)
+(exwm-enable)
+(require 'exwm-randr)
+(exwm-randr-enable)
+(desktop-environment-mode)
+(setq exwm-workspace-number 4)
+(setq exwm-input-global-keys
+      `(([?\s-r] . exwm-reset)
+        ([?\s-f] . exwm-input-toggle-keyboard)
+        ([?\s-w] . exwm-workspace-switch)
+        ;; Bind "s-0" to "s-9" to switch to a workspace by its index.
+        ,@(mapcar (lambda (i) `(,(kbd (format "s-%d" i)) .
+                           (lambda ()
+                             (interactive) (exwm-workspace-switch-create ,i))))
+                  (number-sequence 0 9))
+        ;; Bind "s-&" to launch applications
+        ([?\s-&] . (lambda (command)
+                     (interactive (list (read-shell-command "$ ")))
+                     (start-process-shell-command command nil command)))
+        ;; Bind "s-l" to lock the screen
+        ([?\s-l] . (lambda () (interactive) (start-process "" nil "xlock")))
+        ;; Bind "s-L" to lock the screen and suspend
+        ([?\s-L] . (lambda () (interactive)
+                     (start-process "" nil "loginctl suspend && xlock")))))
 
-  ;; (setq exwm-debug t)
-  (setq exwm-workspace-number 4)
-  (setq exwm-input-global-keys
-        `(
-          ;; Bind "s-r" to exit char-mode and fullscreen mode.
-          ([?\s-r] . exwm-reset)
-          ;; Bind "s-f" to toggle between line-mode and char-mode
-          ([?\s-f] . exwm-input-toggle-keyboard)
-          ;; Bind "s-w" to switch workspace interactively.
-          ([?\s-w] . exwm-workspace-switch)
-          ;; Bind "s-0" to "s-9" to switch to a workspace by its index.
-          ,@(mapcar (lambda (i)
-                      `(,(kbd (format "s-%d" i)) .
-                        (lambda ()
-                          (interactive)
-                          (exwm-workspace-switch-create ,i))))
-                    (number-sequence 0 9))
-          ;; Bind "s-&" to launch applications
-          ([?\s-&] . (lambda (command)
-                       (interactive (list (read-shell-command "$ ")))
-                       (start-process-shell-command command nil command)))
-          ;; Bind "s-l" to lock the screen
-          ([?\s-l] . (lambda ()
-                      (interactive)
-                      (start-process "" nil "xlock")))
-          ;; Bind "s-L" to lock the screen and suspend
-          ([?\s-L] . (lambda ()
-                      (interactive)
-                      (start-process "" nil "loginctl suspend && xlock")))))
-
-  (add-hook 'exwm-update-class-hook
-            (lambda () (exwm-workspace-rename-buffer exwm-class-name)))
-
-  (add-hook 'exwm-update-title-hook
-            (lambda () (exwm-workspace-rename-buffer exwm-title)))
-
-  ;; TODO
-  (setq exwm-systemtray-height 16)
-  (require 'exwm-systemtray)
-  (exwm-systemtray-enable)
-
-  ;; (window-divider-mode)
-
-  (require 'exwm-randr)
-  (exwm-randr-enable)
-
-  (defun exwm-change-screen ()
-    "Enable the external monitor only or fallback to the built-in
-  monitor."
-    (let ((xrandr-output-regexp "\n\\([^ ]+\\) connected ")
-          default-output)
-      (with-temp-buffer
-        (call-process "xrandr" nil t nil)
-        (goto-char (point-min))
-        (re-search-forward xrandr-output-regexp nil 'noerror)
-        (setq default-monitor (match-string 1))
-        (if (re-search-forward xrandr-output-regexp nil 'noerror)
-            (call-process
-             "xrandr" nil nil nil
-             "--output" (match-string 1) "--primary" "--auto"
-             "--output" default-monitor "--off")
+(defun exwm-change-screen ()
+  "Enable the external monitor only or fallback to the built-in
+monitor."
+  (let ((xrandr-output-regexp "\n\\([^ ]+\\) connected ")
+        default-output)
+    (with-temp-buffer
+      (call-process "xrandr" nil t nil)
+      (goto-char (point-min))
+      (re-search-forward xrandr-output-regexp nil 'noerror)
+      (setq default-monitor (match-string 1))
+      (if (re-search-forward xrandr-output-regexp nil 'noerror)
           (call-process
            "xrandr" nil nil nil
-           "--output" default-monitor "--auto")
-          ;; (setq exwm-randr-workspace-output-plist (list 0 (match-string 1)))
-          ))))
+           "--output" (match-string 1) "--primary" "--auto"
+           "--output" default-monitor "--off")
+        (call-process
+         "xrandr" nil nil nil
+         "--output" default-monitor "--auto")))))
 
-  (add-hook 'exwm-randr-screen-change-hook 'exwm-change-screen)
+(add-hook 'exwm-randr-screen-change-hook 'exwm-change-screen)
 
-  (add-hook 'exwm-init-hook (lambda () (start-process "redshift" nil "redshift")))
-  (add-hook 'exwm-init-hook (lambda () (start-process "picom" nil "picom")))
-  ;; add feh?
-  ;; (add-hook 'exwm-init-hook (lambda () (start-process "picom" nil "picom")))
+(add-hook 'exwm-update-class-hook
+          (lambda () (exwm-workspace-rename-buffer exwm-class-name)))
+(add-hook 'exwm-update-title-hook
+          (lambda () (exwm-workspace-rename-buffer exwm-title)))
 
-  (exwm-enable)
+(add-hook 'exwm-init-hook (lambda () (start-process "redshift" nil "redshift")))
+(add-hook 'exwm-init-hook (lambda () (start-process "picom" nil "picom")))
+(add-hook 'exwm-init-hook (lambda () (start-process
+                                 "feh" nil "feh"
+                                 "--no-fehbg" "--bg-fill"
+                                 "'/home/aadcg/dotfiles/wallpaper'")))
 
-  ;; Local Variables:
-  ;; mode: emacs-lisp
-  ;; End:
+;; Local Variables:
+;; mode: emacs-lisp
+;; End:
 #+end_src
 
 *** Desktop environment
-Config audio, brightness, etc.
-Config screenshot file name
-# bindsym --to-code $mod+p exec grim "$HOME/Pictures/$(date +%F_%T).png"
+send a patch to desktop-environment to add parameters to slock.
+add options for poweroff, reboot,etc.
+add a proper volume interface similar to C-x C-+
 
-desktop-environment-mode should be activated in EXWM.
-
-emacs-pulseaudio-control exists.
-
-#+begin_src emacs-lisp
-  (use-package desktop-environment
-    :custom
-    (desktop-environment-brightness-set-command "sudo light %s")
-    (desktop-environment-brightness-get-command "sudo light")
-    (desktop-environment-brightness-normal-decrement "-U 10")
-    (desktop-environment-brightness-normal-increment "-A 10"))
-#+end_src
+- update in guix to 0.4.0.
 
 To connect to a new wifi:
 nmcli device wifi connect "$SSID" password "$PASSWORD"
 
 #+begin_src emacs-lisp
+(use-package desktop-environment
+  :custom
+  (desktop-environment-brightness-set-command "sudo light %s")
+  (desktop-environment-brightness-get-command "sudo light")
+  (desktop-environment-brightness-normal-decrement "-U 10")
+  (desktop-environment-brightness-normal-increment "-A 10")
+  (desktop-environment-brightness-small-decrement "-U 5")
+  (desktop-environment-brightness-small-increment "-A 5")
+  (desktop-environment-screenshot-command "scrot '%F_%T.png'")
+  (desktop-environment-screenshot-partial-command "scrot '%F_%T.png' -s")
+  ;; (desktop-environment-screenlock-command "xlock")
+  :config
+  (defun my-turn-off-wifi-light ()
+    "Turn off annoying TP Link light"
+    (interactive)
+    (let ((led (my-shell-cmd "light -L | grep ath")))
+      (eshell-command (format "sudo light -s  %s -S 0" led))))
+
   (defun my-shell-cmd (command)
     "Run CMD and output the result to a string without trailing spaces."
     (let ((cmd (concat command " | tr -d [:space:]")))
@@ -1372,77 +1394,100 @@ nmcli device wifi connect "$SSID" password "$PASSWORD"
             (my-turn-off-wifi-light))
         (shell-command "nmcli radio wifi off"))))
 
-  (defun my-turn-off-wifi-light ()
-    "Turn off annoying TP Link light"
-    (interactive)
-    (let ((led (my-shell-cmd "light -L | grep ath")))
-      (eshell-command (format "sudo light -s  %s -S 0" led))))
-#+end_src
+  (defalias 'desktop-environment-toggle-wifi 'my-toggle-wifi))
 
-*** Screencast utilities
-#+begin_src emacs-lisp
-  (use-package gif-screencast
-    :config
-    (when (getenv "WAYLAND_DISPLAY")
-      (setq gif-screencast-program "grim"
-            gif-screencast-args nil))
-    :bind ("<f9>" . gif-screencast-start-or-stop))
+(use-package gif-screencast
+  :custom (gif-screencast-output-directory "~/Pictures")
+  :config
+  (when (getenv "WAYLAND_DISPLAY")
+    (setq gif-screencast-program "grim"
+          gif-screencast-args nil))
+  :bind
+  ("<f8>" . gif-screencast-toggle-pause)
+  ("<f9>" . gif-screencast-start-or-stop))
 
-  (use-package keycast
-    :custom (keycast-separator-width 2)
-    :config (add-to-list 'keycast-substitute-alist '(self-insert-command nil nil)))
+(use-package keycast
+  :custom (keycast-separator-width 1)
+  :config
+  (dolist (input '(self-insert-command
+                   org-self-insert-command))
+    (add-to-list 'keycast-substitute-alist `(,input "." "Typing…")))
+
+  (dolist (event '(mouse-event-p
+                   mouse-movement-p
+                   mwheel-scroll))
+    (add-to-list 'keycast-substitute-alist `(,event nil))))
+
+;; (use-package emacs
+;;   :config
+;;   (defun run-system-command (action)
+;;     "TODO"
+;;     (interactive "sWhat should I do? ")
+;;     (let ((cmd (format "loginctl %s" action)))
+;;       (start-process-shell-command cmd nil cmd)))
+;;   :bind
+;;   (("s-p p" . (lambda () (run-system-command "poweroff")))
+;;    ("s-p r" . (lambda () (run-system-command "reboot")))
+;;    ("s-p s" . (lambda () (run-system-command "suspend")))))
+
+;; (shell-command "loginctl suspend && xlock")
 #+end_src
 
 *** Mouse
    There's also unclutter.
 
 #+begin_src emacs-lisp
-  (use-package avoid
-    :config
-    (when (display-mouse-p)
-      (mouse-avoidance-mode 'jump)))
+(use-package avoid
+  :unless termux-p
+  :config
+  (when (display-mouse-p)
+    (mouse-avoidance-mode 'jump)))
 #+end_src
 
-*** Guix
-searching for Guix packages on the web]]
-
+*** Utils
 #+begin_src emacs-lisp
-  (use-package guix
-    :custom (guix-operation-confirm nil)
-    :config (global-guix-prettify-mode)
-    :hook (scheme-mode-hook . guix-devel-mode)
-    :bind ("s-g" . guix))
+(use-package guix
+  :custom (guix-operation-confirm nil)
+  :config (global-guix-prettify-mode)
+  :hook (scheme-mode-hook . guix-devel-mode)
+  :bind ("s-g" . guix))
 
-  (use-package debbugs)
+(use-package debbugs)
+
+(use-package man
+  :custom Man-notify-method 'pushy
+  :bind (:map Man-mode-map
+              ("m" . Man-goto-section)
+              ("g" . Man-update-manpage)))
 #+end_src
 
 *** Web browsers
 #+begin_src emacs-lisp
-  (use-package shr
-    :custom
-    (shr-use-fonts nil)
-    (shr-use-colors nil)
-    (shr-max-image-proportion 0.7)
-    (shr-width (current-fill-column))
-    (shr-image-animate nil)               ; otherwise emacs works slowly
-    (browse-url-generic-program "nyxt")
-    :config
-    (if termux-p
-        (setq shr-external-browser
-              (lambda (url) (shell-command (concat "termux-open-url " url))))
-      (setq shr-external-browser 'browse-url-generic)))
+(use-package shr
+  :custom
+  (shr-use-fonts nil)
+  (shr-use-colors nil)
+  (shr-max-image-proportion 0.7)
+  (shr-width (current-fill-column))
+  (shr-image-animate nil)               ; otherwise emacs works slowly
+  (browse-url-generic-program "nyxt")
+  :config
+  (if termux-p
+      (setq shr-external-browser
+            (lambda (url) (shell-command (concat "termux-open-url " url))))
+    (setq shr-external-browser 'browse-url-generic)))
 
-  (use-package eww
-    :custom
-    (eww-suggest-uris '(eww-links-at-point
-                        thing-at-point-url-at-point
-                        word-at-point))
-    :bind ("C-x w" . eww))
+(use-package eww
+  :custom
+  (eww-suggest-uris '(eww-links-at-point
+                      thing-at-point-url-at-point
+                      word-at-point))
+  :bind ("C-x w" . eww))
 
-  (use-package browse-url
-    :custom
-    (browse-url-browser-function '(("youtube" . browse-url-firefox)
-                                   (".*" . eww-browse-url))))
+(use-package browse-url
+  :custom
+  (browse-url-browser-function '(("youtube" . browse-url-firefox)
+                                 (".*" . eww-browse-url))))
 #+end_src
 
 #+begin_src lisp :tangle ~/.config/nyxt/init.lisp
@@ -1514,147 +1559,145 @@ searching for Guix packages on the web]]
 TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
 
 #+begin_src emacs-lisp
-  (use-package gnus
-    :custom
-    (gnus-select-method
-     '(nnimap "gmail"
-              (nnimap-address "imap.gmail.com")
-              (nnimap-server-port "imaps")
-              (nnimap-stream ssl))
-     nnir-imap-default-search-key "Imap")
-    (gnus-inhibit-startup-message t)
-    (gnus-interactive-exit 'quiet)
-    (gnus-always-read-dribble-file t)
-    :hook
-    (message-send-hook . ispell-message)
-    :bind ("C-c m" . gnus))
+(use-package gnus
+  :custom
+  (gnus-select-method
+   '(nnimap "gmail"
+            (nnimap-address "imap.gmail.com")
+            (nnimap-server-port "imaps")
+            (nnimap-stream ssl))
+   nnir-imap-default-search-key "Imap")
+  (gnus-inhibit-startup-message t)
+  (gnus-interactive-exit 'quiet)
+  (gnus-always-read-dribble-file t)
+  :hook
+  (message-send-hook . ispell-message)
+  :bind ("C-c m" . gnus))
 
-  (use-package gnus-art
-    :after gnus
-    :commands gnus-mime-button-map
-    :bind (:map gnus-mime-button-map
-                ("RET" . gnus-mime-copy-part)))
+(use-package gnus-art
+  :after gnus
+  :commands gnus-mime-button-map
+  :bind (:map gnus-mime-button-map
+              ("RET" . gnus-mime-copy-part)))
 
-  (use-package gnus-async
-    :after gnus
-    :custom
-    (gnus-asynchronous t))
+(use-package gnus-async
+  :after gnus
+  :custom
+  (gnus-asynchronous t))
 
-  (use-package message
-    :custom
-    (mail-signature
-     "André Alexandre Gomes\n\"Free Thought, Free World\"")
-    (message-signature
-     "André Alexandre Gomes\n\"Free Thought, Free World\"")
-    (message-kill-buffer-on-exit t)
-    (message-default-charset 'utf-8)
-    ;; :hook
-    ;; ((message-setup-hook . mml-secure-message-encrypt)
-    ;;  (message-setup-hook . mml-secure-message-sign))
-    )
+(use-package message
+  :custom
+  (mail-signature
+   "André Alexandre Gomes\n\"Free Thought, Free World\"")
+  (message-signature
+   "André Alexandre Gomes\n\"Free Thought, Free World\"")
+  (message-kill-buffer-on-exit t)
+  (message-default-charset 'utf-8)
+  ;; :hook
+  ;; ((message-setup-hook . mml-secure-message-encrypt)
+  ;;  (message-setup-hook . mml-secure-message-sign))
+  )
 
-  (use-package smtpmail
-    :init
-    (setq smtpmail-default-smtp-server "smtp.gmail.com")
-    :custom
-    (smtpmail-smtp-server "smtp.gmail.com")
-    (smtpmail-smtp-service 587)
-    ;; (smtpmail-stream-type 'ssl)
-    (send-mail-function 'smtpmail-send-it))
+(use-package smtpmail
+  :init
+  (setq smtpmail-default-smtp-server "smtp.gmail.com")
+  :custom
+  (smtpmail-smtp-server "smtp.gmail.com")
+  (smtpmail-smtp-service 587)
+  ;; (smtpmail-stream-type 'ssl)
+  (send-mail-function 'smtpmail-send-it))
 
-  ;; (use-package mm-encode
-  ;;   :custom
-  ;;   (mm-encrypt-option 'guided)
-  ;;   (mm-sign-option 'guided))
+;; (use-package mm-encode
+;;   :custom
+;;   (mm-encrypt-option 'guided)
+;;   (mm-sign-option 'guided))
 
-  ;; (use-package mml-sec
-  ;;   :custom
-  ;;   (mml-secure-openpgp-encrypt-to-self t)
-  ;;   (mml-secure-openpgp-sign-with-sender t)
-  ;;   (mml-secure-smime-encrypt-to-self t)
-  ;;   (mml-secure-smime-sign-with-sender t))
+;; (use-package mml-sec
+;;   :custom
+;;   (mml-secure-openpgp-encrypt-to-self t)
+;;   (mml-secure-openpgp-sign-with-sender t)
+;;   (mml-secure-smime-encrypt-to-self t)
+;;   (mml-secure-smime-sign-with-sender t))
 
-  ;; WIP
-  (defun my-mail-missing-attachment-p ()
-    "Return t if an attachment is missing."
-    (interactive)
-    (save-excursion
-      (goto-char (message-goto-body))
-      (when (re-search-forward "attach")
-        (message "Did you forget to attach something?"))))
+;; WIP
+(defun my-mail-missing-attachment-p ()
+  "Return t if an attachment is missing."
+  (interactive)
+  (save-excursion
+    (goto-char (message-goto-body))
+    (when (re-search-forward "attach")
+      (message "Did you forget to attach something?"))))
 #+end_src
 
 **** IRC (Freenode)
 #+begin_src emacs-lisp
-  (use-package erc
-    :config
-    (defun my-freenode ()
-      (interactive)
-      (let ((erc-plist (car (auth-source-search :host "irc.freenode.net")))
-            (erc-prompt-for-password nil))
-        (erc :server "irc.freenode.net"
-             :nick (plist-get erc-plist :user)
-             :password (funcall (plist-get erc-plist :secret))))))
+(use-package erc
+  :config
+  (defun my-freenode ()
+    (interactive)
+    (let ((erc-plist (car (auth-source-search :host "irc.freenode.net")))
+          (erc-prompt-for-password nil))
+      (erc :server "irc.freenode.net"
+           :nick (plist-get erc-plist :user)
+           :password (funcall (plist-get erc-plist :secret))))))
 #+end_src
 
 **** Telegram
 [[https://zevlg.github.io/telega.el/][documentation]]
 
 #+begin_src emacs-lisp
-  (use-package telega
-    :unless termux-p
-    :custom (telega-chat-fill-column 70)
-    :config
-    (telega-mode-line-mode)
-    (global-telega-squash-message-mode 1)
-    :bind ("s-t" . telega))
+(use-package telega
+  :unless termux-p
+  :custom
+  ;; (telega-chat-fill-column 70)
+  (telega-emoji-company-backend 'telega-company-telegram-emoji)
+  :config
+  (telega-mode-line-mode)
+  (global-telega-squash-message-mode)
+  :bind ("s-t" . telega)
+  :hook (telega-load-hook . company-mode))
 
-  ;; number of unread messages
-  ;; (plist-get telega--unread-message-count :unread_unmuted_count)
+;; number of unread messages
+;; (plist-get telega--unread-message-count :unread_unmuted_count)
 
-  (use-package emojify
-    :custom (emojify-company-tooltips-p t)
-    :hook
-    ((telega-chat-mode-hook . emojify-mode)
-     (telega-root-mode-hook . emojify-mode))
-    ;; (emojify-mode-line-mode)
-    )
+;; (use-package emojify
+;;   :custom (emojify-company-tooltips-p t)
+;;   :hook
+;;   ((telega-chat-mode-hook . emojify-mode)
+;;    (telega-root-mode-hook . emojify-mode)))
 
-  (use-package company-emoji
-    :defer t
-    :config
-    (add-to-list 'company-backends 'company-emoji))
+;; (use-package company-emoji
+;;   :config (add-to-list 'company-backends 'company-emoji))
 #+end_src
 
 *** Reader (pdf, djvu, epub)
 #+begin_src emacs-lisp
-  (use-package pdf-tools
-    :when window-system
-    :config
-    (when (>= emacs-major-version 27)
-      (setq image-scaling-factor 1))
-    ;; this is a hack so that I can use docview links in org-mode
-    (defalias 'doc-view-goto-page 'pdf-view-goto-page)
-    :mode ("\\.pdf\\'" . pdf-view-mode)
-    :hook
-    ((pdf-view-mode-hook . pdf-view-fit-height-to-window)
-     (pdf-view-mode-hook . pdf-links-minor-mode)
-     ;; (pdf-view-mode-hook . pdf-annot-minor-mode)
-     (pdf-view-mode-hook . pdf-history-minor-mode)
-     (pdf-view-mode-hook . pdf-view-auto-slice-minor-mode)
-     (pdf-view-mode-hook . (lambda ()
-                             (when (eq
-                                    (frame-parameter nil 'background-mode)
-                                    'dark)
-                               (pdf-view-midnight-minor-mode))))))
+(use-package pdf-tools
+  :when window-system
+  :config
+  (when (>= emacs-major-version 27)
+    (setq image-scaling-factor 1))
+  ;; this is a hack so that I can use docview links in org-mode
+  (defalias 'doc-view-goto-page 'pdf-view-goto-page)
+  :mode ("\\.pdf\\'" . pdf-view-mode)
+  :hook
+  ((pdf-view-mode-hook . pdf-view-fit-height-to-window)
+   (pdf-view-mode-hook . pdf-links-minor-mode)
+   ;; (pdf-view-mode-hook . pdf-annot-minor-mode)
+   (pdf-view-mode-hook . pdf-history-minor-mode)
+   (pdf-view-mode-hook . pdf-view-auto-slice-minor-mode)
+   (pdf-view-mode-hook . (lambda () (when (eq (frame-parameter nil 'background-mode)
+                                         'dark)
+                                 (pdf-view-midnight-minor-mode))))))
 
-  (use-package djvu)
+(use-package djvu
+  :disabled)
 
-  (use-package nov
-    :custom
-    (nov-text-width 80)
-    (nov-variable-pitch nil)
-    :mode ("\\.epub\\'" . nov-mode))
+(use-package nov
+  :custom
+  (nov-text-width 80)
+  (nov-variable-pitch nil)
+  :mode ("\\.epub\\'" . nov-mode))
 #+end_src
 
 *** Media
@@ -1671,90 +1714,64 @@ The keybindings should depend on the wm I'm in. In EXWM volume setting
 must be global.
 
 #+begin_src conf :tangle ~/.config/mpv/mpv.conf
-  save-position-on-quit
-  sub-auto=fuzzy
+save-position-on-quit
+sub-auto=fuzzy
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package emms
-    :custom
-    (emms-volume-change-amount 5)
-    ;; (emms-mode-line-format " %s ")
-    ;; (emms-mode-line-mode-line-function nil)
+(use-package emms
+  :custom
+  (emms-volume-change-amount 5)
+  ;; (emms-mode-line-format " %s ")
+  ;; (emms-mode-line-mode-line-function nil)
+  :config
+  (require 'emms-setup)
+  (emms-all)
+  (emms-default-players)
+  (emms-mode-line 0)
+  (emms-playing-time-disable-display)
 
-    :config
-    (require 'emms-setup)
-    (emms-all)
-    (emms-default-players)
-    (emms-mode-line 0)
-    (emms-playing-time-disable-display)
-
-    (defun my-emms-play-url-at-point ()
-      "Same as `emms-play-url' but with url at point."
-      (interactive)
-      (emms-play-url (or (url-get-url-at-point)
-                         (shr-url-at-point current-prefix-arg))))
-
-    ;; patch
-    (defun my-emms-volume-amixer-change (amount)
-      "Change amixer master volume by AMOUNT."
-      (message "Playback channels: %s"
-               (with-temp-buffer
-                 (when (zerop
-                        (call-process "amixer" nil (current-buffer) nil
-                                      "sset" emms-volume-amixer-control
-                                      (format "%d%%%s" (abs amount)
-                                              (if (< amount 0) "-" "+"))))
-                   (if (re-search-backward "\\[\\([0-9]+%\\)\\]" nil t)
-                       (match-string 1))))))
-
-    (defalias 'emms-volume-amixer-change 'my-emms-volume-amixer-change)
-
-    :bind
-    ("<XF86AudioPlay>"        . emms-pause)
-    ("<XF86AudioNext>"        . emms-next)
-    ("<XF86AudioPrev>"        . emms-previous)
-    ("<XF86AudioRaiseVolume>" . emms-volume-raise)
-    ("<XF86AudioLowerVolume>" . emms-volume-lower))
+  (defun my-emms-play-url-at-point ()
+    "Same as `emms-play-url' but with url at point."
+    (interactive)
+    (emms-play-url (or (url-get-url-at-point)
+                       (shr-url-at-point current-prefix-arg)))))
 #+end_src
 
 *** Authentication
 #+begin_src emacs-lisp
-  (use-package auth-source
-    :custom (auth-sources '("~/.authinfo.gpg" "~/.authinfo")))
+(use-package auth-source
+  :custom (auth-sources '("~/.authinfo.gpg" "~/.authinfo")))
 
-  (use-package pinentry
-    :hook (after-init-hook . pinentry-start))
+(use-package pinentry
+  :hook (after-init-hook . pinentry-start))
 
-  (use-package epa
-    :custom (epa-replace-original-text t))
+(use-package epa
+  :custom (epa-replace-original-text t))
 #+end_src
 
 This is how ~/.authinfo.gpg looks like:
 
 #+begin_example
-  machine smtp.gmail.com login andremegafone port 587 password pw
-  machine imap.gmail.com login andremegafone port imaps password pw
-  machine localhost port sudo login root password pw
-  machine irc.freenode.net login aadcg password pw
+machine smtp.gmail.com login andremegafone port 587 password pw
+machine imap.gmail.com login andremegafone port imaps password pw
+machine localhost port sudo login root password pw
+machine irc.freenode.net login aadcg password pw
 
-  ;; Local Variables:
-  ;; epa-file-encrypt-to: andremegafone@gmail.com
-  ;; End:
+;; Local Variables:
+;; epa-file-encrypt-to: andremegafone@gmail.com
+;; End:
 #+end_example
 
 #+begin_src conf :tangle ~/.gnupg/gpg-agent.conf
-  # (info "(gnupg) Agent Options")
+# (info "(gnupg) Agent Options")
 
-  # 24 hours
-  default-cache-ttl 86400
-  max-cache-ttl 86400
-
-  enable-ssh-support
-  default-cache-ttl-ssh 86400
-  max-cache-ttl-ssh 86400
-
-  allow-emacs-pinentry
+default-cache-ttl 86400
+max-cache-ttl 86400
+enable-ssh-support
+default-cache-ttl-ssh 86400
+max-cache-ttl-ssh 86400
+allow-emacs-pinentry
 #+end_src
 
 *** Emacs completion
@@ -1763,225 +1780,115 @@ This is how ~/.authinfo.gpg looks like:
 counsel-switch-buffer - Useful?
 
 #+begin_src emacs-lisp
-  (use-package ivy
-    :init (ivy-mode 1)
-    :custom
-    (ivy-count-format "%d/%d ")
-    (ivy-extra-directories nil)
-    (ivy-use-virtual-buffers t)
-    ;; (ivy-read-action-function 'ivy-read-action-by-key)
-    ;; (ivy-height-alist '((t lambda (_caller) (/ (window-height) 3))))
-    :config
-    (add-to-list 'ivy-format-functions-alist '(t . ivy-format-function-arrow))
-    :bind
-    ("C-x B" . ivy-switch-buffer-other-window))
+(use-package ivy
+  :init (ivy-mode 1)
+  :custom
+  (ivy-count-format "%d/%d ")
+  (ivy-extra-directories nil)
+  (ivy-use-virtual-buffers t)
+  ;; (ivy-read-action-function 'ivy-read-action-by-key)
+  ;; (ivy-height-alist '((t lambda (_caller) (/ (window-height) 3))))
+  :config
+  (add-to-list 'ivy-format-functions-alist '(t . ivy-format-function-arrow))
+  :bind
+  ("C-x B" . ivy-switch-buffer-other-window))
 
-  (use-package counsel
-    :after ivy
-    :config
-    (counsel-mode 1)
-    (setq ivy-initial-inputs-alist nil)
-    :bind
-    ("C-x 8" . counsel-unicode-char))
+(use-package counsel
+  :after ivy
+  :config
+  (counsel-mode 1)
+  (setq ivy-initial-inputs-alist nil)
+  :bind
+  ("C-x 8" . counsel-unicode-char))
 
-  (use-package swiper
-    :after ivy
-    :bind
-    ("C-s" . swiper))
+(use-package swiper
+  :after ivy
+  :bind
+  ("C-s" . swiper))
 
-  (use-package amx
-    :config (amx-mode))
+(use-package amx
+  :config (amx-mode))
 
-  (use-package ivy-posframe
-    :when window-system
-    :unless termux-p
-    :after ivy
-    :custom
-    (ivy-posframe-height-alist
-     '(;; (swiper . 15)
-       ;; (swiper-isearch . 15)
-       (t . 10)))
-    (ivy-posframe-display-functions-alist
-     '((complete-symbol . ivy-posframe-display-at-point)
-       ;; (swiper . nil)
-       ;; (swiper-isearch . nil)
-       (t . ivy-posframe-display-at-frame-center)))
-    (ivy-posframe-width 80)
-    :config
-    (if (string-match-p "exwm" (getenv "DESKTOP_SESSION"))
-        (setq ivy-posframe-parameters
-              '((internal-border-width . 4)
-                (alpha . 80)
-                (parent-frame . nil)))
+(use-package ivy-posframe
+  :unless termux-p
+  :after ivy
+  :custom
+  (ivy-posframe-height-alist
+   '(;; (swiper . 15)
+     ;; (swiper-isearch . 15)
+     (t . 10)))
+  (ivy-posframe-display-functions-alist
+   '((complete-symbol . ivy-posframe-display-at-point)
+     ;; (swiper . nil)
+     ;; (swiper-isearch . nil)
+     (t . ivy-posframe-display-at-frame-center)))
+  (ivy-posframe-width 80)
+  :config
+  (if (string-match-p "exwm" (getenv "DESKTOP_SESSION"))
       (setq ivy-posframe-parameters
             '((internal-border-width . 4)
-              (alpha . 80))))
-    (ivy-posframe-mode 1))
+              (alpha . 80)
+              (parent-frame . nil)))
+    (setq ivy-posframe-parameters
+          '((internal-border-width . 4)
+            (alpha . 80))))
+  (ivy-posframe-mode 1))
 
-  (use-package avy
-      :bind ("C-r" . avy-goto-word-1))
-#+end_src
-
-*** Auto-complete
-[[https://company-mode.github.io/][documentation]]
-
-#+begin_src emacs-lisp
-  (use-package company
-    :custom
-    (company-require-match nil)
-    ;; (company-idle-delay 0.5)
-    (company-selection-wrap-around t)
-    :config
-    (global-company-mode 1)
-    :bind (:map company-active-map
-                ("C-j"      . company-complete-selection)
-                ("C-n"      . company-select-next)
-                ("C-p"      . company-select-previous)
-                ("<tab>"    . company-complete-common-or-cycle)
-                ("C-h"      . company-show-doc-buffer)
-                ("M-."      . company-show-location)
-                ("RET"      . nil)
-                ("<return>" . nil)))
-#+end_src
-
-*** Dired
-
-#+begin_src emacs-lisp
-  (use-package dired
-    :custom
-    (dired-recursive-copies 'always)
-    (dired-recursive-deletes 'always)
-    ;; (delete-by-moving-to-trash t)
-    (dired-listing-switches "-Atrhl --group-directories-first")
-    (dired-auto-revert-buffer t)
-    :hook (dired-mode-hook . hl-line-mode)
-    :bind ("C-x C-j" . dired-jump))
-#+end_src
-
-*** COMMENT Checking
-Needs review.
-
-**** Flycheck
-#+begin_src emacs-lisp
-  ;; (use-package flycheck
-  ;;   :init
-  ;;   (global-flycheck-mode t))
-#+end_src
-
-**** Flyspell
-#+begin_src emacs-lisp
-  (when window-system
-    (use-package flyspell
-      :config
-      (flyspell-prog-mode)))
-      ;; (when org-mode-hook
-      ;;   (flyspell-mode-off))))
+(use-package avy
+    :bind ("C-r" . avy-goto-word-1))
 #+end_src
 
 *** Misc
 #+begin_src emacs-lisp
-  ;; (use-package speed-type)
+(use-package transmission
+  :hook (transmission-mode-hook . hl-line-mode))
 
-  (use-package transmission
-    :hook
-    (transmission-mode-hook . hl-line-mode))
-
-  (use-package google-translate
-    :custom
-    (google-translate-default-source-language "auto")
-    (google-translate-default-target-language "en")
-    (google-translate-backend-method 'curl)
-    (require 'google-translate-default-ui)
-    :bind
-    ("C-c t" . google-translate-at-point)
-    ("C-c T" . google-translate-query-translate))
-#+end_src
-
-*** Unix utils
-#+begin_src emacs-lisp
-  (use-package man
-    :custom Man-notify-method 'pushy)
-#+end_src
-
-*** COMMENT Weather
-#+begin_src sh
-  curl wttr.in
-#+end_src
-
-*** GTK apps
-Really needed?
-
-#+begin_src conf :tangle ~/.config/gtk-3.0/settings.ini
-  [Settings]
-  gtk-key-theme-name=Emacs
-#+end_src
-
-*** COMMENT System
-    WIP.
-
-    Needed?  Desktop-environment.
-
-#+begin_src emacs-lisp
-  (use-package emacs
-    :config
-    (defun run-system-command (action)
-    "TODO"
-    (interactive "sWhat should I do? ")
-    (let ((cmd (format "loginctl %s" action)))
-      (start-process-shell-command cmd nil cmd)))
-    :bind
-    (("s-p p" . (lambda () (run-system-command "poweroff")))
-     ("s-p r" . (lambda () (run-system-command "reboot")))
-     ("s-p s" . (lambda () (run-system-command "suspend")))))
-
-  ;; (shell-command "loginctl suspend && xlock")
+;; not working
+(use-package google-translate
+  :disabled
+  :custom
+  (google-translate-default-source-language "auto")
+  (google-translate-default-target-language "en")
+  (google-translate-backend-method 'curl)
+  (require 'google-translate-default-ui)
+  :bind
+  ("C-c t" . google-translate-at-point)
+  ("C-c T" . google-translate-query-translate))
 #+end_src
 
 *** Learning russian
-- how to open in new eww buffer is one already exists?
-- add method to look for the root of the work if verb if conjugated,
-  adjective/noun is declinated ([[https://unix.stackexchange.com/questions/154098/copy-the-last-emacs-message-into-the-current-buffer][see]])
-
 #+begin_src emacs-lisp
-  (defun my-openru-search-at-point ()
-    "Search for WORD or root of word at point at https://en.openrussian.org."
-    (interactive)
-    (let ((url "https://en.openrussian.org/ru/"))
-      (eww (concat url (or (my-get-root-ru-word) (current-word))))
-      (sleep-for 2)
-      (my-openru-focus)))
+(defun my-openru-search-at-point ()
+  "Search for word, or root of word, at point using openrussian.org."
+  (interactive)
+  (let ((url "https://en.openrussian.org/ru/"))
+    (eww (concat url (or (my-get-root-ru-word) (current-word))))
+    (sleep-for 2)
+    (forward-paragraph 5)
+    (forward-line 1)
+    (recenter-top-bottom 2)))
 
-  (defun my-openru-focus ()
-    "Move the cursor to the relevant content of https://en.openrussian.org.
+(defun my-ispell-output ()
+  "Output as string the evaluation of ispell."
+  (let ((ispell-check-only t)
+        (inhibit-message t))
+    (my-change-to-dict "russian")
+    (ispell-word)
+    ;; hacky and prone to error. ideas?
+    (save-excursion
+      (set-bufferset-buffer-redisplay "*Messages*")
+      (goto-char (- (point-max) 1))
+      (buffer-substring-no-properties
+       (point)
+       (move-beginning-of-line 1)))))
 
-  This avoids displaying unnecessary content that comes before the
-  word being searched for."
-    (progn
-      (forward-paragraph 5)
-      (forward-line 1)
-      (recenter-top-bottom 2)))
-
-  (defun my-ispell-output ()
-    "Output as string the evaluation of ispell."
-    (let ((ispell-check-only t)
-          (inhibit-message t))
-      (my-change-to-dict "russian")
-      (ispell-word)
-      ;; hacky and prone to error. ideas?
-      (save-excursion
-        (set-buffer "*Messages*")
-        (goto-char (- (point-max) 1))
-        (buffer-substring-no-properties
-         (point)
-         (move-beginning-of-line 1)))))
-
-  (defun my-get-root-ru-word ()
-    "Return russian word at point or its root."
-    (let* ((ispell-message (s-split-words (my-ispell-output)))
-           (len (length ispell-message)))
-      (if (> len 3)
-          (nth (1- len) ispell-message)
-        (nth 0 ispell-message))))
+(defun my-get-root-ru-word ()
+  "Return russian word at point or its root."
+  (let* ((ispell-message-output (s-split-words (my-ispell-output)))
+         (len (length ispell-message-output)))
+    (if (> len 3)
+        (nth (1- len) ispell-message-output)
+      (nth 0 ispell-message-output))))
 #+end_src
 
 * dotfiles I follow
