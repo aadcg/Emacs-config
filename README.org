@@ -52,14 +52,12 @@ characteristics are paramount for scientific endeavors.
 Your wireless chip will most likely not work when using the Linux-libre
 kernel, so keep in mind the following suggestions:
 
-- use an ethernet port when possible (you might need an USB-ethernet
-  adapter);
-- use your android phone to share its internet connection---USB
-  tethering;
-- buy an used external USB wireless chip such as the TL-WN821N that
-  works with free software;
-- change the internal wireless chip so that it will compatible with free
-  software.
+- use an ethernet port (an adapter might be needed);
+- use an Android to share the internet connection (USB tethering);
+- use an external USB wireless chip such as the TL-WN821N that works
+  with free software;
+- replace the internal wireless chip so that it will compatible with
+  free software.
 
 (info "(guix) System Configuration")
 
@@ -456,6 +454,11 @@ bell-character=ignore
   :hook (dired-mode-hook . hl-line-mode)
   :bind ("C-x C-j" . dired-jump))
 
+(use-package isearch
+  :custom
+  (search-whitespace-regexp ".*?")
+  (isearch-lazy-count t))
+
 (setq scroll-preserve-screen-position 'always)
 (setq-default fill-column 72)
 (setq-default indent-tabs-mode nil)
@@ -705,7 +708,7 @@ The portuguese aspell dictionary sucks, why?
                 (delete-other-windows)
                 (window-max-chars-per-line))
               (* n 90))
-      (incf size 0.5)
+      (setq size (+ size 0.5))
       (set-frame-font (concat "Fira Code-" (number-to-string size)) nil t))
     (message "The suggested font size is %f" size)
     (number-to-string size)))
@@ -766,9 +769,16 @@ The portuguese aspell dictionary sucks, why?
 [[https://company-mode.github.io/][company-mode documentation]]
 
 #+begin_src emacs-lisp
+(use-package icomplete
+  :config
+  (icomplete-mode)
+  (fido-mode))
+
 (use-package ivy
+  :disabled
   :init (ivy-mode)
   :custom
+  (ivy-initial-inputs-alist nil)
   (ivy-count-format "%d/%d ")
   (ivy-extra-directories nil)
   (ivy-use-virtual-buffers t)
@@ -776,7 +786,21 @@ The portuguese aspell dictionary sucks, why?
   (add-to-list 'ivy-format-functions-alist '(t . ivy-format-function-arrow))
   :bind ("C-x B" . ivy-switch-buffer-other-window))
 
+(use-package counsel
+  :disabled
+  :after ivy
+  :config
+  (counsel-mode 1)
+  (setq ivy-initial-inputs-alist nil)
+  :bind
+  ("C-x 8" . counsel-unicode-char))
+
+(use-package amx
+  :disabled
+  :config (amx-mode))
+
 (use-package ivy-posframe
+  :disabled
   :unless termux-p
   :after ivy
   :custom
@@ -814,8 +838,8 @@ The portuguese aspell dictionary sucks, why?
               ("RET"      . nil)
               ("<return>" . nil)))
 
-;; not working
 (use-package company-posframe
+  :disabled
   :custom
   (company-posframe-show-params (list :override-parameters '((alpha . 80)))))
 #+end_src
@@ -827,19 +851,14 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
 Update diff-hl to 1.8.8 on guix.
 
 #+begin_src conf :tangle ~/.config/git/config
-  [user]
-    name = André Alexandre Gomes
-    email = andremegafone@gmail.com
-    signingkey = E407570BBE3A8031155910B30DDDBDB1BDA03027
-  [commit]
-    gpgsign = true
-  [core]
-    editor = emacsclient -c
-  [sendemail]
-    smtpEncryption = tls
-    smtpServer = smtp.gmail.com
-    smtpUser = andremegafone@gmail.com
-    smtpServerPort = 587
+[user]
+  name = André Alexandre Gomes
+  email = andremegafone@gmail.com
+  signingkey = E407570BBE3A8031155910B30DDDBDB1BDA03027
+[commit]
+  gpgsign = true
+[core]
+  editor = emacsclient -c
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1152,8 +1171,8 @@ Credit to https://emacs.stackexchange.com/a/31708/19054."
 
 *** WIP Exports
 #+begin_src emacs-lisp
-(use-package ox-beamer :disabled)
-(use-package ox-texinfo :disabled)
+(use-package ox-beamer)
+(use-package ox-texinfo)
 
 (add-to-list 'org-latex-packages-alist
              '("russian,main=english" "babel" t ("pdflatex")))
@@ -1686,7 +1705,7 @@ sub-auto=fuzzy
   (require 'emms-setup)
   (emms-all)
   (emms-default-players)
-  ;; (emms-mode-line 0)
+  (emms-mode-line 0)
 
   (defun my-emms-play-url-at-point ()
     "Same as `emms-play-url' but with url at point."
@@ -1700,8 +1719,8 @@ sub-auto=fuzzy
 (use-package auth-source
   :custom (auth-sources '("~/.authinfo.gpg" "~/.authinfo")))
 
-;; (use-package pinentry
-;;   :hook (after-init-hook . pinentry-start))
+(use-package pinentry
+  :config (pinentry-start))
 
 (use-package epa
   :custom (epa-replace-original-text t))
@@ -1710,10 +1729,10 @@ sub-auto=fuzzy
 This is how ~/.authinfo.gpg looks like:
 
 #+begin_example
-machine smtp.gmail.com login andremegafone port 587 password pw
-machine imap.gmail.com login andremegafone port imaps password pw
-machine localhost port sudo login root password pw
-machine irc.freenode.net login aadcg password pw
+machine smtp.gmail.com login andremegafone port 587 password SECRET
+machine imap.gmail.com login andremegafone port imaps password SECRET
+machine localhost port sudo login root password SECRET
+machine irc.freenode.net login aadcg password SECRET
 
 ;; Local Variables:
 ;; epa-file-encrypt-to: andremegafone@gmail.com
@@ -1812,4 +1831,4 @@ allow-emacs-pinentry
 - [[https://guix.gnu.org/blog/2018/guix-on-android/][try guix on android]]
 - Syncthing vs Nextcloud vs cron/rsync?
 - if I suspend when the lid is closed, I need to open the lid for the
-  screen to work
+  screen to work.  ONLY if you poweroff the monitor or the laptop!
