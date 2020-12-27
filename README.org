@@ -44,8 +44,9 @@ and the Free Software Revolution"]].
 * Systems and machines
 GNU/Linux systems encompass the GNU system plus the Linux kernel.  They
 come in many shapes and flavors---the so-called distros.  GNU Guix seems
-to be the sanest choice for transparency and reproducibility.  These
-characteristics are paramount for scientific endeavours.
+to be the sanest choice for transparency and reproducibility, which are
+paramount for scientific endeavours.  Besides that, it's extensible with
+GNU Guile which is an implementation of Scheme.
 
 ** GNU Guix
 *** System
@@ -296,7 +297,6 @@ This needs review since I want to create a guix pkg with this cfg.
          "emacs-org"
          "emacs-org-drill"
          "emacs-org-make-toc"
-         "emacs-org-superstar"
          "emacs-org-tree-slide"
          "emacs-pdf-tools"
          "emacs-pinentry"
@@ -1032,7 +1032,6 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
                             ("WAITING" . "orange")))
   ;; literate programming
   (org-src-fontify-natively t)
-  (org-src-tab-acts-natively t)
   (org-edit-src-persistent-message nil)
   (org-src-window-setup 'current-window)
   (org-confirm-babel-evaluate nil)
@@ -1085,6 +1084,9 @@ Credit to https://emacs.stackexchange.com/a/31708/19054."
            (last-day-of-month
             (calendar-last-day-of-month month year)))
       (= day last-day-of-month)))
+
+  ;; patch since (org-version) is broken in org 9.4
+  (setq org-version "9.4")
 
   :bind (("C-c a"     . org-agenda)
          ("C-c c"     . org-capture)
@@ -1143,15 +1145,6 @@ Credit to https://emacs.stackexchange.com/a/31708/19054."
 [[https://gitlab.com/phillord/org-drill][org-drill documentation]]
 
 #+begin_src emacs-lisp
-;; (use-package cdlatex
-;;   :hook (org-mode-hook . org-cdlatex-mode))
-
-(use-package org-superstar
-  :after org
-  :custom
-  (org-superstar-headline-bullets-list '("§"))
-  :hook (org-mode-hook . org-superstar-mode))
-
 (use-package org-drill
   :custom
   (org-drill-save-buffers-after-drill-sessions-p nil)
@@ -1162,10 +1155,7 @@ Credit to https://emacs.stackexchange.com/a/31708/19054."
 
 (use-package org-fragtog
   :hook (org-mode-hook . org-fragtog-mode))
-#+end_src
 
-*** WIP Presentations
-#+begin_src emacs-lisp
 (use-package org-tree-slide
   :custom
   (org-tree-slide-breadcrumbs nil)
