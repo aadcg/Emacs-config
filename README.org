@@ -45,7 +45,7 @@ and the Free Software Revolution"]].
 GNU/Linux systems encompass the GNU system plus the Linux kernel.  They
 come in many shapes and flavors---the so-called distros.  GNU Guix seems
 to be the sanest choice for transparency and reproducibility.  These
-characteristics are paramount for scientific endeavors.
+characteristics are paramount for scientific endeavours.
 
 ** GNU Guix
 *** System
@@ -223,7 +223,6 @@ sudo guix system reconfigure ~/.config/guix/system.scm
 
 *** Userland
 This needs review since I want to create a guix pkg with this cfg.
-Add aspell.
 
 #+begin_src scheme
 (define %base
@@ -236,66 +235,49 @@ Add aspell.
          "cryptsetup"
          "curl"
          "exfat-utils"
+         "feh"
          "flatpak"
+         "font-fira-code"
          "fuse-exfat"
+         "gifsicle"
          "git"
          "gnupg"
-         "gnutls"
          "gtypist"
-         "imagemagick"
+         "icecat"
          "libreoffice"
          "light"
          "mpv"
+         "nyxt"
          "owncloud-client"
-         "pari-gp"
          "pavucontrol"
          "pinentry"
-         "qemu"
-         "sicp"
-         "speedtest-cli"
-         "stow"
-         "texinfo"
-         "texlive"
-         "texlive-latex-amsmath"
-         "texlive-latex-babel"
-         "transmission"
-         "tree"
-         "vlc")))
-
-(define %languages
-  (map specification->package
-       '("ghc"
          "python"
          "python-ipython"
-         "python-wrapper")))
+         "python-wrapper"
+         "sicp"
+         "speedtest-cli"
+         "texlive"
+         "transmission"
+         "vlc"
+         ;; "texlive-latex-amsmath"
+         ;; "texlive-latex-babel"
+         )))
 
 (define %wm
   (map specification->package
        '("gnome-tweaks"
+         "guix-simplyblack-sddm-theme"
+         "picom"
          "redshift"
          "scrot"
-         "xrandr"
-         "picom"
-         "guix-simplyblack-sddm-theme")))
-
-(define %browsers
-  (map specification->package
-       '("nyxt"
-         "icecat")))
-
-(define %fonts
-  (map specification->package
-       '("font-fira-code")))
+         "xrandr")))
 
 (define %emacs
   (map specification->package
        '("emacs"
-         "emacs-amx"
          "emacs-auctex"
-         "emacs-avy"
          "emacs-company"
          "emacs-company-emoji"
-         "emacs-counsel"
          "emacs-debbugs"
          "emacs-desktop-environment"
          "emacs-diff-hl"
@@ -306,8 +288,6 @@ Add aspell.
          "emacs-gif-screencast"
          "emacs-guix"
          "emacs-htmlize"
-         "emacs-ivy"
-         "emacs-ivy-posframe"
          "emacs-magit"
          "emacs-markdown-mode"
          "emacs-minions"
@@ -324,7 +304,6 @@ Add aspell.
          "emacs-sly"
          "emacs-sly-asdf"
          "emacs-ssh-agency"
-         "emacs-swiper"
          "emacs-telega"
          "emacs-transmission"
          "emacs-use-package")))
@@ -333,8 +312,8 @@ Add aspell.
 *** Channels
 (info "(guix) Channels")
 
-interesting question]]
-interesting question 2]]
+- [[https://lists.gnu.org/archive/html/help-guix/2020-12/msg00129.html][interesting question]]
+- [[https://lists.gnu.org/archive/html/help-guix/2019-02/msg00108.html][interesting question 2]]
 
 #+begin_src scheme :tangle ~/.config/guix/channels.scm
 ;; (info "(guix) Channels")
@@ -349,7 +328,7 @@ interesting question 2]]
     (openpgp-fingerprint
      "2A39 3FFF 68F4 EF7A 3D29  12AF 6F51 20A0 22FB B2D5"))))
  (channel
-  (name 'aadcg-guix-channel)
+  (name 'aadcg)
   (url "https://git.sr.ht/~aadcg/aadcg-guix-channel"))
  %default-channels)
 #+end_src
@@ -765,7 +744,6 @@ The portuguese aspell dictionary sucks, why?
 #+end_src
 
 ** Emacs completion
-(info "(ivy) Top")
 [[https://company-mode.github.io/][company-mode documentation]]
 
 #+begin_src emacs-lisp
@@ -773,53 +751,6 @@ The portuguese aspell dictionary sucks, why?
   :config
   (icomplete-mode)
   (fido-mode))
-
-(use-package ivy
-  :disabled
-  :init (ivy-mode)
-  :custom
-  (ivy-initial-inputs-alist nil)
-  (ivy-count-format "%d/%d ")
-  (ivy-extra-directories nil)
-  (ivy-use-virtual-buffers t)
-  :config
-  (add-to-list 'ivy-format-functions-alist '(t . ivy-format-function-arrow))
-  :bind ("C-x B" . ivy-switch-buffer-other-window))
-
-(use-package counsel
-  :disabled
-  :after ivy
-  :config
-  (counsel-mode 1)
-  (setq ivy-initial-inputs-alist nil)
-  :bind
-  ("C-x 8" . counsel-unicode-char))
-
-(use-package amx
-  :disabled
-  :config (amx-mode))
-
-(use-package ivy-posframe
-  :disabled
-  :unless termux-p
-  :after ivy
-  :custom
-  (ivy-posframe-height-alist
-   '((t . 10)))
-  (ivy-posframe-display-functions-alist
-   '((complete-symbol . ivy-posframe-display-at-point)
-     (t . ivy-posframe-display-at-frame-center)))
-  (ivy-posframe-width 80)
-  :config
-  (if (string-match-p "exwm" (getenv "DESKTOP_SESSION"))
-      (setq ivy-posframe-parameters
-            '((internal-border-width . 4)
-              (alpha . 80)
-              (parent-frame . nil)))
-    (setq ivy-posframe-parameters
-          '((internal-border-width . 4)
-            (alpha . 80))))
-  (ivy-posframe-mode 1))
 
 (use-package company
   :custom
@@ -847,8 +778,6 @@ The portuguese aspell dictionary sucks, why?
 ** Projects
 *** Version Control
 Get rid of ssh agency when the ssh keys will be manager by gpg.
-
-Update diff-hl to 1.8.8 on guix.
 
 #+begin_src conf :tangle ~/.config/git/config
 [user]
@@ -1273,19 +1202,16 @@ gtk-key-theme-name=Emacs
 #+end_src
 
 *** EXWM
-[[file:~/.config/guix/current/share/guile/site/3.0/gnu/packages/emacs-xyz.scm::(define-public emacs-exwm][GNU Guix expects that the EXWM config be at ~/.exwm]].
+[[file:~/.config/guix/current/share/guile/site/3.0/gnu/packages/emacs-xyz.scm::(define-public emacs-exwm][GNU Guix expects EXWM config at ~/.exwm]]
 [[https://github.com/ch11ng/exwm/wiki][EXWM wiki]]
 
 - how to go back and forth workspaces?
 - s-m media
 - s-p power
-
-for a status bar, you can use emacs-symon, or polybar.
+- add mirror-screen utility
 
 When the redshift conf file has comments it doesn't work---report
 upstream.
-
-Add mirror-screen functionality.
 
 #+begin_src conf :tangle ~/.config/redshift/redshift.conf :comments nil
 [redshift]
@@ -1353,7 +1279,7 @@ monitor."
 
 (add-hook 'exwm-init-hook (lambda () (start-process "redshift" nil "redshift")))
 (add-hook 'exwm-init-hook (lambda () (start-process "picom" nil "picom")))
-;; to add a wallpaper feh --no-fehbg --bg-scale 'path.png'
+;; add a wallpaper: $feh --no-fehbg --bg-scale 'path.png'
 
 ;; Local Variables:
 ;; mode: emacs-lisp
@@ -1474,65 +1400,65 @@ nmcli device wifi connect "$SSID" password "$PASSWORD"
 (use-package browse-url
   :custom
   (browse-url-browser-function '(("youtube" . browse-url-firefox)
-                                 (".*" . eww-browse-url))))
+                                 (".*"      . eww-browse-url))))
 #+end_src
 
 #+begin_src lisp :tangle ~/.config/nyxt/init.lisp
-  (defvar *my-keymap* (make-keymap "my-map"))
-  (define-key *my-keymap*
-    "C-s"     'nyxt/web-mode:search-buffer
-    "C-j"     'nyxt/web-mode:follow-hint
-    "C-J"     'nyxt/web-mode:follow-hint-new-buffer
-    "C-g"     'nyxt/web-mode:remove-search-hints
-    "C-u C-J" 'nyxt/web-mode:follow-hint-new-buffer-focus
-    ;; this doesn't work because there are no keybindings maps
-    ;; "C-j"     'nyxt/minibuffer-mode:return-selection
-    ;; "C-x C-b" 'nyxt:list-buffers
-    ;; "M-b" 'nyxt/input-edit-mode:cursor-backwards-word
-    ;; "M-f" 'nyxt/input-edit-mode:cursor-forwards-word
-    ;; "C-b" 'nyxt/input-edit-mode:cursor-backwards
-    ;; "C-f" 'nyxt/input-edit-mode:cursor-forwards
-    "menu" 'nyxt:execute-command)
+(defvar *my-keymap* (make-keymap "my-map"))
+(define-key *my-keymap*
+  "C-s"     'nyxt/web-mode:search-buffer
+  "C-j"     'nyxt/web-mode:follow-hint
+  "C-J"     'nyxt/web-mode:follow-hint-new-buffer
+  "C-g"     'nyxt/web-mode:remove-search-hints
+  "C-u C-J" 'nyxt/web-mode:follow-hint-new-buffer-focus
+  ;; this doesn't work because there are no keybindings maps
+  ;; "C-j"     'nyxt/minibuffer-mode:return-selection
+  ;; "C-x C-b" 'nyxt:list-buffers
+  ;; "M-b" 'nyxt/input-edit-mode:cursor-backwards-word
+  ;; "M-f" 'nyxt/input-edit-mode:cursor-forwards-word
+  ;; "C-b" 'nyxt/input-edit-mode:cursor-backwards
+  ;; "C-f" 'nyxt/input-edit-mode:cursor-forwards
+  "menu" 'nyxt:execute-command)
 
-  (define-mode my-mode ()
-    "Dummy mode for the custom key bindings in `*my-keymap*'."
-    ((keymap-scheme :initform (keymap:make-scheme
-                               scheme:emacs *my-keymap*))))
+(define-mode my-mode ()
+  "Dummy mode for the custom key bindings in `*my-keymap*'."
+  ((keymap-scheme :initform (keymap:make-scheme
+                             scheme:emacs *my-keymap*))))
 
-  (define-configuration (buffer web-buffer)
-    ((default-modes (append '(emacs-mode my-mode)
-                              %slot-default))
-     (current-zoom-ratio 1.5)
-     (zoom-ratio-default 1.5)
-     (conservative-word-move t)))
+(define-configuration (buffer web-buffer)
+  ((default-modes (append '(emacs-mode my-mode)
+                            %slot-default))
+   (current-zoom-ratio 1.5)
+   (zoom-ratio-default 1.5)
+   (conservative-word-move t)))
 
-  (define-configuration web-buffer
-    ((default-modes (append
-                     '(blocker-mode
-                       force-https-mode
-                       ;; noimage-mode
-                       ;; noscript-mode
-                       proxy-mode)
-                     %slot-default))
-     (default-new-buffer-url "https://github.com/aadcg")))
+(define-configuration web-buffer
+  ((default-modes (append
+                   '(blocker-mode
+                     force-https-mode
+                     ;; noimage-mode
+                     ;; noscript-mode
+                     proxy-mode)
+                   %slot-default))
+   (default-new-buffer-url "https://github.com/aadcg")))
 
-  ;; (setf nyxt/certificate-exception-mode:*default-certificate-exceptions*
-  ;;        '("your.unacceptable.cert.website"))
+;; (setf nyxt/certificate-exception-mode:*default-certificate-exceptions*
+;;        '("your.unacceptable.cert.website"))
 
-  ;; for dev purposes
-  (load-after-system
-  (define-command start-slynk (&optional (slynk-port *swank-port*))
-      "Start a Slynk server that can be connected to, for instance, in
-  Emacs via SLY.
+;; for dev purposes
+(load-after-system
+(define-command start-slynk (&optional (slynk-port *swank-port*))
+    "Start a Slynk server that can be connected to, for instance, in
+Emacs via SLY.
 
-  Warning: This allows Nyxt to be controlled remotely, that is, to
-  execute arbitrary code with the privileges of the user running Nyxt.
-  Make sure you understand the security risks associated with this
-  before running this command."
-      (slynk:create-server :port slynk-port :dont-close t)
-      (echo "Slynk server started at port ~a" slynk-port)))
+Warning: This allows Nyxt to be controlled remotely, that is, to
+execute arbitrary code with the privileges of the user running Nyxt.
+Make sure you understand the security risks associated with this
+before running this command."
+    (slynk:create-server :port slynk-port :dont-close t)
+    (echo "Slynk server started at port ~a" slynk-port)))
 
-  ;; https://github.com/jmercouris/configuration/blob/master/.config/nyxt/init.lisp
+;; https://github.com/jmercouris/configuration/blob/master/.config/nyxt/init.lisp
 #+end_src
 
 *** Communications
@@ -1751,11 +1677,18 @@ allow-emacs-pinentry
 #+end_src
 
 *** Misc
+(info "(debbugs-ug) Top")
+
 #+begin_src emacs-lisp
 (use-package guix
   :when (shell-command-to-string "which guix")
   :custom (guix-operation-confirm nil)
   :config (global-guix-prettify-mode)
+
+  (defun guix-patches-debbugs ()
+    (interactive)
+    (debbugs-gnu debbugs-gnu-default-severities "guix-patches"))
+
   :hook (scheme-mode-hook . guix-devel-mode)
   :bind ("s-g" . guix))
 
@@ -1797,15 +1730,13 @@ allow-emacs-pinentry
   "Output as string the evaluation of ispell."
   (let ((ispell-check-only t)
         (inhibit-message t))
-    (my-change-to-dict "russian")
+    (ispell-change-dictionary "ru")
     (ispell-word)
     ;; hacky and prone to error. ideas?
     (save-excursion
       (set-bufferset-buffer-redisplay "*Messages*")
       (goto-char (- (point-max) 1))
-      (buffer-substring-no-properties
-       (point)
-       (move-beginning-of-line 1)))))
+      (buffer-substring-no-properties (point) (move-beginning-of-line 1)))))
 
 (defun my-get-root-ru-word ()
   "Return russian word at point or its root."
