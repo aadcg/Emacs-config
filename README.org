@@ -49,6 +49,7 @@ paramount for scientific endeavours.  Besides that, it's extensible with
 GNU Guile which is an implementation of Scheme.
 
 ** GNU Guix
+[[http://logs.guix.gnu.org/guix/][IRC Logs]]
 *** System
 Your wireless chip will most likely not work when using the Linux-libre
 kernel, so keep in mind the following suggestions:
@@ -354,14 +355,15 @@ bell-character=ignore
   (not (null (getenv "ANDROID_ROOT")))
   "If non-nil, GNU Emacs is running on Termux.")
 
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/"))
+
 (when termux-p
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
     (package-install 'use-package)))
 
 (use-package package
-  :config (add-to-list 'package-archives
-                       '("melpa" . "https://melpa.org/packages/"))
   :hook (package-menu-mode-hook . hl-line-mode))
 
 (use-package use-package
@@ -381,6 +383,13 @@ bell-character=ignore
 (scroll-bar-mode -1)
 (horizontal-scroll-bar-mode -1)
 (fset 'yes-or-no-p 'y-or-n-p)
+(setq scroll-preserve-screen-position 'always)
+(setq-default fill-column 72)
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 2)
+(setq-default tab-always-indent 'complete)
+;; (setq sentence-end-double-space t)
+(when termux-p (global-visual-line-mode t))
 
 (use-package minibuffer
   :custom (minibuffer-eldef-shorten-default t)
@@ -437,14 +446,6 @@ bell-character=ignore
   :custom
   (search-whitespace-regexp ".*?")
   (isearch-lazy-count t))
-
-(setq scroll-preserve-screen-position 'always)
-(setq-default fill-column 72)
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 2)
-(setq-default tab-always-indent 'complete)
-;; (setq sentence-end-double-space t)
-(when termux-p (global-visual-line-mode t))
 #+end_src
 
 **** Keybindings
@@ -863,28 +864,29 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
 (info "(emacs) Lisp Indent")
 
 #+begin_src emacs-lisp
-;; (define-key lisp-mode-shared-map (kbd "RET")
-;;   'reindent-then-newline-and-indent)
-
 (use-package elisp-mode
-  ;; this is enabled by default no?
-  ;; :config (global-eldoc-mode)
-  )
-
-;; needed?
-;; (add-hook 'emacs-lisp-mode-hook 'my-remove-elc-on-save)
-;; (defun my-remove-elc-on-save ()
-;;   "If you're saving an elisp file, likely the .elc is no longer valid."
-;;   (make-local-variable 'after-save-hook)
-;;   (add-hook 'after-save-hook
-;;             (lambda ()
-;;               (if (file-exists-p (concat buffer-file-name "c"))
-;;                   (delete-file (concat buffer-file-name "c"))))))
+  :config
+  (defun my-remove-elc-on-save ()
+    "When saving an elisp file, the .elc is no longer valid."
+    (make-local-variable 'after-save-hook)
+    (add-hook 'after-save-hook
+              (lambda ()
+                (if (file-exists-p (concat buffer-file-name "c"))
+                    (delete-file (concat buffer-file-name "c"))))))
+  :hook (emacs-lisp-mode-hook . my-remove-elc-on-save)
+  :bind (:map lisp-mode-shared-map
+              ("RET" . reindent-then-newline-and-indent)))
 
 (use-package geiser
   :custom (geiser-default-implementation 'guile))
 
+(use-package slime
+  :custom
+  (inferior-lisp-program "sbcl")
+  (slime-port 4006))
+
 (use-package sly
+  :disabled
   :custom
   (inferior-lisp-program "sbcl")
   (sly-port 4006)
@@ -898,15 +900,13 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
 #+begin_src emacs-lisp
 (use-package flycheck-package
   :after flycheck
-  :config
-  (flycheck-package-setup))
+  :config (flycheck-package-setup))
 
 (use-package package-lint-flymake
   :after flymake
   :hook (emacs-lisp-mode-hook . package-lint-flymake-setup)
-  :config
-  (remove-hook 'flymake-diagnostic-functions 'flymake-proc-legacy-flymake))
-
+  :config (remove-hook 'flymake-diagnostic-functions
+                       'flymake-proc-legacy-flymake))
 #+end_src
 
 **** Python
@@ -1218,58 +1218,67 @@ lon=30.31
 #+end_src
 
 #+begin_src emacs-lisp :tangle ~/.exwm
-(require 'exwm)
-(exwm-enable)
-(require 'exwm-randr)
-(exwm-randr-enable)
-(desktop-environment-mode)
-(setq exwm-workspace-number 4)
-(setq exwm-input-global-keys
-      `(([?\s-r] . exwm-reset)
-        ([?\s-f] . exwm-input-toggle-keyboard)
-        ([?\s-w] . exwm-workspace-switch)
-        ;; Bind "s-0" to "s-9" to switch to a workspace by its index.
-        ,@(mapcar (lambda (i) `(,(kbd (format "s-%d" i)) .
-                           (lambda ()
-                             (interactive) (exwm-workspace-switch-create ,i))))
-                  (number-sequence 0 9))
-        ;; Bind "s-&" to launch applications
-        ([?\s-&] . (lambda (command)
-                     (interactive (list (read-shell-command "$ ")))
-                     (start-process-shell-command command nil command)))
-        ;; Bind "s-L" to lock the screen and suspend
-        ([?\s-L] . (lambda () (interactive)
-                     (start-process "" nil "loginctl suspend && xlock")))))
+(use-package exwm
+  ;; add a wallpaper: $feh --no-fehbg --bg-scale 'path.png'
+  :config
+  (require 'exwm)
+  (exwm-enable)
+  (require 'exwm-randr)
+  (exwm-randr-enable)
+  (desktop-environment-mode)
+  (setq exwm-workspace-number 4)
+  (setq exwm-input-global-keys
+        `(([?\s-r] . exwm-reset)
+          ([?\s-f] . exwm-input-toggle-keyboard)
+          ([?\s-w] . exwm-workspace-switch)
+          ;; Bind "s-0" to "s-9" to switch to a workspace by its index.
+          ,@(mapcar (lambda (i) `(,(kbd (format "s-%d" i)) .
+                             (lambda ()
+                               (interactive) (exwm-workspace-switch-create ,i))))
+                    (number-sequence 0 9))
+          ;; Bind "s-&" to launch applications
+          ([?\s-&] . (lambda (command)
+                       (interactive (list (read-shell-command "$ ")))
+                       (start-process-shell-command command nil command)))
+          ;; Bind "s-L" to lock the screen and suspend
+          ([?\s-L] . (lambda () (interactive)
+                       (start-process "" nil "loginctl suspend && xlock")))))
 
-(defun exwm-change-screen ()
-  "Mutually exclusively enable the external monitor or built-in
+  (defun exwm-change-screen ()
+    "Mutually exclusively enable the external monitor or built-in
 monitor."
-  (let ((xrandr-output-regexp "\n\\([^ ]+\\) connected ")
-        default-output)
-    (with-temp-buffer
-      (call-process "xrandr" nil t nil)
-      (goto-char (point-min))
-      (re-search-forward xrandr-output-regexp nil 'noerror)
-      (setq default-monitor (match-string 1))
-      (if (re-search-forward xrandr-output-regexp nil 'noerror)
+    (let ((xrandr-output-regexp "\n\\([^ ]+\\) connected ")
+          default-output)
+      (with-temp-buffer
+        (call-process "xrandr" nil t nil)
+        (goto-char (point-min))
+        (re-search-forward xrandr-output-regexp nil 'noerror)
+        (setq default-monitor (match-string 1))
+        (if (re-search-forward xrandr-output-regexp nil 'noerror)
+            (call-process
+             "xrandr" nil nil nil
+             "--output" (match-string 1) "--primary" "--auto"
+             "--output" default-monitor "--off")
           (call-process
            "xrandr" nil nil nil
-           "--output" (match-string 1) "--primary" "--auto"
-           "--output" default-monitor "--off")
-        (call-process
-         "xrandr" nil nil nil
-         "--output" default-monitor "--auto")))))
+           "--output" default-monitor "--auto")))))
 
-(add-hook 'exwm-randr-screen-change-hook 'exwm-change-screen)
+  :hook
+  ((exwm-randr-screen-change-hook . exwm-change-screen)
+   (exwm-update-class-hook        . (lambda ()
+                                      (exwm-workspace-rename-buffer
+                                       exwm-class-name)))
+   (exwm-update-title-hook        . (lambda ()
+                                      (exwm-workspace-rename-buffer
+                                       exwm-title)))
+   (exwm-init-hook                . (lambda ()
+                                      (progn
+                                        (start-process "redshift" nil "redshift")
+                                        (start-process "picom" nil "picom"))))))
 
-(add-hook 'exwm-update-class-hook
-          (lambda () (exwm-workspace-rename-buffer exwm-class-name)))
-(add-hook 'exwm-update-title-hook
-          (lambda () (exwm-workspace-rename-buffer exwm-title)))
-
-(add-hook 'exwm-init-hook (lambda () (start-process "redshift" nil "redshift")))
-(add-hook 'exwm-init-hook (lambda () (start-process "picom" nil "picom")))
-;; add a wallpaper: $feh --no-fehbg --bg-scale 'path.png'
+(use-package exwm-edit
+  :custom (exwm-edit-split "right")
+  :config (global-exwm-edit-mode))
 
 ;; Local Variables:
 ;; mode: emacs-lisp
@@ -1277,8 +1286,8 @@ monitor."
 #+end_src
 
 *** Desktop utils
-- send a patch to desktop-environment to add parameters to slock.
-- add options for poweroff, reboot,etc.
+- send a patch to desktop-environment to add parameters to slock
+- add options for poweroff, reboot, etc
 - add a proper volume interface similar to C-x C-+
 - update desktop-environment in guix to 0.4.0.
 
@@ -1365,6 +1374,9 @@ nmcli device wifi connect "$SSID" password "$PASSWORD"
 #+end_src
 
 *** Web browsing
+# export GDK_DPI_SCALE=0.5
+# export GDK_SCALE=2
+
 #+begin_src emacs-lisp
 (use-package shr
   :custom
@@ -1394,6 +1406,8 @@ nmcli device wifi connect "$SSID" password "$PASSWORD"
 #+end_src
 
 #+begin_src lisp :tangle ~/.config/nyxt/init.lisp
+;; https://github.com/jmercouris/configuration/blob/master/.config/nyxt/init.lisp
+
 (defvar *my-keymap* (make-keymap "my-map"))
 (define-key *my-keymap*
   "C-s"     'nyxt/web-mode:search-buffer
@@ -1418,8 +1432,6 @@ nmcli device wifi connect "$SSID" password "$PASSWORD"
 (define-configuration (buffer web-buffer)
   ((default-modes (append '(emacs-mode my-mode)
                             %slot-default))
-   (current-zoom-ratio 1.5)
-   (zoom-ratio-default 1.5)
    (conservative-word-move t)))
 
 (define-configuration web-buffer
@@ -1434,21 +1446,6 @@ nmcli device wifi connect "$SSID" password "$PASSWORD"
 
 ;; (setf nyxt/certificate-exception-mode:*default-certificate-exceptions*
 ;;        '("your.unacceptable.cert.website"))
-
-;; for dev purposes
-(load-after-system
-(define-command start-slynk (&optional (slynk-port *swank-port*))
-    "Start a Slynk server that can be connected to, for instance, in
-Emacs via SLY.
-
-Warning: This allows Nyxt to be controlled remotely, that is, to
-execute arbitrary code with the privileges of the user running Nyxt.
-Make sure you understand the security risks associated with this
-before running this command."
-    (slynk:create-server :port slynk-port :dont-close t)
-    (echo "Slynk server started at port ~a" slynk-port)))
-
-;; https://github.com/jmercouris/configuration/blob/master/.config/nyxt/init.lisp
 #+end_src
 
 *** Communications
