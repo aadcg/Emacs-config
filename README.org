@@ -355,6 +355,7 @@ bell-character=ignore
   (not (null (getenv "ANDROID_ROOT")))
   "If non-nil, GNU Emacs is running on Termux.")
 
+(require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
 
@@ -700,6 +701,7 @@ The portuguese aspell dictionary sucks, why?
 **** Theme
 #+begin_src emacs-lisp
 (use-package modus-themes
+  :ensure termux-p
   :init
   (setq modus-themes-bold-constructs t
         modus-themes-fringes 'subtle
@@ -751,7 +753,7 @@ The portuguese aspell dictionary sucks, why?
 (use-package icomplete
   :config
   (icomplete-mode)
-  (fido-mode))
+  (unless (version<= emacs-version "27") (fido-mode)))
 
 (use-package company
   :custom
@@ -761,14 +763,14 @@ The portuguese aspell dictionary sucks, why?
   :config
   (global-company-mode)
   :bind (:map company-active-map
-              ("C-j"      . company-complete-selection)
-              ("C-n"      . company-select-next)
-              ("C-p"      . company-select-previous)
-              ("<tab>"    . company-complete-common-or-cycle)
-              ("C-h"      . company-show-doc-buffer)
-              ("M-."      . company-show-location)
-              ("RET"      . nil)
-              ("<return>" . nil)))
+  ("C-j"      . company-complete-selection)
+  ("C-n"      . company-select-next)
+  ("C-p"      . company-select-previous)
+  ("<tab>"    . company-complete-common-or-cycle)
+  ("C-h"      . company-show-doc-buffer)
+  ("M-."      . company-show-location)
+  ("RET"      . nil)
+  ("<return>" . nil)))
 
 (use-package company-posframe
   :disabled
@@ -796,6 +798,7 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
   :custom (vc-follow-symlinks t))
 
 (use-package magit
+  :ensure termux-p
   :custom (magit-log-section-commit-count 25)
   :bind ("C-x g" . magit-status))
 
