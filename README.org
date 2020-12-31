@@ -342,7 +342,7 @@ mkdir NextCloud
 ln -s -t NextCloud/* ~/storage/shared/Android/media/com.nextcloud.client/nextcloud/up201106482@fc.up.pt@cloud.owncube.com/*
 #+end_src
 
-#+begin_src conf :tangle ~/.termux
+#+begin_src conf :tangle ~/.termux/termux.properties
 extra-keys=[['TAB', 'ALT', '/', '-', '_', '~', '|', 'CTRL', 'UP', 'DOWN']]
 bell-character=ignore
 #+end_src
@@ -455,8 +455,9 @@ bell-character=ignore
 | Key       | Function               |
 |-----------+------------------------|
 | <ESC>     | Meta                   |
-| <F1>      | C-h                    |
-| <F2>      | C-x 6                  |
+| <f1>      | C-h                    |
+| <f2>      | C-x 6                  |
+| <f10>     | menu-bar-open          |
 | C-c       | mode-specific-map      |
 | C-h       | help-map               |
 | C-u       | universal-argument-map |
@@ -489,7 +490,7 @@ I barely ever use them.
 (bind-keys
  ("C-x x"                    . my-config-visit)
  ("M-o"                      . other-window)
- ("M-O"                      . mode-line-other-buffer)
+ ;; ("M-O"                      . mode-line-other-buffer)
  ("M-E"                      . mark-end-of-sentence)
  ("M-T"                      . transpose-sentences)
  ("C-x M-t"                  . transpose-paragraphs)
@@ -701,7 +702,6 @@ The portuguese aspell dictionary sucks, why?
 **** Theme
 #+begin_src emacs-lisp
 (use-package modus-themes
-  :ensure termux-p
   :init
   (setq modus-themes-bold-constructs t
         modus-themes-fringes 'subtle
@@ -798,7 +798,6 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
   :custom (vc-follow-symlinks t))
 
 (use-package magit
-  :ensure termux-p
   :custom (magit-log-section-commit-count 25)
   :bind ("C-x g" . magit-status))
 
