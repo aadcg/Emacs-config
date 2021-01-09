@@ -334,7 +334,7 @@ This needs review since I want to create a guix pkg with this cfg.
  %default-channels)
 #+end_src
 
-** COMMENT Termux
+** Termux
 #+begin_src sh
 pkg upgrade
 pkg install emacs git huspell huspell-ru
@@ -345,6 +345,7 @@ ln -s -t NextCloud/* ~/storage/shared/Android/media/com.nextcloud.client/nextclo
 #+begin_src conf :tangle ~/.termux/termux.properties
 extra-keys=[['TAB', 'ALT', '/', '-', '_', '~', '|', 'CTRL', 'UP', 'DOWN']]
 bell-character=ignore
+ctrl-space-workaround=true
 #+end_src
 
 * GNU Emacs and other configs
@@ -757,8 +758,8 @@ The portuguese aspell dictionary sucks, why?
 
 (use-package company
   :custom
-  (company-require-match nil)
-  (company-idle-delay 0.2)
+  ;; (company-require-match nil)
+  ;; (company-idle-delay 0.2)
   (company-selection-wrap-around t)
   :config
   (global-company-mode)
@@ -771,11 +772,6 @@ The portuguese aspell dictionary sucks, why?
   ("M-."      . company-show-location)
   ("RET"      . nil)
   ("<return>" . nil)))
-
-(use-package company-posframe
-  :disabled
-  :custom
-  (company-posframe-show-params (list :override-parameters '((alpha . 80)))))
 #+end_src
 
 ** Projects
@@ -825,6 +821,7 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
   (show-paren-mode))
 
 (use-package rainbow-delimiters
+  :disabled
   :hook (prog-mode-hook . rainbow-delimiters-mode))
 
 (use-package prog-mode
@@ -895,7 +892,7 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
   :bind (:map
          sly-mode-map ("C-c o" . sly-documentation)))
 
-(use-package sly-asdf)
+(use-package sly-asdf :disabled)
 #+end_src
 
 ***** COMMENT Emacs packages
@@ -939,6 +936,9 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
 #+end_src
 
 ***** Eshell
+As of <2021-01-08 Fri> there's an issue with tramp-gvfs.  I'd like to
+run the following command.
+cd /afp:USER@HOST:PATH
 #+begin_src emacs-lisp
 (use-package eshell
   :custom
@@ -1201,6 +1201,7 @@ gtk-key-theme-name=Emacs
 - s-m media
 - s-p power
 - add mirror-screen utility
+- [[https://github.com/ch11ng/exwm/wiki#how-to-send-c-c-to-term][how to copy/paste in firefox? C-c is intercepted even in char-mode, why?]]
 
 When the redshift conf file has comments it doesn't work---report
 upstream.
@@ -1450,7 +1451,7 @@ nmcli device wifi connect "$SSID" password "$PASSWORD"
 ;;        '("your.unacceptable.cert.website"))
 #+end_src
 
-*** Communications
+*** Communication
 **** Email (gnus)
 - [[https://protesilaos.com/dotemacs/#h:5ad80664-3163-4d9d-be65-462637d77903][configuring email]]
 - [[https://www.emacswiki.org/emacs/GnusTutorial][gnus tutorial]]
@@ -1604,6 +1605,8 @@ TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
 *** Media
 Find a solution to play smb shares other than:
 vlc -Z -I rc smb://PATH
+
+[[http://linux.reuf.nl/projects/nas.htmhttp://linux.reuf.nl/projects/nas.htm][DIY NAS]]
 
 The keybindings should depend on the wm I'm in. In EXWM volume setting
 must be global.
