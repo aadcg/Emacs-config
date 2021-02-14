@@ -1,6 +1,6 @@
 :HEADER:
 #+TITLE:       GNU/Linux Literate Configuration
-#+AUTHOR:      André Alexandre Gomes
+#+AUTHOR:      André A. Gomes
 #+EMAIL:       andremegafone@gmail.com
 #+DESCRIPTION: My Literate Dotfiles
 
@@ -144,16 +144,16 @@ EndSection")
  (host-name "guix-xps13")
  (users (cons* (user-account
                 (name "aadcg")
-                (comment "André Alexandre Gomes")
+                (comment "André A. Gomes")
                 (group "users")
                 (home-directory "/home/aadcg")
                 (supplementary-groups
                  '("wheel" "netdev" "audio" "video")))
                %base-user-accounts))
 
- ;; I like to use the latest longterm release
+ ;; I like to use the latest longterm release (aka "stable")
  ;; https://www.kernel.org/
- (kernel linux-libre-5.4)
+ (kernel linux-libre-lts)
 
  ;; TODO?
  ;; (skeletons
@@ -316,6 +316,8 @@ This needs review since I want to create a guix pkg with this cfg.
 - [[https://lists.gnu.org/archive/html/help-guix/2020-12/msg00129.html][interesting question]]
 - [[https://lists.gnu.org/archive/html/help-guix/2019-02/msg00108.html][interesting question 2]]
 
+You can get substitutes for non-guix from https://mirror.brielmaier.net.
+
 #+begin_src scheme :tangle ~/.config/guix/channels.scm
 ;; (info "(guix) Channels")
 
@@ -361,6 +363,7 @@ ctrl-space-workaround=true
              '("melpa" . "https://melpa.org/packages/"))
 
 (when termux-p
+  (package-initialize)
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
     (package-install 'use-package)))
@@ -377,6 +380,8 @@ ctrl-space-workaround=true
 
 *** My defaults
 (info "(emacs) Dired")
+(info "(emacs) Search")
+(info "(autotype) Hippie Expand")
 
 #+begin_src emacs-lisp
 (menu-bar-mode -1)
@@ -393,8 +398,15 @@ ctrl-space-workaround=true
 ;; (setq sentence-end-double-space t)
 (when termux-p (global-visual-line-mode t))
 
+(defun sudo ()
+  "Use Tramp to sudo the current buffer."
+  (interactive)
+  (when buffer-file-name
+    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+
 (use-package minibuffer
-  :custom (minibuffer-eldef-shorten-default t)
+  :custom
+  (minibuffer-eldef-shorten-default t)
   :config (minibuffer-electric-default-mode))
 
 (use-package files
@@ -421,8 +433,9 @@ ctrl-space-workaround=true
   :custom (blink-cursor-blinks 2))
 
 (use-package cus-edit
-  :custom (custom-file (concat user-emacs-directory ".emacs-custom.el"))
-  :hook (after-init-hook . (lambda () (load custom-file))))
+  :custom (custom-file (concat user-emacs-directory "emacs-custom.el"))
+  :hook (after-init-hook . (lambda () (unless (not (file-exists-p custom-file))
+                                   (load custom-file)))))
 
 (use-package proced
   :hook (proced-mode-hook . hl-line-mode))
@@ -444,10 +457,19 @@ ctrl-space-workaround=true
   :hook (dired-mode-hook . hl-line-mode)
   :bind ("C-x C-j" . dired-jump))
 
+(use-package dired-x
+  :hook (dired-load-hook . (lambda (x) (require 'dired-x))))
+
 (use-package isearch
   :custom
   (search-whitespace-regexp ".*?")
   (isearch-lazy-count t))
+
+(use-package apropos
+  :custom (apropos-sort-by-scores t))
+
+(use-package hippie-expand
+  :bind ([remap dabbrev-expand] . hippie-expand))
 #+end_src
 
 **** Keybindings
@@ -483,6 +505,8 @@ Bind all keybindings with bind-key.el, and use
 Consider remapping keybindings like =C-i=, =M-r=, =C-z=, =C-x C-z= since
 I barely ever use them.
 
+Don't forget about M-m and M-^, very useful bindings!
+
 #+begin_src emacs-lisp
 (defun my-config-visit ()
   (interactive)
@@ -499,6 +523,7 @@ I barely ever use them.
  ("C-:"                      . eval-print-last-sexp)
  ("M-R"                      . raise-sexp)
  ("S-SPC"                    . cycle-spacing)
+ ("C-x 4 o"                  . display-buffer)
  ;; so that M-= works without a selected region
  ([remap count-words-region] . count-words)
  ([remap upcase-word]        . upcase-dwim)
@@ -511,7 +536,7 @@ I barely ever use them.
 
 *** Locale
 #+begin_src emacs-lisp
-(setq user-full-name "André Alexandre Gomes"
+(setq user-full-name "André A. Gomes"
       user-mail-address "andremegafone@gmail.com")
 
 (use-package solar
@@ -656,7 +681,7 @@ The portuguese aspell dictionary sucks, why?
 #+begin_src emacs-lisp
 (use-package desktop
   :custom
-  (desktop-files-not-to-save ".")
+  ;; (desktop-files-not-to-save ".")
   (desktop-globals-to-clear nil)
   (desktop-restore-frames nil)
   (desktop-lazy-verbose nil)
@@ -780,7 +805,7 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
 
 #+begin_src conf :tangle ~/.config/git/config
 [user]
-  name = André Alexandre Gomes
+  name = André A. Gomes
   email = andremegafone@gmail.com
   signingkey = E407570BBE3A8031155910B30DDDBDB1BDA03027
 [commit]
@@ -891,8 +916,6 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
   (sly-port 4006)
   :bind (:map
          sly-mode-map ("C-c o" . sly-documentation)))
-
-(use-package sly-asdf :disabled)
 #+end_src
 
 ***** COMMENT Emacs packages
@@ -939,6 +962,9 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
 As of <2021-01-08 Fri> there's an issue with tramp-gvfs.  I'd like to
 run the following command.
 cd /afp:USER@HOST:PATH
+
+Emacs crashes when I do cd /ssh:USER@HOST:PATH why?
+
 #+begin_src emacs-lisp
 (use-package eshell
   :custom
@@ -957,9 +983,9 @@ cd /afp:USER@HOST:PATH
 #+end_src
 
 #+begin_src sh :tangle ~/.emacs.d/eshell/alias :comments nil
-  alias ll ls -Atrhlb --group-directories-first
-  alias zoom flatpak run us.zoom.Zoom
-  alias jitsi flatpak run org.jitsi.jitsi-meet
+alias ll ls -Atrhlb --group-directories-first
+alias zoom flatpak run us.zoom.Zoom
+alias jitsi flatpak run org.jitsi.jitsi-meet
 #+end_src
 
 **** COMMENT Haskell
@@ -983,6 +1009,9 @@ cd /afp:USER@HOST:PATH
 
 **** COMMENT \LaTeX
 #+begin_src emacs-lisp
+(use-package tex-mode
+  :hook (tex-mode-hook . (lambda () (setq ispell-parser 'tex))))
+
 (use-package auctex)
 #+end_src
 
@@ -995,7 +1024,7 @@ cd /afp:USER@HOST:PATH
 
 (use-package yaml-mode
   :disabled
-  :mode (("\\.yml\\'" . yaml-mode)
+  :mode (("\\.yml\\'"  . yaml-mode)
          ("\\.yaml\\'" . yaml-mode)))
 
 (use-package csv-mode :disabled)
@@ -1086,9 +1115,6 @@ Credit to https://emacs.stackexchange.com/a/31708/19054."
            (last-day-of-month
             (calendar-last-day-of-month month year)))
       (= day last-day-of-month)))
-
-  ;; patch since (org-version) is broken in org 9.4
-  (setq org-version "9.4")
 
   :bind (("C-c a"     . org-agenda)
          ("C-c c"     . org-capture)
@@ -1188,11 +1214,6 @@ Credit to https://emacs.stackexchange.com/a/31708/19054."
 #+end_src
 
 ** Emacs OS - The Kitchen Sink
-#+begin_src conf :tangle ~/.config/gtk-3.0/settings.ini
-[Settings]
-gtk-key-theme-name=Emacs
-#+end_src
-
 *** EXWM
 [[file:~/.config/guix/current/share/guile/site/3.0/gnu/packages/emacs-xyz.scm::(define-public emacs-exwm][GNU Guix expects EXWM config at ~/.exwm]]
 [[https://github.com/ch11ng/exwm/wiki][EXWM wiki]]
@@ -1201,7 +1222,10 @@ gtk-key-theme-name=Emacs
 - s-m media
 - s-p power
 - add mirror-screen utility
-- [[https://github.com/ch11ng/exwm/wiki#how-to-send-c-c-to-term][how to copy/paste in firefox? C-c is intercepted even in char-mode, why?]]
+- [[https://github.com/ch11ng/exwm/wiki#how-to-send-c-c-to-term][how to copy/paste in firefox? C-c is intercepted even in char-mode,
+  why?]]
+- send patch to exwm-edit to handle (exwm-input--fake-key ?\C-a)
+  (sometimes C-a isn't the right key to copy the contents) ([[https://askubuntu.com/questions/294953/gtk-key-theme-emacs-what-keystroke-is-for-select-all][see]])
 
 When the redshift conf file has comments it doesn't work---report
 upstream.
@@ -1223,7 +1247,7 @@ lon=30.31
 #+begin_src emacs-lisp :tangle ~/.exwm
 (use-package exwm
   ;; add a wallpaper: $feh --no-fehbg --bg-scale 'path.png'
-  :config
+  :init
   (require 'exwm)
   (exwm-enable)
   (require 'exwm-randr)
@@ -1280,8 +1304,9 @@ monitor."
                                         (start-process "picom" nil "picom"))))))
 
 (use-package exwm-edit
-  :custom (exwm-edit-split "right")
-  :config (global-exwm-edit-mode))
+  :custom (exwm-edit-split "below")
+  :config (global-exwm-edit-mode)
+  :hook (exwm-edit-compose-hook . org-mode))
 
 ;; Local Variables:
 ;; mode: emacs-lisp
@@ -1377,10 +1402,14 @@ nmcli device wifi connect "$SSID" password "$PASSWORD"
 #+end_src
 
 *** Web browsing
-# export GDK_DPI_SCALE=0.5
-# export GDK_SCALE=2
+To run firefox:
+$ flatpak run org.mozilla.firefox
 
 #+begin_src emacs-lisp
+(setenv "GDK_DPI_SCALE" "0.5")
+(setenv "GDK_SCALE" "2")
+(setenv "VISUAL" "emacsclient -c")
+
 (use-package shr
   :custom
   (shr-use-fonts nil)
@@ -1408,9 +1437,10 @@ nmcli device wifi connect "$SSID" password "$PASSWORD"
                                  (".*"      . eww-browse-url))))
 #+end_src
 
-#+begin_src lisp :tangle ~/.config/nyxt/init.lisp
-;; https://github.com/jmercouris/configuration/blob/master/.config/nyxt/init.lisp
+- external-editor-program or exwm-edit in nyxt?
+- how to unbound a keybinding?
 
+#+begin_src lisp :tangle ~/.config/nyxt/init.lisp
 (defvar *my-keymap* (make-keymap "my-map"))
 (define-key *my-keymap*
   "C-s"     'nyxt/web-mode:search-buffer
@@ -1432,9 +1462,22 @@ nmcli device wifi connect "$SSID" password "$PASSWORD"
   ((keymap-scheme :initform (keymap:make-scheme
                              scheme:emacs *my-keymap*))))
 
+(define-configuration browser
+  ((session-restore-prompt :never-restore)
+   (open-external-link-in-new-window-p t)
+   (autofills (list (nyxt::make-autofill :key "Name" :fill "André A. Gomes")
+                    (nyxt::make-autofill :key "Email"
+                                         :fill "andremegafone@gmail.com")
+                    (nyxt::make-autofill :key "Birth" :fill "1970-01-01")
+                    (nyxt::make-autofill :name "Hello Printer"
+                                         :key "Function example"
+                                         :fill
+                                         (lambda () (format nil "hello!")))))))
+
 (define-configuration (buffer web-buffer)
   ((default-modes (append '(emacs-mode my-mode)
                             %slot-default))
+   (allowlist (list "duckduckgo.com"))
    (conservative-word-move t)))
 
 (define-configuration web-buffer
@@ -1445,7 +1488,14 @@ nmcli device wifi connect "$SSID" password "$PASSWORD"
                      ;; noscript-mode
                      proxy-mode)
                    %slot-default))
-   (default-new-buffer-url "https://github.com/aadcg")))
+   (default-new-buffer-url "about:blank")))
+
+(define-configuration nyxt/proxy-mode:proxy-mode
+    ((nyxt/proxy-mode:proxy
+      (make-instance 'proxy
+                     :server-address (quri:uri "socks5://localhost:9050")
+                     :allowlist '("localhost" "localhost:8080" "gitlab.com")
+                     :proxied-downloads-p t))))
 
 ;; (setf nyxt/certificate-exception-mode:*default-certificate-exceptions*
 ;;        '("your.unacceptable.cert.website"))
@@ -1491,9 +1541,9 @@ TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
 (use-package message
   :custom
   (mail-signature
-   "André Alexandre Gomes\n\"Free Thought, Free World\"")
+   "André A. Gomes\n\"Free Thought, Free World\"")
   (message-signature
-   "André Alexandre Gomes\n\"Free Thought, Free World\"")
+   "André A. Gomes\n\"Free Thought, Free World\"")
   (message-kill-buffer-on-exit t)
   (message-default-charset 'utf-8)
   ;; :hook
@@ -1535,6 +1585,8 @@ TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
 **** IRC (Freenode)
 #+begin_src emacs-lisp
 (use-package erc
+  :custom
+  (erc-autojoin-channels-alist '((".*\.freenode\.net" . ("#nyxt"))))
   :config
   (defun my-freenode ()
     (interactive)
@@ -1749,9 +1801,12 @@ allow-emacs-pinentry
 * TODO
 - use gpg as a ssh key
 - [[file:~/repos/prot-dotfiles/emacs/.emacs.d/emacs-init.org::#h:3d8ebbb1-f749-412e-9c72-5d65f48d5957][Window rules and basic tweaks]] (info "(emacs) Buffers")
+- do I need winner-mode?
 - type-break-mode
 - can I use my phone camera as webcam?
 - [[https://guix.gnu.org/blog/2018/guix-on-android/][try guix on android]]
 - Syncthing vs Nextcloud vs cron/rsync?
+- take a look at dumb-jump so that M-. works for all projects
 - if I suspend when the lid is closed, I need to open the lid for the
   screen to work.  ONLY if you poweroff the monitor or the laptop!
+- say goodbye to use-package
