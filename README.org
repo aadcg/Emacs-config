@@ -1443,19 +1443,19 @@ $ flatpak run org.mozilla.firefox
 #+begin_src lisp :tangle ~/.config/nyxt/init.lisp
 (defvar *my-keymap* (make-keymap "my-map"))
 (define-key *my-keymap*
-  "C-s"     'nyxt/web-mode:search-buffer
-  "C-j"     'nyxt/web-mode:follow-hint
-  "C-J"     'nyxt/web-mode:follow-hint-new-buffer
-  "C-g"     'nyxt/web-mode:remove-search-hints
-  "C-u C-J" 'nyxt/web-mode:follow-hint-new-buffer-focus
-  ;; this doesn't work because there are no keybindings maps
-  ;; "C-j"     'nyxt/minibuffer-mode:return-selection
-  ;; "C-x C-b" 'nyxt:list-buffers
-  ;; "M-b" 'nyxt/input-edit-mode:cursor-backwards-word
-  ;; "M-f" 'nyxt/input-edit-mode:cursor-forwards-word
-  ;; "C-b" 'nyxt/input-edit-mode:cursor-backwards
-  ;; "C-f" 'nyxt/input-edit-mode:cursor-forwards
-  "menu" 'nyxt:execute-command)
+    "C-s"     'nyxt/web-mode:search-buffer
+    "C-j"     'nyxt/web-mode:follow-hint
+    "C-J"     'nyxt/web-mode:follow-hint-new-buffer
+    "C-g"     'nyxt/web-mode:remove-search-hints
+    "C-u C-J" 'nyxt/web-mode:follow-hint-new-buffer-focus
+    ;; this doesn't work because there are no keybindings maps
+    ;; "C-j"     'nyxt/minibuffer-mode:return-selection
+    ;; "C-x C-b" 'nyxt:list-buffers
+    ;; "M-b" 'nyxt/input-edit-mode:cursor-backwards-word
+    ;; "M-f" 'nyxt/input-edit-mode:cursor-forwards-word
+    ;; "C-b" 'nyxt/input-edit-mode:cursor-backwards
+    ;; "C-f" 'nyxt/input-edit-mode:cursor-forwards
+    "menu" 'nyxt:execute-command)
 
 (define-mode my-mode ()
   "Dummy mode for the custom key bindings in `*my-keymap*'."
@@ -1463,32 +1463,31 @@ $ flatpak run org.mozilla.firefox
                              scheme:emacs *my-keymap*))))
 
 (define-configuration browser
-  ((session-restore-prompt :never-restore)
-   (open-external-link-in-new-window-p t)
-   (autofills (list (nyxt::make-autofill :key "Name" :fill "André A. Gomes")
-                    (nyxt::make-autofill :key "Email"
-                                         :fill "andremegafone@gmail.com")
-                    (nyxt::make-autofill :key "Birth" :fill "1970-01-01")
-                    (nyxt::make-autofill :name "Hello Printer"
-                                         :key "Function example"
-                                         :fill
-                                         (lambda () (format nil "hello!")))))))
+    ((session-restore-prompt :never-restore)
+     ;; (open-external-link-in-new-window-p t)
+     (autofills (list (nyxt::make-autofill :key "Name" :fill "André A. Gomes")
+                      (nyxt::make-autofill :key "Email"
+                                           :fill "andremegafone@gmail.com")
+                      (nyxt::make-autofill :name "Hello Printer"
+                                           :key "Function example"
+                                           :fill
+                                           (lambda () (format nil "hello!")))))))
 
 (define-configuration (buffer web-buffer)
-  ((default-modes (append '(emacs-mode my-mode)
+    ((default-modes (append '(emacs-mode
+                              my-mode)
                             %slot-default))
-   (allowlist (list "duckduckgo.com"))
-   (conservative-word-move t)))
+     (conservative-word-move t)))
 
 (define-configuration web-buffer
-  ((default-modes (append
-                   '(blocker-mode
-                     force-https-mode
-                     ;; noimage-mode
-                     ;; noscript-mode
-                     proxy-mode)
-                   %slot-default))
-   (default-new-buffer-url "about:blank")))
+    ((default-modes (append
+                     '(blocker-mode
+                       force-https-mode
+                       ;; noimage-mode
+                       noscript-mode
+                       proxy-mode)
+                     %slot-default))
+     (default-new-buffer-url "about:blank")))
 
 (define-configuration nyxt/proxy-mode:proxy-mode
     ((nyxt/proxy-mode:proxy
@@ -1496,9 +1495,6 @@ $ flatpak run org.mozilla.firefox
                      :server-address (quri:uri "socks5://localhost:9050")
                      :allowlist '("localhost" "localhost:8080" "gitlab.com")
                      :proxied-downloads-p t))))
-
-;; (setf nyxt/certificate-exception-mode:*default-certificate-exceptions*
-;;        '("your.unacceptable.cert.website"))
 #+end_src
 
 *** Communication
