@@ -1439,23 +1439,36 @@ $ flatpak run org.mozilla.firefox
 
 - external-editor-program or exwm-edit in nyxt?
 - how to unbound a keybinding?
+- add eww keybindings
+
+[[https://github.com/jmercouris/configuration/blob/master/.config/nyxt/init.lisp][jmercouris config]]
+[[https://github.com/aartaka/nyxt-config/blob/master/init.lisp][aatarka config]]
 
 #+begin_src lisp :tangle ~/.config/nyxt/init.lisp
 (defvar *my-keymap* (make-keymap "my-map"))
 (define-key *my-keymap*
-    "C-s"     'nyxt/web-mode:search-buffer
-    "C-j"     'nyxt/web-mode:follow-hint
-    "C-J"     'nyxt/web-mode:follow-hint-new-buffer
-    "C-g"     'nyxt/web-mode:remove-search-hints
-    "C-u C-J" 'nyxt/web-mode:follow-hint-new-buffer-focus
-    ;; this doesn't work because there are no keybindings maps
-    ;; "C-j"     'nyxt/minibuffer-mode:return-selection
-    ;; "C-x C-b" 'nyxt:list-buffers
-    ;; "M-b" 'nyxt/input-edit-mode:cursor-backwards-word
-    ;; "M-f" 'nyxt/input-edit-mode:cursor-forwards-word
-    ;; "C-b" 'nyxt/input-edit-mode:cursor-backwards
-    ;; "C-f" 'nyxt/input-edit-mode:cursor-forwards
-    "menu" 'nyxt:execute-command)
+  "C-s"     'nyxt/web-mode:search-buffer
+  "escape"  'nyxt/web-mode:remove-search-hints
+  "C-g"     'nyxt/web-mode:remove-search-hints
+  "C-j"     'nyxt/web-mode:follow-hint
+  "C-J"     'nyxt/web-mode:follow-hint-new-buffer
+  "C-u C-j" 'nyxt/web-mode:follow-hint-new-buffer-focus
+  ;; first I need to figure out vi:normal/insert mode in nyxt
+  ;; "j"       'nyxt/web-mode:follow-hint
+  ;; "J"       'nyxt/web-mode:follow-hint-new-buffer
+  ;; "C-u j"   'nyxt/web-mode:follow-hint-new-buffer-focus
+  ;; "d"       'list-downloads
+  ;; "g"       'reload-current-buffer
+  ;; "l"       'nyxt/web-mode:history-backwards
+  ;; "r"       'nyxt/web-mode:history-forwards
+  ;; "L"       'nyxt/web-mode:history-backwards-query
+  ;; "R"       'nyxt/web-mode:history-forwards-query
+  ;; "b"       'bookmark-current-page
+  ;; "B"       'list-bookmarks
+  ;; "s"       'switch-buffer
+  ;; "S"       'list-buffers
+  ;; "w"       'copy-url
+  )
 
 (define-mode my-mode ()
   "Dummy mode for the custom key bindings in `*my-keymap*'."
@@ -1463,38 +1476,55 @@ $ flatpak run org.mozilla.firefox
                              scheme:emacs *my-keymap*))))
 
 (define-configuration browser
-    ((session-restore-prompt :never-restore)
-     ;; (open-external-link-in-new-window-p t)
-     (autofills (list (nyxt::make-autofill :key "Name" :fill "André A. Gomes")
-                      (nyxt::make-autofill :key "Email"
-                                           :fill "andremegafone@gmail.com")
-                      (nyxt::make-autofill :name "Hello Printer"
-                                           :key "Function example"
-                                           :fill
-                                           (lambda () (format nil "hello!")))))))
+  ((session-restore-prompt :never-restore)
+   (autofills (list (nyxt::make-autofill :key "Name" :fill "André A. Gomes")
+                    (nyxt::make-autofill :key "Email"
+                                         :fill "andremegafone@gmail.com")
+                    (nyxt::make-autofill :name "Hello Printer"
+                                         :key "Function example"
+                                         :fill
+                                         (lambda () (format nil "hello!")))))))
 
 (define-configuration (buffer web-buffer)
-    ((default-modes (append '(emacs-mode
-                              my-mode)
-                            %slot-default))
-     (conservative-word-move t)))
+  ((default-modes (append '(emacs-mode
+                            my-mode)
+                          %slot-default))
+   (conservative-word-move t)
+   (override-map (let ((map (make-keymap "my-override-map")))
+                   (define-key map
+                     "M-x" 'execute-command
+                     "menu" 'execute-command)))))
 
 (define-configuration web-buffer
-    ((default-modes (append
-                     '(blocker-mode
-                       force-https-mode
-                       ;; noimage-mode
-                       noscript-mode
-                       proxy-mode)
-                     %slot-default))
-     (default-new-buffer-url "about:blank")))
+  ((default-modes (append
+                   '(
+                     ;; auto-mode
+                     blocker-mode
+                     force-https-mode
+                     ;; noimage-mode
+                     ;; noscript-mode
+                     ;; proxy-mode
+                     )
+                   %slot-default))
+   (default-new-buffer-url "about:blank")))
 
+;; auto-mode could easily replace this
 (define-configuration nyxt/proxy-mode:proxy-mode
-    ((nyxt/proxy-mode:proxy
-      (make-instance 'proxy
-                     :server-address (quri:uri "socks5://localhost:9050")
-                     :allowlist '("localhost" "localhost:8080" "gitlab.com")
-                     :proxied-downloads-p t))))
+  ((nyxt/proxy-mode:proxy
+    (make-instance 'proxy
+                   :server-address (quri:uri "socks5://localhost:9050")
+                   :allowlist '("localhost" "localhost:8080" "gitlab.com")
+                   :proxied-downloads-p t))))
+
+(defvar +dev-data-profile+ (make-instance 'data-profile :name "dev")
+  "Development profile.")
+
+(defmethod nyxt:expand-data-path ((profile (eql +dev-data-profile+))
+                                  (path data-path))
+  "Persist data to /tmp/nyxt/."
+  (expand-default-path (make-instance (class-name (class-of path))
+                                      :basename (basename path)
+                                      :dirname "/tmp/nyxt/")))
 #+end_src
 
 *** Communication
