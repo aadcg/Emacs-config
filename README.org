@@ -50,6 +50,7 @@ GNU Guile which is an implementation of Scheme.
 
 ** GNU Guix
 [[http://logs.guix.gnu.org/guix/][IRC Logs]]
+
 *** System
 Your wireless chip will most likely not work when using the Linux-libre
 kernel, so keep in mind the following suggestions:
@@ -67,7 +68,7 @@ kernel, so keep in mind the following suggestions:
 (use-modules (gnu)
              (guix packages)
              (srfi srfi-1))
-(use-service-modules desktop sddm networking ssh xorg pm nix)
+(use-service-modules desktop sddm networking ssh xorg pm)
 (use-package-modules gnome xorg linux)
 
 ;; (man "xorg.conf(5)")
@@ -205,13 +206,6 @@ EndSection")
     (service openssh-service-type)
     (service tor-service-type)
     (service tlp-service-type))
-   ;; (modify-services %desktop-services
-   ;;     ;; (man "logind.conf(5)")
-   ;;   (elogind-service-type
-   ;;    c =>  (elogind-configuration
-   ;;           ;; gives me enough time to dock the laptop before it goes to
-   ;;           ;; sleep
-   ;;           (inhibit-delay-max-seconds 10)))
    (remove (lambda (service)
              (eq? (service-kind service) gdm-service-type))
            %desktop-services))))
