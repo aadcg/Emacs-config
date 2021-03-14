@@ -523,7 +523,7 @@ Don't forget about M-m and M-^, very useful bindings!
  ([remap upcase-word]        . upcase-dwim)
  ([remap downcase-word]      . downcase-dwim)
  ([remap capitalize-word]    . capitalize-dwim)
- ([remap kill-buffer]        . kill-buffer-and-window)
+ ;; ([remap kill-buffer]        . kill-buffer-and-window)
  ("<f1>"                     . nil)
  ("<f2>"                     . nil))
 #+end_src
@@ -565,6 +565,9 @@ Don't forget about M-m and M-^, very useful bindings!
 
 **** WIP Input method and dicts
 The portuguese aspell dictionary sucks, why?
+
+Study this to package yeis properly.
+(info "(elisp) Packaging")
 
 #+begin_src emacs-lisp
 (setq yeis-dir (expand-file-name "repos/emacs-yeis/" "~"))
@@ -675,7 +678,7 @@ The portuguese aspell dictionary sucks, why?
 #+begin_src emacs-lisp
 (use-package desktop
   :custom
-  ;; (desktop-files-not-to-save ".")
+  (desktop-files-not-to-save ".")
   (desktop-globals-to-clear nil)
   (desktop-restore-frames nil)
   (desktop-lazy-verbose nil)
@@ -694,6 +697,7 @@ The portuguese aspell dictionary sucks, why?
 
 #+begin_src emacs-lisp
 (use-package server
+  :custom (server-temp-file-regexp "\\`/tmp/Re\\|/draft\\'\\|\\.tmp")
   :config (unless (server-running-p) (server-start)))
 #+end_src
 
@@ -725,10 +729,12 @@ The portuguese aspell dictionary sucks, why?
   :init
   (setq modus-themes-bold-constructs t
         modus-themes-fringes 'subtle
+        modus-themes-syntax 'faint
         modus-themes-links 'neutral-underline
         modus-themes-region 'bg-only-no-extend
         modus-themes-org-blocks 'grayscale
         modus-themes-scale-headings t)
+  (modus-themes-load-themes)
   :config
   (let* ((inhibit-message t)
          (sunrise (nth 1 (split-string (sunrise-sunset))))
@@ -780,17 +786,18 @@ The portuguese aspell dictionary sucks, why?
   ;; (company-require-match nil)
   ;; (company-idle-delay 0.2)
   (company-selection-wrap-around t)
-  :config
-  (global-company-mode)
-  :bind (:map company-active-map
-  ("C-j"      . company-complete-selection)
-  ("C-n"      . company-select-next)
-  ("C-p"      . company-select-previous)
-  ("<tab>"    . company-complete-common-or-cycle)
-  ("C-h"      . company-show-doc-buffer)
-  ("M-."      . company-show-location)
-  ("RET"      . nil)
-  ("<return>" . nil)))
+  ;; :config
+  ;; (global-company-mode)
+  :bind
+  (:map company-active-map
+        ("C-j"      . company-complete-selection)
+        ("C-n"      . company-select-next)
+        ("C-p"      . company-select-previous)
+        ("<tab>"    . company-complete-common-or-cycle)
+        ("C-h"      . company-show-doc-buffer)
+        ("M-."      . company-show-location)
+        ("RET"      . nil)
+        ("<return>" . nil)))
 #+end_src
 
 ** Projects
@@ -813,7 +820,10 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
   :custom (vc-follow-symlinks t))
 
 (use-package magit
-  :custom (magit-log-section-commit-count 25)
+  :custom
+  (magit-log-section-commit-count 25)
+  (magit-clone-default-directory "~/repos")
+  ;; (magit-clone-always-transient t)
   :bind ("C-x g" . magit-status))
 
 (use-package diff-hl
@@ -901,15 +911,16 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
 (use-package slime
   :custom
   (inferior-lisp-program "sbcl")
-  (slime-port 4006))
-
-(use-package sly
-  :disabled
-  :custom
-  (inferior-lisp-program "sbcl")
-  (sly-port 4006)
-  :bind (:map
-         sly-mode-map ("C-c o" . sly-documentation)))
+  ;; (info "(slime) Compound Completion") this is disabled.  is it cool?
+  ;; complain upsteam because c-p-c misbehaves
+  (slime-completion-at-point-functions '(slime-filename-completion slime-simple-completion-at-point))
+  ;; (slime-port 4006)
+  :config
+  (defun my-nyxt-connect ()
+    "Connect to a running Nyxt instance."
+    (interactive)
+    (let ((slime-protocol-version 'ignore))
+      (slime-connect "127.0.0.1" "4006"))))
 #+end_src
 
 ***** COMMENT Emacs packages
@@ -982,7 +993,7 @@ alias zoom flatpak run us.zoom.Zoom
 alias jitsi flatpak run org.jitsi.jitsi-meet
 #+end_src
 
-**** COMMENT Haskell
+**** Haskell
 #+begin_src emacs-lisp
 (use-package haskell-mode
   :hook
@@ -1017,7 +1028,6 @@ alias jitsi flatpak run org.jitsi.jitsi-meet
   )
 
 (use-package yaml-mode
-  :disabled
   :mode (("\\.yml\\'"  . yaml-mode)
          ("\\.yaml\\'" . yaml-mode)))
 
@@ -1078,6 +1088,7 @@ alias jitsi flatpak run org.jitsi.jitsi-meet
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
+     (lisp       . t)
      (scheme     . t)
      (python     . t)
      (haskell    . t)
@@ -1293,14 +1304,12 @@ monitor."
                                       (exwm-workspace-rename-buffer
                                        exwm-title)))
    (exwm-init-hook                . (lambda ()
-                                      (progn
-                                        (start-process "redshift" nil "redshift")
-                                        (start-process "picom" nil "picom"))))))
+                                      (start-process "redshift" nil "redshift")))))
 
-(use-package exwm-edit
-  :custom (exwm-edit-split "below")
-  :config (global-exwm-edit-mode)
-  :hook (exwm-edit-compose-hook . org-mode))
+;; (use-package exwm-edit
+;;   :init (global-exwm-edit-mode)
+;;   :custom (exwm-edit-split "below")
+;;   :hook (exwm-edit-compose-hook . org-mode))
 
 ;; Local Variables:
 ;; mode: emacs-lisp
@@ -1402,7 +1411,8 @@ $ flatpak run org.mozilla.firefox
 #+begin_src emacs-lisp
 (setenv "GDK_DPI_SCALE" "0.5")
 (setenv "GDK_SCALE" "2")
-(setenv "VISUAL" "emacsclient -c")
+;; to make nyxt's external editor function work
+(setenv "VISUAL" "emacsclient")
 
 (use-package shr
   :custom
@@ -1510,11 +1520,13 @@ $ flatpak run org.mozilla.firefox
                    :allowlist '("localhost" "localhost:8080" "gitlab.com")
                    :proxied-downloads-p t))))
 
-(defvar +dev-data-profile+ (make-instance 'data-profile :name "dev")
-  "Development profile.")
+;; start nyxt from the REPL
+;; (nyxt:start :socket "/tmp/nyxt.socket" :data-profile "dev")
+(define-class dev-data-profile (data-profile)
+  ((name :initform "dev"))
+  (:documentation "Development profile."))
 
-(defmethod nyxt:expand-data-path ((profile (eql +dev-data-profile+))
-                                  (path data-path))
+(defmethod nyxt:expand-data-path ((profile dev-data-profile) (path data-path))
   "Persist data to /tmp/nyxt/."
   (expand-default-path (make-instance (class-name (class-of path))
                                       :basename (basename path)
@@ -1543,8 +1555,8 @@ TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
   (gnus-inhibit-startup-message t)
   (gnus-interactive-exit 'quiet)
   (gnus-always-read-dribble-file t)
-  :hook
-  (message-send-hook . ispell-message)
+  ;; :hook
+  ;; (message-send-hook . ispell-message)
   :bind ("C-c m" . gnus))
 
 (use-package gnus-art
@@ -1567,6 +1579,7 @@ TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
   (message-kill-buffer-on-exit t)
   (message-default-charset 'utf-8)
   ;; :hook
+  ;; (message-setup-hook 'flyspell-mode)
   ;; ((message-setup-hook . mml-secure-message-encrypt)
   ;;  (message-setup-hook . mml-secure-message-sign))
   )
@@ -1686,6 +1699,10 @@ must be global.
 #+begin_src conf :tangle ~/.config/mpv/mpv.conf
 save-position-on-quit
 sub-auto=fuzzy
+#+end_src
+
+#+begin_src conf :tangle ~/.config/mpv/input.conf
+s playlist-shuffle
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1817,16 +1834,31 @@ allow-emacs-pinentry
 - [[https://github.com/oantolin/emacs-config][Omar Antolín Camarena]]
 - [[https://gitlab.com/ambrevar/dotfiles][Pierre Neidhardt]]
 - [[https://gitlab.com/protesilaos/dotfiles][Protesilaos Stravrou]]
+- [[https://gitlab.com/link0ff/emacs-init][Juri Linkov]]
 
 * TODO
-- use gpg as a ssh key
-- [[file:~/repos/prot-dotfiles/emacs/.emacs.d/emacs-init.org::#h:3d8ebbb1-f749-412e-9c72-5d65f48d5957][Window rules and basic tweaks]] (info "(emacs) Buffers")
-- do I need winner-mode?
-- type-break-mode
-- can I use my phone camera as webcam?
-- [[https://guix.gnu.org/blog/2018/guix-on-android/][try guix on android]]
-- Syncthing vs Nextcloud vs cron/rsync?
-- take a look at dumb-jump so that M-. works for all projects
-- if I suspend when the lid is closed, I need to open the lid for the
-  screen to work.  ONLY if you poweroff the monitor or the laptop!
-- say goodbye to use-package
+** say goodbye to use-package
+replace bind-keys with define-key
+(info "(elisp) Remapping Commands")
+
+read about package.el
+
+** use gpg as ssh key
+
+** [[file:~/repos/prot-dotfiles/emacs/.emacs.d/emacs-init.org::#h:3d8ebbb1-f749-412e-9c72-5d65f48d5957][Window rules and basic tweaks]]
+(info "(emacs) Buffers")
+
+** winner-mode
+
+** type-break-mode
+
+** android
+[[https://guix.gnu.org/blog/2018/guix-on-android/][try guix on android]]
+Syncthing vs Nextcloud vs cron/rsync?
+
+** dumb-jump
+so that M-. works for all projects?
+
+** lid
+if I suspend when the lid is closed, I need to open the lid for the
+screen to work.  ONLY if you poweroff the monitor or the laptop!
