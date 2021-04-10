@@ -818,14 +818,12 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
   :custom
   (magit-log-section-commit-count 25)
   (magit-clone-default-directory "~/repos")
-  ;; (magit-clone-always-transient t)
   :bind ("C-x g" . magit-status))
 
 (use-package diff-hl
   :custom (diff-hl-draw-borders nil)
   :config (global-diff-hl-mode)
-  :hook
-  (magit-post-refresh-hook . diff-hl-magit-post-refresh))
+  :hook (magit-post-refresh-hook . diff-hl-magit-post-refresh))
 
 ;; to avoid passphrase prompts
 (use-package ssh-agency)
@@ -1003,9 +1001,10 @@ alias jitsi flatpak run org.jitsi.jitsi-meet
 
 **** COMMENT Golang
 #+begin_src emacs-lisp
-(use-package go-mode)
+(use-package go-mode :disabled)
 
 (use-package company-go
+  :disabled
   :config (add-to-list 'company-backends 'company-go))
 #+end_src
 
