@@ -915,6 +915,9 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
     (interactive)
     (let ((slime-protocol-version 'ignore))
       (slime-connect "127.0.0.1" "4006"))))
+
+(load "~/common-lisp/nyxt/build-scripts/nyxt-guix.el" :noerror)
+;; (load "/gnu/store/r6npagnd8l1l8jgwrx1dika8bgkwrwa1-cl-parenscript-2.7.1-1.7a1ac46/share/common-lisp/source/cl-parenscript/extras/js-expander.el")
 #+end_src
 
 ***** COMMENT Emacs packages
