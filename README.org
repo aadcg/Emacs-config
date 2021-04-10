@@ -217,7 +217,7 @@ EndSection")
 sudo guix system reconfigure ~/.config/guix/system.scm
 #+end_src
 
-*** Userland
+*** COMMENT Userland
 This needs review since I want to create a guix pkg with this cfg.
 
 #+begin_src scheme
@@ -279,7 +279,6 @@ This needs review since I want to create a guix pkg with this cfg.
          "emacs-diff-hl"
          "emacs-emms"
          "emacs-emojify"
-         "emacs-exwm-edit"
          "emacs-geiser"
          "emacs-gif-screencast"
          "emacs-guix"
@@ -782,22 +781,18 @@ Study this to package yeis properly.
   (unless (version<= emacs-version "27") (fido-mode)))
 
 (use-package company
-  :custom
-  ;; (company-require-match nil)
-  ;; (company-idle-delay 0.2)
-  (company-selection-wrap-around t)
-  ;; :config
-  ;; (global-company-mode)
-  :bind
-  (:map company-active-map
-        ("C-j"      . company-complete-selection)
-        ("C-n"      . company-select-next)
-        ("C-p"      . company-select-previous)
-        ("<tab>"    . company-complete-common-or-cycle)
-        ("C-h"      . company-show-doc-buffer)
-        ("M-."      . company-show-location)
-        ("RET"      . nil)
-        ("<return>" . nil)))
+  :disabled
+  :custom (company-selection-wrap-around t)
+  :config (global-company-mode)
+  :bind (:map company-active-map
+              ("C-j"      . company-complete-selection)
+              ("C-n"      . company-select-next)
+              ("C-p"      . company-select-previous)
+              ("<tab>"    . company-complete-common-or-cycle)
+              ("C-h"      . company-show-doc-buffer)
+              ("M-."      . company-show-location)
+              ("RET"      . nil)
+              ("<return>" . nil)))
 #+end_src
 
 ** Projects
@@ -848,10 +843,6 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
   ;; (show-paren-when-point-in-periphery t)
   :config
   (show-paren-mode))
-
-(use-package rainbow-delimiters
-  :disabled
-  :hook (prog-mode-hook . rainbow-delimiters-mode))
 
 (use-package prog-mode
   :config (global-prettify-symbols-mode))
@@ -911,9 +902,12 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
 (use-package slime
   :custom
   (inferior-lisp-program "sbcl")
+  (slime-lisp-implementations `((sbcl-nyxt
+                                 (lambda () (nyxt-make-guix-sbcl-for-nyxt
+                                        "~/common-lisp/nyxt")))))
   ;; (info "(slime) Compound Completion") this is disabled.  is it cool?
   ;; complain upsteam because c-p-c misbehaves
-  (slime-completion-at-point-functions '(slime-filename-completion slime-simple-completion-at-point))
+  ;; (slime-completion-at-point-functions '(slime-c-p-c-completion-at-point slime-filename-completion slime-simple-completion-at-point))
   ;; (slime-port 4006)
   :config
   (defun my-nyxt-connect ()
@@ -1229,8 +1223,6 @@ Credit to https://emacs.stackexchange.com/a/31708/19054."
 - add mirror-screen utility
 - [[https://github.com/ch11ng/exwm/wiki#how-to-send-c-c-to-term][how to copy/paste in firefox? C-c is intercepted even in char-mode,
   why?]]
-- send patch to exwm-edit to handle (exwm-input--fake-key ?\C-a)
-  (sometimes C-a isn't the right key to copy the contents) ([[https://askubuntu.com/questions/294953/gtk-key-theme-emacs-what-keystroke-is-for-select-all][see]])
 
 When the redshift conf file has comments it doesn't work---report
 upstream.
@@ -1247,6 +1239,75 @@ location-provider=manual
 [manual]
 lat=59.94
 lon=30.31
+#+end_src
+
+#+begin_src conf :tangle ~/.config/gammastep/config.ini :comments nil
+[general]
+temp-day=5700
+temp-night=4000
+
+; Disable the smooth fade between temperatures when Redshift starts and stops.
+; 0 will cause an immediate change between screen temperatures.
+; 1 will gradually apply the new screen temperature over a couple of seconds.
+fade=1
+
+; Solar elevation thresholds.
+; By default, Redshift will use the current elevation of the sun to determine
+; whether it is daytime, night or in transition (dawn/dusk). When the sun is
+; above the degrees specified with elevation-high it is considered daytime and
+; below elevation-low it is considered night.
+;elevation-high=3
+;elevation-low=-6
+
+; Custom dawn/dusk intervals.
+; Instead of using the solar elevation, the time intervals of dawn and dusk
+; can be specified manually. The times must be specified as HH:MM in 24-hour
+; format.
+;dawn-time=6:00-7:45
+;dusk-time=18:35-20:15
+
+; Set the screen brightness. Default is 1.0.
+;brightness=0.9
+; It is also possible to use different settings for day and night
+; since version 1.8.
+;brightness-day=0.7
+;brightness-night=0.4
+; Set the screen gamma (for all colors, or each color channel
+; individually)
+gamma=0.8
+;gamma=0.8:0.7:0.8
+; This can also be set individually for day and night since
+; version 1.10.
+;gamma-day=0.8:0.7:0.8
+;gamma-night=0.6
+
+; Set the location-provider: 'geoclue2', 'manual'.
+; The location provider settings are in a different section.
+location-provider=manual
+
+; Set the adjustment-method: 'randr', 'vidmode', 'drm', 'wayland'.
+; 'randr' is the preferred X11 method, 'vidmode' is an older API
+; that works in some cases when 'randr' does not.
+; The adjustment method settings are in a different section.
+adjustment-method=randr
+
+; Configuration of the location-provider:
+; type 'gammastep -l PROVIDER:help' to see the settings.
+; ex: 'gammastep -l manual:help'
+; Keep in mind that longitudes west of Greenwich (e.g. the Americas)
+; are negative numbers.
+[manual]
+lat=59.94
+lon=30.31
+
+; Configuration of the adjustment-method
+; type 'gammastep -m METHOD:help' to see the settings.
+; ex: 'gammastep -m randr:help'
+; In this example, randr is configured to adjust only screen 0.
+; Note that the numbering starts from 0, so this is actually the first screen.
+; If this option is not specified, Redshift will try to adjust _all_ screens.
+[randr]
+screen=0
 #+end_src
 
 #+begin_src emacs-lisp :tangle ~/.exwm
@@ -1304,12 +1365,7 @@ monitor."
                                       (exwm-workspace-rename-buffer
                                        exwm-title)))
    (exwm-init-hook                . (lambda ()
-                                      (start-process "redshift" nil "redshift")))))
-
-;; (use-package exwm-edit
-;;   :init (global-exwm-edit-mode)
-;;   :custom (exwm-edit-split "below")
-;;   :hook (exwm-edit-compose-hook . org-mode))
+                                      (start-process "gammastep" nil "gammastep")))))
 
 ;; Local Variables:
 ;; mode: emacs-lisp
@@ -1348,6 +1404,7 @@ nmcli device wifi connect "$SSID" password "$PASSWORD"
     (let ((cmd (concat command " | tr -d [:space:]")))
       (shell-command-to-string cmd)))
 
+  ;; use call-process instead of shell-command
   (defun my-toggle-wifi ()
     "Toggle wifi connection."
     (interactive)
@@ -1441,7 +1498,6 @@ $ flatpak run org.mozilla.firefox
                                  (".*"      . eww-browse-url))))
 #+end_src
 
-- external-editor-program or exwm-edit in nyxt?
 - how to unbound a keybinding?
 - add eww keybindings
 
@@ -1837,12 +1893,6 @@ allow-emacs-pinentry
 - [[https://gitlab.com/link0ff/emacs-init][Juri Linkov]]
 
 * TODO
-** say goodbye to use-package
-replace bind-keys with define-key
-(info "(elisp) Remapping Commands")
-
-read about package.el
-
 ** use gpg as ssh key
 
 ** [[file:~/repos/prot-dotfiles/emacs/.emacs.d/emacs-init.org::#h:3d8ebbb1-f749-412e-9c72-5d65f48d5957][Window rules and basic tweaks]]
@@ -1862,3 +1912,7 @@ so that M-. works for all projects?
 ** lid
 if I suspend when the lid is closed, I need to open the lid for the
 screen to work.  ONLY if you poweroff the monitor or the laptop!
+
+** emacs, exwm, laptop screen
+when typing, the cursor kind of hangs.
+this doesn't happen when connected to an external screen.
