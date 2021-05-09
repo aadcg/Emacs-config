@@ -897,15 +897,6 @@ alias jitsi flatpak run org.jitsi.jitsi-meet
               ("C-c C-c" . haskell-interactive-bring)))
 #+end_src
 
-**** COMMENT Golang
-#+begin_src emacs-lisp
-(use-package go-mode :disabled)
-
-(use-package company-go
-  :disabled
-  :config (add-to-list 'company-backends 'company-go))
-#+end_src
-
 **** COMMENT \LaTeX
 #+begin_src emacs-lisp
 (use-package tex-mode
