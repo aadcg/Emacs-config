@@ -1624,8 +1624,6 @@ TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
   (nov-text-width 80)
   (nov-variable-pitch nil)
   :mode ("\\.epub\\'" . nov-mode))
-
-(use-package djvu :disabled)
 #+end_src
 
 *** Media
