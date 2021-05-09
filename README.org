@@ -1801,11 +1801,6 @@ allow-emacs-pinentry
 * TODO
 ** use gpg as ssh key
 
-** [[file:~/repos/prot-dotfiles/emacs/.emacs.d/emacs-init.org::#h:3d8ebbb1-f749-412e-9c72-5d65f48d5957][Window rules and basic tweaks]]
-(info "(emacs) Buffers")
-
-** winner-mode
-
 ** type-break-mode
 
 ** android
