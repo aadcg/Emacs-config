@@ -716,7 +716,7 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
 
 (use-package magit
   :custom
-  (magit-log-section-commit-count 25)
+  (magit-log-section-commit-count 50)
   (magit-clone-default-directory "~/repos")
   :bind ("C-x g" . magit-status))
 
