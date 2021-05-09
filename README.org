@@ -1404,37 +1404,30 @@ $ flatpak run org.mozilla.firefox
                                  (".*"      . eww-browse-url))))
 #+end_src
 
-- how to unbound a keybinding?
-- add eww keybindings
-
-[[https://github.com/jmercouris/configuration/blob/master/.config/nyxt/init.lisp][jmercouris config]]
 [[https://github.com/aartaka/nyxt-config/blob/master/init.lisp][aatarka config]]
 
 #+begin_src lisp :tangle ~/.config/nyxt/init.lisp
 (defvar *my-keymap* (make-keymap "my-map"))
 (define-key *my-keymap*
-  "C-s"     'nyxt/web-mode:search-buffer
-  "escape"  'nyxt/web-mode:remove-search-hints
-  "C-g"     'nyxt/web-mode:remove-search-hints
-  "C-j"     'nyxt/web-mode:follow-hint
-  "C-J"     'nyxt/web-mode:follow-hint-new-buffer
-  "C-u C-j" 'nyxt/web-mode:follow-hint-new-buffer-focus
-  ;; first I need to figure out vi:normal/insert mode in nyxt
-  ;; "j"       'nyxt/web-mode:follow-hint
-  ;; "J"       'nyxt/web-mode:follow-hint-new-buffer
-  ;; "C-u j"   'nyxt/web-mode:follow-hint-new-buffer-focus
-  ;; "d"       'list-downloads
-  ;; "g"       'reload-current-buffer
-  ;; "l"       'nyxt/web-mode:history-backwards
-  ;; "r"       'nyxt/web-mode:history-forwards
-  ;; "L"       'nyxt/web-mode:history-backwards-query
-  ;; "R"       'nyxt/web-mode:history-forwards-query
-  ;; "b"       'bookmark-current-page
-  ;; "B"       'list-bookmarks
-  ;; "s"       'switch-buffer
-  ;; "S"       'list-buffers
-  ;; "w"       'copy-url
-  )
+  "C-s"   'nyxt/web-mode:search-buffer
+  "C-g"   'nyxt/web-mode:remove-search-hints
+  "C-h a" 'describe-any)
+
+;; https://github.com/atlas-engineer/nyxt/issues/1020
+;; "j"       'nyxt/web-mode:follow-hint
+;; "J"       'nyxt/web-mode:follow-hint-new-buffer
+;; "C-u j"   'nyxt/web-mode:follow-hint-new-buffer-focus
+;; "d"       'list-downloads
+;; "g"       'reload-current-buffer
+;; "l"       'nyxt/web-mode:history-backwards
+;; "r"       'nyxt/web-mode:history-forwards
+;; "L"       'nyxt/web-mode:history-backwards-query
+;; "R"       'nyxt/web-mode:history-forwards-query
+;; "b"       'bookmark-current-page
+;; "B"       'list-bookmarks
+;; "s"       'switch-buffer
+;; "S"       'list-buffers
+;; "w"       'copy-url
 
 (define-mode my-mode ()
   "Dummy mode for the custom key bindings in `*my-keymap*'."
@@ -1454,7 +1447,7 @@ $ flatpak run org.mozilla.firefox
 (define-configuration (buffer web-buffer)
   ((default-modes (append '(emacs-mode
                             my-mode)
-                          %slot-default))
+                          %slot-default%))
    (conservative-word-move t)
    (override-map (let ((map (make-keymap "my-override-map")))
                    (define-key map
@@ -1463,24 +1456,31 @@ $ flatpak run org.mozilla.firefox
 
 (define-configuration web-buffer
   ((default-modes (append
-                   '(
-                     ;; auto-mode
-                     blocker-mode
+                   '(blocker-mode
                      force-https-mode
+                     ;; proxy-mode
+                     ;; auto-mode
                      ;; noimage-mode
                      ;; noscript-mode
-                     ;; proxy-mode
                      )
-                   %slot-default))
+                   %slot-default%))
    (default-new-buffer-url "about:blank")))
 
-;; auto-mode could easily replace this
+;; auto-mode could replace this
 (define-configuration nyxt/proxy-mode:proxy-mode
-  ((nyxt/proxy-mode:proxy
-    (make-instance 'proxy
-                   :server-address (quri:uri "socks5://localhost:9050")
-                   :allowlist '("localhost" "localhost:8080" "gitlab.com")
-                   :proxied-downloads-p t))))
+    ((proxy-mode
+      ;; nyxt/proxy-mode::proxy
+      (make-instance 'proxy
+                     :server-address (quri:uri "socks5://localhost:9050")
+                     :allowlist '("localhost" "localhost:8080" "gitlab.com")
+                     :proxied-downloads-p t))))
+
+(define-configuration nyxt/web-mode:web-mode
+   ;; QWERTY home row.
+  ((nyxt/web-mode:hints-alphabet "DSJKHLFAGNMXCWEIO")))
+
+(define-configuration prompt-buffer
+  ((default-modes (list* 'emacs-mode %slot-default%))))
 
 ;; start nyxt from the REPL
 ;; (nyxt:start :socket "/tmp/nyxt.socket" :data-profile "dev")
