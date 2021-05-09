@@ -846,7 +846,7 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
   (python-shell-interpreter-args "-i --simple-prompt")
   (python-shell-interpreter "ipython"))
 
-(use-package elpy :disabled)
+(use-package elpy)
 
 (use-package company-jedi
   :disabled
