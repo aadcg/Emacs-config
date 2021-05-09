@@ -1592,26 +1592,11 @@ TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
 #+begin_src emacs-lisp
 (use-package telega
   :unless termux-p
-  :custom
-  (telega-chat-fill-column 70)
-  (telega-emoji-company-backend 'telega-company-telegram-emoji)
+  :custom (telega-chat-fill-column 70)
   :config
   (telega-mode-line-mode)
   (global-telega-squash-message-mode)
-  :bind ("s-t" . telega)
-  :hook (telega-load-hook . company-mode))
-
-;; number of unread messages
-;; (plist-get telega--unread-message-count :unread_unmuted_count)
-
-(use-package emojify
-  :custom (emojify-company-tooltips-p t)
-  :hook
-  ((telega-chat-mode-hook . emojify-mode)
-   (telega-root-mode-hook . emojify-mode)))
-
-(use-package company-emoji
-  :config (add-to-list 'company-backends 'company-emoji))
+  :bind ("s-t" . telega))
 #+end_src
 
 *** Reader (pdf, djvu, epub)
