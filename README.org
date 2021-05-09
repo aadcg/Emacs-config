@@ -847,12 +847,6 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
   (python-shell-interpreter "ipython"))
 
 (use-package elpy)
-
-(use-package company-jedi
-  :disabled
-  :config (add-to-list 'company-backends 'company-jedi))
-
-(use-package ein :disabled)
 #+end_src
 
 **** Bash
