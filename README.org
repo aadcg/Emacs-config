@@ -1,9 +1,7 @@
 :HEADER:
-#+TITLE:       GNU/Linux Literate Configuration
-#+AUTHOR:      André A. Gomes
-#+EMAIL:       andremegafone@gmail.com
-#+DESCRIPTION: My Literate Dotfiles
-
+#+TITLE:    GNU/Linux Literate Configuration
+#+AUTHOR:   André A. Gomes
+#+EMAIL:    andremegafone@gmail.com
 #+PROPERTY: header-args :results silent :mkdirp t :comments link
 :END:
 
