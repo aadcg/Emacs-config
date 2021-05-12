@@ -603,7 +603,7 @@ Example: M-2 M-x my-auto-size-font RET iosevka"
     (message "The suggested font size is %f" size)
     (number-to-string size)))
 
-(add-to-list 'default-frame-alist '(font . "Hack-18.5"))
+(add-to-list 'default-frame-alist '(font . "Iosevka-21.5"))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
 
