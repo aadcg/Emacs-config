@@ -567,12 +567,9 @@ Study this to package yeis properly.
   (desktop-restore-frames nil)
   (desktop-lazy-verbose nil)
   :config
-  (add-to-list 'desktop-clear-preserve-buffers
-               "\\*info\\*")
-  (add-to-list 'desktop-modes-not-to-save
-               'image-mode)
-  (add-to-list 'desktop-modes-not-to-save
-               'eww-mode)
+  (add-to-list 'desktop-clear-preserve-buffers "\\*info\\*")
+  (add-to-list 'desktop-modes-not-to-save 'image-mode)
+  (add-to-list 'desktop-modes-not-to-save 'eww-mode)
   (desktop-save-mode))
 #+end_src
 
