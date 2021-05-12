@@ -1216,6 +1216,7 @@ monitor."
 - add options for poweroff, reboot, etc
 - add a proper volume interface similar to C-x C-+
 - update desktop-environment in guix to 0.4.0.
+- (desktop-environment-screenshot) should write to the minibuffer.
 
 To connect to a new wifi:
 nmcli device wifi connect "$SSID" password "$PASSWORD"
