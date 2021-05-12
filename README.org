@@ -1304,6 +1304,8 @@ nmcli device wifi connect "$SSID" password "$PASSWORD"
 To run firefox:
 $ flatpak run org.mozilla.firefox
 
+I should probably define a way to either open a link in nyxt or firefox.
+
 #+begin_src emacs-lisp
 (setenv "GDK_DPI_SCALE" "0.5")
 (setenv "GDK_SCALE" "2")
