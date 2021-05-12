@@ -614,6 +614,10 @@ Example: M-2 M-x my-auto-size-font RET iosevka"
 #+end_src
 
 **** Theme
+I prefer a light theme at night, as long as the screen brightness is
+adjusted accordingly.  This also avoids the circus of configuring theme
+togglers on browsers or other GUI programs.
+
 #+begin_src emacs-lisp
 (use-package modus-themes
   :init
@@ -626,15 +630,16 @@ Example: M-2 M-x my-auto-size-font RET iosevka"
         modus-themes-scale-headings t)
   (modus-themes-load-themes)
   :config
-  (let* ((inhibit-message t)
-         (sunrise (nth 1 (split-string (sunrise-sunset))))
-         (sunset (nth 4 (split-string (sunrise-sunset)))))
-    (run-at-time sunrise
-                 (* 60 60 24)
-                 'modus-themes-load-operandi)
-    (run-at-time sunset
-                 (* 60 60 24)
-                 'modus-themes-load-vivendi))
+  ;; Auto toggle; if before sunrise then load vivendi, else load operandi!
+  ;; (let* ((inhibit-message t)
+  ;;        (sunrise (nth 1 (split-string (sunrise-sunset))))
+  ;;        (sunset (nth 4 (split-string (sunrise-sunset)))))
+  ;;   (run-at-time sunrise
+  ;;                (* 60 60 24)
+  ;;                'modus-themes-load-operandi)
+  ;;   (run-at-time sunset
+  ;;                (* 60 60 24)
+  ;;                'modus-themes-load-vivendi))
   (modus-themes-load-operandi))
 
 (use-package fringe
