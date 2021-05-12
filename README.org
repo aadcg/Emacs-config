@@ -1577,8 +1577,14 @@ save-position-on-quit
 sub-auto=fuzzy
 #+end_src
 
+The following keybindings work, even though no information is
+displayed.  Evaluate =mpv --input-cmdlist= to get a list to commands.
+
 #+begin_src conf :tangle ~/.config/mpv/input.conf
 s playlist-shuffle
+u playlist-unshuffle
+n playlist-next
+p playlist-prev
 #+end_src
 
 #+begin_src emacs-lisp
