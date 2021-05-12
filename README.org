@@ -1413,7 +1413,10 @@ $ flatpak run org.mozilla.firefox
   ((nyxt/web-mode:hints-alphabet "DSJKHLFAGNMXCWEIO")))
 
 (define-configuration prompt-buffer
-  ((default-modes (list* 'emacs-mode %slot-default%))))
+    ((default-modes (list* 'emacs-mode %slot-default%))))
+
+(define-configuration status-buffer
+    ((height 10)))
 
 ;; start nyxt from the REPL
 ;; (nyxt:start :socket "/tmp/nyxt.socket" :data-profile "dev")
