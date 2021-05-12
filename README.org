@@ -869,11 +869,11 @@ Get rid of ssh agency when the ssh keys will be manager by gpg.
 #+end_src
 
 ***** Eshell
-As of <2021-01-08 Fri> there's an issue with tramp-gvfs.  I'd like to
-run the following command.
-cd /afp:USER@HOST:PATH
+There's an issue with tramp-gvfs when I run:
 
-Emacs crashes when I do cd /ssh:USER@HOST:PATH why?
+$ cd /afp:USER@HOST:PATH
+
+[[gnus:INBOX#877dkm5w71.fsf@gmx.de][Email from Michael Albinus: Re: Package `tramp-gvfs' not supported]]
 
 #+begin_src emacs-lisp
 (use-package eshell
