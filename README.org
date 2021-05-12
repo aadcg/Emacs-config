@@ -586,14 +586,11 @@ Study this to package yeis properly.
 **** Font
 (info "(emacs) Fonts")
 
-I'm considering changing to the Iosevka font or to Hack.
-
-Write this recursively.
-
 #+begin_src emacs-lisp
 (defun my-auto-size-font (arg font)
   "Set FONT size such that ARG number of FILL-COLUMN fit in a buffer.
 Example: M-2 M-x my-auto-size-font RET iosevka"
+  ;; Refactor recursively.
   (interactive "P\nsFont: ")
   (let ((size 1.0))
     (set-frame-font (concat font "-" (number-to-string size)) nil t)
