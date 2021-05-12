@@ -615,13 +615,15 @@ togglers on browsers or other GUI programs.
 #+begin_src emacs-lisp
 (use-package modus-themes
   :init
-  (setq modus-themes-bold-constructs t
-        modus-themes-fringes 'subtle
-        modus-themes-syntax 'faint
-        modus-themes-links 'neutral-underline
-        modus-themes-region 'bg-only-no-extend
-        modus-themes-org-blocks 'grayscale
-        modus-themes-scale-headings t)
+  (setq modus-themes-no-mixed-fonts t
+	      modus-themes-fringes 'faint
+	      modus-themes-syntax 'faint
+        modus-themes-completions 'moderate
+        modus-themes-lang-checkers 'straight-underline
+	      modus-themes-links 'neutral-underline
+	      modus-themes-region 'bg-only
+	      modus-themes-org-blocks 'grayscale
+	      modus-themes-scale-headings t)
   (modus-themes-load-themes)
   :config
   ;; Auto toggle; if before sunrise then load vivendi, else load operandi!
