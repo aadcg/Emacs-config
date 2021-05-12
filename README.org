@@ -1678,6 +1678,7 @@ allow-emacs-pinentry
   (interactive)
   (let ((url "https://en.openrussian.org/ru/"))
     (eww (concat url (or (my-get-root-ru-word) (current-word))))
+    ;; use eww-after-render-hook
     (sleep-for 2)
     (forward-paragraph 5)
     (forward-line 1)
