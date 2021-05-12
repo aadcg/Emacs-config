@@ -1709,14 +1709,14 @@ allow-emacs-pinentry
 - [[https://gitlab.com/protesilaos/dotfiles][Protesilaos Stravrou]]
 - [[https://gitlab.com/link0ff/emacs-init][Juri Linkov]]
 
-* TODO
-** use gpg as ssh key
+* COMMENT Ideas
+** Generate an ssh key from gpg key
 ** type-break-mode
-** android
-[[https://guix.gnu.org/blog/2018/guix-on-android/][try guix on android]]
+** Android
+[[https://guix.gnu.org/blog/2018/guix-on-android/][Guix on android]]
 Syncthing vs Nextcloud vs cron/rsync?
 
-** lid
+** Lid
 if I suspend when the lid is closed, I need to open the lid for the
 screen to work.  ONLY if you poweroff the monitor or the laptop!
 
