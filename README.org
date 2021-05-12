@@ -667,15 +667,18 @@ togglers on browsers or other GUI programs.
 (info "(emacs) Icomplete")
 (info "(emacs) Completion Styles")
 
-Icomplete is good, but I think it should update its contents everytime
-the user moves the point.  Package such as orderless are interesting
-when one is looking for more completion styles.
+Icomplete is ok, but I think it should update its contents everytime the
+user moves the point.  Packages such as orderless are interesting when
+one is looking for more completion styles.
+
+Maybe I should get rid of initials.  Or keep it to match file names only.
 
 #+begin_src emacs-lisp
 (use-package icomplete
   :custom
   (icomplete-prospects-height 1)
   (icomplete-separator "   ")
+  (icomplete-max-delay-chars 0)
   (icomplete-in-buffer t)
   :config
   (icomplete-mode)
