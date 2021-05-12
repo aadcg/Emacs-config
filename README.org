@@ -612,6 +612,8 @@ I prefer a light theme at night, as long as the screen brightness is
 adjusted accordingly.  This also avoids the circus of configuring theme
 togglers on browsers or other GUI programs.
 
+I need to get a lamp on my desk.
+
 #+begin_src emacs-lisp
 (use-package modus-themes
   :init
