@@ -1464,10 +1464,8 @@ TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
 
 (use-package message
   :custom
-  (mail-signature
-   "André A. Gomes\n\"Free Thought, Free World\"")
-  (message-signature
-   "André A. Gomes\n\"Free Thought, Free World\"")
+  (mail-signature "André A. Gomes\n\"Free Thought, Free World\"")
+  (message-signature "André A. Gomes\n\"Free Thought, Free World\"")
   (message-kill-buffer-on-exit t)
   (message-default-charset 'utf-8)
   ;; :hook
