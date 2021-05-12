@@ -542,7 +542,8 @@ Study this to package yeis properly.
      (my-switch-to-agenda)
      (delete-other-windows)))
   (initial-scratch-message ";; Happy Hacking!\n\n")
-  (inhibit-startup-screen t))
+  (inhibit-startup-screen t)
+  (put 'narrow-to-region 'disabled nil))
 
 (use-package savehist
   :custom (history-length 500)
