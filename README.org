@@ -1712,20 +1712,18 @@ allow-emacs-pinentry
 
 * TODO
 ** use gpg as ssh key
-
 ** type-break-mode
-
 ** android
 [[https://guix.gnu.org/blog/2018/guix-on-android/][try guix on android]]
 Syncthing vs Nextcloud vs cron/rsync?
-
-** dumb-jump
-so that M-. works for all projects?
 
 ** lid
 if I suspend when the lid is closed, I need to open the lid for the
 screen to work.  ONLY if you poweroff the monitor or the laptop!
 
-** emacs, exwm, laptop screen
+** Exwm on my laptop's screen
 when typing, the cursor kind of hangs.
 this doesn't happen when connected to an external screen.
+
+this happens on exwm but not on GNOME!
+what if I have both the internal and the external screens connected?
