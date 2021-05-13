@@ -1439,29 +1439,60 @@ I should probably define a way to either open a link in nyxt or firefox.
 
 *** Communication
 **** Email (gnus)
-- [[https://protesilaos.com/dotemacs/#h:5ad80664-3163-4d9d-be65-462637d77903][configuring email]]
-- [[https://www.emacswiki.org/emacs/GnusTutorial][gnus tutorial]]
-- [[https://github.com/redguardtoo/mastering-emacs-in-one-year-guide/blob/master/gnus-guide-en.org#my-gnusel][another gnus tutorial]]
-- [[https://www.fsf.org/resources/webmail-systems][fsf advice]]
+- [[https://www.fsf.org/resources/webmail-systems][FSF advice]]
+- [[https://www.emacswiki.org/emacs/GnusTutorial][GNUS tutorial 1]]; [[https://github.com/redguardtoo/mastering-emacs-in-one-year-guide/blob/master/gnus-guide-en.org#my-gnusel][GNUS tutorial 2]]
 - [[https://github.com/kensanata/ggg#gmail-gnus-gpg-guide-gggg][how to encrypt]]
 
-TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
+[[https://www.bounga.org/tips/2020/05/03/multiple-smtp-accounts-in-gnus-without-external-tools/][This]] blog post helped me to set up gnus with multiple accounts.
+
+(info "(gnus) Posting Styles")
+
+/ N fetches new messages.
 
 #+begin_src emacs-lisp
 (use-package gnus
   :custom
-  (gnus-select-method
-   '(nnimap "gmail"
-            (nnimap-address "imap.gmail.com")
-            (nnimap-server-port "imaps")
-            (nnimap-stream ssl))
-   nnir-imap-default-search-key "Imap")
+  (mail-user-agent 'gnus-user-agent)
+  (gnus-select-method '(nnnil nil))
+  (gnus-secondary-select-methods
+   '((nnimap "home"
+             (nnimap-address "imap.gmail.com")
+             (nnimap-server-port "imaps")
+             (nnimap-stream ssl)
+             (nnir-search-engine imap)
+             (nnmail-expiry-target "nnimap+home:[Gmail]/Trash")
+             (nnmail-expiry-wait 'immediate))
+     (nnimap "work"
+             (nnimap-address "mail.gandi.net")
+             (nnimap-server-port "imaps")
+             (nnimap-stream ssl)
+             (nnir-search-engine imap)
+             (nnmail-expiry-target "nnimap+work:[Gandi]/Trash")
+             (nnmail-expiry-wait 'immediate))))
   (gnus-inhibit-startup-message t)
   (gnus-interactive-exit 'quiet)
   (gnus-always-read-dribble-file t)
   ;; :hook
   ;; (message-send-hook . ispell-message)
   :bind ("C-c m" . gnus))
+
+;; (gnus-alive-p)
+
+(use-package gnus-msg
+  :after gnus
+  :custom
+  (gnus-posting-styles
+   '((".*"
+      (signature "André A. Gomes\n\"Free Thought, Free World\"")
+      (name (user-full-name)))
+     ("home"
+      (address "andremegafone@gmail.com")
+      ("X-Message-SMTP-Method"
+       "smtp smtp.gmail.com 587 andremegafone@gmail.com"))
+     ("work"
+      (address "andre.gomes@astrolabium.io")
+      ("X-Message-SMTP-Method"
+       "smtp mail.gandi.net 587 andre.gomes@astrolabium.io")))))
 
 (use-package gnus-art
   :after gnus
@@ -1471,14 +1502,14 @@ TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
 
 (use-package gnus-async
   :after gnus
-  :custom
-  (gnus-asynchronous t))
+  :custom (gnus-asynchronous t))
 
 (use-package message
   :custom
   (mail-signature "André A. Gomes\n\"Free Thought, Free World\"")
   (message-signature "André A. Gomes\n\"Free Thought, Free World\"")
   (message-kill-buffer-on-exit t)
+  (message-alternative-emails "")
   (message-default-charset 'utf-8)
   ;; :hook
   ;; (message-setup-hook 'flyspell-mode)
@@ -1507,7 +1538,7 @@ TODO configure things not to enter gpg pw all the time (gpg-agent.conf)
 ;;   (mml-secure-smime-encrypt-to-self t)
 ;;   (mml-secure-smime-sign-with-sender t))
 
-;; WIP
+;; WIP Add to message-send-hook
 (defun my-mail-missing-attachment-p ()
   "Return t if an attachment is missing."
   (interactive)
@@ -1637,9 +1668,9 @@ machine irc.freenode.net login aadcg password SECRET
 ;; End:
 #+end_example
 
-#+begin_src conf :tangle ~/.gnupg/gpg-agent.conf
-# (info "(gnupg) Agent Options")
+(info "(gnupg) Agent Options")
 
+#+begin_src conf :tangle ~/.gnupg/gpg-agent.conf
 default-cache-ttl 86400
 max-cache-ttl 86400
 enable-ssh-support
