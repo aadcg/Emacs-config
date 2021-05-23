@@ -22,20 +22,15 @@ by a dot---that's why they're called *dotfiles*.  Users keep them so
 that their computing environment is easily reproducible on a new
 machine.  That's the scope of this project.
 
-* Philosophy
-All of my computing is centered around GNU Emacs.
-
-[[https://www.youtube.com/watch?v=FLjbKuoBlXs&t=0][Let Protesilaos Stavrou tell you more about it]].
+* Ethos
+I started using GNU Emacs in August 2018, and my life changed forever.
+[[https://www.youtube.com/watch?v=FLjbKuoBlXs&t=0][Protesilaos Stavrou argues whether this tool is right for you]].
 
 /Are you ready to go down the rabbit hole?/
 
-I started using GNU Emacs in August 2018.
-
-My life changed forever.
-
 [[https://www.gnu.org/philosophy/philosophy.html][GNU is about freedom]].
 
-If you want to know more about the GNU project and its founder, Richard
+For more information about the GNU project and its founder, Richard
 Stallman, I suggest reading [[https://static.fsf.org/nosvn/faif-2.0.pdf]["Free as in Freedom (2.0): Richard Stallman
 and the Free Software Revolution"]].
 
@@ -1748,7 +1743,7 @@ allow-emacs-pinentry
       (nth 0 ispell-message-output))))
 #+end_src
 
-* dotfiles I follow
+* COMMENT dotfiles I follow
 - [[https://github.com/daviwil/dotfiles][David Wilson]]
 - [[https://git.sr.ht/~w96k/dotfiles][Mikhail Kirillov]]
 - [[https://github.com/oantolin/emacs-config][Omar Antolín Camarena]]
