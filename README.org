@@ -203,7 +203,6 @@ https://gitlab.com/nonguix/nonguix/-/issues/70
  (channel
   (name 'nonguix)
   (url "https://gitlab.com/nonguix/nonguix")
-  (commit "3ada8acf78b8a48c7d92f2f20225eb1e4bfd60db")
   (introduction
    (make-channel-introduction
     "897c1a470da759236cc11798f4e0a5f7d4d59fbc"
@@ -564,6 +563,7 @@ Study this to package yeis properly.
 (use-package desktop
   :custom
   (desktop-files-not-to-save ".")
+  (desktop-load-locked-desktop t)
   (desktop-globals-to-clear nil)
   (desktop-restore-frames nil)
   (desktop-lazy-verbose nil)
@@ -619,13 +619,14 @@ I need to get a lamp on my desk.
 (use-package modus-themes
   :init
   (setq modus-themes-no-mixed-fonts t
-	      modus-themes-fringes 'faint
+	      modus-themes-fringes 'subtle
 	      modus-themes-syntax 'faint
         modus-themes-completions 'moderate
         modus-themes-lang-checkers 'straight-underline
 	      modus-themes-links 'neutral-underline
 	      modus-themes-region 'bg-only
 	      modus-themes-org-blocks 'grayscale
+        ;; modus-themes-mail-citations 'desaturated
 	      modus-themes-scale-headings t)
   (modus-themes-load-themes)
   :config
@@ -710,7 +711,7 @@ Maybe I should get rid of initials.  Or keep it to match file names only.
 
 ** Projects
 *** Version Control
-Get rid of ssh agency when the ssh keys will be manager by gpg.
+Get rid of ssh agency when the ssh keys will be managed by gpg.
 
 #+begin_src conf :tangle ~/.config/git/config
 [user]
@@ -1058,7 +1059,7 @@ Credit to https://emacs.stackexchange.com/a/31708/19054."
 \\theoremstyle{definition}
 \\newtheorem{definition}{Definition}[section]
 \\newtheorem{example}{Example}[section]
-\\newtheorem{exercise}[exa]{Exercise}
+\\newtheorem{exercise}{Exercise}[section]
 
 \\theoremstyle{remark}
 \\newtheorem{remark}{Remark}
@@ -1442,11 +1443,12 @@ Maybe I should scale things using xrandr.
 - [[https://www.emacswiki.org/emacs/GnusTutorial][GNUS tutorial 1]]; [[https://github.com/redguardtoo/mastering-emacs-in-one-year-guide/blob/master/gnus-guide-en.org#my-gnusel][GNUS tutorial 2]]
 - [[https://github.com/kensanata/ggg#gmail-gnus-gpg-guide-gggg][how to encrypt]]
 
-[[https://www.bounga.org/tips/2020/05/03/multiple-smtp-accounts-in-gnus-without-external-tools/][This]] blog post helped me to set up gnus with multiple accounts.
+[[https://www.bounga.org/tips/2020/05/03/multiple-smtp-accounts-in-gnus-without-external-tools/][This]] blog post helped me to set up gnus with multiple accounts.  There's
+also [[https://github.com/Bounga/emacs-config/blob/master/gnus.el][this]] config file.
 
 (info "(gnus) Posting Styles")
 
-/ N fetches new messages.
+/ N fetches new messages.  =M-g= updates the group.
 
 #+begin_src emacs-lisp
 (use-package gnus
@@ -1508,12 +1510,9 @@ Maybe I should scale things using xrandr.
   (mail-signature "André A. Gomes\n\"Free Thought, Free World\"")
   (message-signature "André A. Gomes\n\"Free Thought, Free World\"")
   (message-kill-buffer-on-exit t)
-  (message-alternative-emails "")
-  (message-default-charset 'utf-8)
-  ;; :hook
-  ;; (message-setup-hook 'flyspell-mode)
-  ;; ((message-setup-hook . mml-secure-message-encrypt)
-  ;;  (message-setup-hook . mml-secure-message-sign))
+  ;; (message-alternative-emails (regexp-opt '("user@domain.com"
+  ;;                                           "user@work.com")))
+  ;; (message-default-charset 'utf-8)
   )
 
 (use-package smtpmail
@@ -1522,7 +1521,6 @@ Maybe I should scale things using xrandr.
   :custom
   (smtpmail-smtp-server "smtp.gmail.com")
   (smtpmail-smtp-service 587)
-  ;; (smtpmail-stream-type 'ssl)
   (send-mail-function 'smtpmail-send-it))
 
 ;; (use-package mm-encode
