@@ -52,9 +52,9 @@ for extensibility, they will probably let your manager decide things for
 you and give you no control at all.  For both of these reasons, a
 company would never have designed an editor with which users could
 experiment as MIT users did, and they would not have been able to build
-on the results of the experiments to produce an Emacs.
+on the results of the experiments to produce an Emacs. --- [[https://www.lysator.liu.se/history/garb/txt/87-1-emacs.txt][Richard Stallman]]
 #+end_quote
-- [[https://www.lysator.liu.se/history/garb/txt/87-1-emacs.txt][Richard Stallman]]
+
 
 * Systems and machines
 GNU/Linux systems encompass the GNU system plus the Linux kernel.  They
@@ -613,7 +613,7 @@ I prefer a light theme at night, as long as the screen brightness is
 adjusted accordingly.  This also avoids the circus of configuring theme
 togglers on browsers or other GUI programs.
 
-I need to get a lamp on my desk.
+I need to get a lamp on my desk.  Do I?
 
 #+begin_src emacs-lisp
 (use-package modus-themes
