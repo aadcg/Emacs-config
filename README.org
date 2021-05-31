@@ -164,18 +164,7 @@ EndSection")
      (service tlp-service-type))
     (remove (lambda (service)
               (eq? (service-kind service) gdm-service-type))
-            %desktop-services))
-   (modify-services %desktop-services
-     (guix-service-type
-      config =>
-      (guix-configuration
-       (inherit config)
-       (substitute-urls
-        (append (list "https://mirror.brielmaier.net")
-                %default-substitute-urls))
-       (authorized-keys
-        (append (list (local-file "~/.config/guix/mirror.brielmaier.net.pub"))
-                %default-authorized-guix-keys)))))))
+            %desktop-services))))
 #+end_src
 
 (info "(guix) Invoking guix system")
