@@ -914,6 +914,8 @@ alias jitsi flatpak run org.jitsi.jitsi-meet
   :mode (("\\.yml\\'"  . yaml-mode)
          ("\\.yaml\\'" . yaml-mode)))
 
+(use-package gitlab-ci-mode)
+
 (use-package csv-mode :disabled)
 #+end_src
 
