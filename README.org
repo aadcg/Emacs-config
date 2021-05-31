@@ -695,8 +695,6 @@ Maybe I should get rid of initials.  Or keep it to match file names only.
 
 ** Projects
 *** Version Control
-Get rid of ssh agency when the ssh keys will be managed by gpg.
-
 #+begin_src conf :tangle ~/.config/git/config
 [user]
   name = André A. Gomes
@@ -722,9 +720,6 @@ Get rid of ssh agency when the ssh keys will be managed by gpg.
   :custom (diff-hl-draw-borders nil)
   :config (global-diff-hl-mode)
   :hook (magit-post-refresh-hook . diff-hl-magit-post-refresh))
-
-;; to avoid passphrase prompts
-(use-package ssh-agency)
 #+end_src
 
 *** Utilities
@@ -1626,7 +1621,7 @@ p playlist-prev
                        (shr-url-at-point current-prefix-arg)))))
 #+end_src
 
-*** Authentication
+*** Authentication (GPG)
 #+begin_src emacs-lisp
 (use-package auth-source
   :custom (auth-sources '("~/.authinfo.gpg" "~/.authinfo")))
@@ -1660,6 +1655,13 @@ enable-ssh-support
 default-cache-ttl-ssh 86400
 max-cache-ttl-ssh 86400
 allow-emacs-pinentry
+#+end_src
+
+(info "(gnupg) Agent Configuration")
+https://wiki.archlinux.org/title/GnuPG#SSH_agent
+
+#+begin_src conf :tangle ~/.gnupg/sshcontrol
+736A5C83F2DB81330579A0998320E925C254EC51
 #+end_src
 
 *** Misc
@@ -1743,7 +1745,6 @@ allow-emacs-pinentry
 - [[https://gitlab.com/link0ff/emacs-init][Juri Linkov]]
 
 * COMMENT Ideas
-** Generate an ssh key from gpg key
 ** type-break-mode
 ** Android
 [[https://guix.gnu.org/blog/2018/guix-on-android/][Guix on android]]
