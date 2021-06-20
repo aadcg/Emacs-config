@@ -50,7 +50,6 @@ experiment as MIT users did, and they would not have been able to build
 on the results of the experiments to produce an Emacs. --- [[https://www.lysator.liu.se/history/garb/txt/87-1-emacs.txt][Richard Stallman]]
 #+end_quote
 
-
 * Systems and machines
 GNU/Linux systems encompass the GNU system plus the Linux kernel.  They
 come in many shapes and flavors---the so-called distros.  GNU Guix seems
@@ -59,7 +58,12 @@ paramount for scientific endeavours.  Besides that, it's extensible with
 GNU Guile which is an implementation of Scheme.
 
 ** GNU Guix
-[[http://logs.guix.gnu.org/guix/][IRC Logs]]
+Valuable information can be found at the help mailing lists or the [[http://logs.guix.gnu.org/guix/][IRC
+Logs]].
+
+Some man pages of system packages aren't available so you need to issue:
+
+$ guix environment --ad-hoc man-db xorg-server -- man Xorg
 
 *** System
 Your wireless chip will most likely not work when using the Linux-libre
@@ -254,7 +258,7 @@ ctrl-space-workaround=true
 (setq scroll-preserve-screen-position 'always)
 (setq-default fill-column 72)
 (setq-default indent-tabs-mode nil)
-(setq-default tab-width 2)
+(setq-default tab-width 4)
 (setq-default tab-always-indent 'complete)
 ;; (setq sentence-end-double-space t)
 (when termux-p (global-visual-line-mode t))
@@ -313,7 +317,7 @@ ctrl-space-workaround=true
   (dired-recursive-copies 'always)
   (dired-recursive-deletes 'always)
   ;; (delete-by-moving-to-trash t)
-  (dired-listing-switches "-Atrhl --group-directories-first")
+  (dired-listing-switches "-Athl --group-directories-first")
   (dired-auto-revert-buffer t)
   :hook (dired-mode-hook . hl-line-mode)
   :bind ("C-x C-j" . dired-jump))
@@ -681,7 +685,7 @@ Maybe I should get rid of initials.  Or keep it to match file names only.
 (use-package company
   :disabled
   :custom (company-selection-wrap-around t)
-  :config (global-company-mode)
+  ;; :config (global-company-mode)
   :bind (:map company-active-map
               ("C-j"      . company-complete-selection)
               ("C-n"      . company-select-next)
@@ -865,12 +869,12 @@ $ cd /afp:USER@HOST:PATH
   :config (add-to-list 'eshell-modules-list 'eshell-tramp)
   :hook
   (eshell-mode-hook . (lambda () (company-mode -1)))
-  (eshell-pre-command-hook . 'eshell-save-some-history)
+  (eshell-pre-command-hook . eshell-save-some-history)
   :bind ("<s-return>" . eshell))
 
 ;; (use-package em-term
 ;;   :config
-;;   (add-to-list 'eshell-visual-commands "alsamixer"))
+;;   (add-to-list 'eshell-visual-commands "nmtui"))
 #+end_src
 
 #+begin_src sh :tangle ~/.emacs.d/eshell/alias :comments nil
@@ -885,9 +889,7 @@ alias jitsi flatpak run org.jitsi.jitsi-meet
   :hook
   ((haskell-mode-hook . haskell-doc-mode)
    (haskell-mode-hook . (lambda () turn-on-haskell-indent))
-   (haskell-mode-hook . interactive-haskell-mode))
-  :bind (:map interactive-haskell-mode-map
-              ("C-c C-c" . haskell-interactive-bring)))
+   (haskell-mode-hook . interactive-haskell-mode)))
 #+end_src
 
 **** COMMENT \LaTeX
@@ -941,8 +943,8 @@ alias jitsi flatpak run org.jitsi.jitsi-meet
   (org-agenda-start-on-weekday nil)
   (org-agenda-files '("~/NextCloud/org/"))
   (org-todo-keywords
-   '((sequence "TODO(t!)" "WIP(s!)" "WAITING(w@)" "|"
-               "DONE(d!)" "CANCEL(c@)")))
+   '((sequence "TODO(t)" "WIP(s)" "WAITING(w@)" "|"
+               "DONE(d)" "CANCEL(c@)")))
   (org-todo-keyword-faces '(("WIP" . "orange")
                             ("WAITING" . "orange")))
   ;; literate programming
@@ -973,7 +975,8 @@ alias jitsi flatpak run org.jitsi.jitsi-meet
      (python     . t)
      (haskell    . t)
      (latex      . t)
-     (shell      . t)))
+     (shell      . t)
+     (ditaa      . t)))
 
   (when termux-p
     (add-to-list 'org-file-apps '("\\.pdf\\'" . "termux-open %s")))
@@ -1655,6 +1658,7 @@ enable-ssh-support
 default-cache-ttl-ssh 86400
 max-cache-ttl-ssh 86400
 allow-emacs-pinentry
+allow-loopback-pinentry
 #+end_src
 
 (info "(gnupg) Agent Configuration")
@@ -1760,3 +1764,23 @@ this doesn't happen when connected to an external screen.
 
 this happens on exwm but not on GNOME!
 what if I have both the internal and the external screens connected?
+
+** Macros
+For text use org macros.  Within source code blocks, use noweb syntax.
+
+** Deprecate ssh agency
+I had an issue.  See [[https://stackoverflow.com/questions/60812866/emacs-gpg-pinentry-el-for-authentication][this]].  [[https://www.youtube.com/watch?v=4-Ks_f8rQFA][Tropin's video]] is good.
+
+** Owncloud
+If you start it from $HOME, then have ~/etc/ownCloud/sync-exclude.lst.
+Why?  Хз.
+
+** Emacs loads deleted packages
+E.g. company.
+
+** DPI
+[[https://linuxreviews.org/HOWTO_set_DPI_in_Xorg#How_DPI_Values_Are_Used][How to config]]
+
+External monitor - 118
+Internal monitor - 282 (at 3200x1800)
+                 - 226 (at 2560x1440)
