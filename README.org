@@ -1372,6 +1372,8 @@ nmcli device wifi connect "$SSID" password "$PASSWORD"
 ;;    ("s-p s" . (lambda () (run-system-command "suspend")))))
 
 ;; (shell-command "loginctl suspend && xlock")
+
+(setenv "GDK_SCALE" "2")
 #+end_src
 
 *** Web browsing
@@ -1380,8 +1382,6 @@ I should probably define a way to either open a link in nyxt or firefox.
 Maybe I should scale things using xrandr.
 
 #+begin_src emacs-lisp
-(setenv "GDK_DPI_SCALE" "0.5")
-(setenv "GDK_SCALE" "2")
 ;; to make nyxt's external editor function work
 (setenv "VISUAL" "emacsclient")
 
