@@ -933,6 +933,9 @@ of which are missing in Python.\" --- Richard Stallman\n\nHappy Hacking!""")
 #+begin_src emacs-lisp
 (use-package shell
   :custom (shell-command-prompt-show-cwd t))
+
+(use-package bash-completion
+  :hook (shell-dynamic-complete-functions . bash-completion-dynamic-complete))
 #+end_src
 
 ***** Eshell
