@@ -841,6 +841,33 @@ Email isn't set globally since it depends on the project.
 #+end_src
 
 **** Python
+Black, yapf or autopep8?
+
+How could I get auto-indentation on inferior python?  There could be an
+ipython minor mode on top of interactive python. [[https://lists.gnu.org/archive/html/emacs-devel/2014-08/msg00448.html][Emacs Devel Thread]]
+
+I highly recommend reading the [[https://ipython.readthedocs.io/en/stable/][IPython documentation]].
+
+#+TITLE: IPython Cheat-sheet
+| Cmd             | Description         | Example      |
+|-----------------+---------------------+--------------|
+| %run -t /path   | timer               |              |
+| %run -d /path   | debug               |              |
+| %run -p /path   | profile             |              |
+| %pastebin #line |                     | %pastebin _i |
+| %xmode          | set the debug level |              |
+| !any-shell-cmd  |                     |              |
+| _               | last output         |              |
+| _i<n>           | last nth input      |              |
+| _<n>            | last nth output     |              |
+| _ih             | list of inputs      |              |
+| _oh             | dict of outputs     |              |
+
+#+begin_src python :tangle ~/.ipython/profile_default/startup/init.py
+print("""\n\"When you start Lisp, it does 'read', 'eval', and 'print', all
+of which are missing in Python.\" --- Richard Stallman\n\nHappy Hacking!""")
+#+end_src
+
 #+begin_src emacs-lisp
 (use-package python
   ;; :config
@@ -848,10 +875,57 @@ Email isn't set globally since it depends on the project.
   ;;                             (require 'sphinx-doc)
   ;;                             (sphinx-doc-mode t)))
   :custom
-  (python-shell-interpreter-args "-i --simple-prompt")
-  (python-shell-interpreter "ipython"))
+  (python-shell-interpreter "ipython")
+  (python-shell-interpreter-args
+   (mapconcat
+    'identity
+    '("-i" "--simple-prompt" "--no-automagic" "--pdb" "--classic"
+      "--TerminalInteractiveShell.ast_node_interactivity='last_expr_or_assign'"
+      "--HistoryManager.enabled=False")
+    " "))
+  (python-indent-guess-indent-offset-verbose nil))
 
-(use-package elpy)
+(use-package elpy
+  :init (elpy-enable)
+  :config
+  (defun my-elpy-module-eldoc (command &rest _args)
+    "Module to support ElDoc for Python files."
+    (pcase command
+      (`global-init
+       (require 'eldoc)
+       (elpy-modules-remove-modeline-lighter 'eldoc-minor-mode))
+      (`buffer-init
+       (eldoc-add-command-completions "python-indent-dedent-line-backspace")
+       (when (member 'elpy-module-company elpy-modules)
+         (set (make-local-variable 'company-frontends)
+              (remq 'company-echo-metadata-frontend company-frontends)))
+       ;; New (Emacs >= 28) vs old eldoc API
+       (if (and (version< "28.0.0" emacs-version)
+                (boundp 'eldoc-documentation-functions))
+           (add-hook 'eldoc-documentation-functions
+                     'elpy-eldoc-documentation nil t)
+         (set (make-local-variable 'eldoc-documentation-function)
+              'elpy-eldoc-documentation))
+       (eldoc-mode 1))
+      (`buffer-stop
+       (eldoc-mode -1)
+       (kill-local-variable 'eldoc-documentation-function))))
+
+  (defalias 'elpy-module-eldoc 'my-elpy-module-eldoc)
+  :custom
+  (elpy-modules '(elpy-module-sane-defaults
+                  elpy-module-eldoc
+                  ;; elpy-module-highlight-indentation
+                  elpy-module-flymake))
+  :hook
+  (inferior-python-mode-hook . (lambda () (set (make-local-variable
+                                                'eldoc-documentation-function)
+                                               'elpy-eldoc-documentation)
+                                 (eldoc-mode)))
+
+  :bind (:map inferior-python-mode-map
+              ("C-c C-d" . elpy-doc)
+              ("M-."     . elpy-goto-definition)))
 #+end_src
 
 **** Bash
