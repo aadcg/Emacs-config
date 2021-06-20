@@ -848,7 +848,6 @@ ipython minor mode on top of interactive python. [[https://lists.gnu.org/archive
 
 I highly recommend reading the [[https://ipython.readthedocs.io/en/stable/][IPython documentation]].
 
-#+TITLE: IPython Cheat-sheet
 | Cmd             | Description         | Example      |
 |-----------------+---------------------+--------------|
 | %run -t /path   | timer               |              |
