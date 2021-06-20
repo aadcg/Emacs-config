@@ -699,10 +699,11 @@ Maybe I should get rid of initials.  Or keep it to match file names only.
 
 ** Projects
 *** Version Control
+Email isn't set globally since it depends on the project.
+
 #+begin_src conf :tangle ~/.config/git/config
 [user]
   name = André A. Gomes
-  email = andremegafone@gmail.com
   signingkey = E407570BBE3A8031155910B30DDDBDB1BDA03027
 [commit]
   gpgsign = true
@@ -718,12 +719,19 @@ Maybe I should get rid of initials.  Or keep it to match file names only.
   :custom
   (magit-log-section-commit-count 50)
   (magit-clone-default-directory "~/repos")
+  :config
+  (defun git-set-email (email)
+    "Set email on the current git project."
+    (interactive "sEmail: ")
+    (magit-set email "user.email"))
   :bind ("C-x g" . magit-status))
 
 (use-package diff-hl
   :custom (diff-hl-draw-borders nil)
   :config (global-diff-hl-mode)
   :hook (magit-post-refresh-hook . diff-hl-magit-post-refresh))
+
+(use-package git-modes)
 #+end_src
 
 *** Utilities
